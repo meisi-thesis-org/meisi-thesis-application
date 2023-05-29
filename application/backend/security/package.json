@@ -1,0 +1,7 @@
+{
+  "name": "@meisi-thesis/application-backend-security",
+  "version": "alpha@0.0.1",
+  "author": "Diogo <diogorafaellourencooliveira97@gmail.com>",
+  "license": "MIT",
+  "main": "MainApplication.ts"
+}
