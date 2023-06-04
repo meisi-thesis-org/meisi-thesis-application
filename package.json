@@ -22,6 +22,7 @@
   },
   "workspaces": [
     "@meisi-thesis/application-frontend-security",
-    "@meisi-thesis/application-backend-security"
+    "@meisi-thesis/application-backend-security",
+    "@meisi-thesis/application-backend-shared"
   ]
 }
