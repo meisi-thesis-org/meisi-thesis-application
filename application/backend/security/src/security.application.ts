@@ -4,10 +4,6 @@ export class SecurityApplication {
   private readonly _application: Application = Express();
   private readonly _serverPort: number = 8080;
 
-  public defineConfiguration(): SecurityApplication {
-    return this;
-  }
-
   public defineMiddlewares(): SecurityApplication {
     return this;
   }

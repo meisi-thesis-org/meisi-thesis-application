@@ -6,9 +6,12 @@ import { HttpStatusCode } from '../../../../shared/src/collections/http-status-c
 import { SignUpRequest } from './requests/sign-up.request';
 import { SignInRequest } from './requests/sign-in.request';
 import { RefreshCodeRequest } from './requests/refresh-code.request';
+import { UserMockRepository } from './repositories/user-mock.repository';
 
 export class UserController {
-  private readonly _service: UserService = new UserService();
+  private readonly _service: UserService = new UserService(
+    new UserMockRepository()
+  );
 
   public async fetchUser(request: Request, response: Response): Promise<Response> {
     try {

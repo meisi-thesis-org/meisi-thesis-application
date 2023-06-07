@@ -3,6 +3,16 @@ import { UserDTO } from './user.dto';
 import { type UserEntity } from './user.entity';
 
 export class UserDTOMapper extends Mapper<UserEntity, UserDTO> {
+  private static _instance: UserDTOMapper | null = null;
+
+  public static get instance(): UserDTOMapper {
+    if (this._instance === null) {
+      this._instance = new UserDTOMapper();
+    }
+
+    return this._instance;
+  }
+
   public override apply(entity: UserEntity): UserDTO {
     return new UserDTO(
       entity.uuid,

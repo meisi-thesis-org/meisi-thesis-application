@@ -1,6 +1,7 @@
 export enum HttpStatusCode {
   INTERNAL_SERVER_ERROR = 500,
   NON_FOUND_RESOURCE = 404,
+  ALREADY_EXISTS_RESOURCE = 409,
   OK = 200,
   CREATED = 201,
 }
