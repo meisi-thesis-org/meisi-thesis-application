@@ -6,7 +6,7 @@ export default {
   ],
   testPathIgnorePatterns: ['<rootDir>/node_modules'],
   moduleFileExtensions: ['js', 'ts'],
-  coverageReports: ['json', 'html'],
+  coverageReporters: ['json', 'html'],
   projects: [
     {
       displayName: '@meisi-thesis/application-backend',
