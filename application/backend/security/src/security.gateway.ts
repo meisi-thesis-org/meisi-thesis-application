@@ -9,7 +9,7 @@ export class SecurityGateway extends Gateway<Router> {
   }
 
   public override subscribe(): Router {
-    this._router.use(SecurityGatewayCollection.USERS, () => new UserGateway().subscribe());
+    this._router.use(SecurityGatewayCollection.USERS, new UserGateway().subscribe());
     return this._router;
   }
 }

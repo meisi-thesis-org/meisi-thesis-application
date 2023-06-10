@@ -1,4 +1,5 @@
 import Express, { type Application } from 'express';
+import { SecurityGateway } from './security.gateway';
 
 export class SecurityApplication {
   private readonly _application: Application = Express();
@@ -9,6 +10,7 @@ export class SecurityApplication {
   }
 
   public defineRoutes(): SecurityApplication {
+    this._application.all('*', new SecurityGateway().subscribe())
     return this;
   }
 

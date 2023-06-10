@@ -1,4 +1,4 @@
-import { ExceptionHandler } from './../../shared/src/handlers/exception.handler';
+import { UuidProvider } from './../../shared/src/providers/uuid.provider';
 
 export class SecurityConfiguration {
   private static _instance: SecurityConfiguration | null = null;
@@ -11,7 +11,7 @@ export class SecurityConfiguration {
     return this._instance;
   }
 
-  public get exceptionHandler(): ExceptionHandler {
-    return new ExceptionHandler();
+  public get uuidProvider(): UuidProvider {
+    return new UuidProvider();
   }
 }
