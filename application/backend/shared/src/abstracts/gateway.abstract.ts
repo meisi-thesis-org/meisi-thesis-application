@@ -1,5 +1,5 @@
 export abstract class Gateway<T> {
-  public constructor(
+  protected constructor(
     protected readonly _router: T
   ) {}
 

@@ -1,12 +1,24 @@
-import { Router } from 'express';
+import { type Request, type Response, Router } from 'express';
 import { Gateway } from '../../../../shared/src/abstracts/gateway.abstract';
+import { UserGatewayCollection } from './shared/collections/user-gateway.collection';
+import { UserController } from './user.controller';
 
 export class UserGateway extends Gateway<Router> {
+  private readonly _controller: UserController = new UserController();
+
   public constructor() {
     super(Router());
   }
 
   public override subscribe(): Router {
-    return this._router
+    this._router.post(UserGatewayCollection.SIGN_UP, (request: Request, response: Response) => {
+      void this._controller.signUp(request, response);
+    })
+
+    this._router.post(UserGatewayCollection.SIGN_IN, (request: Request, response: Response) => {
+      void this._controller.signIn(request, response);
+    })
+
+    return this._router;
   }
 }
