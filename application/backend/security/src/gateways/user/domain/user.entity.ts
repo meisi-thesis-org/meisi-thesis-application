@@ -52,7 +52,11 @@ export class UserEntity {
   }
 
   @Column({ name: 'access_code' })
-  private readonly _accessCode: string;
+  private _accessCode: string;
+
+  public set accessCode(value: string) {
+    this._accessCode = value;
+  }
 
   public get accessCode(): string {
     return this._accessCode;

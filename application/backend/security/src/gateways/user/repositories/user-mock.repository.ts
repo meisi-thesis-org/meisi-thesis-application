@@ -8,8 +8,8 @@ export class UserMockRepository extends UserRepository {
     return this._userEntityList.find((userEntity) => userEntity.uuid.match(uuid))
   }
 
-  public override async findByAuthCredentials(username: string, email: string, phoneNumber: string): Promise<UserEntity | null | undefined> {
-    return this._userEntityList.find((userEntity) => {
+  public override async findByAuthCredentials(username: string, email: string, phoneNumber: string): Promise<UserEntity | null> {
+    const user = this._userEntityList.find((userEntity) => {
       if (
         userEntity.username === username ||
         userEntity.email === email ||
@@ -20,9 +20,11 @@ export class UserMockRepository extends UserRepository {
 
       return undefined;
     });
+
+    return user !== undefined ? user : null;
   }
 
-  public override async save(data: UserEntity): Promise<void> {
+  public override async create(data: UserEntity): Promise<void> {
     this._userEntityList.push(data);
   }
 
@@ -34,8 +36,8 @@ export class UserMockRepository extends UserRepository {
     uuid: string,
     accessToken: string,
     encodedRefreshToken: string
-  ): Promise<UserEntity | null | undefined> {
-    return this._userEntityList.find((userEntity) => {
+  ): Promise<UserEntity | null> {
+    const user = this._userEntityList.find((userEntity) => {
       if (userEntity.uuid === uuid) {
         userEntity.accessToken = accessToken;
         userEntity.refreshToken = encodedRefreshToken;
@@ -43,5 +45,22 @@ export class UserMockRepository extends UserRepository {
 
       return userEntity;
     });
+
+    return user !== undefined ? user : null;
+  }
+
+  public override async updateAccessCode(
+    uuid: string,
+    accessCode: string
+  ): Promise<UserEntity | null> {
+    const user = this._userEntityList.find((userEntity) => {
+      if (userEntity.uuid === uuid) {
+        userEntity.accessCode = accessCode;
+      }
+
+      return userEntity;
+    });
+
+    return user !== undefined ? user : null;
   }
 }

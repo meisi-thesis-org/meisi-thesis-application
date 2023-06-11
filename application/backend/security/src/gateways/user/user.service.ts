@@ -13,6 +13,7 @@ import { type SignInRequest } from './requests/sign-in.request';
 import { type SignUpRequest } from './requests/sign-up.request';
 import { type UserRepository } from './user.repository';
 import { type RandomTokenProvider } from '../../../../shared/src/providers/random-token.provider';
+import { type RefreshAccessCodeRequest } from './requests/refresh-access-code.request';
 
 export class UserService {
   private readonly _repository: UserRepository = new UserMockRepository();
@@ -68,7 +69,7 @@ export class UserService {
       false
     );
 
-    await this._repository.save(createdUser).catch(() => {
+    await this._repository.create(createdUser).catch(() => {
       throw new InternalServerException();
     });
 
@@ -112,7 +113,7 @@ export class UserService {
             throw new InternalServerException();
           });
 
-        if (updatedUser === null || updatedUser === undefined) {
+        if (updatedUser === null) {
           throw new InternalServerException();
         }
 
@@ -140,7 +141,73 @@ export class UserService {
         throw new InternalServerException();
       });
 
-    if (updatedUser === null || updatedUser === undefined) {
+    if (updatedUser === null) {
+      throw new InternalServerException();
+    }
+
+    return this._userDTOMapper.apply(updatedUser);
+  }
+
+  public async refreshAccessCode(refreshAccessCodeRequest: RefreshAccessCodeRequest): Promise<UserDTO> {
+    const foundUser = await this._repository
+      .findByAuthCredentials(
+        refreshAccessCodeRequest.username,
+        refreshAccessCodeRequest.email,
+        refreshAccessCodeRequest.phoneNumber
+      ).catch(() => {
+        throw new InternalServerException();
+      });
+
+    if (foundUser === null || foundUser === undefined) {
+      throw new NotFoundException();
+    };
+
+    const generatedPassword = this._randomStringProvider.generate(12);
+    const encodedPassword = await this._randomStringEncoderProvider
+      .hash(generatedPassword, 10)
+      .catch(() => { throw new InternalServerException(); });
+
+    const updatedUser = await this._repository
+      .updateAccessCode(foundUser.uuid, encodedPassword).catch(() => {
+        throw new InternalServerException();
+      });
+
+    if (updatedUser === null) {
+      throw new InternalServerException();
+    }
+
+    // TODO: Send Email
+
+    return this._userDTOMapper.apply(updatedUser);
+  }
+
+  public async refreshTokens(uuid: string): Promise<UserDTO> {
+    const foundUser = await this._repository
+      .findOneByUuid(uuid)
+      .catch(() => {
+        throw new InternalServerException();
+      });
+
+    if (foundUser === null || foundUser === undefined) {
+      throw new NotFoundException();
+    };
+
+    const accessToken = this._randomTokenProvider.sign({ username: foundUser.username, email: foundUser.email }, 'accessTokenSecret', '1h');
+    const refreshToken = this._randomTokenProvider.sign({ username: foundUser.username, email: foundUser.email }, 'refreshTokenSecret', '1d');
+
+    const encodedRefreshToken = await this._randomStringEncoderProvider
+      .hash(refreshToken, 10)
+      .catch(() => {
+        throw new InternalServerException();
+      });
+
+    const updatedUser = await this._repository
+      .updateTokens(foundUser.uuid, accessToken, encodedRefreshToken)
+      .catch(() => {
+        throw new InternalServerException();
+      });
+
+    if (updatedUser === null) {
       throw new InternalServerException();
     }
 

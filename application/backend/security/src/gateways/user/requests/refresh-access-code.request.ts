@@ -1,19 +1,19 @@
 export class RefreshAccessCodeRequest {
   public constructor(
-    private readonly _username: string | undefined,
-    private readonly _email: string | undefined,
-    private readonly _phoneNumber: string | undefined
+    private readonly _username: string,
+    private readonly _email: string,
+    private readonly _phoneNumber: string
   ) {}
 
-  public get username(): string | undefined {
+  public get username(): string {
     return this._username;
   }
 
-  public get email(): string | undefined {
+  public get email(): string {
     return this._email;
   }
 
-  public get phoneNumber(): string | undefined {
+  public get phoneNumber(): string {
     return this._phoneNumber;
   }
 }
