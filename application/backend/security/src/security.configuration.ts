@@ -1,7 +1,7 @@
 import { UuidProvider } from './../../shared/src/providers/uuid.provider';
 import { RandomStringProvider } from './../../shared/src/providers/random-string.provider';
 import { RandomStringEncoderProvider } from './../../shared/src/providers/random-string-encoder.provider';
-
+import { RandomTokenProvider } from './../../shared/src/providers/random-token.provider';
 export class SecurityConfiguration {
   private static _instance: SecurityConfiguration | null = null;
 
@@ -23,5 +23,9 @@ export class SecurityConfiguration {
 
   public get randomStringEncoderProvider(): RandomStringEncoderProvider {
     return new RandomStringEncoderProvider();
+  }
+
+  public get randomTokenProvider(): RandomTokenProvider {
+    return new RandomTokenProvider();
   }
 }

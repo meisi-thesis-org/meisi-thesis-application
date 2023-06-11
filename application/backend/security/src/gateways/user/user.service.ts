@@ -9,8 +9,10 @@ import { UserDTOMapper } from './domain/user-dto.mapper';
 import { type UserDTO } from './domain/user.dto';
 import { UserEntity } from './domain/user.entity';
 import { UserMockRepository } from './repositories/user-mock.repository';
+import { type SignInRequest } from './requests/sign-in.request';
 import { type SignUpRequest } from './requests/sign-up.request';
 import { type UserRepository } from './user.repository';
+import { type RandomTokenProvider } from '../../../../shared/src/providers/random-token.provider';
 
 export class UserService {
   private readonly _repository: UserRepository = new UserMockRepository();
@@ -18,6 +20,7 @@ export class UserService {
   private readonly _uuidProvider: UuidProvider = SecurityConfiguration.instance.uuidProvider;
   private readonly _randomStringProvider: RandomStringProvider = SecurityConfiguration.instance.randomStringProvider
   private readonly _randomStringEncoderProvider: RandomStringEncoderProvider = SecurityConfiguration.instance.randomStringEncoderProvider
+  private readonly _randomTokenProvider: RandomTokenProvider = SecurityConfiguration.instance.randomTokenProvider
 
   public async fetchUser(userUuid: string): Promise<UserDTO> {
     const user = await this._repository.findOneByUuid(userUuid).catch(() => {
@@ -72,5 +75,64 @@ export class UserService {
     // TODO: Send Email
 
     return this._userDTOMapper.apply(createdUser);
+  }
+
+  public async signIn(signInRequest: SignInRequest): Promise<UserDTO> {
+    const foundUsers = await this._repository
+      .findBulk()
+      .catch(() => {
+        throw new InternalServerException();
+      });
+
+    for (const foundUser of foundUsers) {
+      const comparedPassword = await this._randomStringEncoderProvider
+        .compare(
+          signInRequest.accessCode,
+          foundUser.accessCode
+        ).catch(() => {
+          throw new InternalServerException();
+        });
+
+      if (comparedPassword) {
+        const updatedUser = await this.updateTokens(
+          foundUser.uuid,
+          foundUser.username,
+          foundUser.email
+        ).catch(() => {
+          throw new InternalServerException();
+        });
+
+        if (updatedUser === null || updatedUser === undefined) {
+          throw new InternalServerException();
+        }
+
+        return this._userDTOMapper.apply(updatedUser);
+      }
+    }
+
+    throw new NotFoundException();
+  }
+
+  private async updateTokens(
+    uuid: string,
+    username: string,
+    email: string
+  ): Promise<UserEntity | null | undefined> {
+    const accessToken = this._randomTokenProvider
+      .sign({ username, email }, 'accessTokenSecret', '1h');
+    const refreshToken = this._randomTokenProvider
+      .sign({ username, email }, 'refreshTokenSecret', '1d');
+
+    const encodedRefreshToken = await this._randomStringEncoderProvider
+      .hash(refreshToken, 10)
+      .catch(() => {
+        throw new InternalServerException();
+      });
+
+    return await this._repository
+      .updateTokens(uuid, accessToken, encodedRefreshToken)
+      .catch(() => {
+        throw new InternalServerException();
+      });
   }
 }

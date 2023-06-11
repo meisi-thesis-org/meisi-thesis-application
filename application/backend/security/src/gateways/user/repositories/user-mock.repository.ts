@@ -25,4 +25,23 @@ export class UserMockRepository extends UserRepository {
   public override async save(data: UserEntity): Promise<void> {
     this._userEntityList.push(data);
   }
+
+  public override async findBulk(): Promise<UserEntity[]> {
+    return this._userEntityList;
+  }
+
+  public override async updateTokens(
+    uuid: string,
+    accessToken: string,
+    encodedRefreshToken: string
+  ): Promise<UserEntity | null | undefined> {
+    return this._userEntityList.find((userEntity) => {
+      if (userEntity.uuid === uuid) {
+        userEntity.accessToken = accessToken;
+        userEntity.refreshToken = encodedRefreshToken;
+      }
+
+      return userEntity;
+    });
+  }
 }

@@ -59,14 +59,22 @@ export class UserEntity {
   }
 
   @Column({ name: 'access_token' })
-  private readonly _accessToken: string;
+  private _accessToken: string;
+
+  public set accessToken(value: string) {
+    this._accessToken = value;
+  }
 
   public get accessToken(): string {
     return this._accessToken;
   }
 
   @Column({ name: 'refresh_token' })
-  private readonly _refreshToken: string;
+  private _refreshToken: string;
+
+  public set refreshToken(value: string) {
+    this._refreshToken = value;
+  }
 
   public get refreshToken(): string {
     return this._refreshToken;

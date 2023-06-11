@@ -19,6 +19,10 @@ export class UserGateway extends Gateway<Router> {
       void this._controller.signUp(request, response)
     })
 
+    this._router.put(UserGatewayCollection.SIGN_IN, (request: Request, response: Response) => {
+      void this._controller.signIn(request, response)
+    })
+
     return this._router;
   }
 }

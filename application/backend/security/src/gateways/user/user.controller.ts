@@ -2,6 +2,7 @@ import { type Request, type Response } from 'express';
 import { UserService } from './user.service';
 import { HttpCodeCollection } from '../../../../shared/src/collections/http-code.collection';
 import { SignUpRequest } from './requests/sign-up.request';
+import { SignInRequest } from './requests/sign-in.request';
 
 export class UserController {
   private readonly _service: UserService = new UserService();
@@ -28,6 +29,20 @@ export class UserController {
       );
 
       const userDTO = await this._service.signUp(signUpRequest)
+
+      return response.status(HttpCodeCollection.CREATED).json(userDTO);
+    } catch ({ httpCode, message }: any) {
+      return response.status(httpCode).json(message);
+    }
+  }
+
+  public async signIn(request: Request, response: Response): Promise<Response> {
+    try {
+      const signInRequest = new SignInRequest(
+        request.body.accessCode
+      );
+
+      const userDTO = await this._service.signIn(signInRequest)
 
       return response.status(HttpCodeCollection.CREATED).json(userDTO);
     } catch ({ httpCode, message }: any) {
