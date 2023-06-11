@@ -124,8 +124,8 @@ export class UserEntity {
     lastName: string,
     dateBirth: Date,
     accessCode: string,
-    accessToken: string,
-    refreshToken: string,
+    accessToken: string | null,
+    refreshToken: string | null,
     blocked: boolean,
     deactivated: boolean,
     acceptedPrivacyTerms: boolean

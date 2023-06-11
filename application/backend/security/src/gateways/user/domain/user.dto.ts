@@ -7,8 +7,8 @@ export class UserDTO {
     private readonly _firstName: string,
     private readonly _lastName: string,
     private readonly _dateBirth: Date,
-    private readonly _accessToken: string,
-    private readonly _refreshToken: string,
+    private readonly _accessToken: string | null,
+    private readonly _refreshToken: string | null,
     private readonly _blocked: boolean,
     private readonly _deactivated: boolean,
     private readonly _acceptedPrivacyTerms: boolean,
@@ -44,11 +44,11 @@ export class UserDTO {
     return this._dateBirth;
   }
 
-  public get accessToken(): string {
+  public get accessToken(): string | null {
     return this._accessToken;
   }
 
-  public get refreshToken(): string {
+  public get refreshToken(): string | null {
     return this._refreshToken;
   }
 

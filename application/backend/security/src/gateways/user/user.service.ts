@@ -61,8 +61,8 @@ export class UserService {
       signUpRequest.lastName,
       signUpRequest.dateBirth,
       encodedPassword,
-      '',
-      '',
+      null,
+      null,
       false,
       false,
       false
