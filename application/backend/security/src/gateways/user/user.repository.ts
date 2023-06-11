@@ -9,7 +9,7 @@ export abstract class UserRepository extends Repository<UserEntity, string> {
   ): Promise<UserEntity | null | undefined>;
   public abstract updateTokens(
     uuid: string,
-    accessToken: string,
-    encodedRefreshToken: string
+    accessToken: null,
+    encodedRefreshToken: null
   ): Promise<UserEntity | null | undefined>;
 }

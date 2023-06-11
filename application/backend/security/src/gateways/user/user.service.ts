@@ -94,13 +94,23 @@ export class UserService {
         });
 
       if (comparedPassword) {
-        const updatedUser = await this.updateTokens(
-          foundUser.uuid,
-          foundUser.username,
-          foundUser.email
-        ).catch(() => {
-          throw new InternalServerException();
-        });
+        const accessToken = this._randomTokenProvider.sign({ username: foundUser.username, email: foundUser.email }, 'accessTokenSecret', '1h');
+        const refreshToken = this._randomTokenProvider.sign({ username: foundUser.username, email: foundUser.email }, 'refreshTokenSecret', '1d');
+
+        const encodedRefreshToken = await this._randomStringEncoderProvider
+          .hash(refreshToken, 10)
+          .catch(() => {
+            throw new InternalServerException();
+          });
+
+        const updatedUser = await this._repository
+          .updateTokens(
+            foundUser.uuid,
+            accessToken,
+            encodedRefreshToken
+          ).catch(() => {
+            throw new InternalServerException();
+          });
 
         if (updatedUser === null || updatedUser === undefined) {
           throw new InternalServerException();
@@ -113,26 +123,27 @@ export class UserService {
     throw new NotFoundException();
   }
 
-  private async updateTokens(
-    uuid: string,
-    username: string,
-    email: string
-  ): Promise<UserEntity | null | undefined> {
-    const accessToken = this._randomTokenProvider
-      .sign({ username, email }, 'accessTokenSecret', '1h');
-    const refreshToken = this._randomTokenProvider
-      .sign({ username, email }, 'refreshTokenSecret', '1d');
-
-    const encodedRefreshToken = await this._randomStringEncoderProvider
-      .hash(refreshToken, 10)
+  public async signOut(uuid: string): Promise<UserDTO> {
+    const foundUser = await this._repository
+      .findOneByUuid(uuid)
       .catch(() => {
         throw new InternalServerException();
       });
 
-    return await this._repository
-      .updateTokens(uuid, accessToken, encodedRefreshToken)
+    if (foundUser === null || foundUser === undefined) {
+      throw new NotFoundException();
+    };
+
+    const updatedUser = await this._repository
+      .updateTokens(foundUser.uuid, null, null)
       .catch(() => {
         throw new InternalServerException();
       });
+
+    if (updatedUser === null || updatedUser === undefined) {
+      throw new InternalServerException();
+    }
+
+    return this._userDTOMapper.apply(updatedUser);
   }
 }

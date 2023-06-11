@@ -49,4 +49,14 @@ export class UserController {
       return response.status(httpCode).json(message);
     }
   }
+
+  public async signOut(request: Request, response: Response): Promise<Response> {
+    try {
+      const userDTO = await this._service.signOut(request.params.uuid!)
+
+      return response.status(HttpCodeCollection.CREATED).json(userDTO);
+    } catch ({ httpCode, message }: any) {
+      return response.status(httpCode).json(message);
+    }
+  }
 }
