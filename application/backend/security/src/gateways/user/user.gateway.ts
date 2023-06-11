@@ -3,6 +3,7 @@ import { Gateway } from '../../../../shared/src/abstracts/gateway.abstract';
 import { UserController } from './user.controller';
 import { UserGatewayCollection } from './shared/collections/user-gateway.collection';
 import { AccessTokenGuard } from './guards/access-token.guard';
+import { RefreshTokenGuard } from './guards/refresh-token.guard';
 
 export class UserGateway extends Gateway<Router> {
   private readonly _controller: UserController = new UserController();
@@ -32,7 +33,7 @@ export class UserGateway extends Gateway<Router> {
       void this._controller.refreshAccessCode(request, response)
     })
 
-    this._router.put(UserGatewayCollection.REFRESH_TOKENS, AccessTokenGuard, (request: Request, response: Response) => {
+    this._router.put(UserGatewayCollection.REFRESH_TOKENS, RefreshTokenGuard, (request: Request, response: Response) => {
       void this._controller.refreshTokens(request, response)
     })
 
