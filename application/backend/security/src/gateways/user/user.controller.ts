@@ -4,13 +4,16 @@ import { HttpCodeCollection } from '../../../../shared/src/collections/http-code
 import { SignUpRequest } from './requests/sign-up.request';
 import { SignInRequest } from './requests/sign-in.request';
 import { RefreshAccessCodeRequest } from './requests/refresh-access-code.request';
+import { type AuthenticatedRequest } from './types/authenticated-request.type';
 
 export class UserController {
   private readonly _service: UserService = new UserService();
 
   public async fetchUser(request: Request, response: Response): Promise<Response> {
     try {
-      const userDTO = await this._service.fetchUser(request.params.uuid!)
+      const uuid = (request as AuthenticatedRequest).user.uuid;
+
+      const userDTO = await this._service.fetchUser(uuid)
 
       return response.status(HttpCodeCollection.OK).json(userDTO);
     } catch ({ httpCode, message }: any) {
@@ -53,7 +56,9 @@ export class UserController {
 
   public async signOut(request: Request, response: Response): Promise<Response> {
     try {
-      const userDTO = await this._service.signOut(request.params.uuid!)
+      const uuid = (request as AuthenticatedRequest).user.uuid;
+
+      const userDTO = await this._service.signOut(uuid)
 
       return response.status(HttpCodeCollection.CREATED).json(userDTO);
     } catch ({ httpCode, message }: any) {
@@ -69,6 +74,18 @@ export class UserController {
         request.body.phoneNumber
       );
       const userDTO = await this._service.refreshAccessCode(refreshAccessCodeRequest)
+
+      return response.status(HttpCodeCollection.CREATED).json(userDTO);
+    } catch ({ httpCode, message }: any) {
+      return response.status(httpCode).json(message);
+    }
+  }
+
+  public async refreshTokens(request: Request, response: Response): Promise<Response> {
+    try {
+      const uuid = (request as AuthenticatedRequest).user.uuid;
+
+      const userDTO = await this._service.refreshTokens(uuid)
 
       return response.status(HttpCodeCollection.CREATED).json(userDTO);
     } catch ({ httpCode, message }: any) {

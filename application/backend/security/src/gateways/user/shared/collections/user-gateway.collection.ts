@@ -3,5 +3,6 @@ export enum UserGatewayCollection {
   SIGN_UP = '/sign-up',
   SIGN_IN = '/sign-in',
   SIGN_OUT = '/sign-out',
-  REFRESH_ACCESS_CODE = '/refresh-access-code'
+  REFRESH_ACCESS_CODE = '/refresh-access-code',
+  REFRESH_TOKENS = '/refresh-tokens'
 }

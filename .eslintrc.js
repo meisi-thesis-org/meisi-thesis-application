@@ -14,6 +14,8 @@ module.exports = {
   },
   rules: {
     '@typescript-eslint/semi': 'off',
-    '@typescript-eslint/space-before-function-paren': 'off'
+    '@typescript-eslint/space-before-function-paren': 'off',
+    '@typescript-eslint/no-throw-literal': 'off',
+    '@typescript-eslint/strict-boolean-expressions': 'off'
   }
 }
