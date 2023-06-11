@@ -1,11 +1,13 @@
-import Express, { type Application } from 'express';
+import Express, { json, type Application, urlencoded } from 'express';
 import { SecurityGateway } from './security.gateway';
 
 export class SecurityApplication {
   private readonly _application: Application = Express();
   private readonly _serverPort: number = 8080;
 
-  public defineConfigurations(): SecurityApplication {
+  public defineMiddlewares(): SecurityApplication {
+    this._application.use(urlencoded({ extended: true }))
+    this._application.use(json())
     return this;
   }
 
@@ -23,4 +25,4 @@ export class SecurityApplication {
   }
 }
 
-new SecurityApplication().defineConfigurations().defineRoutes().defineListner()
+new SecurityApplication().defineMiddlewares().defineRoutes().defineListner()
