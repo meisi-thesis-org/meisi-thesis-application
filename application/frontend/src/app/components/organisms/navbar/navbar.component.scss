@@ -1,0 +1,13 @@
+.container {
+  width: 100vw;
+  height: 4rem;
+
+  &--inner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: inherit;
+
+    &.column {}
+  }
+}
