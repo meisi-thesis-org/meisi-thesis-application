@@ -117,6 +117,8 @@ export class UserService {
           throw new InternalServerException();
         }
 
+        updatedUser.refreshToken = refreshToken;
+
         return this._userDTOMapper.apply(updatedUser);
       }
     }

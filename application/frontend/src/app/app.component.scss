@@ -1,0 +1,12 @@
+#container {
+  min-height: inherit;
+  width: inherit;
+
+  &--inner {
+    min-height: inherit;
+    width: inherit;
+
+    display: flex;
+    flex-direction: row;
+  }
+}

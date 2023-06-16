@@ -1,13 +1,21 @@
 .container {
   width: 100vw;
-  height: 4rem;
+  min-height: 4rem;
 
-  &--inner {
+  &__inner {
+    min-height: inherit;
+    width: inherit;
+
+    padding: 0 1.5rem;
+
     display: flex;
     flex-direction: row;
     align-items: center;
-    height: inherit;
+    justify-content: space-between;
 
-    &.column {}
+    &.column {
+      height: auto;
+      width: auto;
+    }
   }
 }
