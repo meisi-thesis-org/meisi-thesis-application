@@ -16,6 +16,10 @@
     &.column {
       height: auto;
       width: auto;
+
+      display: flex;
+      flex-direction: row;
+      gap: 0.5rem;
     }
   }
 }
