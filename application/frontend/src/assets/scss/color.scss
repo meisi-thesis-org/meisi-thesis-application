@@ -3,3 +3,14 @@
   --dark--primary: #343540;
   --yellow-primary: #FF9900;
 }
+
+
+.dark-theme {
+  background-color: var(--dark--primary);
+  color: var(--light--primary)
+}
+
+.light-theme {
+  background-color: var(--light--primary);
+  color: var(--dark--primary)
+}

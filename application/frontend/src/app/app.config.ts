@@ -2,7 +2,15 @@ import { type ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
+import { LocalStorageService } from './core/services/storage/local-storage/local-storage.service';
+import { Storage } from './core/services/storage/storage.abstract';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes)]
+  providers: [
+    provideRouter(routes),
+    {
+      provide: Storage,
+      useClass: LocalStorageService
+    }
+  ]
 };

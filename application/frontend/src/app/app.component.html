@@ -1,4 +1,4 @@
-<div id="container">
+<div id="container" [ngClass]="this.themeService.state$ | async">
   <div id="container--inner">
     <div id="container--inner navbar">
       <app-navbar></app-navbar>

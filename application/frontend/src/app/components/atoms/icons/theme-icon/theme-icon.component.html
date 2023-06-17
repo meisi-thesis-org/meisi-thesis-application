@@ -1,0 +1,5 @@
+<img
+  *ngIf="(this.themeService.state$ | async) as state"
+  [style]="this.getStyles(state)"
+  class="container"
+  src="./../../../../../assets/svg/theme-icon.svg" alt="theme-icon">
