@@ -1,4 +1,5 @@
 export default {
+  resetMocks: false,
   rootDir: './',
   coverageDirectory: '<rootDir>/coverage',
   collectCoverageFrom: [
@@ -15,18 +16,8 @@ export default {
       testMatch: [
         '<rootDir>/application/backend/**/__tests__/**/**/*.spec.ts'
       ],
-      preset: 'ts-jest'
-    },
-    {
-      displayName: '@meisi-thesis/application-frontend',
-      testEnvironment: 'node',
-      transform: { '^.+\\.ts?$': 'jest-preset-angular' },
-      testMatch: [
-        '<rootDir>/application/frontend/src/**/**/*.spec.ts'
-      ],
-      preset: 'jest-preset-angular',
-      setupFilesAfterEnv: ['<rootDir>/application/frontend/setup-jest.ts'],
-      globalSetup: 'jest-preset-angular/global-setup'
+      preset: 'ts-jest',
+      resetMocks: false
     }
   ]
 };
