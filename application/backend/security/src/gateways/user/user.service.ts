@@ -14,6 +14,7 @@ import { type SignUpRequest } from './requests/sign-up.request';
 import { type UserRepository } from './user.repository';
 import { type RandomTokenProvider } from '../../../../shared/src/providers/random-token.provider';
 import { type RefreshAccessCodeRequest } from './requests/refresh-access-code.request';
+import { type MessageProvider } from '../../../../shared/src/providers/message.provider';
 
 export class UserService {
   private readonly _repository: UserRepository = new UserMockRepository();
@@ -22,6 +23,7 @@ export class UserService {
   private readonly _randomStringProvider: RandomStringProvider = SecurityConfiguration.instance.randomStringProvider
   private readonly _randomStringEncoderProvider: RandomStringEncoderProvider = SecurityConfiguration.instance.randomStringEncoderProvider
   private readonly _randomTokenProvider: RandomTokenProvider = SecurityConfiguration.instance.randomTokenProvider
+  private readonly _messageProvider: MessageProvider = SecurityConfiguration.instance.messageProvider
 
   public async fetchUser(userUuid: string): Promise<UserDTO> {
     const user = await this._repository.findOneByUuid(userUuid).catch(() => {
@@ -73,7 +75,11 @@ export class UserService {
       throw new InternalServerException();
     });
 
-    // TODO: Send Email
+    await this._messageProvider
+      .sendEmail(createdUser.email, 'Created Account', `Welcome, your access code is ${generatedPassword}`)
+      .catch(() => {
+        throw new InternalServerException();
+      });
 
     return this._userDTOMapper.apply(createdUser);
   }
@@ -178,7 +184,11 @@ export class UserService {
       throw new InternalServerException();
     }
 
-    // TODO: Send Email
+    await this._messageProvider
+      .sendEmail(updatedUser.email, 'Refresh Access Code', `Hello there, your new access code is ${generatedPassword}`)
+      .catch(() => {
+        throw new InternalServerException();
+      });
 
     return this._userDTOMapper.apply(updatedUser);
   }
