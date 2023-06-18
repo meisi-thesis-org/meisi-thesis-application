@@ -19,4 +19,8 @@ export class AppComponent {
   public get themeService(): ThemeService {
     return this._themeService;
   }
+
+  public updateTheme(): void {
+    this._themeService.updateState();
+  }
 }

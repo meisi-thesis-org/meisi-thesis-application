@@ -35,8 +35,11 @@ export class ThemeService implements OnDestroy {
     return this._state$;
   }
 
-  public updateState(theme: ThemeCollection): void {
+  public updateState(): void {
+    const theme = this.isDarkTheme() ? ThemeCollection.LIGHT_THEME : ThemeCollection.DARK_THEME;
+    console.log(theme);
     this._state.next(theme);
+    this._storage.save(StorageCollection.THEME, theme)
   }
 
   public isDarkTheme(): boolean {

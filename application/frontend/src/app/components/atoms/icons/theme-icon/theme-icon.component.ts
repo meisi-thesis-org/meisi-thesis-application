@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { ThemeService } from '../../../../core/services/theme/theme.service';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ThemeCollection } from '../../../../core/services/theme/theme.collection';
 import { CommonModule } from '@angular/common';
 
@@ -11,17 +10,16 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule]
 })
 export class ThemeIconComponent {
-  public constructor(
-    private readonly _themeService: ThemeService
-  ) {}
+  @Input({ required: true }) public theme: ThemeCollection | undefined;
+  @Output() public onClick: EventEmitter<void> = new EventEmitter<void>();
 
-  public get themeService(): ThemeService {
-    return this._themeService;
+  public getStyles(): Record<string, string> {
+    return {
+      filter: this.theme === ThemeCollection.DARK_THEME ? 'invert(48%) sepia(79%) saturate(2476%) hue-rotate(5deg) brightness(118%) contrast(122%)' : 'none'
+    }
   }
 
-  public getStyles(theme: ThemeCollection): Record<string, string> {
-    return {
-      filter: theme === ThemeCollection.DARK_THEME ? 'invert(48%) sepia(79%) saturate(2476%) hue-rotate(5deg) brightness(118%) contrast(122%)' : 'none'
-    }
+  public click(): void {
+    this.onClick.emit();
   }
 }

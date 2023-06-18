@@ -1,10 +1,15 @@
 <div class="container">
   <div class="container__inner">
     <div class="container__inner column">
-      <app-theme-icon></app-theme-icon>
+      <app-menu-icon></app-menu-icon>
       <app-divider></app-divider>
       <app-brand-typography [content]="'E-Bookler'"></app-brand-typography>
     </div>
-    <div class="container__inner column"></div>
+    <div class="container__inner column">
+      <app-search-icon></app-search-icon>
+      <app-settings-icon></app-settings-icon>
+      <app-divider></app-divider>
+      <app-theme-icon (onClick)="this.themeIconClick()" [theme]="this.theme"></app-theme-icon>
+    </div>
   </div>
 </div>

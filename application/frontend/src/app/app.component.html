@@ -1,7 +1,10 @@
-<div id="container" [ngClass]="this.themeService.state$ | async">
+<div id="container" *ngIf="(this.themeService.state$ | async) as state" [ngClass]="state">
   <div id="container--inner">
     <div id="container--inner navbar">
-      <app-navbar></app-navbar>
+      <app-navbar
+        [theme]="state"
+        (onThemeIconClick)="this.updateTheme()"
+      ></app-navbar>
     </div>
     <router-outlet></router-outlet>
   </div>
