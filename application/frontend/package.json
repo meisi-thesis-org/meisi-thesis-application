@@ -8,10 +8,11 @@
     "dev": "webpack serve"
   },
   "dependencies": {
-    "lit-element": "^3.3.2"
+    "lit": "^2.7.5"
   },
   "devDependencies": {
     "css-loader": "^6.8.1",
+    "lit-scss-loader": "^2.0.1",
     "node-sass": "^9.0.0",
     "sass-loader": "^13.3.2",
     "style-loader": "^3.3.3",

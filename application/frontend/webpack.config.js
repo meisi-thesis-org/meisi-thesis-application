@@ -2,7 +2,7 @@ const path = require('path')
 
 module.exports = {
   mode: 'development',
-  entry: './src/app.component.ts',
+  entry: './src/index.ts',
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
@@ -10,7 +10,7 @@ module.exports = {
   },
   devtool: 'inline-source-map',
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.js', 'css', 'scss']
   },
   module: {
     rules: [
@@ -21,7 +21,13 @@ module.exports = {
       },
       {
         test: /\.s[ac]ss$/i,
-        use: ['style-loader', 'css-loader', 'sass-loader']
+        use: [{
+          loader: 'lit-scss-loader',
+          options: {
+            minify: true
+          }
+        },
+        'style-loader', 'css-loader', 'sass-loader']
       }
     ]
   },
