@@ -1,0 +1,23 @@
+{
+  "name": "@meisi-thesi/application-frontend",
+  "version": "alpha@0.0.1",
+  "author": "Diogo <diogorafaellourencooliveira97@gmail.com>",
+  "license": "MIT",
+  "main": "application.component.ts",
+  "scripts": {
+    "dev": "webpack serve"
+  },
+  "dependencies": {
+    "lit-element": "^3.3.2"
+  },
+  "devDependencies": {
+    "css-loader": "^6.8.1",
+    "node-sass": "^9.0.0",
+    "sass-loader": "^13.3.2",
+    "style-loader": "^3.3.3",
+    "ts-loader": "^9.4.3",
+    "webpack": "^5.87.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  }
+}
