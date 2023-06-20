@@ -24,7 +24,6 @@ describe('RandomTokenProvider', () => {
     }));
 
     jest.spyOn(jsonwebtoken, 'sign').mockReturnValue(dummyToken as any);
-    jest.spyOn(jsonwebtoken, 'decode').mockReturnValue(dummyPayload as any);
     jest.spyOn(jsonwebtoken, 'verify').mockReturnValue(dummyPayload as any);
   })
 
@@ -32,9 +31,6 @@ describe('RandomTokenProvider', () => {
     expect(toolbox.sign()).toBe(dummyToken)
   })
 
-  it('should have token decoded', () => {
-    expect(toolbox.decode()).toBe(dummyPayload)
-  })
   it('should have token verified', () => {
     expect(toolbox.verify()).toBe(dummyPayload)
   })

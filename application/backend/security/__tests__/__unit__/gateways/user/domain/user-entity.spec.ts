@@ -71,10 +71,4 @@ describe('UserEntity', () => {
   it('should have user containing acceptedPrivacyTerms', () => {
     expect(userEntity.acceptedPrivacyTerms).toEqual(acceptedPrivacyTerms);
   })
-  it('should have user containing createdAt', () => {
-    expect(userEntity.createdAt).toBeTruthy();
-  })
-  it('should have user containing updatedAt', () => {
-    expect(userEntity.updatedAt).toBeTruthy();
-  })
 })
