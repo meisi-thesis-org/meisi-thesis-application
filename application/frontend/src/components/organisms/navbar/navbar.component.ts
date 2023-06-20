@@ -5,12 +5,10 @@ import { customElement } from 'lit/decorators.js';
 export class NavbarComponent extends LitElement {
   static override styles?: CSSResultGroup = css`
     .container {
-      min-height: 4rem;
+      box-shadow: 0px 0.5px 1.5px rgba(0, 0, 0, 0.25);
     }
 
     .container--inner {
-      min-height: inherit;
-
       padding: 0.5rem;
 
       display: flex;

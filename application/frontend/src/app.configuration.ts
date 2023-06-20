@@ -1,5 +1,3 @@
-import { ThemeService } from './core/services/theme/theme.service';
-
 export class AppConfiguration {
   private static _instance: AppConfiguration | undefined = undefined;
 
@@ -9,9 +7,5 @@ export class AppConfiguration {
     }
 
     return this._instance;
-  }
-
-  public themeService(): ThemeService {
-    return ThemeService.instance;
   }
 }
