@@ -8,18 +8,9 @@ export class UserLocalRepository extends UserRepository {
     return this._userEntities.find((userEntity) => userEntity.getUuid() === uuid);
   }
 
-  public override async save(data: UserEntity): Promise<void> {
+  public override async save(data: UserEntity): Promise<UserEntity | undefined> {
     this._userEntities.push(data);
-  }
 
-  public override async deleteOneByUuid(uuid: string): Promise<void> {
-    this._userEntities.filter((userEntity) => {
-      if (userEntity.getUuid() === uuid) {
-        userEntity.setDeactivated(false);
-        userEntity.setActivated(false);
-      }
-
-      return userEntity
-    })
+    return await this.fetchOneByUuid(data.getUuid());
   }
 }
