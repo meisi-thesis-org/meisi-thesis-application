@@ -20,20 +20,20 @@ export class UserEntity extends BaseEntity {
   @Column({ type: 'string', name: 'last_name' })
   private readonly lastName: string;
 
-  @Column({ type: 'date', name: 'date_birth' })
-  private readonly dateBirth: Date;
+  @Column({ type: 'string', name: 'date_birth' })
+  private readonly dateBirth: string;
 
   @Column({ type: 'string', name: 'access_code' })
   private readonly accessCode: string;
 
   @Column({ type: 'string', name: 'access_token' })
-  private readonly accessToken: string | null;
+  private accessToken: string | null;
 
   @Column({ type: 'string', name: 'refresh_token' })
-  private readonly refreshToken: string | null;
+  private refreshToken: string | null;
 
-  @Column({ type: 'boolean', name: 'activated' })
-  private activated: boolean;
+  @Column({ type: 'boolean', name: 'blocked' })
+  private blocked: boolean;
 
   @Column({ type: 'boolean', name: 'deactivated' })
   private deactivated: boolean;
@@ -51,7 +51,7 @@ export class UserEntity extends BaseEntity {
     phoneNumber: string,
     firstName: string,
     lastName: string,
-    dateBirth: Date,
+    dateBirth: string,
     accessCode: string
   ) {
     super();
@@ -66,7 +66,7 @@ export class UserEntity extends BaseEntity {
     this.accessCode = accessCode;
     this.accessToken = null;
     this.refreshToken = null;
-    this.activated = false;
+    this.blocked = false;
     this.deactivated = false;
     this.createdAt = null;
     this.updatedAt = null;
@@ -96,7 +96,7 @@ export class UserEntity extends BaseEntity {
     return this.lastName;
   }
 
-  public getDateBirth(): Date {
+  public getDateBirth(): string {
     return this.dateBirth;
   }
 
@@ -108,16 +108,24 @@ export class UserEntity extends BaseEntity {
     return this.accessToken;
   }
 
+  public setAccessToken(value: string): void {
+    this.accessToken = value;
+  }
+
   public getRefreshToken(): string | null {
     return this.refreshToken;
   }
 
-  public getActivated(): boolean {
-    return this.activated;
+  public setRefreshToken(value: string): void {
+    this.refreshToken = value;
   }
 
-  public setActivated(value: boolean): void {
-    this.activated = value;
+  public getBlocked(): boolean {
+    return this.blocked;
+  }
+
+  public setBlocked(value: boolean): void {
+    this.blocked = value;
   }
 
   public getDeactivated(): boolean {

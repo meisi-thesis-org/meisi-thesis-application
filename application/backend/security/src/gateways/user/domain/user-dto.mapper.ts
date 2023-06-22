@@ -14,7 +14,7 @@ export class UserDTOMapper extends Mapper<UserEntity, UserDTO> {
       entity.getDateBirth(),
       entity.getAccessToken(),
       entity.getRefreshToken(),
-      entity.getActivated(),
+      entity.getBlocked(),
       entity.getDeactivated(),
       entity.getCreatedAt(),
       entity.getUpdatedAt()

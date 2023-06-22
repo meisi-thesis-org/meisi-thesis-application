@@ -6,10 +6,10 @@ export class UserDTO {
     private readonly phoneNumber: string,
     private readonly firstName: string,
     private readonly lastName: string,
-    private readonly dateBirth: Date,
+    private readonly dateBirth: string,
     private readonly accessToken: string | null,
     private readonly refreshToken: string | null,
-    private readonly activated: boolean,
+    private readonly blocked: boolean,
     private readonly deactivated: boolean,
     private readonly createdAt: Date | null,
     private readonly updatedAt: Date | null
@@ -39,7 +39,7 @@ export class UserDTO {
     return this.lastName;
   }
 
-  public getDateBirth(): Date {
+  public getDateBirth(): string {
     return this.dateBirth;
   }
 
@@ -51,8 +51,8 @@ export class UserDTO {
     return this.refreshToken;
   }
 
-  public getActivated(): boolean {
-    return this.activated;
+  public getBlocked(): boolean {
+    return this.blocked;
   }
 
   public getDeactivated(): boolean {

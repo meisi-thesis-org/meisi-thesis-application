@@ -5,7 +5,7 @@ export class SignUpRequest {
     private readonly phoneNumber: string,
     private readonly firstName: string,
     private readonly lastName: string,
-    private readonly dateBirth: Date
+    private readonly dateBirth: string
   ) {}
 
   public getUsername(): string {
@@ -28,7 +28,7 @@ export class SignUpRequest {
     return this.lastName;
   }
 
-  public getDateBirth(): Date {
+  public getDateBirth(): string {
     return this.dateBirth;
   }
 }
