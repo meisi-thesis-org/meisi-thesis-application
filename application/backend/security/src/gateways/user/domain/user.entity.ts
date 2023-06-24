@@ -108,7 +108,7 @@ export class UserEntity extends BaseEntity {
     return this.accessToken;
   }
 
-  public setAccessToken(value: string): void {
+  public setAccessToken(value: string | null): void {
     this.accessToken = value;
   }
 
@@ -116,7 +116,7 @@ export class UserEntity extends BaseEntity {
     return this.refreshToken;
   }
 
-  public setRefreshToken(value: string): void {
+  public setRefreshToken(value: string | null): void {
     this.refreshToken = value;
   }
 

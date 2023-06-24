@@ -3,5 +3,5 @@ export enum HttpCodeCollection {
   CREATED = 201,
   INTERNAL_SERVER_ERROR = 500,
   BAD_REQUEST = 400,
-  NOT_FOUND = 404
+  NON_FOUND = 404
 }

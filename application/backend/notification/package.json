@@ -1,0 +1,10 @@
+{
+  "name": "@meisi-thesi/application-backend-notification",
+  "version": "alpha@0.0.1",
+  "author": "Diogo <diogorafaellourencooliveira97@gmail.com>",
+  "license": "MIT",
+  "main": "notification.application.ts",
+  "scripts": {
+    "dev": "nodemon src/notification.application.ts"
+  }
+}

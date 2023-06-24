@@ -3,6 +3,7 @@ import { UserService } from './user.service';
 import { HttpCodeCollection } from './../../../../shared/src/collections/http-code.collection';
 import { SignUpRequest } from './requests/sign-up.request';
 import { SignInRequest } from './requests/sign-in.request';
+import { type AuthenticatedRequest } from './types/authenticated-request.type';
 
 export class UserController {
   private readonly _service: UserService = new UserService();
@@ -30,6 +31,17 @@ export class UserController {
       const signInRequest = new SignInRequest(request.body.accessCode);
 
       const userDTO = await this._service.signIn(signInRequest);
+      return response.status(HttpCodeCollection.OK).json(userDTO);
+    } catch (error: any) {
+      return response.status(error.status).json(error);
+    }
+  }
+
+  public async signOut(request: Request, response: Response): Promise<Response> {
+    try {
+      const authenticatedRequest: AuthenticatedRequest = request as AuthenticatedRequest;
+
+      const userDTO = await this._service.signOut(authenticatedRequest.user.uuid);
       return response.status(HttpCodeCollection.OK).json(userDTO);
     } catch (error: any) {
       return response.status(error.status).json(error);

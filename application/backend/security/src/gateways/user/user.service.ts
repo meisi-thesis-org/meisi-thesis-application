@@ -1,4 +1,3 @@
-import { HttpCodeCollection } from '../../../../shared/src/collections/http-code.collection';
 import { UserDTOMapper } from './domain/user-dto.mapper';
 import { type UserDTO } from './domain/user.dto';
 import { UserEntity } from './domain/user.entity';
@@ -9,6 +8,9 @@ import { UserLocalRepository } from './repositories/user-local.repository';
 import { type SignInRequest } from './requests/sign-in.request';
 import { type SignUpRequest } from './requests/sign-up.request';
 import { type UserRepository } from './user.repository';
+import { NonFoundException } from './../../../../shared/src/exceptions/non-found.exception';
+import { InternalServerErrorException } from './../../../../shared/src/exceptions/internal-server-error.exception';
+import { BadRequestException } from './../../../../shared/src/exceptions/bad-request.exception';
 
 export class UserService {
   private readonly repository: UserRepository = new UserLocalRepository();
@@ -18,16 +20,17 @@ export class UserService {
   private readonly tokenProvider: TokenProvider = new TokenProvider();
 
   public async signUp(signUpRequest: SignUpRequest): Promise<UserDTO> {
-    const foundUser = await this.repository.findUserByAuth(
-      signUpRequest.getUsername(),
-      signUpRequest.getEmail(),
-      signUpRequest.getPhoneNumber()
-    ).catch((error) => {
-      throw { status: HttpCodeCollection.INTERNAL_SERVER_ERROR, ...error }
-    });
+    const foundUser = await this.repository
+      .findUserByAuth(
+        signUpRequest.getUsername(),
+        signUpRequest.getEmail(),
+        signUpRequest.getPhoneNumber()
+      ).catch(() => {
+        throw new InternalServerErrorException();
+      });
 
     if (foundUser !== undefined) {
-      throw { status: HttpCodeCollection.NOT_FOUND }
+      throw new NonFoundException();
     }
 
     const generatedAccessCode = this.generatorProvider.generateRandomString(12);
@@ -35,8 +38,8 @@ export class UserService {
     console.log(generatedAccessCode)
     const encodedAccessCode = await this.encoderProvider
       .hash(generatedAccessCode)
-      .catch((error) => {
-        throw { status: HttpCodeCollection.INTERNAL_SERVER_ERROR, ...error }
+      .catch(() => {
+        throw new InternalServerErrorException();
       });
 
     const userEntity = new UserEntity(
@@ -50,29 +53,30 @@ export class UserService {
       encodedAccessCode
     );
 
-    const createdUser = await this.repository.save(userEntity).catch((error) => {
-      throw { status: HttpCodeCollection.INTERNAL_SERVER_ERROR, error }
-    });
+    const createdUser = await this.repository
+      .save(userEntity)
+      .catch(() => {
+        throw new InternalServerErrorException();
+      });
 
     return this.userDTOMapper.apply(createdUser)
   }
 
   public async signIn(signInRequest: SignInRequest): Promise<UserDTO> {
-    const foundUsers = await this.repository.fetchBulk().catch((error) => {
-      throw { status: HttpCodeCollection.INTERNAL_SERVER_ERROR, ...error }
-    });
-
-    for (const foundUser of foundUsers) {
-      console.log(foundUser)
-      console.log(signInRequest)
-      const decoded = await this.encoderProvider.compare(
-        signInRequest.getAccessCode(),
-        foundUser.getAccessCode()
-      ).catch((error) => {
-        throw { status: HttpCodeCollection.INTERNAL_SERVER_ERROR, ...error }
+    const foundUsers = await this.repository
+      .fetchBulk()
+      .catch(() => {
+        throw new InternalServerErrorException();
       });
 
-      console.log(decoded)
+    for (const foundUser of foundUsers) {
+      const decoded = await this.encoderProvider
+        .compare(
+          signInRequest.getAccessCode(),
+          foundUser.getAccessCode()
+        ).catch(() => {
+          throw new InternalServerErrorException();
+        });
 
       if (decoded) {
         const payload = { username: foundUser.getUsername(), email: foundUser.getEmail() }
@@ -81,20 +85,21 @@ export class UserService {
 
         const encryptedRefreshToken = await this.encoderProvider
           .hash(refreshToken)
-          .catch((error) => {
-            throw { status: HttpCodeCollection.INTERNAL_SERVER_ERROR, ...error }
+          .catch(() => {
+            throw new InternalServerErrorException();
           });
 
-        const updatedUser = await this.repository.updateTokens(
-          foundUser.getUuid(),
-          accessToken,
-          encryptedRefreshToken
-        ).catch((error) => {
-          throw { status: HttpCodeCollection.INTERNAL_SERVER_ERROR, ...error }
-        });
+        const updatedUser = await this.repository
+          .updateTokens(
+            foundUser.getUuid(),
+            accessToken,
+            encryptedRefreshToken
+          ).catch(() => {
+            throw new InternalServerErrorException();
+          });
 
         if (updatedUser === undefined) {
-          throw { status: HttpCodeCollection.NOT_FOUND }
+          throw new NonFoundException();
         }
 
         updatedUser.setRefreshToken(refreshToken);
@@ -103,6 +108,30 @@ export class UserService {
       }
     }
 
-    throw { status: HttpCodeCollection.BAD_REQUEST };
+    throw new BadRequestException();
+  }
+
+  public async signOut(uuid: string): Promise<UserDTO> {
+    const foundUser = await this.repository
+      .fetchOneByUuid(uuid)
+      .catch(() => {
+        throw new InternalServerErrorException();
+      });
+
+    if (foundUser === undefined) {
+      throw new NonFoundException();
+    }
+
+    const updatedUser = await this.repository
+      .updateTokens(uuid, null, null)
+      .catch(() => {
+        throw new InternalServerErrorException();
+      });
+
+    if (updatedUser === undefined) {
+      throw new NonFoundException();
+    }
+
+    return this.userDTOMapper.apply(updatedUser);
   }
 }
