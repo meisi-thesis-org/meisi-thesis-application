@@ -31,7 +31,7 @@ export class UserController {
       const signInRequest = new SignInRequest(request.body.accessCode);
 
       const userDTO = await this._service.signIn(signInRequest);
-      return response.status(HttpCodeCollection.OK).json(userDTO);
+      return response.status(HttpCodeCollection.CREATED).json(userDTO);
     } catch (error: any) {
       return response.status(error.status).json(error);
     }
@@ -42,7 +42,18 @@ export class UserController {
       const authenticatedRequest: AuthenticatedRequest = request as AuthenticatedRequest;
 
       const userDTO = await this._service.signOut(authenticatedRequest.user.uuid);
-      return response.status(HttpCodeCollection.OK).json(userDTO);
+      return response.status(HttpCodeCollection.CREATED).json(userDTO);
+    } catch (error: any) {
+      return response.status(error.status).json(error);
+    }
+  }
+
+  public async refreshToken(request: Request, response: Response): Promise<Response> {
+    try {
+      const authenticatedRequest: AuthenticatedRequest = request as AuthenticatedRequest;
+
+      const userDTO = await this._service.refreshTokens(authenticatedRequest.user.uuid);
+      return response.status(HttpCodeCollection.CREATED).json(userDTO);
     } catch (error: any) {
       return response.status(error.status).json(error);
     }

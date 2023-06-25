@@ -134,4 +134,49 @@ export class UserService {
 
     return this.userDTOMapper.apply(updatedUser);
   }
+
+  public async refreshTokens(uuid: string): Promise<UserDTO> {
+    const foundUser = await this.repository
+      .fetchOneByUuid(uuid)
+      .catch(() => {
+        throw new InternalServerErrorException();
+      });
+
+    if (foundUser === undefined) {
+      throw new NonFoundException();
+    }
+
+    const payload = {
+      username: foundUser.getUsername(),
+      email: foundUser.getEmail()
+    }
+
+    const accessToken = this.tokenProvider
+      .sign(payload, 'accessTokenSecret', '7d');
+    const refreshToken = this.tokenProvider
+      .sign(payload, 'refreshTokenSecret', '7d');
+
+    const encryptedRefreshToken = await this.encoderProvider
+      .hash(refreshToken)
+      .catch(() => {
+        throw new InternalServerErrorException();
+      });
+
+    const updatedUser = await this.repository
+      .updateTokens(
+        foundUser.getUuid(),
+        accessToken,
+        encryptedRefreshToken
+      ).catch(() => {
+        throw new InternalServerErrorException();
+      });
+
+    if (updatedUser === undefined) {
+      throw new NonFoundException();
+    }
+
+    updatedUser.setRefreshToken(refreshToken);
+
+    return this.userDTOMapper.apply(updatedUser);
+  }
 }
