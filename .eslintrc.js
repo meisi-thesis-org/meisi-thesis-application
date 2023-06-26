@@ -12,5 +12,8 @@ module.exports = {
     sourceType: 'module',
     project: 'tsconfig.json'
   },
-  rules: {}
+  rules: {
+    '@typescript-eslint/semi': 'off',
+    '@typescript-eslint/space-before-function-paren': 'off'
+  }
 }
