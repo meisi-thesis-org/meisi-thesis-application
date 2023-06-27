@@ -1,6 +1,0 @@
-export enum HttpCodeCollection {
-  OK = 200,
-  CREATED = 201,
-  INTERNAL_SERVER_EXCEPTION = 500,
-  CONFLICT_EXCEPTION = 409,
-}
