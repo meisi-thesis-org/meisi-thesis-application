@@ -1,3 +1,6 @@
+import { EncoderProvider } from './shared/providers/encoder.provider';
+import { GeneratorProvider } from './shared/providers/generator.provider';
+
 export class SecurityConfiguration {
   private static instance: SecurityConfiguration | null;
 
@@ -7,5 +10,13 @@ export class SecurityConfiguration {
     }
 
     return this.instance;
+  }
+
+  public getGeneratorProvider(): GeneratorProvider {
+    return GeneratorProvider.getInstance();
+  }
+
+  public getEncoderProvider(): EncoderProvider {
+    return EncoderProvider.getInstance();
   }
 }

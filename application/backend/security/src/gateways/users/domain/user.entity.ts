@@ -27,10 +27,10 @@ export class UserEntity {
   private readonly accessCode: string;
 
   @Column({ name: 'access_token', nullable: true })
-  private readonly accessToken: string | null;
+  private accessToken: string | null;
 
   @Column({ name: 'refresh_token', nullable: true })
-  private readonly refreshToken: string | null;
+  private refreshToken: string | null;
 
   @Column({ name: 'blocked' })
   private readonly blocked: boolean;
@@ -117,8 +117,16 @@ export class UserEntity {
     return this.accessToken;
   }
 
+  public setAccessToken(value: string | null): void {
+    this.accessToken = value;
+  }
+
   public getRefreshToken(): string | null {
     return this.refreshToken;
+  }
+
+  public setRefreshToken(value: string | null): void {
+    this.refreshToken = value;
   }
 
   public getBlocked(): boolean {
