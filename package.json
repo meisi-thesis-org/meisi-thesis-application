@@ -5,6 +5,10 @@
   "author": "Diogo <diogorafaellourencooliveira97@gmail.com>",
   "license": "MIT",
   "private": "true",
+  "workspaces": [
+    "@meisi-thesis/application-backend-security",
+    "@meisi-thesis/application-frontend"
+  ],
   "devDependencies": {
     "@types/jest": "^29.5.2",
     "@typescript-eslint/eslint-plugin": "^5.50.0",
