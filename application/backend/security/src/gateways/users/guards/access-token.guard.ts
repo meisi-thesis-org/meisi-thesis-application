@@ -23,7 +23,7 @@ export const AccessTokenGuard = (
     const verifiedToken = SecurityConfiguration
       .getInstance()
       .getTokenProvider()
-      .verifyToken(token, 'devSecret');
+      .verifyToken(token, process.env.JWT_ACCESS_TOKEN_SECRET);
 
     (request as any).user = verifiedToken;
     (request as any).token = token;

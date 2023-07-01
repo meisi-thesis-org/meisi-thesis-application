@@ -4,6 +4,7 @@ import { InternalServerException } from '../../shared/exceptions/internal-server
 import { NonFoundException } from '../../shared/exceptions/non-found.exception';
 import { type EncoderProvider } from '../../shared/providers/encoder.provider';
 import { type GeneratorProvider } from '../../shared/providers/generator.provider';
+import { type NodemailerProvider } from '../../shared/providers/nodemailer.provider';
 import { type TokenProvider } from '../../shared/providers/token.provider';
 import { UserDTOMapper } from './domain/user-dto.mapper';
 import { type UserDTO } from './domain/user.dto';
@@ -21,6 +22,7 @@ export class UserService {
   private readonly generatorProvider: GeneratorProvider = SecurityConfiguration.getInstance().getGeneratorProvider();
   private readonly encoderProvider: EncoderProvider = SecurityConfiguration.getInstance().getEncoderProvider();
   private readonly tokenProvider: TokenProvider = SecurityConfiguration.getInstance().getTokenProvider();
+  private readonly nodemailerProvider: NodemailerProvider = SecurityConfiguration.getInstance().getNodemailerProvider();
 
   public async signUp(signUpRequest: SignUpRequest): Promise<UserDTO> {
     const foundByAuthUser = await this.repository
@@ -62,11 +64,19 @@ export class UserService {
         throw new InternalServerException()
       });
 
-    // TODO: Send Email
-
     if (savedUser === null || savedUser === undefined) {
       throw new NonFoundException()
     }
+
+    await this.nodemailerProvider
+      .sendEmail(
+        savedUser.getEmail(),
+        'E-Bookler | Created Account',
+        accessCode
+      )
+      .catch(() => {
+        throw new InternalServerException()
+      });
 
     return this.userDTOMapper.apply(savedUser);
   }
@@ -94,8 +104,8 @@ export class UserService {
           email: userEntity.getEmail()
         }
 
-        const accessToken = this.tokenProvider.createToken(payload, 'devSecret', '1h');
-        const refreshToken = this.tokenProvider.createToken(payload, 'devSecret', '1d');
+        const accessToken = this.tokenProvider.createToken(payload, process.env.JWT_ACCESS_TOKEN_SECRET, '1h');
+        const refreshToken = this.tokenProvider.createToken(payload, process.env.JWT_REFRESH_TOKEN_SECRET, '1d');
 
         const [
           encodedAccessToken,
@@ -179,11 +189,19 @@ export class UserService {
         throw new InternalServerException()
       });
 
-    // TODO: SendEmail
-
     if (savedUser === null || savedUser === undefined) {
       throw new NonFoundException()
     }
+
+    await this.nodemailerProvider
+      .sendEmail(
+        savedUser.getEmail(),
+        'E-Bookler | Refreshed AccessCode',
+        accessCode
+      )
+      .catch(() => {
+        throw new InternalServerException()
+      });
 
     return this.userDTOMapper.apply(savedUser);
   }

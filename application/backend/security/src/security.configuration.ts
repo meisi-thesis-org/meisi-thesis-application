@@ -1,9 +1,10 @@
 import { EncoderProvider } from './shared/providers/encoder.provider';
 import { GeneratorProvider } from './shared/providers/generator.provider';
+import { NodemailerProvider } from './shared/providers/nodemailer.provider';
 import { TokenProvider } from './shared/providers/token.provider';
 
 export class SecurityConfiguration {
-  private static instance: SecurityConfiguration | null;
+  private static instance: SecurityConfiguration | null = null;
 
   public static getInstance(): SecurityConfiguration {
     if (this.instance === null) {
@@ -23,5 +24,9 @@ export class SecurityConfiguration {
 
   public getTokenProvider(): TokenProvider {
     return TokenProvider.getInstance();
+  }
+
+  public getNodemailerProvider(): NodemailerProvider {
+    return NodemailerProvider.getInstance();
   }
 }

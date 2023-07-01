@@ -8,7 +8,9 @@ export class UserMockRepository extends UserRepository {
     return this.userEntityCollection;
   }
 
-  public override async save(entity: UserEntity): Promise<UserEntity | null | undefined> {
+  public override async save(
+    entity: UserEntity
+  ): Promise<UserEntity | null | undefined> {
     this.userEntityCollection.push(entity);
 
     return this.userEntityCollection.find((userEntity) => userEntity.getUuid() === entity.getUuid());

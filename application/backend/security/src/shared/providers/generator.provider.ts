@@ -1,7 +1,7 @@
 import * as randomstring from 'randomstring';
 
 export class GeneratorProvider {
-  private static instance: GeneratorProvider | null;
+  private static instance: GeneratorProvider | null = null;
 
   public static getInstance(): GeneratorProvider {
     if (this.instance === null) {

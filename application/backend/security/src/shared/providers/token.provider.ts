@@ -15,13 +15,16 @@ export class TokenProvider {
 
   public createToken(
     payload: string | object | Buffer,
-    tokenSecret: string,
+    tokenSecret: string = 'dummySecret',
     expiresIn: string
   ): string {
     return jsonwebtoken.sign(payload, tokenSecret, { expiresIn });
   }
 
-  public verifyToken(token: string, tokenSecret: string): string | jsonwebtoken.JwtPayload {
+  public verifyToken(
+    token: string,
+    tokenSecret: string = 'dummySecret'
+  ): string | jsonwebtoken.JwtPayload {
     return jsonwebtoken.verify(token, tokenSecret);
   }
 }

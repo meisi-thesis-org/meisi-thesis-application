@@ -5,7 +5,6 @@ import { SignUpRequest } from './requests/sign-up.request';
 import { SignInRequest } from './requests/sign-in.request';
 import { type AuthenticatedRequest } from './types/authenticated-request.type';
 import { RefreshAccessCodeRequest } from './requests/refresh-access-code.request';
-import { ConflictException } from '../../shared/exceptions/conflict.exception';
 
 export class UserController {
   private readonly service: UserService = new UserService();
@@ -25,11 +24,7 @@ export class UserController {
 
       return response.status(HttpCodeCollection.CREATED).json(userDTO);
     } catch (exception: any) {
-      if (exception instanceof ConflictException) {
-        return response.status(HttpCodeCollection.CONFLICT);
-      }
-
-      return response.status(HttpCodeCollection.INTERNAL_SERVER_ERROR);
+      return response.status(exception.httpCode).json();
     }
   }
 
@@ -42,8 +37,8 @@ export class UserController {
       const userDTO = await this.service.signIn(signInRequest);
 
       return response.status(HttpCodeCollection.CREATED).json(userDTO);
-    } catch (error) {
-      return response.status(HttpCodeCollection.INTERNAL_SERVER_ERROR);
+    } catch (exception: any) {
+      return response.status(exception.httpCode).json();
     }
   }
 
@@ -54,8 +49,8 @@ export class UserController {
       const userDTO = await this.service.signOut(userUuid);
 
       return response.status(HttpCodeCollection.CREATED).json(userDTO);
-    } catch (error) {
-      return response.status(HttpCodeCollection.INTERNAL_SERVER_ERROR);
+    } catch (exception: any) {
+      return response.status(exception.httpCode).json();
     }
   }
 
@@ -70,8 +65,8 @@ export class UserController {
       const userDTO = await this.service.refreshAccessCode(refreshAccessCode);
 
       return response.status(HttpCodeCollection.CREATED).json(userDTO);
-    } catch (error) {
-      return response.status(HttpCodeCollection.INTERNAL_SERVER_ERROR);
+    } catch (exception: any) {
+      return response.status(exception.httpCode).json();
     }
   }
 
@@ -82,8 +77,8 @@ export class UserController {
       const userDTO = await this.service.refreshTokens(userUuid);
 
       return response.status(HttpCodeCollection.CREATED).json(userDTO);
-    } catch (error) {
-      return response.status(HttpCodeCollection.INTERNAL_SERVER_ERROR);
+    } catch (exception: any) {
+      return response.status(exception.httpCode).json();
     }
   }
 }

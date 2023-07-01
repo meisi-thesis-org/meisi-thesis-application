@@ -23,7 +23,7 @@ export const RefreshTokenGuard = (
     const verifiedToken = SecurityConfiguration
       .getInstance()
       .getTokenProvider()
-      .verifyToken(token, 'devSecret');
+      .verifyToken(token, process.env.JWT_REFRESH_TOKEN_SECRET);
 
     (request as any).user = verifiedToken;
     (request as any).token = token;

@@ -2,7 +2,7 @@ import { type Request, type Response, type NextFunction } from 'express';
 import { type AnyZodObject } from 'zod';
 import { HttpCodeCollection } from '../collections/http-code.collection';
 
-export const validate = (schema: AnyZodObject) =>
+export const SchemaValidatorMiddleware = (schema: AnyZodObject) =>
   async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     try {
       await schema.parseAsync({
