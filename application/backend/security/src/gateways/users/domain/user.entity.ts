@@ -24,7 +24,7 @@ export class UserEntity {
   private readonly dateBirth: Date;
 
   @Column({ name: 'access_code', nullable: false })
-  private readonly accessCode: string;
+  private accessCode: string;
 
   @Column({ name: 'access_token', nullable: true })
   private accessToken: string | null;
@@ -111,6 +111,10 @@ export class UserEntity {
 
   public getAccessCode(): string {
     return this.accessCode;
+  }
+
+  public setAccessCode(value: string): void {
+    this.accessCode = value;
   }
 
   public getAccessToken(): string | null {

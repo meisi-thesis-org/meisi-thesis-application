@@ -4,11 +4,21 @@ import { UserRepository } from '../user.repository';
 export class UserMockRepository extends UserRepository {
   private readonly userEntityCollection = new Array<UserEntity>();
 
-  public override findByAuth(
-    username: string,
-    email: string,
-    phoneNumber: string
-  ): UserEntity | null | undefined {
+  public override async findBulk(): Promise<UserEntity[]> {
+    return this.userEntityCollection;
+  }
+
+  public override async save(entity: UserEntity): Promise<UserEntity | null | undefined> {
+    this.userEntityCollection.push(entity);
+
+    return this.userEntityCollection.find((userEntity) => userEntity.getUuid() === entity.getUuid());
+  }
+
+  public override async findByAuth(
+    username: string | null,
+    email: string | null,
+    phoneNumber: string | null
+  ): Promise<UserEntity | null | undefined> {
     return this.userEntityCollection.find((userEntity) => {
       if (
         userEntity.getUsername() === username ||
@@ -20,5 +30,39 @@ export class UserMockRepository extends UserRepository {
 
       return undefined;
     })
+  }
+
+  public override async updateTokens(
+    uuid: string,
+    encodedAccessToken: string | null,
+    encodedRefreshToken: string | null
+  ): Promise<UserEntity | null | undefined> {
+    return this.userEntityCollection.find((userEntity) => {
+      if (userEntity.getUuid() === uuid) {
+        userEntity.setAccessToken(encodedAccessToken);
+        userEntity.setAccessToken(encodedRefreshToken);
+      }
+
+      return undefined;
+    });
+  }
+
+  public override async updateAccessCode(
+    uuid: string,
+    encodedAccessCode: string
+  ): Promise<UserEntity | null | undefined> {
+    return this.userEntityCollection.find((userEntity) => {
+      if (userEntity.getUuid() === uuid) {
+        userEntity.setAccessCode(encodedAccessCode);
+      }
+
+      return undefined;
+    });
+  }
+
+  public override async findByUuid(
+    uuid: string
+  ): Promise<UserEntity | null | undefined> {
+    return this.userEntityCollection.find((userEntity) => userEntity.getUuid() === uuid);
   }
 }

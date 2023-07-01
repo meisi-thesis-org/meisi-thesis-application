@@ -1,15 +1,22 @@
-import { Repository } from 'typeorm';
+import { Repository } from '../../shared/abstracts/repository';
 import { type UserEntity } from './domain/user.entity';
 
 export abstract class UserRepository extends Repository<UserEntity> {
   public abstract findByAuth(
-    username: string,
-    email: string,
-    phoneNumber: string
-  ): Promise<UserEntity | undefined | null>;
+    username: string | null,
+    email: string | null,
+    phoneNumber: string | null
+  ): Promise<UserEntity | null | undefined>;
   public abstract updateTokens(
     uuid: string,
-    encodedAccessCode: string,
-    encodedRefreshCode: string
-  ): Promise<UserEntity | undefined | null>;
+    encodedAccessToken: string | null,
+    encodedRefreshToken: string | null
+  ): Promise<UserEntity | null | undefined>;
+  public abstract updateAccessCode(
+    uuid: string,
+    encodedAccessCode: string | null,
+  ): Promise<UserEntity | null | undefined>;
+  public abstract findByUuid(
+    uuid: string
+  ): Promise<UserEntity | null | undefined>;
 }
