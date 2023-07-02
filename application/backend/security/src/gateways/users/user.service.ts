@@ -24,6 +24,20 @@ export class UserService {
   private readonly tokenProvider: TokenProvider = SecurityConfiguration.getInstance().getTokenProvider();
   private readonly nodemailerProvider: NodemailerProvider = SecurityConfiguration.getInstance().getNodemailerProvider();
 
+  public async fetchUser(uuid: string): Promise<UserDTO> {
+    const foundUser = await this.repository
+      .findByUuid(uuid)
+      .catch(() => {
+        throw new InternalServerException()
+      });
+
+    if (foundUser === undefined || foundUser === null) {
+      throw new NonFoundException();
+    }
+
+    return this.userDTOMapper.apply(foundUser)
+  }
+
   public async signUp(signUpRequest: SignUpRequest): Promise<UserDTO> {
     const foundByAuthUser = await this.repository
       .findByAuth(

@@ -17,6 +17,13 @@ export class UserGateway extends Gateway<Router> {
   }
 
   public override subscribe(): Router {
+    this.router.get(
+      UserGatewayCollection.BASE,
+      AccessTokenGuard,
+      async (request: Request, response: Response) => {
+        void this.controller.fetchUser(request, response);
+      });
+
     this.router.post(
       UserGatewayCollection.SIGN_UP,
       SchemaValidatorMiddleware(SignUpSchema),

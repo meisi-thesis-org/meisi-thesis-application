@@ -9,6 +9,18 @@ import { RefreshAccessCodeRequest } from './requests/refresh-access-code.request
 export class UserController {
   private readonly service: UserService = new UserService();
 
+  public async fetchUser(request: Request, response: Response): Promise<Response> {
+    try {
+      const userUuid = (request as AuthenticatedRequest).user.uuid;
+
+      const userDTO = await this.service.fetchUser(userUuid);
+
+      return response.status(HttpCodeCollection.OK).json(userDTO);
+    } catch (exception: any) {
+      return response.status(exception.httpCode).json();
+    }
+  }
+
   public async signUp(request: Request, response: Response): Promise<Response> {
     try {
       const signUpRequest = new SignUpRequest(
