@@ -16,6 +16,14 @@ export abstract class UserRepository extends Repository<UserEntity> {
     uuid: string,
     encodedAccessCode: string | null,
   ): Promise<UserEntity | null | undefined>;
+  public abstract updateBlocked(
+    uuid: string,
+    blocked: boolean,
+  ): Promise<UserEntity | null | undefined>;
+  public abstract updateDeactivated(
+    uuid: string,
+    deactivated: boolean,
+  ): Promise<UserEntity | null | undefined>;
   public abstract findByUuid(
     uuid: string
   ): Promise<UserEntity | null | undefined>;

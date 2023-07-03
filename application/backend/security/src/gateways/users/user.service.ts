@@ -266,4 +266,72 @@ export class UserService {
 
     return this.userDTOMapper.apply(updatedUser);
   }
+
+  public async blocked(uuid: string): Promise<UserDTO> {
+    const foundUser = await this.repository
+      .findByUuid(uuid)
+      .catch(() => {
+        throw new InternalServerException()
+      });
+
+    if (foundUser === undefined || foundUser === null) {
+      throw new NonFoundException();
+    }
+
+    const savedUser = await this.repository
+      .updateBlocked(uuid, !foundUser.getBlocked())
+      .catch(() => {
+        throw new InternalServerException()
+      });
+
+    if (savedUser === undefined || savedUser === null) {
+      throw new NonFoundException();
+    }
+
+    await this.nodemailerProvider
+      .sendEmail(
+        savedUser.getEmail(),
+        `E-Bookler | ${savedUser.getBlocked() ? 'Blocked' : 'Unblocked'} Account`,
+        `Hello. Your account is now ${savedUser.getBlocked() ? 'Blocked' : 'Unblocked'}.`
+      )
+      .catch(() => {
+        throw new InternalServerException()
+      });
+
+    return this.userDTOMapper.apply(savedUser);
+  }
+
+  public async deactivated(uuid: string): Promise<UserDTO> {
+    const foundUser = await this.repository
+      .findByUuid(uuid)
+      .catch(() => {
+        throw new InternalServerException()
+      });
+
+    if (foundUser === undefined || foundUser === null) {
+      throw new NonFoundException();
+    }
+
+    const savedUser = await this.repository
+      .updateDeactivated(uuid, !foundUser.getDeactivated())
+      .catch(() => {
+        throw new InternalServerException()
+      });
+
+    if (savedUser === undefined || savedUser === null) {
+      throw new NonFoundException();
+    }
+
+    await this.nodemailerProvider
+      .sendEmail(
+        savedUser.getEmail(),
+        `E-Bookler | ${savedUser.getDeactivated() ? 'Deactivated' : 'Activated'} Account`,
+        `Hello. Your account is now ${savedUser.getDeactivated() ? 'Deactivated' : 'Activated'}.`
+      )
+      .catch(() => {
+        throw new InternalServerException()
+      });
+
+    return this.userDTOMapper.apply(savedUser);
+  }
 }

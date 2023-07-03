@@ -93,4 +93,16 @@ export class UserController {
       return response.status(exception.httpCode).json();
     }
   }
+
+  public async blocked(request: Request, response: Response): Promise<Response> {
+    try {
+      const userUuid = (request as AuthenticatedRequest).user.uuid;
+
+      const userDTO = await this.service.blocked(userUuid);
+
+      return response.status(HttpCodeCollection.CREATED).json(userDTO);
+    } catch (exception: any) {
+      return response.status(exception.httpCode).json();
+    }
+  }
 }

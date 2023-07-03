@@ -33,10 +33,10 @@ export class UserEntity {
   private refreshToken: string | null;
 
   @Column({ name: 'blocked' })
-  private readonly blocked: boolean;
+  private blocked: boolean;
 
   @Column({ name: 'deactivate' })
-  private readonly deactivated: boolean;
+  private deactivated: boolean;
 
   @Column({ name: 'accepted_privacy_terms' })
   private readonly acceptedPrivacyTerms: boolean;
@@ -137,8 +137,16 @@ export class UserEntity {
     return this.blocked;
   }
 
+  public setBlocked(value: boolean): void {
+    this.blocked = value;
+  }
+
   public getDeactivated(): boolean {
     return this.deactivated;
+  }
+
+  public setDeactivated(value: boolean): void {
+    this.deactivated = value;
   }
 
   public getAcceptedPrivacyTerms(): boolean {

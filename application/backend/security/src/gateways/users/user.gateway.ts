@@ -59,6 +59,20 @@ export class UserGateway extends Gateway<Router> {
         void this.controller.refreshTokens(request, response);
       });
 
+    this.router.put(
+      UserGatewayCollection.BLOCK,
+      AccessTokenGuard,
+      (request: Request, response: Response) => {
+        void this.controller.blocked(request, response);
+      });
+
+    this.router.put(
+      UserGatewayCollection.DEACTIVE,
+      AccessTokenGuard,
+      (request: Request, response: Response) => {
+        void this.controller.blocked(request, response);
+      });
+
     return this.router;
   }
 }
