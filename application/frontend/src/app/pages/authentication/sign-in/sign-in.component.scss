@@ -1,0 +1,15 @@
+.container {
+  height: 90vh;
+  width: 100vw;
+
+  &__inner {
+    height: inherit;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 0.5rem;
+  }
+}

@@ -1,0 +1,13 @@
+<form class="container">
+  <div class="container__inner">
+    <div *ngFor="let formField of this.formFields" class="container__inner__form-field">
+    </div>
+    <div *ngFor="let formAction of this.formActions" class="container__inner__form-action">
+      <a [type]="formAction.type" [ariaPlaceholder]="formAction.placeholder"></a>
+      <app-divider [width]="'100%'" [height]="'0.025rem'"></app-divider>
+      <div *ngIf="formAction.type === 'link'" class="container__inner__form-action__link">
+        <a [type]="formAction.type" [ariaPlaceholder]="formAction.placeholder"></a>
+      </div>
+    </div>
+  </div>
+</form>
