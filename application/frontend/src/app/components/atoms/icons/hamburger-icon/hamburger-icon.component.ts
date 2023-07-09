@@ -8,6 +8,4 @@ import { CommonModule } from '@angular/common';
   templateUrl: './hamburger-icon.component.html',
   styleUrls: ['./hamburger-icon.component.scss']
 })
-export class HamburgerIconComponent {
-
-}
+export class HamburgerIconComponent {}

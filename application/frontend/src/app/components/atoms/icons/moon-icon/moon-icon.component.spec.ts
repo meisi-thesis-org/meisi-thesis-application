@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ThemeIconComponent } from './theme-icon.component';
+import { MoonIconComponent } from './moon-icon.component';
 
-describe('ThemeIconComponent', () => {
-  let component: ThemeIconComponent;
-  let fixture: ComponentFixture<ThemeIconComponent>;
+describe('MoonIconComponent', () => {
+  let component: MoonIconComponent;
+  let fixture: ComponentFixture<MoonIconComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ThemeIconComponent]
+      imports: [MoonIconComponent]
     });
-    fixture = TestBed.createComponent(ThemeIconComponent);
+    fixture = TestBed.createComponent(MoonIconComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

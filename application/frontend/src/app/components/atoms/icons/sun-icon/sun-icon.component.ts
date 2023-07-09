@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-theme-icon',
+  selector: 'app-sun-icon',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './theme-icon.component.html',
-  styleUrls: ['./theme-icon.component.scss']
+  templateUrl: './sun-icon.component.html',
+  styleUrls: ['./sun-icon.component.scss']
 })
-export class ThemeIconComponent {
+export class SunIconComponent {
 
 }
