@@ -1,9 +1,9 @@
 import { type Routes } from '@angular/router';
-import { SignInComponent } from './pages/authentication/sign-in/sign-in.component';
+import { LandingComponent } from './pages/landing/landing.component';
 
 export const routes: Routes = [
   {
-    path: 'sign-in',
-    component: SignInComponent
+    path: '',
+    component: LandingComponent
   }
 ];
