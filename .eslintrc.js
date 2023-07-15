@@ -16,6 +16,7 @@ module.exports = {
     '@typescript-eslint/semi': 'off',
     '@typescript-eslint/space-before-function-paren': 'off',
     '@typescript-eslint/no-throw-literal': 'off',
-    '@typescript-eslint/no-misused-promises': 'off'
+    '@typescript-eslint/no-misused-promises': 'off',
+    '@typescript-eslint/consistent-type-definitions': 'off'
   }
 }
