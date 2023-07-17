@@ -19,12 +19,12 @@
           :background-color="'var(--dark--secondary--color)'" 
         />
         <SunIconComponent 
-          @click="themeService.updateTheme()" 
-          v-show="themeService.isLightTheme()"
+          @click="themeStore.updateTheme" 
+          v-show="themeRefs.isLightTheme.value"
         />
         <MoonIconComponent 
-          @click="themeService.updateTheme()"  
-          v-show="themeService.isDarkTheme()"
+          @click="themeStore.updateTheme"  
+          v-show="themeRefs.isDarkTheme.value"
         />
       </div>
     </div>
@@ -32,23 +32,23 @@
 </template>
 
 <script setup lang="ts">
-  import SpanTypographyComponent from "@/components/atoms/typographies/span-typography/span-typography.component.vue"
+  import SpanTypographyComponent from "@/components/atoms/typography/span-typography/span-typography.component.vue"
   import DividerComponent from "@/components/atoms/divider/divider.component.vue";
   import MenuIconComponent from "@/components/atoms/icons/menu-icon/menu-icon.component.vue"
   import SearchIconComponent from "@/components/atoms/icons/search-icon/search-icon.component.vue"
   import SettingIconComponent from "@/components/atoms/icons/setting-icon/setting-icon.component.vue"
   import SunIconComponent from "@/components/atoms/icons/sun-icon/sun-icon.component.vue"
   import MoonIconComponent from "@/components/atoms/icons/moon-icon/moon-icon.component.vue"
-  import { inject } from "vue";
-  import { ThemeService } from '@/core/services/theme/theme.service';
-  import { LocalStorageService } from "@/core/services/storage/local-storage/local-storage.service";
-  
-  const themeService = inject('ThemeService', () => new ThemeService(new LocalStorageService()), true)
+  import { useThemeStore } from "@/stores/use-theme.store";
+  import { storeToRefs } from "pinia";
+
+  const themeStore = useThemeStore()
+  const themeRefs = storeToRefs(themeStore)
 </script>
 
 <style scoped lang="scss">
   .navbar {
-    height: 4rem;
+    height: 10vh;
     width: 100vw;
 
     box-shadow: 0 0 0.25rem 0.025rem var(--dark--secondary--color);

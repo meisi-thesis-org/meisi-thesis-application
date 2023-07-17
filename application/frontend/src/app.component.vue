@@ -1,16 +1,18 @@
 <template>
-  <div class="wrapper" :class="[themeService.fetchStoredTheme()]">
+  <div class="wrapper" :class="[themeRefs.theme.value]">
     <NavbarComponent />
+    <LandingComponent />
   </div>
 </template>
 
 <script setup lang="ts">
-  import { inject, ref } from "vue";
   import NavbarComponent from "@/components/organisms/navbar/navbar.component.vue";
-  import { LocalStorageService } from "@/core/services/storage/local-storage/local-storage.service";
-  import { ThemeService } from "@/core/services/theme/theme.service";
-
-  const themeService = inject('ThemeService', () => new ThemeService(new LocalStorageService()), true);
+  import LandingComponent from "./pages/landing/landing.component.vue";
+  import { useThemeStore } from "./stores/use-theme.store";
+  import { storeToRefs } from "pinia";
+  
+  const themeStore = useThemeStore()
+  const themeRefs = storeToRefs(themeStore)
 </script>
 
 <style lang="scss">
