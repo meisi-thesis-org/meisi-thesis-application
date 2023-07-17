@@ -1,19 +1,10 @@
 <template>
-  <div class="wrapper" :class="[themeRefs.theme.value]">
-    <NavbarComponent />
-    <LandingComponent />
+  <div class="wrapper">
+    <router-view></router-view>
   </div>
 </template>
 
-<script setup lang="ts">
-  import NavbarComponent from "@/components/organisms/navbar/navbar.component.vue";
-  import LandingComponent from "./pages/landing/landing.component.vue";
-  import { useThemeStore } from "./stores/use-theme.store";
-  import { storeToRefs } from "pinia";
-  
-  const themeStore = useThemeStore()
-  const themeRefs = storeToRefs(themeStore)
-</script>
+<script setup lang="ts"></script>
 
 <style lang="scss">
   @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
