@@ -1,0 +1,9 @@
+#darkTheme {
+  background-color: var(--dark--primary--color);
+  color: var(--light--primary--color);
+}
+
+#lightTheme {
+  background-color: var(--light--primary--color);
+  color: var(--dark--primary--color);
+}
