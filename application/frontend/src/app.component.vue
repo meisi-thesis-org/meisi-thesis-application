@@ -1,10 +1,15 @@
 <template>
   <div class="wrapper">
-    <router-view></router-view>
+    <div class="wrapper__inner">
+      <NavbarComponent />
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import NavbarComponent from "@/components/organisms/navbar/navbar.component.vue";
+</script>
 
 <style lang="scss">
   @import "./assets/scss/$colors.scss";
@@ -15,7 +20,12 @@
     min-height: inherit;
     width: inherit;
 
-    display: flex;
-    flex-direction: column;
+    &__inner {
+      min-height: inherit;
+      width: inherit;
+
+      display: flex;
+      flex-direction: column;
+    }
   }
 </style>
