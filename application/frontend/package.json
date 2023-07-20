@@ -9,7 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "lit": "^2.7.5"
+    "lit": "^2.7.5",
+    "sass": "^1.63.6"
   },
   "devDependencies": {
     "typescript": "^5.0.2",
