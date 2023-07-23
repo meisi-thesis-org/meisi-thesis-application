@@ -1,0 +1,8 @@
+:root {
+  /** DarkColors */
+  --dark--primary--color: #111827;
+  --dark--secondary--color: #0d121b;
+
+  /** LightColors */
+  --light--primary--color: #fafafa;
+}
