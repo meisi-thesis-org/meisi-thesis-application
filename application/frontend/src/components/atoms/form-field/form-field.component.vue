@@ -16,7 +16,10 @@
     box-shadow: 0 0 0.50rem 0.25rem var(--dark--secondary);
     background-color: transparent;
     color: inherit;
-    padding: 1rem;
+    padding: 1.5rem;
     outline: none;
+
+    font-family: inherit;
+    font-weight: bolder;
   }
 </style>
