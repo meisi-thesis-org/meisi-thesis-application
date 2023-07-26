@@ -1,7 +1,8 @@
 <template>
   <div class="form-group">
     <LabelTypographyComponent 
-     :typography="props.name" 
+      v-show="props.name"
+      :typography="props.name" 
     />
     <FormFieldComponent
       :type="props.type"

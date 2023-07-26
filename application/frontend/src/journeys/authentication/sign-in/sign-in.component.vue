@@ -2,7 +2,7 @@
   <div class="container">
     <div class="container__inner">
       <FormComponent
-        :greeting="'Welcome back to E-Bookler!'"
+        :greeting="'Welcome to E-Bookler!'"
         :formGroups="formGroups"
       />
     </div>
@@ -13,8 +13,10 @@
   import FormComponent from '@/components/organisms/form/form.component.vue';
 
   const formGroups = new Array(
-    { name: "Access Code", type: "text", placeholder: "Your digital E-Bookler Access Code" }
+    { type: "password", placeholder: "Your digital E-Bookler Access Code" }
   );
+
+  function onContinue(): void {}
 </script>
 
 <style scoped lang="scss">

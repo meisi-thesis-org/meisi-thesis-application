@@ -10,6 +10,10 @@
       :type="formGroup.type"
       :placeholder="formGroup.placeholder"
     />
+    <div class="form__actions">
+      <div class="form__actions__button"></div>
+      <div class="form__actions__link"></div>
+    </div>
   </form>
 </template>
 
@@ -19,7 +23,7 @@
 
   const props = defineProps({
     greeting: String,
-    formGroups: Array<{ name: string, type: string, placeholder: string}>
+    formGroups: Array<{ name?: string, type: string, placeholder: string}>
   })
 </script>
 
@@ -30,7 +34,6 @@
     justify-content: center;
     align-items: center;
     gap: 2.5rem;
-
     width: 80%;
     max-width: 520px;
   }
