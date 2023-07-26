@@ -10,6 +10,8 @@
 
 <style scoped lang="scss">
   .typography {
-    font-size: clamp(0.70rem, 0.70rem + 0.5rem, 1.70rem);
+    font-size: clamp(0.70rem, 0.70rem + 0.5vw, 1.70rem);
+    color: inherit;
+    font-family: inherit;
   }
 </style>
