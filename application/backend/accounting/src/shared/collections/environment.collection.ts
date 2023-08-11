@@ -1,1 +1,3 @@
-export type EnvironmentCollection = 'SERVER_PORT';
+export const EnvironmentCollection = {
+  SERVER_PORT: 'SERVER_PORT'
+} as const;

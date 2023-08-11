@@ -1,6 +1,6 @@
 import Express, { type Application } from 'express';
 import { EnvironmentProvider } from './shared/providers/environment.provider';
-import { SecurityRouter } from './security.router';
+import { SecurityGateway } from './security.gateway';
 
 export class SecurityApplication {
   private readonly application: Application;
@@ -12,7 +12,7 @@ export class SecurityApplication {
   }
 
   public defineRoutes(): void {
-    this.application.use('*', new SecurityRouter().subscribeRouter())
+    this.application.use('/security', new SecurityGateway().subscribeRouter())
   }
 
   public initializeListner(): void {
