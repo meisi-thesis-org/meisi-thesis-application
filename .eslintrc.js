@@ -13,6 +13,7 @@ module.exports = {
   },
   rules: {
     semi: 'off',
-    '@typescript-eslint/semi': 'off'
+    '@typescript-eslint/semi': 'off',
+    '@typescript-eslint/restrict-template-expressions': 'off'
   }
 }
