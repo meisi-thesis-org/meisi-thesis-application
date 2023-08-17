@@ -1,4 +1,4 @@
-import { Mapper } from '../../../@shared/src/abstracts/mapper.abstract';
+import { Mapper } from '@meisi-thesis/application-backend-shared/src/abstracts/mapper.abstract';
 import { UserDTO } from './user.dto';
 import { type UserEntity } from './user.entity';
 

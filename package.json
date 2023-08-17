@@ -6,7 +6,8 @@
   "private": true,
   "scripts": {
     "lint:fix": "eslint ./application/**/**/src/**/*.ts",
-    "lint:check": "eslint ./application/**/**/src/**/*.ts"
+    "lint:check": "eslint ./application/**/**/src/**/*.ts",
+    "test": "vitest"
   },
   "devDependencies": {
     "@tsconfig/node18": "^18.2.0",

@@ -1,9 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { UserEntity } from './user.entity'
-import { randomUUID } from 'crypto';
 
 describe('UserEntity', () => {
-  const dummyUuid = randomUUID();
   const dummyUsername = 'dummyUsername';
   const dummyEmail = 'dummyEmail';
   const dummyPhoneNumber = 'dummyPhoneNumber';
@@ -11,30 +9,19 @@ describe('UserEntity', () => {
   const dummyFirstName = 'dummyFirstName';
   const dummyLastName = 'dummyLastName';
   const dummyDateBirth = 'dummyDateBirth';
-  const dummyCreatedAt = new Date();
-  const dummyUpdatedAt = dummyCreatedAt;
 
   const instance = new UserEntity(
-    dummyUuid,
     dummyUsername,
     dummyEmail,
     dummyPhoneNumber,
     dummyAccessCode,
     dummyFirstName,
     dummyLastName,
-    dummyDateBirth,
-    dummyCreatedAt,
-    dummyUpdatedAt
+    dummyDateBirth
   );
 
   it('should have instanceOf UserEntity', () => {
     expect(instance).instanceOf(UserEntity);
-  })
-
-  describe('uuid', () => {
-    it(`should be equal to ${dummyUuid}`, () => {
-      expect(instance.getUuid()).toEqual(dummyUuid);
-    })
   })
 
   describe('username', () => {
@@ -73,13 +60,13 @@ describe('UserEntity', () => {
     })
   })
   describe('createdAt', () => {
-    it(`should be equal to ${dummyCreatedAt}`, () => {
-      expect(instance.getCreatedAt()).toEqual(dummyCreatedAt);
+    it('should be instanceOf Date', () => {
+      expect(instance.getCreatedAt()).instanceOf(Date);
     })
   })
   describe('updatedAt', () => {
-    it(`should be equal to ${dummyUpdatedAt}`, () => {
-      expect(instance.getUpdatedAt()).toEqual(dummyUpdatedAt);
+    it('should be instanceOf Date', () => {
+      expect(instance.getUpdatedAt()).instanceOf(Date);
     })
   })
 })

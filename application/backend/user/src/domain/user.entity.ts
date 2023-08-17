@@ -1,18 +1,24 @@
 import { type UUID } from 'crypto'
+import { CryptoProvider } from '@meisi-thesis/application-backend-shared/src/providers/crypto.provider';
 
 export class UserEntity {
+  private readonly uuid: UUID;
+  private readonly createdAt: Date;
+  private readonly updatedAt: Date
+
   public constructor (
-    private readonly uuid: UUID,
     private readonly username: string,
     private readonly email: string,
     private readonly phoneNumber: string,
     private readonly accessCode: string,
     private readonly firstName: string,
     private readonly lastName: string,
-    private readonly dateBirth: string,
-    private readonly createdAt: Date,
-    private readonly updatedAt: Date
-  ) {}
+    private readonly dateBirth: string
+  ) {
+    this.uuid = new CryptoProvider().randomUUID();
+    this.createdAt = new Date();
+    this.updatedAt = this.createdAt;
+  }
 
   public getUuid (): UUID {
     return this.uuid
