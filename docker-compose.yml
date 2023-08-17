@@ -1,0 +1,11 @@
+services:
+  meisi-thesis-application-backend-mailer:
+    container_name: meisi-thesis-application-backend-mailer
+  meisi-thesis-application-backend-logger:
+    container_name: meisi-thesis-application-backend-logger
+  meisi-thesis-application-backend-security:
+    container_name: meisi-thesis-application-backend-security
+  meisi-thesis-application-backend-commerce:
+    container_name: meisi-thesis-application-backend-commerce
+  meisi-thesis-application-backend-accounting:
+    container_name: meisi-thesis-application-backend-accounting
