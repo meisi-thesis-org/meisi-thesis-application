@@ -6,9 +6,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "lint:watch": "eslint ./application/**/**/src/**/*.ts",
+    "lint:check": "eslint ./application/**/**/src/**/*.ts",
     "lint:fix": "eslint --fix ./application/**/**/src/**/*.ts",
-    "vitest": "vitest"
+    "test": "vitest"
   },
   "devDependencies": {
     "@types/node": "^20.5.0",

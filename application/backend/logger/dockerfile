@@ -1,0 +1,16 @@
+FROM node:18
+
+RUN npm i -g yarn
+
+WORKDIR /usr/src/app
+
+COPY application/backend/logger/package.json application/backend/logger/yarn.lock ./
+RUN yarn install --frozen-lockfile
+
+COPY . .
+
+RUN yarn build
+
+EXPOSE 3000
+
+CMD ["yarn","start:dev"]
