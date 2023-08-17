@@ -1,0 +1,5 @@
+services:
+  postgre_sql_db:
+    container_name: postgre_sql_db
+  postgre_sql_client:
+    container_name: postgre_sql_client

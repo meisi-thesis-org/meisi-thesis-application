@@ -13,6 +13,8 @@ module.exports = {
   },
   rules: {
     semi: 'off',
-    '@typescript-eslint/semi': 'off'
+    '@typescript-eslint/semi': 'off',
+    '@typescript-eslint/no-misused-promises': 'off'
+
   }
 }
