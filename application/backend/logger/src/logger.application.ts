@@ -20,7 +20,8 @@ export class LoggerApplication {
 
       const connection = await connect(process.env.URL ?? 'amqp://localhost');
       const channel = await connection.createChannel();
-      const queueDesignation = (process.env.QUEUE_DESIGNATION ?? 'exceptions');
+      const queueDesignation = (process.env.QUEUE_DESIGNATION ?? 'Exceptions');
+      await channel.purgeQueue(queueDesignation);
 
       await channel.assertQueue(queueDesignation, { durable: false });
       await channel.consume(queueDesignation, async (message: ConsumeMessage | null) => {
@@ -28,6 +29,7 @@ export class LoggerApplication {
           if (message === null) {
             throw new InternalServerException();
           }
+          console.log(message.content.toString())
 
           const client = new Client({
             host: process.env.PG_HOST ?? '192.168.1.64',
@@ -40,15 +42,17 @@ export class LoggerApplication {
           await client.connect()
           await client.query({
             name: 'create-exception',
-            text: `INSERT INTO public.${queueDesignation}(uuid, content) VALUES($1, $2)`,
+            text: `INSERT INTO public."${queueDesignation}"(uuid, content) VALUES($1, $2)`,
             values: [randomUUID(), message.content.toString()]
           })
 
           await client.end();
         } catch (error) {
+          console.log(error)
           throw new InternalServerException();
         }
       })
+      await channel.purgeQueue(queueDesignation);
     })
 
     return this;

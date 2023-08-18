@@ -10,3 +10,14 @@ services:
     ports:
       - 8000:8000
     command: yarn run start
+  meisi-thesis-application-backend-mailer:
+    container_name: meisi-thesis-application-backend-mailer
+    build: 
+      context: .
+      dockerfile: ./application/backend/mailer/dockerfile
+    volumes:
+      - ./:/usr/src/app
+      - /urs/src/app/node_modules
+    ports:
+      - 8000:8000
+    command: yarn run start
