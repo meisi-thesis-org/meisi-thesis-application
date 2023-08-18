@@ -2,6 +2,8 @@ import Express, { type Application } from 'express';
 import 'dotenv/config';
 import { connect, type ConsumeMessage } from 'amqplib';
 import { InternalServerException } from './exceptions/internal-server.exception';
+import { Client } from 'pg';
+import { randomUUID } from 'crypto';
 
 export class LoggerApplication {
   private readonly application: Application;
@@ -21,13 +23,31 @@ export class LoggerApplication {
       const queueDesignation = (process.env.QUEUE_DESIGNATION ?? 'exceptions');
 
       await channel.assertQueue(queueDesignation, { durable: false });
-      await channel.consume(queueDesignation, (message: ConsumeMessage | null) => {
-        if (message === null) {
+      await channel.consume(queueDesignation, async (message: ConsumeMessage | null) => {
+        try {
+          if (message === null) {
+            throw new InternalServerException();
+          }
+
+          const client = new Client({
+            host: process.env.PG_HOST ?? '192.168.1.64',
+            port: parseInt(process.env.PORT ?? '5431'),
+            database: process.env.PG_DB ?? 'root',
+            user: process.env.PG_USER ?? 'root',
+            password: process.env.PG_PSSW ?? 'root'
+          });
+
+          await client.connect()
+          await client.query({
+            name: 'create-exception',
+            text: 'INSERT INTO public."Exceptions"(uuid, content) VALUES($1, $2)',
+            values: [randomUUID(), message.content.toString()]
+          })
+
+          await client.end();
+        } catch (error) {
           throw new InternalServerException();
         }
-
-        // TODO: StoreLogs On DB
-        console.log(message.content.toString())
       })
     })
 
