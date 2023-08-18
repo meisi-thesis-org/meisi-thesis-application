@@ -24,12 +24,6 @@ export class MailerApplication {
 
       await channel.assertQueue(queueDesignation, { durable: false });
 
-      channel.sendToQueue(queueDesignation, Buffer.from(JSON.stringify({
-        toEmail: 'dummy@gmail.com',
-        subject: 'HelloWorld',
-        text: 'HelloWorld'
-      })))
-
       await channel.consume(queueDesignation, async (message: ConsumeMessage | null) => {
         if (message === null) {
           throw new InternalServerException();
