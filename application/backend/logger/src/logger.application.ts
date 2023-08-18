@@ -40,7 +40,7 @@ export class LoggerApplication {
           await client.connect()
           await client.query({
             name: 'create-exception',
-            text: 'INSERT INTO public."Exceptions"(uuid, content) VALUES($1, $2)',
+            text: `INSERT INTO public.${queueDesignation}(uuid, content) VALUES($1, $2)`,
             values: [randomUUID(), message.content.toString()]
           })
 
