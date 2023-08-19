@@ -8,7 +8,7 @@ describe('JournalEntity', () => {
   const dummyURL = 'dummyURL';
   const dummyCause = 'dummyCause';
 
-  const instance = new JournalEntity(
+  const instance = new JournalEntity<string>(
     dummyUuid,
     dummyCorrelationUuid,
     dummyURL,

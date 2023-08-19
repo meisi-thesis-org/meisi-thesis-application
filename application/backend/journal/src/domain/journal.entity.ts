@@ -1,11 +1,11 @@
 import { type UUID } from 'crypto';
 
-export class JournalEntity {
+export class JournalEntity<T> {
   public constructor (
     private readonly uuid: UUID,
     private readonly correlationUuid: UUID,
     private readonly URL: string,
-    private readonly cause: string
+    private readonly cause: T
   ) {}
 
   public getUuid (): UUID {
@@ -20,7 +20,7 @@ export class JournalEntity {
     return this.URL;
   }
 
-  public getCause (): string {
+  public getCause (): T {
     return this.cause;
   }
 }

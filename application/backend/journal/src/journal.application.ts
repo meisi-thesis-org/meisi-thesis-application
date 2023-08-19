@@ -15,6 +15,7 @@ export class JournalApplication {
   public defineListner (): void {
     this.application.listen((this.serverPort), async () => {
       console.log(`Server initialized on PORT: ${this.serverPort}!`);
+
       const queueProvider = new QueueProvider();
       const connectionURL = process.env.RABBITMQ_URL
 

@@ -14,7 +14,7 @@ module.exports = {
   rules: {
     semi: 'off',
     '@typescript-eslint/semi': 'off',
-    '@typescript-eslint/no-misused-promises': 'off'
-
+    '@typescript-eslint/no-misused-promises': 'off',
+    '@typescript-eslint/restrict-template-expressions': 'off'
   }
 }
