@@ -4,12 +4,14 @@ import { randomUUID } from 'crypto';
 
 describe('JournalEntity', () => {
   const dummyUuid = randomUUID();
+  const dummySeverity = 'Error';
   const dummyCorrelationUuid = randomUUID();
   const dummyURL = 'dummyURL';
   const dummyCause = 'dummyCause';
 
   const instance = new JournalEntity<string>(
     dummyUuid,
+    dummySeverity,
     dummyCorrelationUuid,
     dummyURL,
     dummyCause
@@ -21,6 +23,10 @@ describe('JournalEntity', () => {
 
   it('should have instance.getUuid toEqual dummyUuid', () => {
     expect(instance.getUuid()).toEqual(dummyUuid);
+  })
+
+  it('should have instance.getSeverity toEqual dummySeverity', () => {
+    expect(instance.getSeverity()).toEqual(dummySeverity);
   })
 
   it('should have instance.getCorrelationUuid toEqual dummyCorrelationUuid', () => {

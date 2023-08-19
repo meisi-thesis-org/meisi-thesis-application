@@ -3,6 +3,7 @@ import { type UUID } from 'crypto';
 export class JournalEntity<T> {
   public constructor (
     private readonly uuid: UUID,
+    private readonly severity: 'Error' | 'Warning' | 'Info',
     private readonly correlationUuid: UUID,
     private readonly URL: string,
     private readonly cause: T
@@ -10,6 +11,10 @@ export class JournalEntity<T> {
 
   public getUuid (): UUID {
     return this.uuid;
+  }
+
+  public getSeverity (): 'Error' | 'Warning' | 'Info' {
+    return this.severity;
   }
 
   public getCorrelationUuid (): UUID {
