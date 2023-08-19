@@ -1,6 +1,6 @@
 import * as HttpCode from './../types/http-code.type';
 
-export class InternalServerException extends Error {
+export class BadRequestException extends Error {
   private readonly httpCode: HttpCode.Keys;
 
   public constructor (
@@ -8,7 +8,7 @@ export class InternalServerException extends Error {
   ) {
     super(cause);
 
-    this.httpCode = HttpCode.Collection.INTERNAL_SERVER_ERROR;
+    this.httpCode = HttpCode.Collection.BAD_REQUEST;
   }
 
   public getHttpCode (): HttpCode.Keys {

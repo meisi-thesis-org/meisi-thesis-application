@@ -15,19 +15,24 @@ export class JournalApplication {
   public defineListner (): void {
     this.application.listen((this.serverPort), async () => {
       console.log(`Server initialized on PORT: ${this.serverPort}!`);
+      try {
+        const queueProvider = new QueueProvider();
+        const connectionURL = process.env.RABBITMQ_URL
 
-      const queueProvider = new QueueProvider();
-      const connectionURL = process.env.RABBITMQ_URL
+        if (connectionURL === undefined) throw new InternalServerException('');
 
-      if (connectionURL === undefined) throw new InternalServerException();
+        await queueProvider.consumeQueue(
+          connectionURL,
+          QueueProviders.Collection.REGISTER_EXCEPTION,
+          (message) => {
+            if (message === null) throw new Error('Required Message Missing');
 
-      await queueProvider.consumeQueue(
-        connectionURL,
-        QueueProviders.Collection.REGISTER_EXCEPTION,
-        (message) => {
-          if (message === null) throw new InternalServerException();
-        }
-      ).catch(() => { throw new InternalServerException(); });
+            console.log(message)
+          }
+        );
+      } catch (error) {
+        throw new InternalServerException(JSON.stringify(error));
+      }
     })
   }
 }

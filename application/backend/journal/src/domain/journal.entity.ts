@@ -5,7 +5,7 @@ export class JournalEntity<T> {
     private readonly uuid: UUID,
     private readonly severity: 'Error' | 'Warning' | 'Info',
     private readonly correlationUuid: UUID,
-    private readonly URL: string,
+    private readonly url: string,
     private readonly cause: T
   ) {}
 
@@ -21,8 +21,8 @@ export class JournalEntity<T> {
     return this.correlationUuid;
   }
 
-  public getURL (): string {
-    return this.URL;
+  public getUrl (): string {
+    return this.url;
   }
 
   public getCause (): T {

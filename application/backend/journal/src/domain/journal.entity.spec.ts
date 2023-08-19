@@ -34,7 +34,7 @@ describe('JournalEntity', () => {
   })
 
   it('should have instance.getURL toEqual dummyURL', () => {
-    expect(instance.getURL()).toEqual(dummyURL);
+    expect(instance.getUrl()).toEqual(dummyURL);
   })
 
   it('should have instance.getCause toEqual dummyCause', () => {
