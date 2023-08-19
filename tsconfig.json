@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "module": "ESNext",
+        "target": "ESNext",
+        "moduleResolution": "Node",
+        "strict": true,
+        "outDir": "./dist",
+        "allowSyntheticDefaultImports": true
+    },
+    "include": ["./application", ".eslintrc.js"],
+    "exclude": [
+        ".vscode",
+        "node_modules",
+        "dist"
+    ]
+}
