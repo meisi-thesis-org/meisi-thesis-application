@@ -3,7 +3,7 @@ import { QueueProvider } from '@meisi-thesis/application-backend-shared/src/prov
 import * as QueueProviders from '@meisi-thesis/application-backend-shared/src/providers/queue.provider.type'
 import { InternalServerException } from '@meisi-thesis/application-backend-shared/src/exceptions/internal-server.exception';
 
-export class JournalApplication {
+export class DispatchApplication {
   private readonly application: Application;
   private readonly serverPort: number;
 
@@ -31,4 +31,4 @@ export class JournalApplication {
   }
 }
 
-new JournalApplication().defineListner();
+new DispatchApplication().defineListner();

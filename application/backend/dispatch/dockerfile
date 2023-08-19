@@ -1,0 +1,16 @@
+FROM node:18
+
+RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
+
+WORKDIR /usr/src/app
+
+COPY application/backend/dispatch/package.json application/backend/dispatch/yarn.lock ./
+RUN yarn install --frozen-lockfile
+
+COPY . .
+
+RUN cd application/backend/dispatch && yarn build
+
+EXPOSE 8000
+
+CMD ["yarn","start"]
