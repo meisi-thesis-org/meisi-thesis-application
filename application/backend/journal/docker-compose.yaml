@@ -1,8 +1,8 @@
 version: '3.8'
 
 services:
-  rabbit_mq:
-    container_name: rabbit_mq
+  meisi-thesis-application-backend-dispatch-rabbit_mq:
+    container_name: meisi-thesis-application-backend-dispatch-rabbit_mq
     image: rabbitmq:3.12-management
     ports:
       - 5672:5672
