@@ -1,0 +1,5 @@
+version: '3.8'
+
+services:
+  meisi-thesis-application-backend-dispatch:
+    container_name: meisi-thesis-application-backend-dispatch

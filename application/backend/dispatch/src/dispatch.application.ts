@@ -4,6 +4,7 @@ import * as QueueProviders from '@meisi-thesis/application-backend-shared/src/pr
 import { InternalServerException } from '@meisi-thesis/application-backend-shared/src/exceptions/internal-server.exception';
 import * as nodemailer from 'nodemailer';
 import { dispatchSchema } from './dispatch.schema';
+import 'dotenv/config';
 
 export class DispatchApplication {
   private readonly application: Application;
@@ -61,7 +62,7 @@ export class DispatchApplication {
           }
         )
       } catch (error) {
-        throw new InternalServerException(JSON.stringify(error));
+        throw new InternalServerException('');
       }
     })
   }
