@@ -8,6 +8,7 @@ export class UserMapper extends Mapper<UserEntity, UserDTO> {
       entity.getUuid(),
       entity.getEmail(),
       entity.getUsername(),
+      entity.getPhoneNumber(),
       entity.getFirstName(),
       entity.getLastName(),
       entity.getDateBirth(),

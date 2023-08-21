@@ -1,10 +1,9 @@
-import { type UUID } from 'crypto';
-
 export class UserDTO {
   public constructor (
-    private readonly uuid: UUID,
+    private readonly uuid: string,
     private readonly email: string,
     private readonly username: string,
+    private readonly phoneNumber: string,
     private readonly firstName: string,
     private readonly lastName: string,
     private readonly dateBirth: string,
@@ -12,7 +11,7 @@ export class UserDTO {
     private readonly updatedAt: string
   ) {}
 
-  public getUuid (): UUID {
+  public getUuid (): string {
     return this.uuid;
   }
 
@@ -22,6 +21,10 @@ export class UserDTO {
 
   public getUsername (): string {
     return this.username;
+  }
+
+  public getPhoneNumber (): string {
+    return this.phoneNumber;
   }
 
   public getFirstName (): string {

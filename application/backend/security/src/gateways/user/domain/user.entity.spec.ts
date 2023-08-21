@@ -1,11 +1,12 @@
 import { describe, it, expect } from 'vitest';
 import { UserEntity } from './user.entity';
-import { RandomProvider } from '../../../../../shared/src/providers/random.provider';
+import { RandomProvider } from '@meisi-thesis/application-backend-shared/src/providers/random.provider';
 
 describe('UserEntity', () => {
   const dummyUuid = new RandomProvider().randomUUID();
   const dummyEmail = 'dummyEmail';
   const dummyUsername = 'dummyUsername';
+  const dummyPhoneNumber = 'dummyPhoneNumber';
   const dummyAccessToken = 'dummyAccessToken';
   const dummyFirstName = 'dummyFirstName';
   const dummyLastName = 'dummyLastName';
@@ -17,6 +18,7 @@ describe('UserEntity', () => {
     dummyUuid,
     dummyEmail,
     dummyUsername,
+    dummyPhoneNumber,
     dummyAccessToken,
     dummyFirstName,
     dummyLastName,
@@ -39,6 +41,10 @@ describe('UserEntity', () => {
 
   it('should have dummyUsername as username', () => {
     expect(instance.getUsername()).toBe(dummyUsername);
+  })
+
+  it('should have dummyPhoneNumber as phoneNumber', () => {
+    expect(instance.getPhoneNumber()).toBe(dummyPhoneNumber);
   })
 
   it('should have dummyAccessToken as accessToken', () => {

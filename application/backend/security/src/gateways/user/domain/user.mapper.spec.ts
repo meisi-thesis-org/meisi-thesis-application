@@ -16,6 +16,7 @@ describe('UserMapper', () => {
       const dummyUuid = new RandomProvider().randomUUID();
       const dummyEmail = 'dummyEmail';
       const dummyUsername = 'dummyUsername';
+      const dummyPhoneNumber = 'dummyPhoneNumber';
       const dummyAccessToken = 'dummyAccessToken';
       const dummyFirstName = 'dummyFirstName';
       const dummyLastName = 'dummyLastName';
@@ -27,6 +28,7 @@ describe('UserMapper', () => {
         dummyUuid,
         dummyEmail,
         dummyUsername,
+        dummyPhoneNumber,
         dummyAccessToken,
         dummyFirstName,
         dummyLastName,

@@ -1,10 +1,9 @@
-import { type UUID } from 'crypto';
-
 export class UserEntity {
   public constructor (
-    private readonly uuid: UUID,
+    private readonly uuid: string,
     private readonly email: string,
     private readonly username: string,
+    private readonly phoneNumber: string,
     private readonly accessToken: string,
     private readonly firstName: string,
     private readonly lastName: string,
@@ -13,7 +12,7 @@ export class UserEntity {
     private readonly updatedAt: string
   ) {}
 
-  public getUuid (): UUID {
+  public getUuid (): string {
     return this.uuid;
   }
 
@@ -23,6 +22,10 @@ export class UserEntity {
 
   public getUsername (): string {
     return this.username;
+  }
+
+  public getPhoneNumber (): string {
+    return this.phoneNumber;
   }
 
   public getAccessToken (): string {

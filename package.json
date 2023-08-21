@@ -6,8 +6,7 @@
   "license": "MIT",
   "private": true,
   "workspaces": [
-    "@meisi-thesis/application-backend-security",
-    "@meisi-thesis/application-backend-shared"
+    "application/*"
   ],
   "scripts": {
     "lint:check": "eslint application/**/**/src/**/*.ts",

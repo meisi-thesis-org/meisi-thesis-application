@@ -1,11 +1,12 @@
 import { describe, it, expect } from 'vitest';
-import { RandomProvider } from '../../../../../shared/src/providers/random.provider';
+import { RandomProvider } from '@meisi-thesis/application-backend-shared/src/providers/random.provider';
 import { UserDTO } from './user.domain';
 
 describe('UserDTO', () => {
   const dummyUuid = new RandomProvider().randomUUID();
   const dummyEmail = 'dummyEmail';
   const dummyUsername = 'dummyUsername';
+  const dummyPhoneNumber = 'dummyPhoneNumber';
   const dummyFirstName = 'dummyFirstName';
   const dummyLastName = 'dummyLastName';
   const dummyDateBirth = new Date().toISOString();
@@ -16,6 +17,7 @@ describe('UserDTO', () => {
     dummyUuid,
     dummyEmail,
     dummyUsername,
+    dummyPhoneNumber,
     dummyFirstName,
     dummyLastName,
     dummyDateBirth,
@@ -37,6 +39,10 @@ describe('UserDTO', () => {
 
   it('should have dummyUsername as username', () => {
     expect(instance.getUsername()).toBe(dummyUsername);
+  })
+
+  it('should have dummyPhoneNumber as phoneNumber', () => {
+    expect(instance.getPhoneNumber()).toBe(dummyPhoneNumber);
   })
 
   it('should have dummyFirstName as firstName', () => {

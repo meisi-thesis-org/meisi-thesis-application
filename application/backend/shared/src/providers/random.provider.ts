@@ -1,8 +1,8 @@
-import { randomBytes, randomUUID, type UUID } from 'crypto';
+import { randomBytes, randomUUID } from 'crypto';
 
 export class RandomProvider {
-  public randomUUID (): UUID {
-    return randomUUID();
+  public randomUUID (): string {
+    return randomUUID().toString();
   }
 
   public randomString (length: number): string {

@@ -18,7 +18,7 @@ describe('RandomProvider', () => {
 
   describe('randomUUID', () => {
     beforeEach(() => {
-      vi.spyOn(crypto, 'randomUUID').mockReturnValue('dummyUuid' as any)
+      vi.spyOn(crypto, 'randomUUID').mockReturnValue('dummyUuid' as crypto.UUID)
     })
 
     it('should provide a random uuid', () => {
@@ -28,11 +28,11 @@ describe('RandomProvider', () => {
 
   describe('randomBytes', () => {
     beforeEach(() => {
-      vi.spyOn(crypto, 'randomBytes').mockReturnValue('dummyUuid' as any)
+      vi.spyOn(crypto, 'randomBytes').mockReturnValue('dummyString' as any)
     })
 
     it('should provide a random string', () => {
-      expect(instance.randomString(64)).toBe('dummyUuid')
+      expect(instance.randomString(64)).toBe('dummyString')
     })
   })
 })
