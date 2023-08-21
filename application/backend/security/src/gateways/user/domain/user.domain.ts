@@ -1,11 +1,10 @@
 import { type UUID } from 'crypto';
 
-export class UserEntity {
+export class UserDTO {
   public constructor (
     private readonly uuid: UUID,
     private readonly email: string,
     private readonly username: string,
-    private readonly accessToken: string,
     private readonly firstName: string,
     private readonly lastName: string,
     private readonly dateBirth: string,
@@ -23,10 +22,6 @@ export class UserEntity {
 
   public getUsername (): string {
     return this.username;
-  }
-
-  public getAccessToken (): string {
-    return this.accessToken;
   }
 
   public getFirstName (): string {

@@ -9,12 +9,15 @@ describe('RandomProvider', () => {
     expect(instance).toBeInstanceOf(RandomProvider);
   })
 
+  beforeEach(() => {
+    vi.mock('crypto', () => ({
+      randomUUID: vi.fn(),
+      randomBytes: vi.fn()
+    }))
+  })
+
   describe('randomUUID', () => {
     beforeEach(() => {
-      vi.mock('crypto', () => ({
-        randomUUID: vi.fn()
-      }))
-
       vi.spyOn(crypto, 'randomUUID').mockReturnValue('dummyUuid' as any)
     })
 
@@ -23,12 +26,8 @@ describe('RandomProvider', () => {
     })
   })
 
-  describe('randomUUID', () => {
+  describe('randomBytes', () => {
     beforeEach(() => {
-      vi.mock('crypto', () => ({
-        randomBytes: vi.fn()
-      }))
-
       vi.spyOn(crypto, 'randomBytes').mockReturnValue('dummyUuid' as any)
     })
 

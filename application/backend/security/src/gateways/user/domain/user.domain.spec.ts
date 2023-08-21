@@ -1,23 +1,21 @@
 import { describe, it, expect } from 'vitest';
-import { UserEntity } from './user.entity';
 import { RandomProvider } from '../../../../../shared/src/providers/random.provider';
+import { UserDTO } from './user.domain';
 
-describe('UserEntity', () => {
+describe('UserDTO', () => {
   const dummyUuid = new RandomProvider().randomUUID();
   const dummyEmail = 'dummyEmail';
   const dummyUsername = 'dummyUsername';
-  const dummyAccessToken = 'dummyAccessToken';
   const dummyFirstName = 'dummyFirstName';
   const dummyLastName = 'dummyLastName';
   const dummyDateBirth = new Date().toISOString();
   const dummyCreatedAt = new Date().toISOString();
   const dummyUpdatedAt = new Date().toISOString();
 
-  const instance = new UserEntity(
+  const instance = new UserDTO(
     dummyUuid,
     dummyEmail,
     dummyUsername,
-    dummyAccessToken,
     dummyFirstName,
     dummyLastName,
     dummyDateBirth,
@@ -25,8 +23,8 @@ describe('UserEntity', () => {
     dummyUpdatedAt
   );
 
-  it('should have an instanceOf UserEntity', () => {
-    expect(instance).instanceOf(UserEntity);
+  it('should have an instanceOf UserDTO', () => {
+    expect(instance).instanceOf(UserDTO);
   })
 
   it('should have dummyUuid as uuid', () => {
@@ -39,10 +37,6 @@ describe('UserEntity', () => {
 
   it('should have dummyUsername as username', () => {
     expect(instance.getUsername()).toBe(dummyUsername);
-  })
-
-  it('should have dummyAccessToken as accessToken', () => {
-    expect(instance.getAccessToken()).toBe(dummyAccessToken);
   })
 
   it('should have dummyFirstName as firstName', () => {
