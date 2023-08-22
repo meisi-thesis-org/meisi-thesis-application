@@ -4,7 +4,9 @@ import { RandomProvider } from '@meisi-thesis/application-backend-shared/src/pro
 
 describe('FindUserByUuidSchema', () => {
   const findUserByUuidProps = {
-    uuid: new RandomProvider().randomUUID()
+    params: {
+      uuid: new RandomProvider().randomUUID()
+    }
   }
 
   it('should equal the findUserByUuidProps as the schema is correct', () => {

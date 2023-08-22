@@ -3,9 +3,12 @@ import { signUpSchema } from './sign-up.schema';
 
 describe('SignUpSchema', () => {
   const signUpProps = {
-    username: 'dummyUsername',
-    email: 'dummyEmail@dummyEmail.com',
-    phoneNumber: 'dummyPhoneNumber'
+    body: {
+      username: 'dummyUsername',
+      email: 'dummyEmail@dummyEmail.com',
+      phoneNumber: 'dummyPhoneNumber'
+
+    }
   }
 
   it('should equal the signUpProps as the schema is correct', () => {
