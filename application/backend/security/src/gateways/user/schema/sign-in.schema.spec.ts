@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { signInSchema } from './sign-in.schema';
+import { SignInSchema } from './sign-in.schema';
 
 describe('SignInSchema', () => {
   const signInProps = {
@@ -9,10 +9,10 @@ describe('SignInSchema', () => {
   }
 
   it('should equal the signInProps as the schema is correct', () => {
-    expect(signInSchema.parse(signInProps)).toEqual(signInProps);
+    expect(SignInSchema.parse(signInProps)).toEqual(signInProps);
   })
 
   it('should have an error because incorrect given structure', () => {
-    expect(() => signInSchema.parse({})).toThrow();
+    expect(() => SignInSchema.parse({})).toThrow();
   })
 })
