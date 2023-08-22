@@ -1,5 +1,4 @@
 import { FindUserByUuidRequest } from './requests/find-user-by-uuid.request';
-import { UpdateUserByUuidRequest } from './requests/update-user-by-uuid.request';
 import { UserService } from './user.service';
 import { type Request, type Response } from 'express';
 
@@ -15,24 +14,6 @@ export class UserController {
       const findUserByUuidRequest = new FindUserByUuidRequest(request.params.uuid);
       const foundUser = await this.service.findUserByUuid(findUserByUuidRequest);
       return response.status(200).json(foundUser);
-    } catch (error: any) {
-      return response.status(error.getHttpCode()).json();
-    }
-  }
-
-  public async updateUserByUuid (request: Request, response: Response): Promise<Response> {
-    try {
-      const updateUserByUuidRequest = new UpdateUserByUuidRequest(
-        request.params.uuid,
-        request.body.email,
-        request.body.username,
-        request.body.phoneNumber,
-        request.body.firstName,
-        request.body.lastName,
-        request.body.dateBirth
-      );
-      const foundUser = await this.service.updateUserByUuid(updateUserByUuidRequest);
-      return response.status(201).json(foundUser);
     } catch (error: any) {
       return response.status(error.getHttpCode()).json();
     }
