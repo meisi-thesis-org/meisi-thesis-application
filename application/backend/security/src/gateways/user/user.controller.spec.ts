@@ -55,7 +55,9 @@ describe('UserController', () => {
     }
 
     it('should throw an exception because an error ocurred while making a service request', async () => {
-      vi.spyOn(UserService.prototype, 'findUserByUuid').mockRejectedValue(new Error());
+      vi.spyOn(UserService.prototype, 'findUserByUuid').mockRejectedValue({
+        getHttpCode: vi.fn()
+      });
       defineResponseMock(new Error());
 
       await expect(callFindUserByUuid()).resolves.toEqual(new Error());
