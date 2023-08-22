@@ -1,4 +1,5 @@
 import Express, { type Application } from 'express';
+import 'dotenv/config';
 
 export class SecurityApplication {
   private readonly application: Application;

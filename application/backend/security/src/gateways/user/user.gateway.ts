@@ -11,7 +11,6 @@ export class UserGateway extends Gateway<Router> {
 
   public subscribe (): Router {
     this.router.get('/:uuid', async (request: Request, response: Response) => await this.userController.findUserByUuid(request, response));
-    this.router.put('/:uuid', async (request: Request, response: Response) => await this.userController.updateUserByUuid(request, response));
     this.router.post('/sign-up', async (request: Request, response: Response) => await this.userController.signUp(request, response));
     this.router.put('/sign-in', async (request: Request, response: Response) => await this.userController.signIn(request, response));
     this.router.put('/sign-out', async (request: Request, response: Response) => await this.userController.signOut(request, response));

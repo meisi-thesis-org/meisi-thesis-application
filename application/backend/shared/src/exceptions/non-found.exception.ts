@@ -1,9 +1,9 @@
-export class InternalServerException extends Error {
+export class NonFoundException extends Error {
   private readonly httpCode: number;
 
   public constructor () {
     super();
 
-    this.httpCode = 500;
+    this.httpCode = 404;
   }
 }
