@@ -6,4 +6,8 @@ export class ConflictException extends Error {
 
     this.httpCode = 409;
   }
+
+  public getHttpCode (): number {
+    return this.httpCode;
+  }
 }

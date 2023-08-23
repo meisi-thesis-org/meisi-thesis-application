@@ -6,4 +6,8 @@ export class InternalServerException extends Error {
 
     this.httpCode = 500;
   }
+
+  public getHttpCode (): number {
+    return this.httpCode;
+  }
 }
