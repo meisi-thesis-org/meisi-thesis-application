@@ -70,4 +70,72 @@ describe('UserController', () => {
       await expect(callFindUserByUuid()).resolves.toEqual(userDTO);
     })
   })
+
+  describe('signUp', () => {
+    beforeEach(() => {
+      requestMock.body = { username: 'dummyUsername', email: 'dummyEmail', phoneNumber: 'dummyPhoneNumber' }
+      vi.mock('user.service', () => ({
+        signUp: vi.fn()
+      }))
+    })
+
+    async function callSignUp (): Promise<Response> {
+      return await instance.signUp(requestMock, responseMock);
+    }
+
+    function defineResponseMock<T> (jsonResponse: T): void {
+      responseMock.json = vi.fn().mockReturnValue(jsonResponse);
+      responseMock.status = vi.fn(() => responseMock)
+    }
+
+    it('should throw an exception because an error ocurred while making a service request', async () => {
+      vi.spyOn(UserService.prototype, 'findUserByUuid').mockRejectedValue({
+        getHttpCode: vi.fn()
+      });
+      defineResponseMock(new Error());
+
+      await expect(callSignUp()).resolves.toEqual(new Error());
+    })
+
+    it('should return an UserDTO', async () => {
+      vi.spyOn(UserService.prototype, 'signUp').mockResolvedValue(userDTO);
+      defineResponseMock(userDTO);
+
+      await expect(callSignUp()).resolves.toEqual(userDTO);
+    })
+  })
+
+  describe('signIn', () => {
+    beforeEach(() => {
+      requestMock.body = { accessCode: 'dummyAccessCode' }
+      vi.mock('user.service', () => ({
+        signIn: vi.fn()
+      }))
+    })
+
+    async function callSignIn (): Promise<Response> {
+      return await instance.signIn(requestMock, responseMock);
+    }
+
+    function defineResponseMock<T> (jsonResponse: T): void {
+      responseMock.json = vi.fn().mockReturnValue(jsonResponse);
+      responseMock.status = vi.fn(() => responseMock)
+    }
+
+    it('should throw an exception because an error ocurred while making a service request', async () => {
+      vi.spyOn(UserService.prototype, 'findUserByUuid').mockRejectedValue({
+        getHttpCode: vi.fn()
+      });
+      defineResponseMock(new Error());
+
+      await expect(callSignIn()).resolves.toEqual(new Error());
+    })
+
+    it('should return an UserDTO', async () => {
+      vi.spyOn(UserService.prototype, 'signUp').mockResolvedValue(userDTO);
+      defineResponseMock(userDTO);
+
+      await expect(callSignIn()).resolves.toEqual(userDTO);
+    })
+  })
 })

@@ -67,4 +67,19 @@ describe('UserService', () => {
       await expect(async () => await instance.findUserByUuid(findUserByUuidRequest)).rejects.toThrow(InternalServerException);
     })
   })
+
+  describe('signUp', () => {
+    beforeEach(() => {
+      vi.mock('user.state.repository', () => ({
+        findUserByCredentials: vi.fn(),
+        createOne: vi.fn()
+      }))
+    })
+
+    it('should return an UserDTO', () => {})
+    it('should have an ConflictException thrown because there is already an user created with provided request body', () => {})
+    it('should have an InternalServerException thrown because an error ocurred while calling HashProvider hash ', () => {})
+    it('should have an InternalServerException thrown because an error ocurred while calling repository findUserByCredentials', () => {})
+    it('should have an InternalServerException thrown because an error ocurred while calling repository create', () => {})
+  })
 })
