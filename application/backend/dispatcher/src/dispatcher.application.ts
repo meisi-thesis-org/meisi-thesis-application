@@ -2,7 +2,6 @@ import { QueueProvider } from '@meisi-thesis/application-backend-shared/src/prov
 import Express, { type Application } from 'express';
 import 'dotenv/config';
 import { DispatcherSchema } from './dispatcher.schema';
-import { BadRequestException } from '@meisi-thesis/application-backend-shared/src/exceptions/bad-request.exception';
 import * as nodemailer from 'nodemailer';
 
 export class DispatcherApplication {
@@ -17,18 +16,34 @@ export class DispatcherApplication {
   public defineListner (): DispatcherApplication {
     this.application.listen((this.serverPort), async () => {
       console.log(`Server initialized on PORT: ${this.serverPort}!`)
+      const queueProvider = new QueueProvider();
 
       try {
-        const queueProvider = new QueueProvider();
         await queueProvider.consumeQueue(
           process.env.RABBITMQ_URL ?? 'amqplib://localhost',
           'create_email',
           async (message) => {
-            if (message === null) throw new BadRequestException();
+            if (message === null) {
+              await queueProvider.sendQueue(
+                process.env.RABBITMQ_URL ?? 'amqplib://localhost',
+                'create_exception',
+                Buffer.from(JSON.stringify(message))
+              )
+
+              return;
+            }
 
             const parsedSchema = DispatcherSchema.safeParse(message?.content);
 
-            if (!parsedSchema.success) throw new BadRequestException();
+            if (!parsedSchema.success) {
+              await queueProvider.sendQueue(
+                process.env.RABBITMQ_URL ?? 'amqplib://localhost',
+                'create_exception',
+                Buffer.from(JSON.stringify(parsedSchema.error))
+              )
+
+              return;
+            }
 
             const transporter = nodemailer.createTransport({
               host: process.env.NODEMAILER_HOST,
