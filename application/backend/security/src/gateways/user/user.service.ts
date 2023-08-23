@@ -11,6 +11,7 @@ import { UserEntity } from './domain/user.entity';
 import { RandomProvider } from '@meisi-thesis/application-backend-shared/src/providers/random.provider';
 import { HashProvider } from '@meisi-thesis/application-backend-shared/src/providers/hash.provider';
 import { QueueProvider } from '@meisi-thesis/application-backend-shared/src/providers/queue.provider';
+import { type SignInRequest } from './requests/sign-in.request';
 
 export class UserService {
   private readonly userRepository: UserRepository;
@@ -51,7 +52,8 @@ export class UserService {
 
     if (foundUser !== undefined) throw new ConflictException();
 
-    const randomString = this.randomProvider.randomString(64);
+    const randomString = this.randomProvider.randomString(12);
+    console.log(randomString);
     const randomHash = await this.hashProvider.hash(randomString).catch(() => {
       throw new InternalServerException();
     });
@@ -86,5 +88,24 @@ export class UserService {
     // )
 
     return this.userMapper.map(createdUser);
+  }
+
+  public async signIn (signInRequest: SignInRequest): Promise<UserDTO> {
+    const foundUsers = await this.userRepository.findBulk().catch(() => {
+      throw new InternalServerException();
+    })
+
+    for (const foundUser of foundUsers) {
+      const isAccessCodeEqual = await this.hashProvider.compare(
+        signInRequest.getAccessCode(),
+        foundUser.getAccessCode()
+      )
+
+      if (isAccessCodeEqual === true) {
+        return this.userMapper.map(foundUser);
+      }
+    }
+
+    throw new NonFoundException()
   }
 }

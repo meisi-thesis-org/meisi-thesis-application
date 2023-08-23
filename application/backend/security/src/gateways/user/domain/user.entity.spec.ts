@@ -7,7 +7,7 @@ describe('UserEntity', () => {
   const dummyEmail = 'dummyEmail';
   const dummyUsername = 'dummyUsername';
   const dummyPhoneNumber = 'dummyPhoneNumber';
-  const dummyAccessToken = 'dummyAccessToken';
+  const dummyAccessCode = 'dummyAccessCode';
   const dummyFirstName = 'dummyFirstName';
   const dummyLastName = 'dummyLastName';
   const dummyDateBirth = new Date().toISOString();
@@ -19,7 +19,7 @@ describe('UserEntity', () => {
     dummyEmail,
     dummyUsername,
     dummyPhoneNumber,
-    dummyAccessToken,
+    dummyAccessCode,
     dummyFirstName,
     dummyLastName,
     dummyDateBirth,
@@ -47,8 +47,8 @@ describe('UserEntity', () => {
     expect(instance.getPhoneNumber()).toBe(dummyPhoneNumber);
   })
 
-  it('should have dummyAccessToken as accessToken', () => {
-    expect(instance.getAccessToken()).toBe(dummyAccessToken);
+  it('should have dummyAccessCode as accessCode', () => {
+    expect(instance.getAccessCode()).toBe(dummyAccessCode);
   })
 
   it('should have dummyFirstName as firstName', () => {

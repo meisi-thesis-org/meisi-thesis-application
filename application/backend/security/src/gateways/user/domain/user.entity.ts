@@ -4,7 +4,7 @@ export class UserEntity {
     private readonly email: string,
     private readonly username: string,
     private readonly phoneNumber: string,
-    private readonly accessToken: string,
+    private readonly accessCode: string,
     private readonly firstName: string,
     private readonly lastName: string,
     private readonly dateBirth: string,
@@ -28,8 +28,8 @@ export class UserEntity {
     return this.phoneNumber;
   }
 
-  public getAccessToken (): string {
-    return this.accessToken;
+  public getAccessCode (): string {
+    return this.accessCode;
   }
 
   public getFirstName (): string {
