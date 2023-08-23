@@ -10,18 +10,21 @@ import { ConflictException } from '@meisi-thesis/application-backend-shared/src/
 import { UserEntity } from './domain/user.entity';
 import { RandomProvider } from '@meisi-thesis/application-backend-shared/src/providers/random.provider';
 import { HashProvider } from '@meisi-thesis/application-backend-shared/src/providers/hash.provider';
+import { QueueProvider } from '@meisi-thesis/application-backend-shared/src/providers/queue.provider';
 
 export class UserService {
   private readonly userRepository: UserRepository;
   private readonly userMapper: UserMapper;
   private readonly randomProvider: RandomProvider;
   private readonly hashProvider: HashProvider;
+  private readonly queueProvider: QueueProvider;
 
   public constructor () {
     this.userRepository = new UserStateRepository();
     this.userMapper = new UserMapper();
     this.randomProvider = new RandomProvider();
     this.hashProvider = new HashProvider();
+    this.queueProvider = new QueueProvider();
   }
 
   public async findUserByUuid (findUserByUuidRequest: FindUserByUuidRequest): Promise<UserDTO> {
@@ -70,7 +73,17 @@ export class UserService {
       throw new InternalServerException();
     });
 
-    // TODO: Call RabbitMQ Service (SendEmail)
+    await this.queueProvider.sendQueue(
+      process.env.RABBITMQ_URL ?? 'amqplib://localhost',
+      'create_email',
+      Buffer.from(JSON.stringify({
+        routeURL: '/security/sign-up',
+        correlationUuid: this.randomProvider.randomUUID(),
+        toEmail: createdUser.getEmail(),
+        subject: 'Created Account',
+        content: `Welcome! Your access code is ${randomString}!`
+      }))
+    )
 
     return this.userMapper.map(createdUser);
   }

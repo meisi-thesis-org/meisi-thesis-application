@@ -33,7 +33,9 @@ export class DispatcherApplication {
               return;
             }
 
-            const parsedSchema = DispatcherSchema.safeParse(message?.content);
+            const parsedContent = JSON.parse(message.content.toString())
+
+            const parsedSchema = DispatcherSchema.safeParse(parsedContent);
 
             if (!parsedSchema.success) {
               await queueProvider.sendQueue(
