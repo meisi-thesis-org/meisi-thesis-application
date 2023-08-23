@@ -73,17 +73,17 @@ export class UserService {
       throw new InternalServerException();
     });
 
-    await this.queueProvider.sendQueue(
-      process.env.RABBITMQ_URL ?? 'amqplib://localhost',
-      'create_email',
-      Buffer.from(JSON.stringify({
-        routeURL: '/security/sign-up',
-        correlationUuid: this.randomProvider.randomUUID(),
-        toEmail: createdUser.getEmail(),
-        subject: 'Created Account',
-        content: `Welcome! Your access code is ${randomString}!`
-      }))
-    )
+    // await this.queueProvider.sendQueue(
+    //   process.env.RABBITMQ_URL ?? 'amqp://localhost',
+    //   'create_email',
+    //   Buffer.from(JSON.stringify({
+    //     routeURL: '/security/users/sign-up',
+    //     correlationUuid: this.randomProvider.randomUUID(),
+    //     toEmail: createdUser.getEmail(),
+    //     subject: 'Created Account',
+    //     content: `Welcome! Your access code is ${randomString}!`
+    //   }))
+    // )
 
     return this.userMapper.map(createdUser);
   }

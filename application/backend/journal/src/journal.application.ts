@@ -16,9 +16,9 @@ export class JournalApplication {
       console.log(`Server initialized on PORT: ${this.serverPort}!`)
       const queueProvider = new QueueProvider();
       await queueProvider.consumeQueue(
-        process.env.RABBITMQ_URL ?? 'amqplib://localhost',
+        process.env.RABBITMQ_URL ?? 'amqp://localhost',
         'create_exception',
-        (message) => { console.log(message); }
+        (message) => { console.log(message?.content.toString()); }
       )
     })
 

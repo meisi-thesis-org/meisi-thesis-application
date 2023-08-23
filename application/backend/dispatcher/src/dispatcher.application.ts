@@ -20,12 +20,12 @@ export class DispatcherApplication {
 
       try {
         await queueProvider.consumeQueue(
-          process.env.RABBITMQ_URL ?? 'amqplib://localhost',
+          process.env.RABBITMQ_URL ?? 'amqp://localhost',
           'create_email',
           async (message) => {
             if (message === null) {
               await queueProvider.sendQueue(
-                process.env.RABBITMQ_URL ?? 'amqplib://localhost',
+                process.env.RABBITMQ_URL ?? 'amqp://localhost',
                 'create_exception',
                 Buffer.from(JSON.stringify(message))
               )
@@ -39,7 +39,7 @@ export class DispatcherApplication {
 
             if (!parsedSchema.success) {
               await queueProvider.sendQueue(
-                process.env.RABBITMQ_URL ?? 'amqplib://localhost',
+                process.env.RABBITMQ_URL ?? 'amqp://localhost',
                 'create_exception',
                 Buffer.from(JSON.stringify(parsedSchema.error))
               )

@@ -6,7 +6,7 @@
     "license": "MIT",
     "scripts": {
         "start": "node dist/security.application.js",
-        "start:watch": "tsx src/security.application.ts",
+        "start:watch": "tsx --watch src/security.application.ts",
         "build": "rimraf dist && tsup src"
     },
     "dependencies": {

@@ -1,8 +1,8 @@
 version: '3.8'
 
 services:
-  rabbit_mq:
-    container_name: rabbit_mq
+  rabbit_mq_dispatcher:
+    container_name: rabbit_mq_dispatcher
     image: rabbitmq:3.12-management
     ports:
       - 5671:5671
