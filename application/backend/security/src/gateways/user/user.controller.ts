@@ -1,4 +1,5 @@
 import { FindUserByUuidRequest } from './requests/find-user-by-uuid.request';
+import { RefreshAccessCodeRequest } from './requests/refresh-access-code.request';
 import { SignInRequest } from './requests/sign-in.request';
 import { SignUpRequest } from './requests/sign-up.request';
 import { UserService } from './user.service';
@@ -39,6 +40,19 @@ export class UserController {
     try {
       const signInRequest = new SignInRequest(request.body.accessCode);
       const data = await this.service.signIn(signInRequest);
+      return response.status(201).json(data);
+    } catch (error: any) {
+      return response.status(error.getHttpCode()).json();
+    }
+  }
+
+  public async refreshAccessCode (request: Request, response: Response): Promise<Response> {
+    try {
+      const refreshAccessCode = new RefreshAccessCodeRequest(
+        request.body.username,
+        request.body.email, request.body.phoneNumber
+      );
+      const data = await this.service.refreshAccessCode(refreshAccessCode);
       return response.status(201).json(data);
     } catch (error: any) {
       return response.status(error.getHttpCode()).json();

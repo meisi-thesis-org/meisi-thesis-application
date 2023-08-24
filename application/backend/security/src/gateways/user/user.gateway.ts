@@ -5,6 +5,7 @@ import { SchemaValidator } from '@meisi-thesis/application-backend-shared/src/mi
 import { FindUserByUuidSchema } from './schema/find-user-by-uuid.schema';
 import { SignUpSchema } from './schema/sign-up.schema';
 import { SignInSchema } from './schema/sign-in.schema';
+import { RefreshAccessCodeSchema } from './schema/refresh-access-code.schema';
 
 export class UserGateway extends Gateway<Router> {
   private readonly userController = new UserController();
@@ -17,6 +18,7 @@ export class UserGateway extends Gateway<Router> {
     this.router.get('/:uuid', SchemaValidator(FindUserByUuidSchema), async (request: Request, response: Response) => await this.userController.findUserByUuid(request, response));
     this.router.post('/sign-up', SchemaValidator(SignUpSchema), async (request: Request, response: Response) => await this.userController.signUp(request, response));
     this.router.put('/sign-in', SchemaValidator(SignInSchema), async (request: Request, response: Response) => await this.userController.signIn(request, response));
+    this.router.put('/refresh-access-code', SchemaValidator(RefreshAccessCodeSchema), async (request: Request, response: Response) => await this.userController.signIn(request, response))
     this.router.put('/sign-out', async (request: Request, response: Response) => await this.userController.signOut(request, response));
 
     return this.router;

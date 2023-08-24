@@ -12,6 +12,7 @@ import { RandomProvider } from '@meisi-thesis/application-backend-shared/src/pro
 import { HashProvider } from '@meisi-thesis/application-backend-shared/src/providers/hash.provider';
 import { QueueProvider } from '@meisi-thesis/application-backend-shared/src/providers/queue.provider';
 import { type SignInRequest } from './requests/sign-in.request';
+import { type RefreshAccessCodeRequest } from './requests/refresh-access-code.request';
 
 export class UserService {
   private readonly userRepository: UserRepository;
@@ -107,5 +108,9 @@ export class UserService {
     }
 
     throw new NonFoundException()
+  }
+
+  public async refreshAccessCode (refreshAccessCode: RefreshAccessCodeRequest): Promise<UserDTO> {
+    throw new Error();
   }
 }
