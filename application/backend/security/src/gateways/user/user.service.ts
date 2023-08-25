@@ -1,5 +1,5 @@
 import { InternalServerException } from '@meisi-thesis/application-backend-shared/src/exceptions/internal-server.exception';
-import { type UserDTO } from './domain/user.domain';
+import { type UserDTO } from './domain/user.dto';
 import { UserStateRepository } from './repositories/user-state.repository';
 import { type FindUserByUuidRequest } from './requests/find-user-by-uuid.request';
 import { type UserRepository } from './user.repository';
@@ -13,6 +13,8 @@ import { HashProvider } from '@meisi-thesis/application-backend-shared/src/provi
 import { QueueProvider } from '@meisi-thesis/application-backend-shared/src/providers/queue.provider';
 import { type SignInRequest } from './requests/sign-in.request';
 import { type RefreshAccessCodeRequest } from './requests/refresh-access-code.request';
+import { TokenProvider } from './providers/token.provider';
+import { BadRequestException } from '@meisi-thesis/application-backend-shared/src/exceptions/bad-request.exception';
 
 export class UserService {
   private readonly userRepository: UserRepository;
@@ -20,6 +22,7 @@ export class UserService {
   private readonly randomProvider: RandomProvider;
   private readonly hashProvider: HashProvider;
   private readonly queueProvider: QueueProvider;
+  private readonly tokenProvider: TokenProvider;
 
   public constructor () {
     this.userRepository = new UserStateRepository();
@@ -27,6 +30,7 @@ export class UserService {
     this.randomProvider = new RandomProvider();
     this.hashProvider = new HashProvider();
     this.queueProvider = new QueueProvider();
+    this.tokenProvider = new TokenProvider();
   }
 
   public async findUserByUuid (findUserByUuidRequest: FindUserByUuidRequest): Promise<UserDTO> {
@@ -68,6 +72,8 @@ export class UserService {
       '',
       '',
       '',
+      '',
+      '',
       new Date().toISOString(),
       new Date().toISOString()
     );
@@ -102,10 +108,34 @@ export class UserService {
         foundUser.getAccessCode()
       )
 
-      if (isAccessCodeEqual) return this.userMapper.map(foundUser);
+      if (isAccessCodeEqual) {
+        const payload = {
+          uuid: foundUser.getUuid(),
+          username: foundUser.getUsername(),
+          email: foundUser.getEmail(),
+          phoneNumber: foundUser.getPhoneNumber()
+        }
+
+        const accessToken = this.tokenProvider.sign(payload, process.env.ACCESS_TOKEN_SECRET, '1h');
+        const refreshToken = this.tokenProvider.sign(payload, process.env.REFRESH_TOKEN_SECRET, '1d');
+
+        const hashedAccessToken = await this.hashProvider.hash(accessToken);
+        const hashedRefreshToken = await this.hashProvider.hash(refreshToken);
+
+        await this.userRepository
+          .updateTokens(foundUser.getUuid(), hashedAccessToken, hashedRefreshToken)
+          .catch(() => {
+            throw new InternalServerException();
+          });
+
+        foundUser.setAccessToken(accessToken);
+        foundUser.setRefreshToken(refreshToken);
+
+        return this.userMapper.map(foundUser)
+      };
     }
 
-    throw new NonFoundException()
+    throw new BadRequestException()
   }
 
   public async refreshAccessCode (refreshAccessCode: RefreshAccessCodeRequest): Promise<UserDTO> {

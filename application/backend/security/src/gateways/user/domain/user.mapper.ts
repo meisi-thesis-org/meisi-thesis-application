@@ -1,6 +1,6 @@
 import { Mapper } from '@meisi-thesis/application-backend-shared/src/abstracts/mapper.abstract';
 import { type UserEntity } from './user.entity';
-import { UserDTO } from './user.domain';
+import { UserDTO } from './user.dto';
 
 export class UserMapper extends Mapper<UserEntity, UserDTO> {
   public map (entity: UserEntity): UserDTO {
@@ -12,6 +12,8 @@ export class UserMapper extends Mapper<UserEntity, UserDTO> {
       entity.getFirstName(),
       entity.getLastName(),
       entity.getDateBirth(),
+      entity.getAccessToken(),
+      entity.getRefreshToken(),
       entity.getCreatedAt(),
       entity.getUpdatedAt()
     );

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { UserMapper } from './user.mapper';
 import { UserEntity } from './user.entity';
-import { UserDTO } from './user.domain';
+import { UserDTO } from './user.dto';
 import { RandomProvider } from '@meisi-thesis/application-backend-shared/src/providers/random.provider';
 
 describe('UserMapper', () => {

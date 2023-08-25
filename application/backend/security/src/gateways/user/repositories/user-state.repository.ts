@@ -12,7 +12,7 @@ export class UserStateRepository implements UserRepository {
     return this.userCollection.find((user) => user.getUuid() === uuid);
   }
 
-  async findUserByCredentials (username: string, email: string, phoneNumber: string): Promise<UserEntity | undefined> {
+  public async findUserByCredentials (username: string, email: string, phoneNumber: string): Promise<UserEntity | undefined> {
     return this.userCollection.find((user) =>
       user.getUsername() === username ||
       user.getEmail() === email ||
@@ -20,7 +20,18 @@ export class UserStateRepository implements UserRepository {
     );
   }
 
-  async createOne (entity: UserEntity): Promise<void> {
+  public async createOne (entity: UserEntity): Promise<void> {
     this.userCollection.push(entity);
+  }
+
+  public async updateTokens (uuid: string, accessToken: string, refreshToken: string): Promise<void> {
+    this.userCollection.find((user) => {
+      if (user.getUuid() === uuid) {
+        user.setAccessToken(accessToken);
+        user.setRefreshToken(refreshToken);
+      }
+
+      return user;
+    });
   }
 }

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { RandomProvider } from '@meisi-thesis/application-backend-shared/src/providers/random.provider';
-import { UserDTO } from './user.domain';
+import { UserDTO } from './user.dto';
 
 describe('UserDTO', () => {
   const dummyUuid = new RandomProvider().randomUUID();
@@ -10,6 +10,8 @@ describe('UserDTO', () => {
   const dummyFirstName = 'dummyFirstName';
   const dummyLastName = 'dummyLastName';
   const dummyDateBirth = new Date().toISOString();
+  const dummyAccessToken = 'dummyAccessToken';
+  const dummyRefreshToken = 'dummyRefreshToken';
   const dummyCreatedAt = new Date().toISOString();
   const dummyUpdatedAt = new Date().toISOString();
 
@@ -21,6 +23,8 @@ describe('UserDTO', () => {
     dummyFirstName,
     dummyLastName,
     dummyDateBirth,
+    dummyAccessToken,
+    dummyRefreshToken,
     dummyCreatedAt,
     dummyUpdatedAt
   );
@@ -55,6 +59,14 @@ describe('UserDTO', () => {
 
   it('should have dummyDateBirth as dateBirth', () => {
     expect(instance.getDateBirth()).toBe(dummyDateBirth);
+  })
+
+  it('should have dummyAccessToken as accessToken', () => {
+    expect(instance.getAccessToken()).toBe(dummyAccessToken);
+  })
+
+  it('should have dummyRefreshToken as accessToken', () => {
+    expect(instance.getRefreshToken()).toBe(dummyRefreshToken);
   })
 
   it('should have dummyCreatedAt as createdAt', () => {

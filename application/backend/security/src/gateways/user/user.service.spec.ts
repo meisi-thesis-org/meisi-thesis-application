@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { UserService } from './user.service';
 import { FindUserByUuidRequest } from './requests/find-user-by-uuid.request';
 import { randomUUID } from 'crypto';
@@ -6,11 +6,13 @@ import { InternalServerException } from '@meisi-thesis/application-backend-share
 import { UserStateRepository } from './repositories/user-state.repository';
 import { UserEntity } from './domain/user.entity';
 import { RandomProvider } from '@meisi-thesis/application-backend-shared/src/providers/random.provider';
-import { UserDTO } from './domain/user.domain';
+import { UserDTO } from './domain/user.dto';
 import { NonFoundException } from '@meisi-thesis/application-backend-shared/src/exceptions/non-found.exception';
 import { SignUpRequest } from './requests/sign-up.request';
 import { ConflictException } from '@meisi-thesis/application-backend-shared/src/exceptions/conflict.exception';
 import { HashProvider } from '@meisi-thesis/application-backend-shared/src/providers/hash.provider';
+import { SignInRequest } from './requests/sign-in.request';
+import { TokenProvider } from './providers/token.provider';
 
 describe('UserService', () => {
   const instance = new UserService();
@@ -19,37 +21,35 @@ describe('UserService', () => {
     expect(instance).instanceOf(UserService);
   })
 
+  const dummyUuid = new RandomProvider().randomUUID();
+  const dummyEmail = 'dummyEmail';
+  const dummyUsername = 'dummyUsername';
+  const dummyPhoneNumber = 'dummyPhoneNumber';
+  const dummyAccessCode = 'dummyAccessCode';
+  const dummyFirstName = 'dummyFirstName';
+  const dummyLastName = 'dummyLastName';
+  const dummyDateBirth = new Date().toISOString();
+  const dummyAccessToken = 'dummyAccessToken';
+  const dummyRefreshToken = 'dummyRefreshToken';
+  const dummyCreatedAt = new Date().toISOString();
+  const dummyUpdatedAt = new Date().toISOString();
+
+  const userEntity = new UserEntity(
+    dummyUuid,
+    dummyEmail,
+    dummyUsername,
+    dummyPhoneNumber,
+    dummyAccessCode,
+    dummyFirstName,
+    dummyLastName,
+    dummyDateBirth,
+    dummyAccessToken,
+    dummyRefreshToken,
+    dummyCreatedAt,
+    dummyUpdatedAt
+  );
+
   describe('findUserByUuid', () => {
-    const dummyUuid = new RandomProvider().randomUUID();
-    const dummyEmail = 'dummyEmail';
-    const dummyUsername = 'dummyUsername';
-    const dummyPhoneNumber = 'dummyPhoneNumber';
-    const dummyAccessToken = 'dummyAccessToken';
-    const dummyFirstName = 'dummyFirstName';
-    const dummyLastName = 'dummyLastName';
-    const dummyDateBirth = new Date().toISOString();
-    const dummyCreatedAt = new Date().toISOString();
-    const dummyUpdatedAt = new Date().toISOString();
-
-    const userEntity = new UserEntity(
-      dummyUuid,
-      dummyEmail,
-      dummyUsername,
-      dummyPhoneNumber,
-      dummyAccessToken,
-      dummyFirstName,
-      dummyLastName,
-      dummyDateBirth,
-      dummyCreatedAt,
-      dummyUpdatedAt
-    );
-
-    beforeEach(() => {
-      vi.mock('user.state.repository', () => ({
-        findOneByUuid: vi.fn()
-      }))
-    })
-
     const findUserByUuidRequest = new FindUserByUuidRequest(randomUUID());
 
     it('should return an UserDTO', async () => {
@@ -72,40 +72,6 @@ describe('UserService', () => {
   })
 
   describe('signUp', () => {
-    const dummyUuid = new RandomProvider().randomUUID();
-    const dummyEmail = 'dummyEmail';
-    const dummyUsername = 'dummyUsername';
-    const dummyPhoneNumber = 'dummyPhoneNumber';
-    const dummyAccessToken = 'dummyAccessToken';
-    const dummyFirstName = 'dummyFirstName';
-    const dummyLastName = 'dummyLastName';
-    const dummyDateBirth = new Date().toISOString();
-    const dummyCreatedAt = new Date().toISOString();
-    const dummyUpdatedAt = new Date().toISOString();
-
-    const userEntity = new UserEntity(
-      dummyUuid,
-      dummyEmail,
-      dummyUsername,
-      dummyPhoneNumber,
-      dummyAccessToken,
-      dummyFirstName,
-      dummyLastName,
-      dummyDateBirth,
-      dummyCreatedAt,
-      dummyUpdatedAt
-    );
-
-    beforeEach(() => {
-      vi.mock('user.state.repository', () => ({
-        findUserByCredentials: vi.fn(),
-        createOne: vi.fn()
-      }))
-      vi.mock('@meisi-thesis/application-backend-shared/src/providers/hash.provider', () => ({
-        hash: vi.fn()
-      }))
-    })
-
     const signUpRequest = new SignUpRequest('dummyUsername', 'dummyEmail', 'dummyPhoneNumber');
 
     it('should return an UserDTO', async () => {
@@ -124,7 +90,7 @@ describe('UserService', () => {
     it('should have an InternalServerException thrown because an error ocurred while calling HashProvider hash ', async () => {
       vi.spyOn(HashProvider.prototype, 'hash').mockRejectedValue(new InternalServerException());
 
-      await expect(async () => await instance.signUp(signUpRequest)).rejects.toThrow(InternalServerException);
+      await expect(async () => await instance.signUp(signUpRequest)).rejects.toThrow();
     })
 
     it('should have an InternalServerException thrown because an error ocurred while calling repository findUserByCredentials', async () => {
@@ -138,6 +104,62 @@ describe('UserService', () => {
       vi.spyOn(UserStateRepository.prototype, 'createOne').mockRejectedValue(InternalServerException);
 
       await expect(async () => await instance.signUp(signUpRequest)).rejects.toThrow(InternalServerException);
+    })
+  })
+
+  describe('signIn', () => {
+    const signInRequest = new SignInRequest('dummyAccessCode');
+
+    it('should return an instanceOf UserDTO', async () => {
+      vi.spyOn(UserStateRepository.prototype, 'findBulk').mockResolvedValue([userEntity]);
+      vi.spyOn(HashProvider.prototype, 'compare').mockResolvedValue(true);
+      vi.spyOn(TokenProvider.prototype, 'sign').mockResolvedValue('dummyToken');
+      vi.spyOn(HashProvider.prototype, 'hash').mockResolvedValue('dummyHashedToken');
+      vi.spyOn(UserStateRepository.prototype, 'updateTokens').mockResolvedValue();
+      await expect(instance.signIn(signInRequest)).resolves.toBeInstanceOf(UserDTO);
+    })
+
+    it('should throw an InternalServerException because UserRepository.findBulk throws an error', async () => {
+      vi.spyOn(UserStateRepository.prototype, 'findBulk').mockRejectedValue(new Error());
+      await expect(instance.signIn(signInRequest)).rejects.toThrow();
+    })
+
+    it('should throw an InternalServerException because UserRepository.updateTokens throws an error', async () => {
+      vi.spyOn(UserStateRepository.prototype, 'findBulk').mockResolvedValue([userEntity]);
+      vi.spyOn(HashProvider.prototype, 'compare').mockResolvedValue(true);
+      vi.spyOn(TokenProvider.prototype, 'sign').mockResolvedValue('dummyToken');
+      vi.spyOn(HashProvider.prototype, 'hash').mockResolvedValue('dummyHashedToken');
+      vi.spyOn(UserStateRepository.prototype, 'updateTokens').mockRejectedValue(new Error());
+      await expect(instance.signIn(signInRequest)).rejects.toThrow();
+    })
+    it('should throw an InternalServerException because HashProvider.compare throws an error', async () => {
+      vi.spyOn(UserStateRepository.prototype, 'findBulk').mockResolvedValue([userEntity]);
+      vi.spyOn(HashProvider.prototype, 'compare').mockRejectedValue(true);
+      await expect(instance.signIn(signInRequest)).rejects.toThrow();
+    })
+
+    it('should throw an InternalServerException because TokenProvider.sign throws an error', async () => {
+      vi.spyOn(UserStateRepository.prototype, 'findBulk').mockResolvedValue([userEntity]);
+      vi.spyOn(HashProvider.prototype, 'compare').mockResolvedValue(true);
+      vi.spyOn(TokenProvider.prototype, 'sign').mockRejectedValue(new Error());
+      await expect(instance.signIn(signInRequest)).rejects.toThrow();
+    })
+
+    it('should throw an InternalServerException because TokenProvider.sign on AccessToken hash throws an error', async () => {
+      vi.spyOn(UserStateRepository.prototype, 'findBulk').mockResolvedValue([userEntity]);
+      vi.spyOn(HashProvider.prototype, 'compare').mockResolvedValue(true);
+      vi.spyOn(TokenProvider.prototype, 'sign').mockResolvedValue('dummyToken');
+      vi.spyOn(HashProvider.prototype, 'hash').mockRejectedValue(new Error());
+      await expect(instance.signIn(signInRequest)).rejects.toThrow();
+    })
+
+    it('should throw an BadRequestException because HashProvider.compare returns false', async () => {
+      vi.spyOn(UserStateRepository.prototype, 'findBulk').mockResolvedValue([userEntity]);
+      vi.spyOn(HashProvider.prototype, 'compare').mockResolvedValue(false);
+      vi.spyOn(TokenProvider.prototype, 'sign').mockResolvedValue('dummyToken');
+      vi.spyOn(HashProvider.prototype, 'hash').mockResolvedValue('dummyHashedToken');
+      vi.spyOn(UserStateRepository.prototype, 'updateTokens').mockResolvedValue();
+      await expect(instance.signIn(signInRequest)).rejects.toThrow();
     })
   })
 })

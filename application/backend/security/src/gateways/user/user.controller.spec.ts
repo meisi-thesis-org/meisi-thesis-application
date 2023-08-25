@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { UserController } from './user.controller';
 import { type Request, type Response } from 'express';
 import { UserService } from './user.service';
-import { UserDTO } from './domain/user.domain';
+import { UserDTO } from './domain/user.dto';
 import { RandomProvider } from '@meisi-thesis/application-backend-shared/src/providers/random.provider';
 
 describe('UserController', () => {
@@ -19,6 +19,8 @@ describe('UserController', () => {
   const dummyFirstName = 'dummyFirstName';
   const dummyLastName = 'dummyLastName';
   const dummyDateBirth = new Date().toISOString();
+  const dummyAccessToken = 'dummyAccessToken';
+  const dummyRefreshToken = 'dummyRefreshToken';
   const dummyCreatedAt = new Date().toISOString();
   const dummyUpdatedAt = new Date().toISOString();
 
@@ -30,6 +32,8 @@ describe('UserController', () => {
     dummyFirstName,
     dummyLastName,
     dummyDateBirth,
+    dummyAccessToken,
+    dummyRefreshToken,
     dummyCreatedAt,
     dummyUpdatedAt
   );

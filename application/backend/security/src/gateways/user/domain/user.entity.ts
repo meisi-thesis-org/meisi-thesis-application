@@ -8,6 +8,8 @@ export class UserEntity {
     private readonly firstName: string,
     private readonly lastName: string,
     private readonly dateBirth: string,
+    private accessToken: string,
+    private refreshToken: string,
     private readonly createdAt: string,
     private readonly updatedAt: string
   ) {}
@@ -42,6 +44,22 @@ export class UserEntity {
 
   public getDateBirth (): string {
     return this.dateBirth;
+  }
+
+  public getAccessToken (): string {
+    return this.accessToken;
+  }
+
+  public setAccessToken (value: string): void {
+    this.accessToken = value;
+  }
+
+  public getRefreshToken (): string {
+    return this.refreshToken;
+  }
+
+  public setRefreshToken (value: string): void {
+    this.refreshToken = value;
   }
 
   public getCreatedAt (): string {

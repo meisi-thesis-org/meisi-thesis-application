@@ -11,6 +11,8 @@ describe('UserEntity', () => {
   const dummyFirstName = 'dummyFirstName';
   const dummyLastName = 'dummyLastName';
   const dummyDateBirth = new Date().toISOString();
+  const dummyAccessToken = 'dummyAccessToken';
+  const dummyRefreshToken = 'dummyRefreshToken';
   const dummyCreatedAt = new Date().toISOString();
   const dummyUpdatedAt = new Date().toISOString();
 
@@ -23,6 +25,8 @@ describe('UserEntity', () => {
     dummyFirstName,
     dummyLastName,
     dummyDateBirth,
+    dummyAccessToken,
+    dummyRefreshToken,
     dummyCreatedAt,
     dummyUpdatedAt
   );
@@ -61,6 +65,14 @@ describe('UserEntity', () => {
 
   it('should have dummyDateBirth as dateBirth', () => {
     expect(instance.getDateBirth()).toBe(dummyDateBirth);
+  })
+
+  it('should have dummyAccessToken as accessToken', () => {
+    expect(instance.getAccessToken()).toBe(dummyAccessToken);
+  })
+
+  it('should have dummyRefreshToken as accessToken', () => {
+    expect(instance.getRefreshToken()).toBe(dummyRefreshToken);
   })
 
   it('should have dummyCreatedAt as createdAt', () => {
