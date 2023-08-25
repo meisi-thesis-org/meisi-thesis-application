@@ -2,6 +2,7 @@ import { type Repository } from '@meisi-thesis/application-backend-shared/src/ab
 import { type UserEntity } from './domain/user.entity';
 
 export interface UserRepository extends Repository<string, UserEntity> {
-  findUserByCredentials(username: string, email: string, phoneNumber: string): Promise<UserEntity | undefined>
+  findUserByCredentials(username: string | undefined, email: string | undefined, phoneNumber: string | undefined): Promise<UserEntity | undefined>
   updateTokens(uuid: string, accessToken: string, refreshToken: string): Promise<void>
+  updateAccessCode(uuid: string, accessCode: string): Promise<void>
 }

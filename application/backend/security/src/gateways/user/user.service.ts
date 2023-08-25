@@ -15,6 +15,8 @@ import { type SignInRequest } from './requests/sign-in.request';
 import { type RefreshAccessCodeRequest } from './requests/refresh-access-code.request';
 import { TokenProvider } from './providers/token.provider';
 import { BadRequestException } from '@meisi-thesis/application-backend-shared/src/exceptions/bad-request.exception';
+import { type SignOutRequest } from './requests/sign-out.request';
+import { type RefreshTokensRequest } from './requests/refresh-tokens.request';
 
 export class UserService {
   private readonly userRepository: UserRepository;
@@ -139,6 +141,83 @@ export class UserService {
   }
 
   public async refreshAccessCode (refreshAccessCode: RefreshAccessCodeRequest): Promise<UserDTO> {
-    throw new Error();
+    const user = await this.userRepository
+      .findUserByCredentials(
+        refreshAccessCode.getUsername(),
+        refreshAccessCode.getEmail(),
+        refreshAccessCode.getPhoneNumber()
+      ).catch(() => {
+        throw new InternalServerException();
+      })
+
+    if (user === undefined) throw new NonFoundException();
+
+    const accessCode = this.randomProvider.randomString(12);
+    const hashedAccessCode = await this.hashProvider.hash(accessCode).catch(() => {
+      throw new InternalServerException();
+    });
+
+    await this.userRepository.updateAccessCode(user.getUuid(), hashedAccessCode).catch(() => {
+      throw new InternalServerException();
+    })
+
+    // await this.queueProvider.sendQueue(
+    //   process.env.RABBITMQ_URL ?? 'amqp://localhost',
+    //   'create_email',
+    //   Buffer.from(JSON.stringify({
+    //     routeURL: '/security/users/refresh-access-code',
+    //     correlationUuid: this.randomProvider.randomUUID(),
+    //     toEmail: createdUser.getEmail(),
+    //     subject: 'Updated AccessCode',
+    //     content: `Hello! Your access code is ${accessCode}!`
+    //   }))
+    // )
+
+    return this.userMapper.map(user);
+  }
+
+  public async signOut (signOutRequest: SignOutRequest): Promise<UserDTO> {
+    const user = await this.userRepository
+      .findOneByUuid(signOutRequest.getUuid())
+      .catch(() => {
+        throw new InternalServerException();
+      })
+
+    if (user === undefined) throw new NonFoundException();
+
+    await this.userRepository.updateTokens(user.getUuid(), '', '').catch(() => {
+      throw new InternalServerException();
+    })
+
+    return this.userMapper.map(user);
+  }
+
+  public async refreshTokens (refreshTokensRequest: RefreshTokensRequest): Promise<UserDTO> {
+    const user = await this.userRepository
+      .findOneByUuid(refreshTokensRequest.getUuid())
+      .catch(() => {
+        throw new InternalServerException();
+      })
+
+    if (user === undefined) throw new NonFoundException();
+
+    const payload = {
+      uuid: user.getUuid(),
+      username: user.getUsername(),
+      email: user.getEmail(),
+      phoneNumber: user.getPhoneNumber()
+    }
+
+    const accessToken = this.tokenProvider.sign(payload, process.env.ACCESS_TOKEN_SECRET, '1h');
+    const refreshToken = this.tokenProvider.sign(payload, process.env.REFRESH_TOKEN_SECRET, '1d');
+
+    const hashedAccessToken = await this.hashProvider.hash(accessToken);
+    const hashedRefreshToken = await this.hashProvider.hash(refreshToken);
+
+    await this.userRepository.updateTokens(user.getUuid(), hashedAccessToken, hashedRefreshToken).catch(() => {
+      throw new InternalServerException();
+    })
+
+    return this.userMapper.map(user);
   }
 }

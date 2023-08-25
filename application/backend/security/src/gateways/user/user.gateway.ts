@@ -19,8 +19,8 @@ export class UserGateway extends Gateway<Router> {
     this.router.post('/sign-up', SchemaValidator(SignUpSchema), async (request: Request, response: Response) => await this.userController.signUp(request, response));
     this.router.put('/sign-in', SchemaValidator(SignInSchema), async (request: Request, response: Response) => await this.userController.signIn(request, response));
     this.router.put('/refresh-access-code', SchemaValidator(RefreshAccessCodeSchema), async (request: Request, response: Response) => await this.userController.refreshAccessCode(request, response))
-    this.router.put('/refresh-tokens', SchemaValidator(RefreshAccessCodeSchema), async (request: Request, response: Response) => await this.userController.refreshTokens(request, response))
-    this.router.put('/sign-out', async (request: Request, response: Response) => await this.userController.signOut(request, response));
+    this.router.put('/:uuid/refresh-tokens', SchemaValidator(RefreshAccessCodeSchema), async (request: Request, response: Response) => { await this.userController.refreshTokens(request, response); })
+    this.router.put('/:uuid/sign-out', async (request: Request, response: Response) => await this.userController.signOut(request, response));
 
     return this.router;
   }

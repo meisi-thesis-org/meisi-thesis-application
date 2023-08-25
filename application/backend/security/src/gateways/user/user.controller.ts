@@ -1,6 +1,7 @@
 import { FindUserByUuidRequest } from './requests/find-user-by-uuid.request';
 import { RefreshAccessCodeRequest } from './requests/refresh-access-code.request';
 import { SignInRequest } from './requests/sign-in.request';
+import { SignOutRequest } from './requests/sign-out.request';
 import { SignUpRequest } from './requests/sign-up.request';
 import { UserService } from './user.service';
 import { type Request, type Response } from 'express';
@@ -50,7 +51,8 @@ export class UserController {
     try {
       const refreshAccessCode = new RefreshAccessCodeRequest(
         request.body.username,
-        request.body.email, request.body.phoneNumber
+        request.body.email,
+        request.body.phoneNumber
       );
       const data = await this.service.refreshAccessCode(refreshAccessCode);
       return response.status(201).json(data);
@@ -60,6 +62,22 @@ export class UserController {
   }
 
   public async signOut (request: Request, response: Response): Promise<Response> {
-    throw new Error();
+    try {
+      const signOutRequest = new SignOutRequest(request.params.uuid);
+      const data = await this.service.signOut(signOutRequest);
+      return response.status(201).json(data);
+    } catch (error: any) {
+      return response.status(error.getHttpCode()).json();
+    }
+  }
+
+  public async refreshTokens (request: Request, response: Response): Promise<Response> {
+    try {
+      const signOutRequest = new SignOutRequest(request.params.uuid);
+      const data = await this.service.signOut(signOutRequest);
+      return response.status(201).json(data);
+    } catch (error: any) {
+      return response.status(error.getHttpCode()).json();
+    }
   }
 }

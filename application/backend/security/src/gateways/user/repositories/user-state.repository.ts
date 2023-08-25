@@ -12,7 +12,11 @@ export class UserStateRepository implements UserRepository {
     return this.userCollection.find((user) => user.getUuid() === uuid);
   }
 
-  public async findUserByCredentials (username: string, email: string, phoneNumber: string): Promise<UserEntity | undefined> {
+  public async findUserByCredentials (
+    username: string | undefined,
+    email: string | undefined,
+    phoneNumber: string | undefined
+  ): Promise<UserEntity | undefined> {
     return this.userCollection.find((user) =>
       user.getUsername() === username ||
       user.getEmail() === email ||
@@ -29,6 +33,16 @@ export class UserStateRepository implements UserRepository {
       if (user.getUuid() === uuid) {
         user.setAccessToken(accessToken);
         user.setRefreshToken(refreshToken);
+      }
+
+      return user;
+    });
+  }
+
+  public async updateAccessCode (uuid: string, accessCode: string): Promise<void> {
+    this.userCollection.find((user) => {
+      if (user.getUuid() === uuid) {
+        user.setAccessCode(accessCode);
       }
 
       return user;
