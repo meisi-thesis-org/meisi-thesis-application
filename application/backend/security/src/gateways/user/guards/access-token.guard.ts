@@ -3,7 +3,7 @@ import { type Request, type NextFunction, type Response } from 'express';
 import { TokenProvider } from '../providers/token.provider';
 import { type AuthenticatedRequest } from '@meisi-thesis/application-backend-shared/src/types/authenticated-request.type';
 
-export const RefreshTokenGuard = (
+export const AccessTokenGuard = (
   request: Request,
   _response: Response,
   next: NextFunction
