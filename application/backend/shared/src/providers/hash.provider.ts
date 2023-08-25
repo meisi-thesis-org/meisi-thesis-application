@@ -14,4 +14,12 @@ export class HashProvider {
       throw new InternalServerException();
     }
   }
+
+  public async compare (rawData: string, hashedData: string): Promise<boolean> {
+    try {
+      return await bcrypt.compare(rawData, hashedData)
+    } catch (error) {
+      throw new InternalServerException();
+    }
+  }
 }

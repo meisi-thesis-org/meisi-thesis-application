@@ -16,6 +16,8 @@ module.exports = {
     '@typescript-eslint/semi': 'off',
     '@typescript-eslint/no-misused-promises': 'off',
     '@typescript-eslint/restrict-template-expressions': 'off',
-    '@typescript-eslint/method-signature-style': 'off'
+    '@typescript-eslint/method-signature-style': 'off',
+    '@typescript-eslint/consistent-type-definitions': 'off'
+
   }
 }

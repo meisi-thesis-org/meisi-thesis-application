@@ -10,14 +10,15 @@ describe('HashProvider', () => {
     expect(instance).instanceOf(HashProvider);
   })
 
-  describe('hash', () => {
-    beforeEach(() => {
-      vi.mock('bcrypt', () => ({
-        genSalt: vi.fn(),
-        hash: vi.fn()
-      }))
-    })
+  beforeEach(() => {
+    vi.mock('bcrypt', () => ({
+      genSalt: vi.fn(),
+      hash: vi.fn(),
+      compare: vi.fn()
+    }))
+  })
 
+  describe('hash', () => {
     it('should return a hash', async () => {
       vi.spyOn(bcrypt, 'hash').mockResolvedValue('dummyHash' as any)
 
@@ -34,6 +35,26 @@ describe('HashProvider', () => {
       vi.spyOn(bcrypt, 'hash').mockRejectedValue(new InternalServerException())
 
       await expect(instance.hash('dummyData')).rejects.toThrowError(InternalServerException);
+    })
+  })
+
+  describe('compare', () => {
+    it('should return true', async () => {
+      vi.spyOn(bcrypt, 'compare').mockResolvedValue(true as any)
+
+      await expect(instance.compare('dummyData', 'dummyData')).resolves.toBe(true);
+    })
+
+    it('should return true', async () => {
+      vi.spyOn(bcrypt, 'compare').mockResolvedValue(false as any)
+
+      await expect(instance.compare('dummyData', 'hashedDummyData')).resolves.toBe(false);
+    })
+
+    it('should return true', async () => {
+      vi.spyOn(bcrypt, 'compare').mockRejectedValue(new Error())
+
+      await expect(async () => await instance.compare('dummyData', 'hashedDummyData')).rejects.toThrow();
     })
   })
 })
