@@ -102,9 +102,7 @@ export class UserService {
         foundUser.getAccessCode()
       )
 
-      if (isAccessCodeEqual) {
-        return this.userMapper.map(foundUser);
-      }
+      if (isAccessCodeEqual) return this.userMapper.map(foundUser);
     }
 
     throw new NonFoundException()
