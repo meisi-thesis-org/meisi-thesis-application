@@ -17,10 +17,12 @@ describe('UserMapper', () => {
       const dummyEmail = 'dummyEmail';
       const dummyUsername = 'dummyUsername';
       const dummyPhoneNumber = 'dummyPhoneNumber';
-      const dummyAccessToken = 'dummyAccessToken';
+      const dummyAccessCode = 'dummyAccessCode';
       const dummyFirstName = 'dummyFirstName';
       const dummyLastName = 'dummyLastName';
       const dummyDateBirth = new Date().toISOString();
+      const dummyAccessToken = 'dummyAccessToken';
+      const dummyRefreshToken = 'dummyRefreshToken';
       const dummyCreatedAt = new Date().toISOString();
       const dummyUpdatedAt = new Date().toISOString();
 
@@ -29,10 +31,12 @@ describe('UserMapper', () => {
         dummyEmail,
         dummyUsername,
         dummyPhoneNumber,
-        dummyAccessToken,
+        dummyAccessCode,
         dummyFirstName,
         dummyLastName,
         dummyDateBirth,
+        dummyAccessToken,
+        dummyRefreshToken,
         dummyCreatedAt,
         dummyUpdatedAt
       );
