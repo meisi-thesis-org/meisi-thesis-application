@@ -1,4 +1,5 @@
 import { InternalServerException } from '@meisi-thesis/application-backend-shared/src/exceptions/internal-server.exception';
+import { NoAuthorizationException } from '@meisi-thesis/application-backend-shared/src/exceptions/no-authorization.exception';
 import { type JwtPayload, sign, verify } from 'jsonwebtoken';
 
 export class TokenProvider {
@@ -17,12 +18,12 @@ export class TokenProvider {
 
   public verify (
     token: string,
-    tokenSecret: string
+    tokenSecret: string | undefined
   ): string | JwtPayload {
     try {
-      return verify(token, tokenSecret);
+      return verify(token, tokenSecret ?? 'secret');
     } catch (error) {
-      throw new InternalServerException();
+      throw new NoAuthorizationException();
     }
   }
 }
