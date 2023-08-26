@@ -14,7 +14,6 @@ export class LocationGateway extends Gateway<Router> {
   public override subscribe (): Router {
     this.router.get('/:uuid', async (request: Request, response: Response) => await this.locationController.findLocationByUuid(request, response))
     this.router.post('/', async (request: Request, response: Response) => await this.locationController.createLocationByUuid(request, response))
-    this.router.put('/:uuid', async (request: Request, response: Response) => await this.locationController.updateLocationByUuid(request, response))
 
     return this.router;
   }

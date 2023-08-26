@@ -2,7 +2,7 @@ import { Mapper } from '@meisi-thesis/application-backend-shared/src/abstracts/m
 import { type LocationEntity } from './location.entity';
 import { LocationDTO } from './location.dto';
 
-export class UserMapper extends Mapper<LocationEntity, LocationDTO> {
+export class LocationMapper extends Mapper<LocationEntity, LocationDTO> {
   public map (entity: LocationEntity): LocationDTO {
     return new LocationDTO(
       entity.getUuid(),
