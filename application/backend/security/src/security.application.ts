@@ -8,7 +8,7 @@ export class SecurityApplication {
 
   public constructor () {
     this.application = Express();
-    this.serverPort = parseInt(process.env.SERVER_PORT ?? '8000')
+    this.serverPort = parseInt(process.env.SERVER_PORT ?? '8003')
   }
 
   public defineMiddleware (): SecurityApplication {
