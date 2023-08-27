@@ -153,9 +153,7 @@ export class UserService {
     if (user === undefined) throw new NonFoundException();
 
     const accessCode = this.randomProvider.randomString(12);
-    const hashedAccessCode = await this.hashProvider.hash(accessCode).catch(() => {
-      throw new InternalServerException();
-    });
+    const hashedAccessCode = await this.hashProvider.hash(accessCode)
 
     const updatedUser = await this.userRepository
       .updateAccessCode(user.getUuid(), hashedAccessCode)
@@ -164,18 +162,6 @@ export class UserService {
       })
 
     if (updatedUser === undefined) throw new NonFoundException();
-
-    // await this.queueProvider.sendQueue(
-    //   process.env.RABBITMQ_URL ?? 'amqp://localhost',
-    //   'create_email',
-    //   Buffer.from(JSON.stringify({
-    //     routeURL: '/security/users/refresh-access-code',
-    //     correlationUuid: this.randomProvider.randomUUID(),
-    //     toEmail: createdUser.getEmail(),
-    //     subject: 'Updated AccessCode',
-    //     content: `Hello! Your access code is ${accessCode}!`
-    //   }))
-    // )
 
     return this.userMapper.map(updatedUser);
   }

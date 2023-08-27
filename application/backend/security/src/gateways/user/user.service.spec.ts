@@ -13,6 +13,9 @@ import { ConflictException } from '@meisi-thesis/application-backend-shared/src/
 import { HashProvider } from '@meisi-thesis/application-backend-shared/src/providers/hash.provider';
 import { SignInRequest } from './requests/sign-in.request';
 import { TokenProvider } from './providers/token.provider';
+import { RefreshAccessCodeRequest } from './requests/refresh-access-code.request';
+import { SignOutRequest } from './requests/sign-out.request';
+import { RefreshTokensRequest } from './requests/refresh-tokens.request';
 
 describe('UserService', () => {
   const instance = new UserService();
@@ -115,7 +118,7 @@ describe('UserService', () => {
       vi.spyOn(HashProvider.prototype, 'compare').mockResolvedValue(true);
       vi.spyOn(TokenProvider.prototype, 'sign').mockResolvedValue('dummyToken');
       vi.spyOn(HashProvider.prototype, 'hash').mockResolvedValue('dummyHashedToken');
-      vi.spyOn(UserStateRepository.prototype, 'updateTokens').mockResolvedValue();
+      vi.spyOn(UserStateRepository.prototype, 'updateTokens').mockResolvedValue(userEntity);
       await expect(instance.signIn(signInRequest)).resolves.toBeInstanceOf(UserDTO);
     })
 
@@ -138,13 +141,6 @@ describe('UserService', () => {
       await expect(instance.signIn(signInRequest)).rejects.toThrow();
     })
 
-    it('should throw an InternalServerException because TokenProvider.sign throws an error', async () => {
-      vi.spyOn(UserStateRepository.prototype, 'findBulk').mockResolvedValue([userEntity]);
-      vi.spyOn(HashProvider.prototype, 'compare').mockResolvedValue(true);
-      vi.spyOn(TokenProvider.prototype, 'sign').mockRejectedValue(new Error());
-      await expect(instance.signIn(signInRequest)).rejects.toThrow();
-    })
-
     it('should throw an InternalServerException because TokenProvider.sign on AccessToken hash throws an error', async () => {
       vi.spyOn(UserStateRepository.prototype, 'findBulk').mockResolvedValue([userEntity]);
       vi.spyOn(HashProvider.prototype, 'compare').mockResolvedValue(true);
@@ -158,8 +154,161 @@ describe('UserService', () => {
       vi.spyOn(HashProvider.prototype, 'compare').mockResolvedValue(false);
       vi.spyOn(TokenProvider.prototype, 'sign').mockResolvedValue('dummyToken');
       vi.spyOn(HashProvider.prototype, 'hash').mockResolvedValue('dummyHashedToken');
-      vi.spyOn(UserStateRepository.prototype, 'updateTokens').mockResolvedValue();
+      vi.spyOn(UserStateRepository.prototype, 'updateTokens').mockResolvedValue(userEntity);
       await expect(instance.signIn(signInRequest)).rejects.toThrow();
+    })
+
+    it('should throw an BadRequestException because UserStateRepository.updateTokens returns undefined', async () => {
+      vi.spyOn(UserStateRepository.prototype, 'findBulk').mockResolvedValue([userEntity]);
+      vi.spyOn(HashProvider.prototype, 'compare').mockResolvedValue(false);
+      vi.spyOn(TokenProvider.prototype, 'sign').mockResolvedValue('dummyToken');
+      vi.spyOn(HashProvider.prototype, 'hash').mockResolvedValue('dummyHashedToken');
+      vi.spyOn(UserStateRepository.prototype, 'updateTokens').mockResolvedValue(undefined);
+      await expect(instance.signIn(signInRequest)).rejects.toThrow();
+    })
+  })
+
+  describe('refreshAccessCode', () => {
+    const refreshAccessCodeRequest = new RefreshAccessCodeRequest(
+      'dummyUsername',
+      'dummyEmail',
+      'dummyPhoneNumber'
+    );
+
+    async function callRefreshAccessCode (): Promise<UserDTO> {
+      return await instance.refreshAccessCode(refreshAccessCodeRequest)
+    }
+
+    it('should return an instanceOf UserDTO', async () => {
+      vi.spyOn(UserStateRepository.prototype, 'findUserByCredentials').mockResolvedValue(userEntity);
+      vi.spyOn(RandomProvider.prototype, 'randomString').mockResolvedValue('dummyRandomString');
+      vi.spyOn(HashProvider.prototype, 'hash').mockResolvedValue('dummyHashedRandomString');
+      vi.spyOn(UserStateRepository.prototype, 'updateAccessCode').mockResolvedValue(userEntity);
+
+      await expect(callRefreshAccessCode()).resolves.toBeInstanceOf(UserDTO);
+    })
+
+    it('should throw NonFoundException because UserRepository.FindUserByCredentials returned undefined', async () => {
+      vi.spyOn(UserStateRepository.prototype, 'findUserByCredentials').mockResolvedValue(undefined);
+      vi.spyOn(RandomProvider.prototype, 'randomString').mockResolvedValue('dummyRandomString');
+      vi.spyOn(HashProvider.prototype, 'hash').mockResolvedValue('dummyHashedRandomString');
+      vi.spyOn(UserStateRepository.prototype, 'updateAccessCode').mockResolvedValue(userEntity);
+
+      await expect(callRefreshAccessCode()).rejects.toThrow(NonFoundException);
+    })
+
+    it('should throw InternalServerException because HashProvider.Hash thrown an exception', async () => {
+      vi.spyOn(UserStateRepository.prototype, 'findUserByCredentials').mockResolvedValue(userEntity);
+      vi.spyOn(RandomProvider.prototype, 'randomString').mockResolvedValue('dummyRandomString');
+      vi.spyOn(HashProvider.prototype, 'hash').mockRejectedValue(new InternalServerException());
+      vi.spyOn(UserStateRepository.prototype, 'updateAccessCode').mockResolvedValue(userEntity);
+
+      await expect(callRefreshAccessCode()).rejects.toThrow(InternalServerException);
+    })
+
+    it('should throw InternalServerException because UserRepository.UpdatedAccessCode thrown an exception', async () => {
+      vi.spyOn(UserStateRepository.prototype, 'findUserByCredentials').mockResolvedValue(userEntity);
+      vi.spyOn(RandomProvider.prototype, 'randomString').mockResolvedValue('dummyRandomString');
+      vi.spyOn(HashProvider.prototype, 'hash').mockResolvedValue('dummyHashedRandomString');
+      vi.spyOn(UserStateRepository.prototype, 'updateAccessCode').mockRejectedValue(new InternalServerException());
+
+      await expect(callRefreshAccessCode()).rejects.toThrow(InternalServerException);
+    })
+
+    it('should throw NonFoundException because UserRepository.UpdatedAccessCode returned undefined', async () => {
+      vi.spyOn(UserStateRepository.prototype, 'findUserByCredentials').mockResolvedValue(userEntity);
+      vi.spyOn(RandomProvider.prototype, 'randomString').mockResolvedValue('dummyRandomString');
+      vi.spyOn(HashProvider.prototype, 'hash').mockResolvedValue('dummyHashedRandomString');
+      vi.spyOn(UserStateRepository.prototype, 'updateAccessCode').mockResolvedValue(undefined);
+
+      await expect(callRefreshAccessCode()).rejects.toThrow(NonFoundException);
+    })
+  })
+
+  describe('signOut', () => {
+    const signOutRequest = new SignOutRequest('dummyUuid');
+
+    async function callSignOut (): Promise<UserDTO> {
+      return await instance.signOut(signOutRequest);
+    }
+
+    it('should return an instanceOf UserDTO', async () => {
+      vi.spyOn(UserStateRepository.prototype, 'findOneByUuid').mockResolvedValue(userEntity);
+      vi.spyOn(UserStateRepository.prototype, 'updateTokens').mockResolvedValue(userEntity);
+
+      await expect(callSignOut()).resolves.toBeInstanceOf(UserDTO);
+    })
+
+    it('should throw NonFoundException because UserRepository.FindOneByUuid returned undefined', async () => {
+      vi.spyOn(UserStateRepository.prototype, 'findOneByUuid').mockResolvedValue(undefined);
+      vi.spyOn(UserStateRepository.prototype, 'updateTokens').mockResolvedValue(userEntity);
+
+      await expect(callSignOut()).rejects.toThrow(NonFoundException);
+    })
+
+    it('should throw NonFoundException because UserRepository.UpdateTokens returned undefined', async () => {
+      vi.spyOn(UserStateRepository.prototype, 'findOneByUuid').mockResolvedValue(userEntity);
+      vi.spyOn(UserStateRepository.prototype, 'updateTokens').mockResolvedValue(undefined);
+
+      await expect(callSignOut()).rejects.toThrow(NonFoundException);
+    })
+
+    it('should throw NonFoundException because UserRepository.FindOneByUuid threw an exception', async () => {
+      vi.spyOn(UserStateRepository.prototype, 'findOneByUuid').mockRejectedValue(new InternalServerException());
+      vi.spyOn(UserStateRepository.prototype, 'updateTokens').mockResolvedValue(userEntity);
+
+      await expect(callSignOut()).rejects.toThrow(InternalServerException);
+    })
+
+    it('should throw NonFoundException because UserRepository.UpdateTokens threw an exception', async () => {
+      vi.spyOn(UserStateRepository.prototype, 'findOneByUuid').mockResolvedValue(userEntity);
+      vi.spyOn(UserStateRepository.prototype, 'updateTokens').mockRejectedValue(new InternalServerException());
+
+      await expect(callSignOut()).rejects.toThrow(InternalServerException);
+    })
+  })
+
+  describe('refreshTokens', () => {
+    const refreshTokensRequest = new RefreshTokensRequest('dummyUuid');
+
+    async function callRefreshTokens (): Promise<UserDTO> {
+      return await instance.refreshTokens(refreshTokensRequest);
+    }
+
+    it('should return an instanceOf UserDTO', async () => {
+      vi.spyOn(UserStateRepository.prototype, 'findOneByUuid').mockResolvedValue(userEntity);
+      vi.spyOn(TokenProvider.prototype, 'sign').mockResolvedValue('dummyToken');
+      vi.spyOn(HashProvider.prototype, 'hash').mockResolvedValue('dummyHashedToken');
+      vi.spyOn(UserStateRepository.prototype, 'updateTokens').mockResolvedValue(userEntity);
+
+      await expect(callRefreshTokens()).resolves.toBeInstanceOf(UserDTO);
+    })
+
+    it('should throw NonFoundException because UserRepository.findOneByUuid returned an undefined', async () => {
+      vi.spyOn(UserStateRepository.prototype, 'findOneByUuid').mockResolvedValue(undefined);
+      vi.spyOn(TokenProvider.prototype, 'sign').mockResolvedValue('dummyToken');
+      vi.spyOn(HashProvider.prototype, 'hash').mockResolvedValue('dummyHashedToken');
+      vi.spyOn(UserStateRepository.prototype, 'updateTokens').mockResolvedValue(userEntity);
+
+      await expect(callRefreshTokens()).rejects.toThrow(NonFoundException);
+    })
+
+    it('should throw InternalServerException because HashProvider.Hash threw an exception', async () => {
+      vi.spyOn(UserStateRepository.prototype, 'findOneByUuid').mockResolvedValue(userEntity);
+      vi.spyOn(TokenProvider.prototype, 'sign').mockResolvedValue('dummyToken');
+      vi.spyOn(HashProvider.prototype, 'hash').mockRejectedValue(new InternalServerException());
+      vi.spyOn(UserStateRepository.prototype, 'updateTokens').mockResolvedValue(userEntity);
+
+      await expect(callRefreshTokens()).rejects.toThrow(InternalServerException);
+    })
+
+    it('should throw NonFoundException because UserStateRepository.UpdateTokens returned undefined', async () => {
+      vi.spyOn(UserStateRepository.prototype, 'findOneByUuid').mockResolvedValue(userEntity);
+      vi.spyOn(TokenProvider.prototype, 'sign').mockResolvedValue('dummyToken');
+      vi.spyOn(HashProvider.prototype, 'hash').mockResolvedValue('dummyHashedToken');
+      vi.spyOn(UserStateRepository.prototype, 'updateTokens').mockResolvedValue(undefined);
+
+      await expect(callRefreshTokens()).rejects.toThrow(NonFoundException);
     })
   })
 })

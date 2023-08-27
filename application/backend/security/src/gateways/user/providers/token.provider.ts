@@ -11,7 +11,6 @@ export class TokenProvider {
     try {
       return sign(payload, tokenSecret ?? 'secret', { expiresIn });
     } catch (error) {
-      console.log(error)
       throw new InternalServerException();
     }
   }
