@@ -9,6 +9,7 @@ import { LocationMapper } from './domain/location.mapper';
 import { RandomProvider } from '@meisi-thesis/application-backend-shared/src/providers/random.provider';
 import { ConflictException } from '@meisi-thesis/application-backend-shared/src/exceptions/conflict.exception';
 import { LocationEntity } from './domain/location.entity';
+import { type UpdateCoordinatesByUuidRequest } from './requests/update-coordinates-by-uuid.request';
 
 export class LocationService {
   private readonly repository: LocationRepository;
@@ -64,5 +65,30 @@ export class LocationService {
     })
 
     return this.mapper.map(createdLocation);
+  }
+
+  public async updateCoordinatesByUuid (
+    updateCoordinatesByUuidRequest: UpdateCoordinatesByUuidRequest
+  ): Promise<LocationDTO> {
+    const foundLocation = await this.repository
+      .findOneByUuid(updateCoordinatesByUuidRequest.getUuid())
+      .catch(() => {
+        throw new InternalServerException();
+      })
+
+    if (foundLocation === undefined) throw new NonFoundException();
+
+    const updatedLocation = await this.repository
+      .updateCoordinatesByUuid(
+        updateCoordinatesByUuidRequest.getUuid(),
+        updateCoordinatesByUuidRequest.getCoordinatesX(),
+        updateCoordinatesByUuidRequest.getCoordinatesY()
+      ).catch(() => {
+        throw new InternalServerException();
+      })
+
+    if (updatedLocation === undefined) throw new NonFoundException();
+
+    return this.mapper.map(updatedLocation);
   }
 }

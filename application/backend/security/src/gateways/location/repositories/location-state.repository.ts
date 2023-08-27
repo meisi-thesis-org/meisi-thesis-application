@@ -25,4 +25,20 @@ export class LocationStateRepository implements LocationRepository {
       location.getCoordinateY() === coordinateY)
     )
   }
+
+  public async updateCoordinatesByUuid (
+    uuid: string,
+    coordinateX: string,
+    coordinateY: string
+  ): Promise<LocationEntity | undefined> {
+    return this.locationCollection.find((location) => {
+      if (location.getUuid() === uuid) {
+        location.setCoordinateX(coordinateX);
+        location.setCoordinateY(coordinateY);
+        location.setUpdatedAt(new Date().toISOString())
+      }
+
+      return location;
+    })
+  }
 }

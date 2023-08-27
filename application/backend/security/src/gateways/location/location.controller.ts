@@ -2,6 +2,7 @@ import { response, type Request, type Response } from 'express';
 import { FindLocationByUuidRequest } from './requests/find-location-by-uuid.request';
 import { LocationService } from './location.service';
 import { CreateLocationRequest } from './requests/create-location.request';
+import { UpdateCoordinatesByUuidRequest } from './requests/update-coordinates-by-uuid.request';
 
 export class LocationController {
   private readonly service: LocationService;
@@ -28,6 +29,20 @@ export class LocationController {
         request.body.coordinateY
       );
       const location = await this.service.createLocation(createLocationRequest);
+      return response.status(201).json(location);
+    } catch (error: any) {
+      return response.status(error.getHttpCode()).json();
+    }
+  }
+
+  public async updateCoordinatesByUuid (request: Request, reponse: Response): Promise<Response> {
+    try {
+      const updateCoordinatesByUuidRequest = new UpdateCoordinatesByUuidRequest(
+        request.params.uuid,
+        request.body.coordinateX,
+        request.body.coordinateY
+      );
+      const location = await this.service.updateCoordinatesByUuid(updateCoordinatesByUuidRequest);
       return response.status(201).json(location);
     } catch (error: any) {
       return response.status(error.getHttpCode()).json();

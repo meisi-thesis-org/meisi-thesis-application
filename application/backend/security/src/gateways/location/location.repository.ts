@@ -3,4 +3,5 @@ import { type LocationEntity } from './domain/location.entity';
 
 export interface LocationRepository extends Repository<string, LocationEntity> {
   findLocationByCoordinates(coordinateX: string, coordinateY: string): Promise<LocationEntity | undefined>
+  updateCoordinatesByUuid(uuid: string, coordinateX: string, coordinateY: string): Promise<LocationEntity | undefined>
 }
