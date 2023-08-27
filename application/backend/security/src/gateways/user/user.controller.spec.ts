@@ -142,4 +142,106 @@ describe('UserController', () => {
       await expect(callSignIn()).resolves.toEqual(userDTO);
     })
   })
+
+  describe('signOut', () => {
+    beforeEach(() => {
+      requestMock.params = { uuid: 'dummyUuid' }
+      vi.mock('user.service', () => ({
+        signOut: vi.fn()
+      }))
+    })
+
+    async function callSignOut (): Promise<Response> {
+      return await instance.signOut(requestMock, responseMock);
+    }
+
+    function defineResponseMock<T> (jsonResponse: T): void {
+      responseMock.json = vi.fn().mockReturnValue(jsonResponse);
+      responseMock.status = vi.fn(() => responseMock)
+    }
+
+    it('should throw an exception because an error ocurred while making a service request', async () => {
+      vi.spyOn(UserService.prototype, 'signOut').mockRejectedValue({
+        getHttpCode: vi.fn()
+      });
+      defineResponseMock(new Error());
+
+      await expect(callSignOut()).resolves.toEqual(new Error());
+    })
+
+    it('should return an UserDTO', async () => {
+      vi.spyOn(UserService.prototype, 'signOut').mockResolvedValue(userDTO);
+      defineResponseMock(userDTO);
+
+      await expect(callSignOut()).resolves.toEqual(userDTO);
+    })
+  })
+
+  describe('refreshAccessCode', () => {
+    beforeEach(() => {
+      requestMock.body = { username: 'dummyUsername', email: 'dummyEmail', phoneNumber: 'dummyPhoneNumber' }
+      vi.mock('user.service', () => ({
+        refreshAccessCode: vi.fn()
+      }))
+    })
+
+    async function callRefreshAccessCode (): Promise<Response> {
+      return await instance.refreshAccessCode(requestMock, responseMock);
+    }
+
+    function defineResponseMock<T> (jsonResponse: T): void {
+      responseMock.json = vi.fn().mockReturnValue(jsonResponse);
+      responseMock.status = vi.fn(() => responseMock)
+    }
+
+    it('should throw an exception because an error ocurred while making a service request', async () => {
+      vi.spyOn(UserService.prototype, 'refreshAccessCode').mockRejectedValue({
+        getHttpCode: vi.fn()
+      });
+      defineResponseMock(new Error());
+
+      await expect(callRefreshAccessCode()).resolves.toEqual(new Error());
+    })
+
+    it('should return an UserDTO', async () => {
+      vi.spyOn(UserService.prototype, 'refreshAccessCode').mockResolvedValue(userDTO);
+      defineResponseMock(userDTO);
+
+      await expect(callRefreshAccessCode()).resolves.toEqual(userDTO);
+    })
+  })
+
+  describe('refreshTokens', () => {
+    beforeEach(() => {
+      requestMock.params = { uuid: 'dummyUuid' }
+      vi.mock('user.service', () => ({
+        refreshTokens: vi.fn()
+      }))
+    })
+
+    async function callRefreshTokens (): Promise<Response> {
+      return await instance.refreshTokens(requestMock, responseMock);
+    }
+
+    function defineResponseMock<T> (jsonResponse: T): void {
+      responseMock.json = vi.fn().mockReturnValue(jsonResponse);
+      responseMock.status = vi.fn(() => responseMock)
+    }
+
+    it('should throw an exception because an error ocurred while making a service request', async () => {
+      vi.spyOn(UserService.prototype, 'refreshTokens').mockRejectedValue({
+        getHttpCode: vi.fn()
+      });
+      defineResponseMock(new Error());
+
+      await expect(callRefreshTokens()).resolves.toEqual(new Error());
+    })
+
+    it('should return an UserDTO', async () => {
+      vi.spyOn(UserService.prototype, 'refreshTokens').mockResolvedValue(userDTO);
+      defineResponseMock(userDTO);
+
+      await expect(callRefreshTokens()).resolves.toEqual(userDTO);
+    })
+  })
 })
