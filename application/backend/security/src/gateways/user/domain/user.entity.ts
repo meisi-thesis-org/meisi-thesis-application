@@ -11,7 +11,7 @@ export class UserEntity {
     private accessToken: string,
     private refreshToken: string,
     private readonly createdAt: string,
-    private readonly updatedAt: string
+    private updatedAt: string
   ) {}
 
   public getUuid (): string {
@@ -72,5 +72,9 @@ export class UserEntity {
 
   public getUpdatedAt (): string {
     return this.updatedAt;
+  }
+
+  public setUpdatedAt (value: string): void {
+    this.updatedAt = value;
   }
 }

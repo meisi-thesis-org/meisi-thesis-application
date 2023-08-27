@@ -3,6 +3,6 @@ import { type UserEntity } from './domain/user.entity';
 
 export interface UserRepository extends Repository<string, UserEntity> {
   findUserByCredentials(username: string | undefined, email: string | undefined, phoneNumber: string | undefined): Promise<UserEntity | undefined>
-  updateTokens(uuid: string, accessToken: string, refreshToken: string): Promise<void>
-  updateAccessCode(uuid: string, accessCode: string): Promise<void>
+  updateTokens(uuid: string, accessToken: string, refreshToken: string): Promise<UserEntity | undefined>
+  updateAccessCode(uuid: string, accessCode: string): Promise<UserEntity | undefined>
 }

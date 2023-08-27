@@ -157,9 +157,13 @@ export class UserService {
       throw new InternalServerException();
     });
 
-    await this.userRepository.updateAccessCode(user.getUuid(), hashedAccessCode).catch(() => {
-      throw new InternalServerException();
-    })
+    const updatedUser = await this.userRepository
+      .updateAccessCode(user.getUuid(), hashedAccessCode)
+      .catch(() => {
+        throw new InternalServerException();
+      })
+
+    if (updatedUser === undefined) throw new NonFoundException();
 
     // await this.queueProvider.sendQueue(
     //   process.env.RABBITMQ_URL ?? 'amqp://localhost',
@@ -173,7 +177,7 @@ export class UserService {
     //   }))
     // )
 
-    return this.userMapper.map(user);
+    return this.userMapper.map(updatedUser);
   }
 
   public async signOut (signOutRequest: SignOutRequest): Promise<UserDTO> {
@@ -185,9 +189,13 @@ export class UserService {
 
     if (user === undefined) throw new NonFoundException();
 
-    await this.userRepository.updateTokens(user.getUuid(), '', '').catch(() => {
-      throw new InternalServerException();
-    })
+    const updatedUser = await this.userRepository
+      .updateTokens(user.getUuid(), '', '')
+      .catch(() => {
+        throw new InternalServerException();
+      })
+
+    if (updatedUser === undefined) throw new NonFoundException();
 
     return this.userMapper.map(user);
   }
@@ -214,9 +222,13 @@ export class UserService {
     const hashedAccessToken = await this.hashProvider.hash(accessToken);
     const hashedRefreshToken = await this.hashProvider.hash(refreshToken);
 
-    await this.userRepository.updateTokens(user.getUuid(), hashedAccessToken, hashedRefreshToken).catch(() => {
-      throw new InternalServerException();
-    })
+    const updatedUser = await this.userRepository
+      .updateTokens(user.getUuid(), hashedAccessToken, hashedRefreshToken)
+      .catch(() => {
+        throw new InternalServerException();
+      })
+
+    if (updatedUser === undefined) throw new NonFoundException();
 
     return this.userMapper.map(user);
   }

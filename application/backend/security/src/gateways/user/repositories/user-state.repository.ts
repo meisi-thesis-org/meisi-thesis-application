@@ -28,21 +28,23 @@ export class UserStateRepository implements UserRepository {
     this.userCollection.push(entity);
   }
 
-  public async updateTokens (uuid: string, accessToken: string, refreshToken: string): Promise<void> {
-    this.userCollection.find((user) => {
+  public async updateTokens (uuid: string, accessToken: string, refreshToken: string): Promise<UserEntity | undefined> {
+    return this.userCollection.find((user) => {
       if (user.getUuid() === uuid) {
         user.setAccessToken(accessToken);
         user.setRefreshToken(refreshToken);
+        user.setUpdatedAt(new Date().toISOString())
       }
 
       return user;
     });
   }
 
-  public async updateAccessCode (uuid: string, accessCode: string): Promise<void> {
-    this.userCollection.find((user) => {
+  public async updateAccessCode (uuid: string, accessCode: string): Promise<UserEntity | undefined> {
+    return this.userCollection.find((user) => {
       if (user.getUuid() === uuid) {
         user.setAccessCode(accessCode);
+        user.setUpdatedAt(new Date().toISOString())
       }
 
       return user;
