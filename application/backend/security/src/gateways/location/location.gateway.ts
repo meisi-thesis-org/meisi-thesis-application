@@ -13,7 +13,7 @@ export class LocationGateway extends Gateway<Router> {
 
   public override subscribe (): Router {
     this.router.get('/:uuid', async (request: Request, response: Response) => await this.locationController.findLocationByUuid(request, response))
-    this.router.post('/', async (request: Request, response: Response) => await this.locationController.createLocationByUuid(request, response))
+    this.router.post('/', async (request: Request, response: Response) => await this.locationController.createLocation(request, response))
     this.router.put('/:uuid/coordinates', async (request: Request, response: Response) => await this.locationController.updateCoordinatesByUuid(request, response))
     this.router.put('/:uuid/status', async (request: Request, response: Response) => await this.locationController.updateStatusByUuid(request, response))
     this.router.put('/:uuid/activity', async (request: Request, response: Response) => await this.locationController.updateActivityByUuid(request, response))

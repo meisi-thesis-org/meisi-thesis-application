@@ -1,4 +1,4 @@
-import { response, type Request, type Response } from 'express';
+import { type Request, type Response } from 'express';
 import { FindLocationByUuidRequest } from './requests/find-location-by-uuid.request';
 import { LocationService } from './location.service';
 import { CreateLocationRequest } from './requests/create-location.request';
@@ -13,7 +13,7 @@ export class LocationController {
     this.service = new LocationService();
   }
 
-  public async findLocationByUuid (request: Request, reponse: Response): Promise<Response> {
+  public async findLocationByUuid (request: Request, response: Response): Promise<Response> {
     try {
       const findLocationByUuidRequest = new FindLocationByUuidRequest(request.params.uuid);
       const location = await this.service.findLocationByUuid(findLocationByUuidRequest);
@@ -23,7 +23,7 @@ export class LocationController {
     }
   }
 
-  public async createLocationByUuid (request: Request, reponse: Response): Promise<Response> {
+  public async createLocation (request: Request, response: Response): Promise<Response> {
     try {
       const createLocationRequest = new CreateLocationRequest(
         request.body.userUuid,
@@ -37,7 +37,7 @@ export class LocationController {
     }
   }
 
-  public async updateCoordinatesByUuid (request: Request, reponse: Response): Promise<Response> {
+  public async updateCoordinatesByUuid (request: Request, response: Response): Promise<Response> {
     try {
       const updateCoordinatesByUuidRequest = new UpdateCoordinatesByUuidRequest(
         request.params.uuid,
@@ -68,7 +68,7 @@ export class LocationController {
     try {
       const updateActivityByUuidRequest = new UpdateActivityByUuidRequest(
         request.params.uuid,
-        request.body.enabled
+        request.body.activated
       );
       const location = await this.service.updateActivityByUuid(updateActivityByUuidRequest);
       return response.status(201).json(location);
