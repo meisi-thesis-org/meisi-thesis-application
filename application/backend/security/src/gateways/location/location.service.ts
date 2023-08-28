@@ -42,7 +42,8 @@ export class LocationService {
     createLocationRequest: CreateLocationRequest
   ): Promise<LocationDTO> {
     const foundLocation = await this.repository
-      .findLocationByCoordinates(
+      .findLocationByCoordinatesWithUserUuid(
+        createLocationRequest.getUserUuid(),
         createLocationRequest.getCoordinateX(),
         createLocationRequest.getCoordinateY()
       ).catch(() => {
@@ -57,7 +58,7 @@ export class LocationService {
       createLocationRequest.getCoordinateX(),
       createLocationRequest.getCoordinateY(),
       true,
-      false,
+      true,
       new Date().toISOString(),
       new Date().toISOString()
     )

@@ -16,13 +16,17 @@ export class LocationStateRepository implements LocationRepository {
     this.locationCollection.push(entity);
   }
 
-  public async findLocationByCoordinates (
+  public async findLocationByCoordinatesWithUserUuid (
+    userUuid: string,
     coordinateX: string,
     coordinateY: string
   ): Promise<LocationEntity | undefined> {
     return this.locationCollection.find((location) =>
-      (location.getCoordinateX() === coordinateX &&
-      location.getCoordinateY() === coordinateY)
+      (
+        location.getUserUuid() === userUuid &&
+        location.getCoordinateX() === coordinateX &&
+        location.getCoordinateY() === coordinateY
+      )
     )
   }
 
