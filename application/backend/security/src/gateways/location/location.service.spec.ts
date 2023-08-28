@@ -8,6 +8,9 @@ import { NonFoundException } from '@meisi-thesis/application-backend-shared/src/
 import { InternalServerException } from '@meisi-thesis/application-backend-shared/src/exceptions/internal-server.exception';
 import { CreateLocationRequest } from './requests/create-location.request';
 import { ConflictException } from '@meisi-thesis/application-backend-shared/src/exceptions/conflict.exception';
+import { UpdateCoordinatesByUuidRequest } from './requests/update-coordinates-by-uuid.request';
+import { UpdateStatusByUuidRequest } from './requests/update-status-by-uuid.request';
+import { UpdateActivityByUuidRequest } from './requests/update-activity-by-uuid.request';
 
 describe('LocationService', () => {
   const instance = new LocationService();
@@ -91,7 +94,118 @@ describe('LocationService', () => {
     })
   })
 
-  describe('updateCoordinatesByUuid', () => {})
-  describe('updateStatusByUuid', () => {})
-  describe('updateActivityByUuid', () => {})
+  describe('updateCoordinatesByUuid', () => {
+    const updateCoordinatesByUuidRequest = new UpdateCoordinatesByUuidRequest(
+      'dummyUuid',
+      'dummyCoordinatesX',
+      'dummyCoordinatesY'
+    );
+
+    async function callUpdateCoordinatesByUuid (): Promise<LocationDTO> {
+      return await instance.updateCoordinatesByUuid(updateCoordinatesByUuidRequest);
+    }
+
+    it('should have an instanceOf LocationDTO', async () => {
+      vi.spyOn(LocationStateRepository.prototype, 'findOneByUuid').mockResolvedValue(locationEntity);
+      await expect(callUpdateCoordinatesByUuid()).resolves.toBeInstanceOf(LocationDTO);
+    })
+
+    it('should throw a NonFoundException because LocationStateRepository.findOneByUuid returned an undefined', async () => {
+      vi.spyOn(LocationStateRepository.prototype, 'findOneByUuid').mockResolvedValue(undefined);
+      await expect(callUpdateCoordinatesByUuid()).rejects.toThrow(NonFoundException);
+    })
+
+    it('should throw a InternalServerException because LocationStateRepository.findOneByUuid threw an InternalServerException', async () => {
+      vi.spyOn(LocationStateRepository.prototype, 'findOneByUuid').mockRejectedValue(new InternalServerException());
+      await expect(callUpdateCoordinatesByUuid()).rejects.toThrow(InternalServerException);
+    })
+
+    it('should throw a InternalServerException because LocationStateRepository.updateCoordinatesByUuid threw an InternalServerException', async () => {
+      vi.spyOn(LocationStateRepository.prototype, 'findOneByUuid').mockResolvedValue(locationEntity);
+      vi.spyOn(LocationStateRepository.prototype, 'updateCoordinatesByUuid').mockRejectedValue(new InternalServerException());
+      await expect(callUpdateCoordinatesByUuid()).rejects.toThrow(InternalServerException);
+    })
+
+    it('should throw a NonFoundException because LocationStateRepository.updateCoordinatesByUuid returned an undefined', async () => {
+      vi.spyOn(LocationStateRepository.prototype, 'findOneByUuid').mockResolvedValue(locationEntity);
+      vi.spyOn(LocationStateRepository.prototype, 'updateCoordinatesByUuid').mockResolvedValue(undefined);
+      await expect(callUpdateCoordinatesByUuid()).rejects.toThrow(NonFoundException);
+    })
+  })
+
+  describe('updateStatusByUuid', () => {
+    const updateStatusByUuidRequest = new UpdateStatusByUuidRequest(
+      'dummyUuid',
+      true
+    );
+
+    async function callUpdateStatusByUuid (): Promise<LocationDTO> {
+      return await instance.updateStatusByUuid(updateStatusByUuidRequest);
+    }
+
+    it('should have an instanceOf LocationDTO', async () => {
+      vi.spyOn(LocationStateRepository.prototype, 'findOneByUuid').mockResolvedValue(locationEntity);
+      await expect(callUpdateStatusByUuid()).resolves.toBeInstanceOf(LocationDTO);
+    })
+
+    it('should throw a NonFoundException because LocationStateRepository.findOneByUuid returned an undefined', async () => {
+      vi.spyOn(LocationStateRepository.prototype, 'findOneByUuid').mockResolvedValue(undefined);
+      await expect(callUpdateStatusByUuid()).rejects.toThrow(NonFoundException);
+    })
+
+    it('should throw a InternalServerException because LocationStateRepository.findOneByUuid threw an InternalServerException', async () => {
+      vi.spyOn(LocationStateRepository.prototype, 'findOneByUuid').mockRejectedValue(new InternalServerException());
+      await expect(callUpdateStatusByUuid()).rejects.toThrow(InternalServerException);
+    })
+
+    it('should throw a InternalServerException because LocationStateRepository.updateStatusByUuid threw an InternalServerException', async () => {
+      vi.spyOn(LocationStateRepository.prototype, 'findOneByUuid').mockResolvedValue(locationEntity);
+      vi.spyOn(LocationStateRepository.prototype, 'updateStatusByUuid').mockRejectedValue(new InternalServerException());
+      await expect(callUpdateStatusByUuid()).rejects.toThrow(InternalServerException);
+    })
+
+    it('should throw a NonFoundException because LocationStateRepository.updateStatusByUuid returned an undefined', async () => {
+      vi.spyOn(LocationStateRepository.prototype, 'findOneByUuid').mockResolvedValue(locationEntity);
+      vi.spyOn(LocationStateRepository.prototype, 'updateStatusByUuid').mockResolvedValue(undefined);
+      await expect(callUpdateStatusByUuid()).rejects.toThrow(NonFoundException);
+    })
+  })
+
+  describe('updateActivityByUuid', () => {
+    const updateActivityByUuidRequest = new UpdateActivityByUuidRequest(
+      'dummyUuid',
+      true
+    );
+
+    async function callUpdateActivityByUuid (): Promise<LocationDTO> {
+      return await instance.updateActivityByUuid(updateActivityByUuidRequest);
+    }
+
+    it('should have an instanceOf LocationDTO', async () => {
+      vi.spyOn(LocationStateRepository.prototype, 'findOneByUuid').mockResolvedValue(locationEntity);
+      await expect(callUpdateActivityByUuid()).resolves.toBeInstanceOf(LocationDTO);
+    })
+
+    it('should throw a NonFoundException because LocationStateRepository.findOneByUuid returned an undefined', async () => {
+      vi.spyOn(LocationStateRepository.prototype, 'findOneByUuid').mockResolvedValue(undefined);
+      await expect(callUpdateActivityByUuid()).rejects.toThrow(NonFoundException);
+    })
+
+    it('should throw a InternalServerException because LocationStateRepository.findOneByUuid threw an InternalServerException', async () => {
+      vi.spyOn(LocationStateRepository.prototype, 'findOneByUuid').mockRejectedValue(new InternalServerException());
+      await expect(callUpdateActivityByUuid()).rejects.toThrow(InternalServerException);
+    })
+
+    it('should throw a InternalServerException because LocationStateRepository.updateActivityByUuid threw an InternalServerException', async () => {
+      vi.spyOn(LocationStateRepository.prototype, 'findOneByUuid').mockResolvedValue(locationEntity);
+      vi.spyOn(LocationStateRepository.prototype, 'updateActivityByUuid').mockRejectedValue(new InternalServerException());
+      await expect(callUpdateActivityByUuid()).rejects.toThrow(InternalServerException);
+    })
+
+    it('should throw a NonFoundException because LocationStateRepository.updateActivityByUuid returned an undefined', async () => {
+      vi.spyOn(LocationStateRepository.prototype, 'findOneByUuid').mockResolvedValue(locationEntity);
+      vi.spyOn(LocationStateRepository.prototype, 'updateActivityByUuid').mockResolvedValue(undefined);
+      await expect(callUpdateActivityByUuid()).rejects.toThrow(NonFoundException);
+    })
+  })
 })

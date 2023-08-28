@@ -131,7 +131,7 @@ export class LocationService {
     if (foundLocation === undefined) throw new NonFoundException();
 
     const updatedLocation = await this.repository
-      .updateStatusByUuid(
+      .updateActivityByUuid(
         updateActivityByUuidRequest.getUuid(),
         updateActivityByUuidRequest.getActivated()
       ).catch(() => {
