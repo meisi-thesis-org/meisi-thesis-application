@@ -5,7 +5,7 @@ export class LocationEntity {
     private coordinateX: string,
     private coordinateY: string,
     private enabled: boolean,
-    private deactivated: boolean,
+    private activated: boolean,
     private readonly createdAt: string,
     private updatedAt: string
   ) {}
@@ -42,12 +42,12 @@ export class LocationEntity {
     this.enabled = value;
   }
 
-  public getDeactivated (): boolean {
-    return this.deactivated;
+  public getActivated (): boolean {
+    return this.activated;
   }
 
-  public setDeactivated (value: boolean): void {
-    this.deactivated = value;
+  public setActivated (value: boolean): void {
+    this.activated = value;
   }
 
   public getCreatedAt (): string {

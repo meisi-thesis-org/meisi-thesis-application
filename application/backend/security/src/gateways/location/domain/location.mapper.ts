@@ -10,7 +10,7 @@ export class LocationMapper extends Mapper<LocationEntity, LocationDTO> {
       entity.getCoordinateX(),
       entity.getCoordinateY(),
       entity.getEnabled(),
-      entity.getDeactivated(),
+      entity.getActivated(),
       entity.getCreatedAt(),
       entity.getUpdatedAt()
     );

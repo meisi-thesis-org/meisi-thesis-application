@@ -10,6 +10,8 @@ import { RandomProvider } from '@meisi-thesis/application-backend-shared/src/pro
 import { ConflictException } from '@meisi-thesis/application-backend-shared/src/exceptions/conflict.exception';
 import { LocationEntity } from './domain/location.entity';
 import { type UpdateCoordinatesByUuidRequest } from './requests/update-coordinates-by-uuid.request';
+import { type UpdateStatusByUuidRequest } from './requests/update-status-by-uuid.request';
+import { type UpdateActivityByUuidRequest } from './requests/update-activity-by-uuid.request';
 
 export class LocationService {
   private readonly repository: LocationRepository;
@@ -83,6 +85,54 @@ export class LocationService {
         updateCoordinatesByUuidRequest.getUuid(),
         updateCoordinatesByUuidRequest.getCoordinatesX(),
         updateCoordinatesByUuidRequest.getCoordinatesY()
+      ).catch(() => {
+        throw new InternalServerException();
+      })
+
+    if (updatedLocation === undefined) throw new NonFoundException();
+
+    return this.mapper.map(updatedLocation);
+  }
+
+  public async updateStatusByUuid (
+    updateStatusByUuidRequest: UpdateStatusByUuidRequest
+  ): Promise<LocationDTO> {
+    const foundLocation = await this.repository
+      .findOneByUuid(updateStatusByUuidRequest.getUuid())
+      .catch(() => {
+        throw new InternalServerException();
+      })
+
+    if (foundLocation === undefined) throw new NonFoundException();
+
+    const updatedLocation = await this.repository
+      .updateStatusByUuid(
+        updateStatusByUuidRequest.getUuid(),
+        updateStatusByUuidRequest.getEnabled()
+      ).catch(() => {
+        throw new InternalServerException();
+      })
+
+    if (updatedLocation === undefined) throw new NonFoundException();
+
+    return this.mapper.map(updatedLocation);
+  }
+
+  public async updateActivityByUuid (
+    updateActivityByUuidRequest: UpdateActivityByUuidRequest
+  ): Promise<LocationDTO> {
+    const foundLocation = await this.repository
+      .findOneByUuid(updateActivityByUuidRequest.getUuid())
+      .catch(() => {
+        throw new InternalServerException();
+      })
+
+    if (foundLocation === undefined) throw new NonFoundException();
+
+    const updatedLocation = await this.repository
+      .updateStatusByUuid(
+        updateActivityByUuidRequest.getUuid(),
+        updateActivityByUuidRequest.getActivated()
       ).catch(() => {
         throw new InternalServerException();
       })

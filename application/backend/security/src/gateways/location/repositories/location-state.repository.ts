@@ -41,4 +41,32 @@ export class LocationStateRepository implements LocationRepository {
       return location;
     })
   }
+
+  public async updateStatusByUuid (
+    uuid: string,
+    enabled: boolean
+  ): Promise<LocationEntity | undefined> {
+    return this.locationCollection.find((location) => {
+      if (location.getUuid() === uuid) {
+        location.setEnabled(enabled);
+        location.setUpdatedAt(new Date().toISOString())
+      }
+
+      return location;
+    })
+  }
+
+  public async updateActivityByUuid (
+    uuid: string,
+    activated: boolean
+  ): Promise<LocationEntity | undefined> {
+    return this.locationCollection.find((location) => {
+      if (location.getUuid() === uuid) {
+        location.setActivated(activated);
+        location.setUpdatedAt(new Date().toISOString())
+      }
+
+      return location;
+    })
+  }
 }

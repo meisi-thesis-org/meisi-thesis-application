@@ -7,7 +7,7 @@ describe('LocationEntity', () => {
   const dummyCoordinateX = 'dummyCoordinateX';
   const dummyCoordinateY = 'dummyCoordinateY';
   const dummyEnabled = true;
-  const dummyDeactivated = true;
+  const dummyActivated = true;
   const dummyCreatedAt = new Date().toISOString();
   const dummyUpdatedAt = new Date().toISOString();
 
@@ -17,7 +17,7 @@ describe('LocationEntity', () => {
     dummyCoordinateX,
     dummyCoordinateY,
     dummyEnabled,
-    dummyDeactivated,
+    dummyActivated,
     dummyCreatedAt,
     dummyUpdatedAt
   );

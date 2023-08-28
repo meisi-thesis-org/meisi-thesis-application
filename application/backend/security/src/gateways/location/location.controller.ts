@@ -3,6 +3,8 @@ import { FindLocationByUuidRequest } from './requests/find-location-by-uuid.requ
 import { LocationService } from './location.service';
 import { CreateLocationRequest } from './requests/create-location.request';
 import { UpdateCoordinatesByUuidRequest } from './requests/update-coordinates-by-uuid.request';
+import { UpdateActivityByUuidRequest } from './requests/update-activity-by-uuid.request';
+import { UpdateStatusByUuidRequest } from './requests/update-status-by-uuid.request';
 
 export class LocationController {
   private readonly service: LocationService;
@@ -43,6 +45,32 @@ export class LocationController {
         request.body.coordinateY
       );
       const location = await this.service.updateCoordinatesByUuid(updateCoordinatesByUuidRequest);
+      return response.status(201).json(location);
+    } catch (error: any) {
+      return response.status(error.getHttpCode()).json();
+    }
+  }
+
+  public async updateStatusByUuid (request: Request, response: Response): Promise<Response> {
+    try {
+      const updateStateByUuidRequest = new UpdateStatusByUuidRequest(
+        request.params.uuid,
+        request.body.enabled
+      );
+      const location = await this.service.updateStatusByUuid(updateStateByUuidRequest);
+      return response.status(201).json(location);
+    } catch (error: any) {
+      return response.status(error.getHttpCode()).json();
+    }
+  }
+
+  public async updateActivityByUuid (request: Request, response: Response): Promise<Response> {
+    try {
+      const updateActivityByUuidRequest = new UpdateActivityByUuidRequest(
+        request.params.uuid,
+        request.body.enabled
+      );
+      const location = await this.service.updateActivityByUuid(updateActivityByUuidRequest);
       return response.status(201).json(location);
     } catch (error: any) {
       return response.status(error.getHttpCode()).json();

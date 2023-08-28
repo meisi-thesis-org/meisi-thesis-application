@@ -5,7 +5,7 @@ export class LocationDTO {
     private readonly coordinateX: string,
     private readonly coordinateY: string,
     private readonly enabled: boolean,
-    private readonly deactivated: boolean,
+    private readonly activated: boolean,
     private readonly createdAt: string,
     private readonly updatedAt: string
   ) {}
@@ -30,8 +30,8 @@ export class LocationDTO {
     return this.enabled;
   }
 
-  public getDeactivated (): boolean {
-    return this.deactivated;
+  public getActivated (): boolean {
+    return this.activated;
   }
 
   public getCreatedAt (): string {
