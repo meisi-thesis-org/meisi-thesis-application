@@ -37,7 +37,7 @@ describe('LocationController', () => {
 
   describe('findLocations', () => {
     beforeEach(() => {
-      requestMock.params = { ...requestMock.params, userUuid: 'dummyUserUuid' };
+      requestMock.query = { ...requestMock.query, userUuid: 'dummyUserUuid' };
       vi.mock('location.service', () => ({
         findLocations: vi.fn()
       }))
@@ -63,7 +63,7 @@ describe('LocationController', () => {
 
     it('should return an UserDTO collection', async () => {
       vi.spyOn(LocationService.prototype, 'findLocations').mockResolvedValue([locationDTO]);
-      defineResponseMock(locationDTO);
+      defineResponseMock([locationDTO]);
 
       await expect(callFindLocations()).resolves.toEqual([locationDTO]);
     })
