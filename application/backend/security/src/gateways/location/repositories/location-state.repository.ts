@@ -4,6 +4,14 @@ import { type LocationRepository } from '../location.repository';
 export class LocationStateRepository implements LocationRepository {
   private readonly locationCollection: LocationEntity[] = new Array<LocationEntity>();
 
+  public async findLocationsByQueryParams (
+    userUuid: string | undefined,
+    coordinateX: string | undefined,
+    coordinateY: string | undefined
+  ): Promise<LocationEntity[]> {
+    throw new Error('Method not implemented.');
+  }
+
   public async findBulk (): Promise<LocationEntity[]> {
     throw new Error('Method not implemented.');
   }

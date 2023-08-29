@@ -5,12 +5,27 @@ import { CreateLocationRequest } from './requests/create-location.request';
 import { UpdateCoordinatesByUuidRequest } from './requests/update-coordinates-by-uuid.request';
 import { UpdateActivityByUuidRequest } from './requests/update-activity-by-uuid.request';
 import { UpdateStatusByUuidRequest } from './requests/update-status-by-uuid.request';
+import { FindLocationsRequest } from './requests/find-locations.request';
 
 export class LocationController {
   private readonly service: LocationService;
 
   public constructor () {
     this.service = new LocationService();
+  }
+
+  public async findLocations (request: Request, response: Response): Promise<Response> {
+    try {
+      const findLocationsRequest = new FindLocationsRequest(
+        request.query.userUuid !== undefined ? String(request.query.userUuid) : undefined,
+        request.query.coordinateX !== undefined ? String(request.query.coordinateX) : undefined,
+        request.query.coordinateY !== undefined ? String(request.query.coordinateY) : undefined
+      );
+      const locations = await this.service.findLocations(findLocationsRequest);
+      return response.status(201).json(locations);
+    } catch (error: any) {
+      return response.status(error.getHttpCode()).json();
+    }
   }
 
   public async findLocationByUuid (request: Request, response: Response): Promise<Response> {

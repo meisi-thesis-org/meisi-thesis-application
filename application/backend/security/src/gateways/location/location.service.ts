@@ -12,6 +12,7 @@ import { LocationEntity } from './domain/location.entity';
 import { type UpdateCoordinatesByUuidRequest } from './requests/update-coordinates-by-uuid.request';
 import { type UpdateStatusByUuidRequest } from './requests/update-status-by-uuid.request';
 import { type UpdateActivityByUuidRequest } from './requests/update-activity-by-uuid.request';
+import { type FindLocationsRequest } from './requests/find-locations.request';
 
 export class LocationService {
   private readonly repository: LocationRepository;
@@ -22,6 +23,26 @@ export class LocationService {
     this.repository = new LocationStateRepository();
     this.randomProvider = new RandomProvider();
     this.mapper = new LocationMapper();
+  }
+
+  public async findLocations (
+    findLocationsRequest: FindLocationsRequest
+  ): Promise<LocationDTO[]> {
+    const locations = await this.repository
+      .findBulk()
+      .catch(() => {
+        throw new InternalServerException();
+      })
+
+    if (locations.length === 0) throw new NonFoundException();
+
+    const mappedLocations: LocationDTO[] = [];
+
+    for (const location of locations) {
+      mappedLocations.push(this.mapper.map(location));
+    }
+
+    return mappedLocations;
   }
 
   public async findLocationByUuid (

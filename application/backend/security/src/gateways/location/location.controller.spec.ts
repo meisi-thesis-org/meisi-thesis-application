@@ -35,6 +35,40 @@ describe('LocationController', () => {
   const requestMock = {} as unknown as Request;
   const responseMock = {} as unknown as Response;
 
+  describe('findLocations', () => {
+    beforeEach(() => {
+      requestMock.params = { ...requestMock.params, userUuid: 'dummyUserUuid' };
+      vi.mock('location.service', () => ({
+        findLocations: vi.fn()
+      }))
+    })
+
+    async function callFindLocations (): Promise<Response> {
+      return await instance.findLocations(requestMock, responseMock);
+    }
+
+    function defineResponseMock<T> (jsonResponse: T): void {
+      responseMock.json = vi.fn().mockReturnValue(jsonResponse);
+      responseMock.status = vi.fn(() => responseMock)
+    }
+
+    it('should throw an exception because an error ocurred while making a service request', async () => {
+      vi.spyOn(LocationService.prototype, 'findLocations').mockRejectedValue({
+        getHttpCode: vi.fn()
+      });
+      defineResponseMock(new Error())
+
+      await expect(callFindLocations()).resolves.toEqual(new Error());
+    })
+
+    it('should return an UserDTO collection', async () => {
+      vi.spyOn(LocationService.prototype, 'findLocations').mockResolvedValue([locationDTO]);
+      defineResponseMock(locationDTO);
+
+      await expect(callFindLocations()).resolves.toEqual([locationDTO]);
+    })
+  })
+
   describe('findLocationByUuid', () => {
     beforeEach(() => {
       requestMock.params = { ...requestMock.params, uuid: 'dummyUuid' };
