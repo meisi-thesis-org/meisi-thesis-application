@@ -29,12 +29,13 @@ export class LocationService {
     findLocationsRequest: FindLocationsRequest
   ): Promise<LocationDTO[]> {
     const locations = await this.repository
-      .findBulk()
-      .catch(() => {
+      .findLocationsByQueryParams(
+        findLocationsRequest.getUserUuid(),
+        findLocationsRequest.getCoordinateX(),
+        findLocationsRequest.getCoordinateY()
+      ).catch(() => {
         throw new InternalServerException();
       })
-
-    if (locations.length === 0) throw new NonFoundException();
 
     const mappedLocations: LocationDTO[] = [];
 

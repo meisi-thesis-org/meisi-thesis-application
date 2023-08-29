@@ -11,6 +11,7 @@ import { ConflictException } from '@meisi-thesis/application-backend-shared/src/
 import { UpdateCoordinatesByUuidRequest } from './requests/update-coordinates-by-uuid.request';
 import { UpdateStatusByUuidRequest } from './requests/update-status-by-uuid.request';
 import { UpdateActivityByUuidRequest } from './requests/update-activity-by-uuid.request';
+import { FindLocationsRequest } from './requests/find-locations.request';
 
 describe('LocationService', () => {
   const instance = new LocationService();
@@ -29,6 +30,28 @@ describe('LocationService', () => {
     new Date().toISOString(),
     new Date().toISOString()
   );
+
+  describe('findLocations', () => {
+    const findLocationsRequest = new FindLocationsRequest(
+      undefined,
+      undefined,
+      undefined
+    );
+
+    async function callFindLocationsRequest (): Promise<LocationDTO[]> {
+      return await instance.findLocations(findLocationsRequest);
+    }
+
+    it('should return a LocationDTO collection', async () => {
+      vi.spyOn(LocationStateRepository.prototype, 'findLocationsByQueryParams').mockResolvedValue([locationEntity]);
+      await expect(callFindLocationsRequest()).resolves.toEqual([locationEntity])
+    })
+
+    it('should thow an InternalServerException because LocationRepository.findLocationsByQueryParams threw InternalServerException', async () => {
+      vi.spyOn(LocationStateRepository.prototype, 'findLocationsByQueryParams').mockRejectedValue(new InternalServerException());
+      await expect(callFindLocationsRequest()).rejects.toThrow(InternalServerException)
+    })
+  })
 
   describe('findLocationByUuid', () => {
     const findLocationByUuidRequest = new FindLocationByUuidRequest(
