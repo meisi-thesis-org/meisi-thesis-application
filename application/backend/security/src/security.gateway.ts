@@ -11,6 +11,7 @@ export class SecurityGateway extends Gateway<Router> {
   public subscribe (): Router {
     this.router.use('/users', new UserGateway().subscribe());
     this.router.use('/locations', new LocationGateway().subscribe());
+    this.router.use('/devices', new DeviceGateway().subscribe());
     return this.router;
   }
 }
