@@ -9,7 +9,22 @@ export class LocationStateRepository implements LocationRepository {
     coordinateX: string | undefined,
     coordinateY: string | undefined
   ): Promise<LocationEntity[]> {
-    throw new Error('Method not implemented.');
+    const filteredByUserUuid: LocationEntity[] = [];
+    if (userUuid !== undefined) filteredByUserUuid.push(...this.locationCollection.filter((locationEntity) => locationEntity.getUserUuid() === userUuid))
+    const sanitizedArrayByUuid = filteredByUserUuid.length > 0 ? filteredByUserUuid : this.locationCollection;
+
+    const filteredByCoordinateX: LocationEntity[] = [];
+    if (coordinateX !== undefined) filteredByCoordinateX.push(...sanitizedArrayByUuid.filter((locationEntity) => locationEntity.getCoordinateX() === coordinateX))
+    const sanitizedArrayByCoordinateX = filteredByCoordinateX.length > 0 ? filteredByCoordinateX : sanitizedArrayByUuid;
+
+    const filteredByCoordinateY: LocationEntity[] = [];
+    if (coordinateY !== undefined) filteredByCoordinateY.push(...sanitizedArrayByCoordinateX.filter((locationEntity) => locationEntity.getCoordinateY() === coordinateY))
+
+    if (coordinateY !== undefined) return filteredByCoordinateY.length === 0 ? [] : filteredByCoordinateY;
+    if (coordinateX !== undefined) return filteredByCoordinateX.length === 0 ? [] : filteredByCoordinateX;
+    if (userUuid !== undefined) return filteredByUserUuid.length === 0 ? [] : filteredByUserUuid;
+
+    return []
   }
 
   public async findBulk (): Promise<LocationEntity[]> {
