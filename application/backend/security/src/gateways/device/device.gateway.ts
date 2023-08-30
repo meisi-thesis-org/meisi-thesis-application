@@ -15,8 +15,9 @@ export class DeviceGateway extends Gateway<Router> {
     this.router.get('/', async (request: Request, response: Response) => await this.deviceController.findDevices(request, response))
     this.router.get('/:uuid', async (request: Request, response: Response) => await this.deviceController.findDeviceByUuid(request, response))
     this.router.post('/', async (request: Request, response: Response) => await this.deviceController.createDevice(request, response))
-    this.router.put('/:uuid/status', async (request: Request, response: Response) => await this.deviceController.updateStatusByUuid(request, response))
-    this.router.put('/:uuid/activity', async (request: Request, response: Response) => await this.deviceController.updateActivityByUuid(request, response))
+    this.router.put('/:uuid', async (request: Request, response: Response) => await this.deviceController.updateDeviceByUuid(request, response))
+    this.router.put('/:uuid/status', async (request: Request, response: Response) => await this.deviceController.updateDeviceStatusByUuid(request, response))
+    this.router.put('/:uuid/activity', async (request: Request, response: Response) => await this.deviceController.updateDeviceActivityByUuid(request, response))
 
     return this.router;
   }

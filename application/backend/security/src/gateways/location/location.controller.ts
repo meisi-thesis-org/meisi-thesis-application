@@ -22,7 +22,7 @@ export class LocationController {
         request.query.coordinateY !== undefined ? String(request.query.coordinateY) : undefined
       );
       const locations = await this.service.findLocations(findLocationsRequest);
-      return response.status(201).json(locations);
+      return response.status(200).json(locations);
     } catch (error: any) {
       return response.status(error.getHttpCode()).json();
     }
@@ -32,7 +32,7 @@ export class LocationController {
     try {
       const findLocationByUuidRequest = new FindLocationByUuidRequest(request.params.uuid);
       const location = await this.service.findLocationByUuid(findLocationByUuidRequest);
-      return response.status(201).json(location);
+      return response.status(200).json(location);
     } catch (error: any) {
       return response.status(error.getHttpCode()).json();
     }

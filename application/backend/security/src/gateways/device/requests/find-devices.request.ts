@@ -1,24 +1,24 @@
 export class FindDevicesRequest {
   public constructor (
-    private readonly userUuid: string,
-    private readonly ipAddress: string,
-    private readonly platform: string,
-    private readonly model: string
+    private readonly userUuid: string | undefined,
+    private readonly ipAddress: string | undefined,
+    private readonly platform: string | undefined,
+    private readonly model: string | undefined
   ) {}
 
-  public getUserUuid (): string {
+  public getUserUuid (): string | undefined {
     return this.userUuid;
   }
 
-  public getIpAddress (): string {
+  public getIpAddress (): string | undefined {
     return this.ipAddress;
   }
 
-  public getPlatform (): string {
+  public getPlatform (): string | undefined {
     return this.platform;
   }
 
-  public getModel (): string {
+  public getModel (): string | undefined {
     return this.model;
   }
 }
