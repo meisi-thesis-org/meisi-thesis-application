@@ -24,7 +24,7 @@ export class LocationStateRepository implements LocationRepository {
     if (coordinateX !== undefined) return filteredByCoordinateX.length === 0 ? [] : filteredByCoordinateX;
     if (userUuid !== undefined) return filteredByUserUuid.length === 0 ? [] : filteredByUserUuid;
 
-    return []
+    return this.locationCollection;
   }
 
   public async findBulk (): Promise<LocationEntity[]> {
