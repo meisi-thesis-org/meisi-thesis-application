@@ -62,7 +62,7 @@ describe('DeviceController', () => {
       await expect(callFindDevices()).resolves.toEqual(new Error());
     })
 
-    it('should return an UserDTO collection', async () => {
+    it('should return an DeviceDTO collection', async () => {
       vi.spyOn(DeviceService.prototype, 'findDevices').mockResolvedValue([deviceDTO]);
       defineResponseMock([deviceDTO]);
 
@@ -135,7 +135,7 @@ describe('DeviceController', () => {
       await expect(callCreateDevice()).resolves.toEqual(new Error());
     })
 
-    it('should return an UserDTO', async () => {
+    it('should return an DeviceDTO', async () => {
       vi.spyOn(DeviceService.prototype, 'createDevice').mockResolvedValue(deviceDTO);
       defineResponseMock(deviceDTO);
 
@@ -174,7 +174,7 @@ describe('DeviceController', () => {
       await expect(callUpdateDeviceByUuid()).resolves.toEqual(new Error());
     })
 
-    it('should return an UserDTO', async () => {
+    it('should return an DeviceDTO', async () => {
       vi.spyOn(DeviceService.prototype, 'updateDeviceByUuid').mockResolvedValue(deviceDTO);
       defineResponseMock(deviceDTO);
 
@@ -212,7 +212,7 @@ describe('DeviceController', () => {
       await expect(callUpdateDevicesStatusByUuid()).resolves.toEqual(new Error());
     })
 
-    it('should return an UserDTO', async () => {
+    it('should return an DeviceDTO', async () => {
       vi.spyOn(DeviceService.prototype, 'updateDeviceStatusByUuid').mockResolvedValue(deviceDTO);
       defineResponseMock(deviceDTO);
 
@@ -250,7 +250,7 @@ describe('DeviceController', () => {
       await expect(callUpdateDeviceActivityByUuid()).resolves.toEqual(new Error());
     })
 
-    it('should return an UserDTO', async () => {
+    it('should return an DeviceDTO', async () => {
       vi.spyOn(DeviceService.prototype, 'updateDeviceActivityByUuid').mockResolvedValue(deviceDTO);
       defineResponseMock(deviceDTO);
 

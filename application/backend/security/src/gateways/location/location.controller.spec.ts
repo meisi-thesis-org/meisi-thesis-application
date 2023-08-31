@@ -61,7 +61,7 @@ describe('LocationController', () => {
       await expect(callFindLocations()).resolves.toEqual(new Error());
     })
 
-    it('should return an UserDTO collection', async () => {
+    it('should return an LocationDTO collection', async () => {
       vi.spyOn(LocationService.prototype, 'findLocations').mockResolvedValue([locationDTO]);
       defineResponseMock([locationDTO]);
 
@@ -95,7 +95,7 @@ describe('LocationController', () => {
       await expect(callFindLocationByUuid()).resolves.toEqual(new Error());
     })
 
-    it('should return an UserDTO', async () => {
+    it('should return an LocationDTO', async () => {
       vi.spyOn(LocationService.prototype, 'findLocationByUuid').mockResolvedValue(locationDTO);
       defineResponseMock(locationDTO);
 
@@ -134,7 +134,7 @@ describe('LocationController', () => {
       await expect(callCreateLocation()).resolves.toEqual(new Error());
     })
 
-    it('should return an UserDTO', async () => {
+    it('should return an LocationDTO', async () => {
       vi.spyOn(LocationService.prototype, 'createLocation').mockResolvedValue(locationDTO);
       defineResponseMock(locationDTO);
 
@@ -173,7 +173,7 @@ describe('LocationController', () => {
       await expect(callUpdateCoordinatesByUuid()).resolves.toEqual(new Error());
     })
 
-    it('should return an UserDTO', async () => {
+    it('should return an LocationDTO', async () => {
       vi.spyOn(LocationService.prototype, 'updateCoordinatesByUuid').mockResolvedValue(locationDTO);
       defineResponseMock(locationDTO);
 
@@ -211,7 +211,7 @@ describe('LocationController', () => {
       await expect(callUpdateStatusByUuid()).resolves.toEqual(new Error());
     })
 
-    it('should return an UserDTO', async () => {
+    it('should return an LocationDTO', async () => {
       vi.spyOn(LocationService.prototype, 'updateStatusByUuid').mockResolvedValue(locationDTO);
       defineResponseMock(locationDTO);
 
@@ -249,7 +249,7 @@ describe('LocationController', () => {
       await expect(callUpdateActivityByUuid()).resolves.toEqual(new Error());
     })
 
-    it('should return an UserDTO', async () => {
+    it('should return an LocationDTO', async () => {
       vi.spyOn(LocationService.prototype, 'updateActivityByUuid').mockResolvedValue(locationDTO);
       defineResponseMock(locationDTO);
 
