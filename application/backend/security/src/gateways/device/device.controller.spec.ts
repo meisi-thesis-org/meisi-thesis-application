@@ -109,8 +109,9 @@ describe('DeviceController', () => {
       requestMock.body = {
         ...requestMock.body,
         userUuid: 'dummyUserUuid',
-        coordinateX: 'dummyCoordinateX',
-        coordinateY: 'dummyCoordinateY'
+        ipAddress: 'dummyIpAddress',
+        platform: 'dummyPlatform',
+        model: 'dummyModel'
       };
       vi.mock('location.service', () => ({
         createDevice: vi.fn()
@@ -148,8 +149,9 @@ describe('DeviceController', () => {
       requestMock.params = { ...requestMock.params, uuid: 'dummyUuid' };
       requestMock.body = {
         ...requestMock.body,
-        coordinateX: 'dummyCoordinateX',
-        coordinateY: 'dummyCoordinateY'
+        ipAddress: 'dummyIpAddress',
+        platform: 'dummyPlatform',
+        model: 'dummyModel'
       };
       vi.mock('location.service', () => ({
         updateDeviceByUuid: vi.fn()
