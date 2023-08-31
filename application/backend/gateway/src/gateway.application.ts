@@ -1,6 +1,6 @@
 import Express, { type Application } from 'express';
-import 'dotenv/config';
 import { createProxyMiddleware } from 'http-proxy-middleware';
+import 'dotenv/config';
 
 export class GatewayApplication {
   private readonly application: Application;
@@ -13,8 +13,6 @@ export class GatewayApplication {
 
   public defineRoutes (): GatewayApplication {
     this.application.use('/security', createProxyMiddleware({ target: 'http://localhost:8003', changeOrigin: true }));
-    this.application.use('/commerce', createProxyMiddleware({ target: 'http://localhost:8004', changeOrigin: true }));
-    this.application.use('/accounting', createProxyMiddleware({ target: 'http://localhost:8005', changeOrigin: true }));
 
     return this;
   }
