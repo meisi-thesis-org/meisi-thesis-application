@@ -11,6 +11,6 @@ COPY . .
 
 RUN cd application/backend/security && yarn build
 
-EXPOSE 8000
+EXPOSE 8003
 
 CMD ["yarn","start"]
