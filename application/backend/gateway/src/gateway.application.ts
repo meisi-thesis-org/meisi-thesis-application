@@ -1,5 +1,6 @@
 import Express, { type Application } from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
+import { checkAccessTokenMiddleware } from './middlewares/check-access-token.middleware';
 import 'dotenv/config';
 
 export class GatewayApplication {
@@ -12,7 +13,14 @@ export class GatewayApplication {
   }
 
   public defineRoutes (): GatewayApplication {
-    this.application.use('/security', createProxyMiddleware({ target: 'http://localhost:8003', changeOrigin: true }));
+    const availableHosts = new Map<string, string>();
+    availableHosts.set('/security', 'http://localhost:8003');
+    availableHosts.set('/commerce', 'http://localhost:8004');
+    availableHosts.set('/accounting', 'http://localhost:8005');
+
+    for (const [key, value] of availableHosts.entries()) {
+      this.application.use(key, checkAccessTokenMiddleware, createProxyMiddleware({ target: value, changeOrigin: true }))
+    }
 
     return this;
   }

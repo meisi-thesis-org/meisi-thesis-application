@@ -1,12 +1,11 @@
 import { ForbiddenException } from '@meisi-thesis/application-backend-shared/src/exceptions/forbidden.exception';
-import { type Request, type NextFunction, type Response } from 'express';
+import { type Request, type Response } from 'express';
 import { TokenProvider } from '../providers/token.provider';
 import { type AuthenticatedRequest } from '@meisi-thesis/application-backend-shared/src/types/authenticated-request.type';
 
-export const AccessTokenGuard = (
+export const accessTokenGuard = (
   request: Request,
-  _response: Response,
-  next: NextFunction
+  _response: Response
 ): void => {
   const authorizationHeader = request.headers.authorization;
 
@@ -16,9 +15,7 @@ export const AccessTokenGuard = (
 
   if (token === '' || token === undefined || token === null) throw new ForbiddenException();
 
-  const tokenPayload = new TokenProvider().verify(token, process.env.ACCESS_CODE_SECRET);
+  const tokenPayload = new TokenProvider().verify(token, process.env.ACCESS_TOKEN_SECRET);
 
   (request as AuthenticatedRequest).user = tokenPayload as any;
-
-  next();
 }

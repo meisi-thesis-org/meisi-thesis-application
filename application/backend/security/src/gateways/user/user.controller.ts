@@ -1,3 +1,4 @@
+import { accessTokenGuard } from './guards/access-token.guard';
 import { FindUserByUuidRequest } from './requests/find-user-by-uuid.request';
 import { RefreshAccessCodeRequest } from './requests/refresh-access-code.request';
 import { SignInRequest } from './requests/sign-in.request';
@@ -76,6 +77,15 @@ export class UserController {
       const signOutRequest = new SignOutRequest(request.params.uuid);
       const data = await this.service.signOut(signOutRequest);
       return response.status(201).json(data);
+    } catch (error: any) {
+      return response.status(error.getHttpCode()).json();
+    }
+  }
+
+  public async checkAccessCode (request: Request, response: Response): Promise<Response> {
+    try {
+      accessTokenGuard(request, response)
+      return response.status(200).json();
     } catch (error: any) {
       return response.status(error.getHttpCode()).json();
     }
