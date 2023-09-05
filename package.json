@@ -11,7 +11,7 @@
   "scripts": {
     "lint:check": "eslint application/**/**/src/**/*.ts",
     "lint:fix": "eslint --fix application/**/**/src/**/*.ts",
-    "test": "vitest"
+    "test:unit": "vitest"
   },
   "devDependencies": {
     "@types/node": "^20.5.0",
