@@ -1,28 +1,25 @@
 import Express, { json, type Application } from 'express';
 import 'dotenv/config';
-import { DossierGateway } from './dossier.gateway';
 
-export class DossierApplication {
+export class ChapterApplication {
   private readonly application: Application;
   private readonly serverPort: number;
 
   public constructor () {
     this.application = Express();
-    this.serverPort = parseInt(process.env.SERVER_PORT ?? '8004')
+    this.serverPort = parseInt(process.env.SERVER_PORT ?? '8005')
   }
 
-  public defineMiddlewares (): DossierApplication {
+  public defineMiddlewares (): ChapterApplication {
     this.application.use(json());
     return this;
   }
 
-  public defineRoutes (): DossierApplication {
-    this.application.use('/commerce/dossiers', new DossierGateway().subscribe())
-
+  public defineRoutes (): ChapterApplication {
     return this;
   }
 
-  public defineListner (): DossierApplication {
+  public defineListner (): ChapterApplication {
     this.application.listen((this.serverPort), async () => {
       console.log(`Server initialized on PORT: ${this.serverPort}!`)
     })
@@ -31,4 +28,4 @@ export class DossierApplication {
   }
 }
 
-new DossierApplication().defineMiddlewares().defineRoutes().defineListner();
+new ChapterApplication().defineMiddlewares().defineRoutes().defineListner();

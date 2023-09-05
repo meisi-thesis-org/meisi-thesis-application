@@ -1,6 +1,8 @@
 import { type Request, type Response, Router } from 'express';
 import { Gateway } from '@meisi-thesis/application-backend-utilities-shared/src/abstracts/gateway.abstract'
 import { DossierController } from './dossier.controller';
+import { SchemaValidator } from '@meisi-thesis/application-backend-utilities-shared/src/middlewares/schema-validator.middleware';
+import { CreateDossierSchema, FindDossierByUserUuidSchema, FindDossierByUuidSchema, UpdateDossierByUuidSchema } from './structs/dossier.schema';
 
 export class DossierGateway extends Gateway<Router> {
   private readonly controller: DossierController = new DossierController();
@@ -10,10 +12,10 @@ export class DossierGateway extends Gateway<Router> {
   }
 
   public override subscribe (): Router {
-    this.router.get('/', async (request: Request, response: Response) => await this.controller.findDossierByUserUuid(request, response))
-    this.router.post('/', async (request: Request, response: Response) => await this.controller.createDossier(request, response))
-    this.router.put('/:uuid', async (request: Request, response: Response) => await this.controller.updateDossierByUuid(request, response))
-    this.router.get('/:uuid', async (request: Request, response: Response) => await this.controller.findDossierByUuid(request, response))
+    this.router.get('/', SchemaValidator(FindDossierByUserUuidSchema), async (request: Request, response: Response) => await this.controller.findDossierByUserUuid(request, response))
+    this.router.post('/', SchemaValidator(CreateDossierSchema), async (request: Request, response: Response) => await this.controller.createDossier(request, response))
+    this.router.put('/:uuid', SchemaValidator(UpdateDossierByUuidSchema), async (request: Request, response: Response) => await this.controller.updateDossierByUuid(request, response))
+    this.router.get('/:uuid', SchemaValidator(FindDossierByUuidSchema), async (request: Request, response: Response) => await this.controller.findDossierByUuid(request, response))
     return this.router;
   }
 }
