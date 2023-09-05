@@ -80,7 +80,7 @@ export class DossierService {
     updateDossierByUuidRequest: UpdateDossierByUuidRequest
   ): Promise<DossierDTO> {
     const foundDossier = await this.repository
-      .findDossierByUserUuid(updateDossierByUuidRequest.uuid)
+      .findDossierByUuid(updateDossierByUuidRequest.uuid)
       .catch(() => { throw new InternalServerException(); })
 
     if (foundDossier === undefined) throw new NonFoundException();

@@ -11,10 +11,10 @@ export class DeviceGateway extends Gateway<Router> {
   }
 
   public override subscribe (): Router {
+    this.router.get('/', SchemaValidator(FindDevicesByUserUuidSchema), async (request: Request, response: Response) => await this.controller.findDevicesByUserUuid(request, response))
+    this.router.post('/', SchemaValidator(CreateDeviceSchema), async (request: Request, response: Response) => await this.controller.createDevice(request, response))
     this.router.get('/:uuid', SchemaValidator(FindDeviceByUuidSchema), async (request: Request, response: Response) => await this.controller.findDeviceByUuid(request, response))
     this.router.put('/:uuid', SchemaValidator(UpdateDeviceByUuidSchema), async (request: Request, response: Response) => await this.controller.updateDeviceByUuid(request, response))
-    this.router.post('/', SchemaValidator(CreateDeviceSchema), async (request: Request, response: Response) => await this.controller.createDevice(request, response))
-    this.router.get('/', SchemaValidator(FindDevicesByUserUuidSchema), async (request: Request, response: Response) => await this.controller.findDevicesByUserUuidRequest(request, response))
 
     return this.router;
   }

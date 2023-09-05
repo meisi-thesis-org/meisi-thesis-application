@@ -4,7 +4,7 @@ import { type DeviceDTO, type DeviceEntity } from '../structs/device.domain';
 export class DeviceStateRepository implements DeviceRepository {
   private readonly deviceCollection: DeviceEntity[] = new Array<DeviceEntity>();
 
-  public async findDeviceByUserUuidRequest (
+  public async findDeviceByUserUuid (
     userUuid: string | undefined
   ): Promise<DeviceDTO[]> {
     return this.deviceCollection.filter((device) => device.userUuid === userUuid);

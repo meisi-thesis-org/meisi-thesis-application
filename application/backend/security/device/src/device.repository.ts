@@ -1,7 +1,7 @@
 import { type DeviceDTO, type DeviceEntity } from './structs/device.domain'
 
 export interface DeviceRepository {
-  findDeviceByUserUuidRequest(userUuid: string | undefined): Promise<DeviceDTO[]>
+  findDeviceByUserUuid(userUuid: string | undefined): Promise<DeviceDTO[]>
   findDeviceByUuid(uuid: string): Promise<DeviceDTO | undefined>
   findDeviceByProps(
     userUuid: string,

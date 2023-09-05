@@ -13,11 +13,11 @@ export class DeviceService {
   private readonly randomProvider: RandomProvider = new RandomProvider();
   private readonly networkProvider: NetworkProvider = new NetworkProvider();
 
-  public async findDevicesByUserUuidRequest (
+  public async findDevicesByUserUuid (
     findDeviceByUserUuidRequest: FindDevicesByUserUuidRequest
   ): Promise<DeviceDTO[]> {
     const foundDevices = await this.repository
-      .findDeviceByUserUuidRequest(findDeviceByUserUuidRequest.userUuid)
+      .findDeviceByUserUuid(findDeviceByUserUuidRequest.userUuid)
       .catch(() => { throw new InternalServerException(); })
 
     const mappedDevices = new Array<DeviceDTO>();

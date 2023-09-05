@@ -5,12 +5,12 @@ import { DeviceService } from './device.service';
 export class DeviceController {
   private readonly service: DeviceService = new DeviceService();
 
-  public async findDevicesByUserUuidRequest (request: Request, response: Response): Promise<Response> {
+  public async findDevicesByUserUuid (request: Request, response: Response): Promise<Response> {
     try {
       const findDevicesRequest: FindDevicesByUserUuidRequest = {
         userUuid: String(request.query.userUuid)
       }
-      const devices = await this.service.findDevicesByUserUuidRequest(findDevicesRequest);
+      const devices = await this.service.findDevicesByUserUuid(findDevicesRequest);
       return response.status(200).json(devices)
     } catch (error: any) {
       return response.status(error.getHttpCode()).json()

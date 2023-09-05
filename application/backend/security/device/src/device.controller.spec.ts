@@ -38,24 +38,24 @@ describe('DeviceController', () => {
     updatedAt: randomDate
   }
 
-  describe('findDevicesByUserUuidRequest', () => {
+  describe('findDevicesByUserUuid', () => {
     beforeEach(() => {
       requestMock.query = { ...requestMock.query, userUuid: randomUuid }
     })
 
     async function callFindDevices (): Promise<Response> {
-      return await instance.findDevicesByUserUuidRequest(requestMock, responseMock)
+      return await instance.findDevicesByUserUuid(requestMock, responseMock)
     }
 
     it('should throw an exception because an error ocurred while making a service request', async () => {
-      vi.spyOn(DeviceService.prototype, 'findDevicesByUserUuidRequest').mockRejectedValue({ getHttpCode: vi.fn() });
+      vi.spyOn(DeviceService.prototype, 'findDevicesByUserUuid').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
 
       await expect(callFindDevices()).resolves.toEqual(new Error());
     })
 
     it('should return an deviceDTO collection', async () => {
-      vi.spyOn(DeviceService.prototype, 'findDevicesByUserUuidRequest').mockResolvedValue([deviceDTO]);
+      vi.spyOn(DeviceService.prototype, 'findDevicesByUserUuid').mockResolvedValue([deviceDTO]);
       defineResponseMock(deviceDTO);
 
       await expect(callFindDevices()).resolves.toEqual(deviceDTO);
