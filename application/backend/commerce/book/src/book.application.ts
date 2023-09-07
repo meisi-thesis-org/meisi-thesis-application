@@ -8,7 +8,7 @@ export class BookApplication {
 
   public constructor () {
     this.application = Express();
-    this.serverPort = parseInt(process.env.SERVER_PORT ?? '8006')
+    this.serverPort = parseInt(process.env.SERVER_PORT ?? '8005')
   }
 
   public defineMiddlewares (): BookApplication {

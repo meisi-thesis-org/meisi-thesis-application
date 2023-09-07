@@ -11,6 +11,6 @@ COPY . .
 
 RUN cd application/backend/commerce/book && yarn build
 
-EXPOSE 8006
+EXPOSE 8005
 
 CMD ["yarn","start"]

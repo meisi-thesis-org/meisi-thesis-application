@@ -5,5 +5,15 @@ services:
     container_name: meisi-thesis-application-backend-dispatcher
   meisi-thesis-application-backend-journal:
     container_name: meisi-thesis-application-backend-journal
-  meisi-thesis-application-backend-security:
-    container_name: meisi-thesis-application-backend-security
+  meisi-thesis-application-backend-security-user:
+    container_name: meisi-thesis-application-backend-security-user
+  meisi-thesis-application-backend-security-device:
+    container_name: meisi-thesis-application-backend-security-device
+  meisi-thesis-application-backend-security-location:
+    container_name: meisi-thesis-application-backend-security-location
+  meisi-thesis-application-backend-commerce-dossier:
+    container_name: meisi-thesis-application-backend-commerce-dossier
+  meisi-thesis-application-backend-commerce-book:
+    container_name: meisi-thesis-application-backend-commerce-book
+  meisi-thesis-application-backend-commerce-chapter:
+    container_name: meisi-thesis-application-backend-commerce-chapter
