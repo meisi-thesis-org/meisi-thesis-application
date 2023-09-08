@@ -17,7 +17,7 @@ export class DeviceApplication {
   }
 
   public defineRoutes (): DeviceApplication {
-    this.application.use('/security/device', new DeviceGateway().subscribe())
+    this.application.use('/security/devices', new DeviceGateway().subscribe())
     return this;
   }
 

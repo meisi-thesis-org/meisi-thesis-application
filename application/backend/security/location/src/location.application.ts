@@ -17,7 +17,7 @@ export class LocationApplication {
   }
 
   public defineRoutes (): LocationApplication {
-    this.application.use('/security/location', new LocationGateway().subscribe())
+    this.application.use('/security/locations', new LocationGateway().subscribe())
     return this;
   }
 
