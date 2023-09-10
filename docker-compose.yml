@@ -1,6 +1,8 @@
 version: '3.8'
 
 services:
+  meisi-thesis-application-backend-gateway:
+    container_name: meisi-thesis-application-backend-gateway
   meisi-thesis-application-backend-dispatcher:
     container_name: meisi-thesis-application-backend-dispatcher
   meisi-thesis-application-backend-journal:
