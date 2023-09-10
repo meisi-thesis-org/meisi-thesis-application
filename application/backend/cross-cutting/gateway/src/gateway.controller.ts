@@ -9,7 +9,7 @@ export class GatewayController {
   public async signIn (request: Request, response: Response): Promise<Response> {
     try {
       const signInRequest: SignInRequest = {
-        userUuid: request.body.userUuid
+        userUuid: request.params.userUuid
       }
       const signInResponse = await this.gatewayService.signIn(signInRequest);
       return response.status(201).json(signInResponse)

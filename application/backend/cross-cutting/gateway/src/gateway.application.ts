@@ -1,4 +1,4 @@
-import Express, { json, type Application, type Request, type Response } from 'express';
+import Express, { type Application, type Request, type Response } from 'express';
 import 'dotenv/config';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { GatewayController } from './gateway.controller';
@@ -18,20 +18,20 @@ export class GatewayApplication {
     this.serverPort = parseInt(process.env.SERVER_PORT ?? '8000')
   }
 
-  public defineMiddlewares (): void {
-    this.application.use(json());
-  }
-
   public defineRoutes (): void {
-    /** Proxy */
-    this.application.use('/security/users', createProxyMiddleware({ target: 'http://localhost:8001/security/users', changeOrigin: true }));
-    this.application.use('/security/devices', AccessTokenGuard, createProxyMiddleware({ target: 'http://localhost:8002/security/devices', changeOrigin: true }));
-    this.application.use('/security/locations', AccessTokenGuard, createProxyMiddleware({ target: 'http://localhost:8003/security/locations', changeOrigin: true }));
-    this.application.use('/commerce/dossiers', AccessTokenGuard, createProxyMiddleware({ target: 'http://localhost:8004/commerce/dossiers', changeOrigin: true }));
-    this.application.use('/commerce/books', AccessTokenGuard, createProxyMiddleware({ target: 'http://localhost:8005/commerce/books', changeOrigin: true }));
-    this.application.use('/commerce/chapters', AccessTokenGuard, createProxyMiddleware({ target: 'http://localhost:8006/commerce/chapters', changeOrigin: true }));
+    const availableHosts = new Map<string, string>();
+    availableHosts.set('/security/users', 'http://localhost:8001');
+    availableHosts.set('/security/devices', 'http://localhost:8002');
+    availableHosts.set('/security/locations', 'http://localhost:8003');
+    availableHosts.set('/commerce/dossiers', 'http://localhost:8004');
+    availableHosts.set('/commerce/books', 'http://localhost:8005');
+    availableHosts.set('/commerce/chapters', 'http://localhost:8006');
 
-    this.application.put('/session/sign-in', SchemaValidator(SignInSchema), async (request: Request, response: Response) => await this.gatewayController.signIn(request, response))
+    for (const [key, value] of availableHosts.entries()) {
+      this.application.use(key, AccessTokenGuard, createProxyMiddleware({ target: value, changeOrigin: true }))
+    }
+
+    this.application.put('/session/sign-in/:userUuid', SchemaValidator(SignInSchema), async (request: Request, response: Response) => await this.gatewayController.signIn(request, response))
     this.application.put('/session/sign-out', AccessTokenGuard, async (request: Request, response: Response) => await this.gatewayController.signOut(request as AuthenticatedRequest, response))
     this.application.put('/session/refresh-tokens', RefreshTokenGuard, async (request: Request, response: Response) => await this.gatewayController.refreshTokens(request as AuthenticatedRequest, response))
   }
@@ -44,6 +44,5 @@ export class GatewayApplication {
 }
 
 const gatewayApplication = new GatewayApplication()
-gatewayApplication.defineMiddlewares();
 gatewayApplication.defineRoutes();
 gatewayApplication.defineListner();
