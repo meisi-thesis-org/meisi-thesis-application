@@ -15,7 +15,6 @@ export class GatewayService {
   public async signIn (signInRequest: SignInRequest): Promise<SessionDTO> {
     try {
       await this.redisProvider.connect();
-      await this.redisProvider.clear();
 
       const userSessionExists = await this.redisProvider
         .keyExists(`userSession::${signInRequest.userUuid}`)

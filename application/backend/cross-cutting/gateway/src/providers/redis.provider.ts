@@ -3,9 +3,7 @@ import { type RedisClientType } from '@redis/client';
 import { createClient } from 'redis';
 
 export class RedisProvider {
-  private readonly instance: RedisClientType = createClient({
-    url: process.env.redisURL
-  });
+  private readonly instance: RedisClientType = createClient();
 
   public async connect (): Promise<void> {
     await this.instance.connect().catch(() => {
