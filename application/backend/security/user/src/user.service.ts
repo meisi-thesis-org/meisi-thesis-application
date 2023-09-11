@@ -7,11 +7,36 @@ import { ConflictException } from '@meisi-thesis/application-backend-utilities-s
 import { RandomProvider } from '@meisi-thesis/application-backend-utilities-shared/src/providers/random.provider';
 import { HashProvider } from '@meisi-thesis/application-backend-utilities-shared/src/providers/hash.provider';
 import { UserStateRepository } from './repositories/user-state.repository';
+import { QueueProvider } from '@meisi-thesis/application-backend-utilities-shared/src/providers/queue.provider';
 
 export class UserService {
   private readonly userRepository: UserRepository = new UserStateRepository();
   private readonly randomProvider: RandomProvider = new RandomProvider();
   private readonly hashProvider: HashProvider = new HashProvider();
+  private readonly queueProvider: QueueProvider = new QueueProvider();
+
+  private async sendEmailQueue (
+    path: string,
+    props: {
+      toEmail: string
+      subject: string
+      content: string
+    }
+  ): Promise<void> {
+    const message = {
+      routeURL: path,
+      correlationUuid: this.randomProvider.randomUUID(),
+      ...props
+    }
+
+    await this.queueProvider
+      .sendQueue(
+        process.env.RABBITMQ_URL ?? 'amqp://localhost',
+        'create_email',
+        Buffer.from(JSON.stringify(message))
+      )
+      .catch(() => { throw new InternalServerException() });
+  }
 
   public async findUserByUuid (findUserByUuidRequest: FindUserByUuidRequest): Promise<UserDTO> {
     const foundUser = await this.userRepository
@@ -58,6 +83,14 @@ export class UserService {
     await this.userRepository.createUser(createdUser).catch(() => {
       throw new InternalServerException()
     });
+
+    await this.sendEmailQueue('security.users::createUser',
+      {
+        toEmail: createdUser.email,
+        subject: 'Created Account',
+        content: `Welcome. Your access code is ${randomAccessCode}!`
+      }
+    );
 
     return userMapper(createdUser);
   }
@@ -121,6 +154,14 @@ export class UserService {
     await this.userRepository
       .updateUser(updatedUser)
       .catch(() => { throw new InternalServerException() });
+
+    await this.sendEmailQueue('security.users::createUser',
+      {
+        toEmail: updatedUser.email,
+        subject: 'Created Account',
+        content: `Welcome. Your access code is ${randomAccessCode}!`
+      }
+    );
 
     return userMapper(updatedUser);
   }
