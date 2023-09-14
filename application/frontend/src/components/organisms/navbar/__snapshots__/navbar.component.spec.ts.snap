@@ -24,20 +24,17 @@ VueWrapper {
             data-v-5bcb905c=""
           >
             <icon-component-stub
-              class="icon"
               color="light"
               data-v-5bcb905c=""
               name="menu"
               size="minimum"
             />
             <divider-component-stub
-              class="divider"
               data-v-5bcb905c=""
               height="1.5rem"
               width="0.025rem"
             />
             <typography-component-stub
-              class="typography"
               content="E-Bookler"
               data-v-5bcb905c=""
               typography="brand"
@@ -48,41 +45,35 @@ VueWrapper {
             data-v-5bcb905c=""
           >
             <icon-component-stub
-              class="icon"
               color="light"
               data-v-5bcb905c=""
               name="notification"
               size="minimum"
             />
             <icon-component-stub
-              class="icon"
               color="light"
               data-v-5bcb905c=""
               name="search"
               size="minimum"
             />
             <icon-component-stub
-              class="icon"
               color="light"
               data-v-5bcb905c=""
               name="settings"
               size="minimum"
             />
             <divider-component-stub
-              class="divider"
               data-v-5bcb905c=""
               height="1.5rem"
               width="0.025rem"
             />
             <icon-component-stub
-              class="icon"
               color="light"
               data-v-5bcb905c=""
               name="locale"
               size="minimum"
             />
             <icon-component-stub
-              class="icon"
               color="light"
               data-v-5bcb905c=""
               name="theme"
@@ -558,9 +549,7 @@ VueWrapper {
                           },
                           "asyncDep": null,
                           "asyncResolved": false,
-                          "attrs": {
-                            "class": "icon",
-                          },
+                          "attrs": {},
                           "attrsProxy": null,
                           "bc": null,
                           "bm": null,
@@ -685,9 +674,7 @@ VueWrapper {
                             "parent": undefined,
                           },
                           "setupContext": {
-                            "attrs": {
-                              "class": "icon",
-                            },
+                            "attrs": {},
                             "emit": [Function],
                             "expose": [Function],
                             "slots": {},
@@ -701,7 +688,6 @@ VueWrapper {
                             "__v_skip": true,
                             "anchor": null,
                             "appContext": null,
-                            "ce": undefined,
                             "children": null,
                             "component": null,
                             "ctx": [Circular],
@@ -709,16 +695,14 @@ VueWrapper {
                             "dynamicChildren": null,
                             "dynamicProps": null,
                             "el": <icon-component-stub
-                              class="icon"
                               color="light"
                               data-v-5bcb905c=""
                               name="menu"
                               size="minimum"
                             />,
                             "key": null,
-                            "patchFlag": 16,
+                            "patchFlag": 0,
                             "props": {
-                              "class": "icon",
                               "color": "light",
                               "name": "menu",
                               "size": "minimum",
@@ -769,7 +753,6 @@ VueWrapper {
                         "dynamicChildren": null,
                         "dynamicProps": null,
                         "el": <icon-component-stub
-                          class="icon"
                           color="light"
                           data-v-5bcb905c=""
                           name="menu"
@@ -778,7 +761,6 @@ VueWrapper {
                         "key": null,
                         "patchFlag": 0,
                         "props": {
-                          "class": "icon",
                           "color": "light",
                           "name": "menu",
                           "size": "minimum",
@@ -856,9 +838,7 @@ VueWrapper {
                           },
                           "asyncDep": null,
                           "asyncResolved": false,
-                          "attrs": {
-                            "class": "divider",
-                          },
+                          "attrs": {},
                           "attrsProxy": null,
                           "bc": null,
                           "bm": null,
@@ -968,9 +948,7 @@ VueWrapper {
                             "parent": undefined,
                           },
                           "setupContext": {
-                            "attrs": {
-                              "class": "divider",
-                            },
+                            "attrs": {},
                             "emit": [Function],
                             "expose": [Function],
                             "slots": {},
@@ -984,7 +962,6 @@ VueWrapper {
                             "__v_skip": true,
                             "anchor": null,
                             "appContext": null,
-                            "ce": undefined,
                             "children": null,
                             "component": null,
                             "ctx": [Circular],
@@ -992,15 +969,13 @@ VueWrapper {
                             "dynamicChildren": null,
                             "dynamicProps": null,
                             "el": <divider-component-stub
-                              class="divider"
                               data-v-5bcb905c=""
                               height="1.5rem"
                               width="0.025rem"
                             />,
                             "key": null,
-                            "patchFlag": 16,
+                            "patchFlag": 0,
                             "props": {
-                              "class": "divider",
                               "height": "1.5rem",
                               "width": "0.025rem",
                             },
@@ -1046,7 +1021,6 @@ VueWrapper {
                         "dynamicChildren": null,
                         "dynamicProps": null,
                         "el": <divider-component-stub
-                          class="divider"
                           data-v-5bcb905c=""
                           height="1.5rem"
                           width="0.025rem"
@@ -1054,7 +1028,6 @@ VueWrapper {
                         "key": null,
                         "patchFlag": 0,
                         "props": {
-                          "class": "divider",
                           "height": "1.5rem",
                           "width": "0.025rem",
                         },
@@ -1127,9 +1100,7 @@ VueWrapper {
                           },
                           "asyncDep": null,
                           "asyncResolved": false,
-                          "attrs": {
-                            "class": "typography",
-                          },
+                          "attrs": {},
                           "attrsProxy": null,
                           "bc": null,
                           "bm": null,
@@ -1239,9 +1210,7 @@ VueWrapper {
                             "parent": undefined,
                           },
                           "setupContext": {
-                            "attrs": {
-                              "class": "typography",
-                            },
+                            "attrs": {},
                             "emit": [Function],
                             "expose": [Function],
                             "slots": {},
@@ -1255,7 +1224,6 @@ VueWrapper {
                             "__v_skip": true,
                             "anchor": null,
                             "appContext": null,
-                            "ce": undefined,
                             "children": null,
                             "component": null,
                             "ctx": [Circular],
@@ -1263,15 +1231,13 @@ VueWrapper {
                             "dynamicChildren": null,
                             "dynamicProps": null,
                             "el": <typography-component-stub
-                              class="typography"
                               content="E-Bookler"
                               data-v-5bcb905c=""
                               typography="brand"
                             />,
                             "key": null,
-                            "patchFlag": 16,
+                            "patchFlag": 0,
                             "props": {
-                              "class": "typography",
                               "content": "E-Bookler",
                               "typography": "brand",
                             },
@@ -1317,7 +1283,6 @@ VueWrapper {
                         "dynamicChildren": null,
                         "dynamicProps": null,
                         "el": <typography-component-stub
-                          class="typography"
                           content="E-Bookler"
                           data-v-5bcb905c=""
                           typography="brand"
@@ -1325,7 +1290,6 @@ VueWrapper {
                         "key": null,
                         "patchFlag": 0,
                         "props": {
-                          "class": "typography",
                           "content": "E-Bookler",
                           "typography": "brand",
                         },
@@ -1367,20 +1331,17 @@ VueWrapper {
                       data-v-5bcb905c=""
                     >
                       <icon-component-stub
-                        class="icon"
                         color="light"
                         data-v-5bcb905c=""
                         name="menu"
                         size="minimum"
                       />
                       <divider-component-stub
-                        class="divider"
                         data-v-5bcb905c=""
                         height="1.5rem"
                         width="0.025rem"
                       />
                       <typography-component-stub
-                        class="typography"
                         content="E-Bookler"
                         data-v-5bcb905c=""
                         typography="brand"
@@ -1452,9 +1413,7 @@ VueWrapper {
                           },
                           "asyncDep": null,
                           "asyncResolved": false,
-                          "attrs": {
-                            "class": "icon",
-                          },
+                          "attrs": {},
                           "attrsProxy": null,
                           "bc": null,
                           "bm": null,
@@ -1579,9 +1538,7 @@ VueWrapper {
                             "parent": undefined,
                           },
                           "setupContext": {
-                            "attrs": {
-                              "class": "icon",
-                            },
+                            "attrs": {},
                             "emit": [Function],
                             "expose": [Function],
                             "slots": {},
@@ -1595,7 +1552,6 @@ VueWrapper {
                             "__v_skip": true,
                             "anchor": null,
                             "appContext": null,
-                            "ce": undefined,
                             "children": null,
                             "component": null,
                             "ctx": [Circular],
@@ -1603,16 +1559,14 @@ VueWrapper {
                             "dynamicChildren": null,
                             "dynamicProps": null,
                             "el": <icon-component-stub
-                              class="icon"
                               color="light"
                               data-v-5bcb905c=""
                               name="notification"
                               size="minimum"
                             />,
                             "key": null,
-                            "patchFlag": 16,
+                            "patchFlag": 0,
                             "props": {
-                              "class": "icon",
                               "color": "light",
                               "name": "notification",
                               "size": "minimum",
@@ -1663,7 +1617,6 @@ VueWrapper {
                         "dynamicChildren": null,
                         "dynamicProps": null,
                         "el": <icon-component-stub
-                          class="icon"
                           color="light"
                           data-v-5bcb905c=""
                           name="notification"
@@ -1672,7 +1625,6 @@ VueWrapper {
                         "key": null,
                         "patchFlag": 0,
                         "props": {
-                          "class": "icon",
                           "color": "light",
                           "name": "notification",
                           "size": "minimum",
@@ -1750,9 +1702,7 @@ VueWrapper {
                           },
                           "asyncDep": null,
                           "asyncResolved": false,
-                          "attrs": {
-                            "class": "icon",
-                          },
+                          "attrs": {},
                           "attrsProxy": null,
                           "bc": null,
                           "bm": null,
@@ -1877,9 +1827,7 @@ VueWrapper {
                             "parent": undefined,
                           },
                           "setupContext": {
-                            "attrs": {
-                              "class": "icon",
-                            },
+                            "attrs": {},
                             "emit": [Function],
                             "expose": [Function],
                             "slots": {},
@@ -1893,7 +1841,6 @@ VueWrapper {
                             "__v_skip": true,
                             "anchor": null,
                             "appContext": null,
-                            "ce": undefined,
                             "children": null,
                             "component": null,
                             "ctx": [Circular],
@@ -1901,16 +1848,14 @@ VueWrapper {
                             "dynamicChildren": null,
                             "dynamicProps": null,
                             "el": <icon-component-stub
-                              class="icon"
                               color="light"
                               data-v-5bcb905c=""
                               name="search"
                               size="minimum"
                             />,
                             "key": null,
-                            "patchFlag": 16,
+                            "patchFlag": 0,
                             "props": {
-                              "class": "icon",
                               "color": "light",
                               "name": "search",
                               "size": "minimum",
@@ -1961,7 +1906,6 @@ VueWrapper {
                         "dynamicChildren": null,
                         "dynamicProps": null,
                         "el": <icon-component-stub
-                          class="icon"
                           color="light"
                           data-v-5bcb905c=""
                           name="search"
@@ -1970,7 +1914,6 @@ VueWrapper {
                         "key": null,
                         "patchFlag": 0,
                         "props": {
-                          "class": "icon",
                           "color": "light",
                           "name": "search",
                           "size": "minimum",
@@ -2048,9 +1991,7 @@ VueWrapper {
                           },
                           "asyncDep": null,
                           "asyncResolved": false,
-                          "attrs": {
-                            "class": "icon",
-                          },
+                          "attrs": {},
                           "attrsProxy": null,
                           "bc": null,
                           "bm": null,
@@ -2175,9 +2116,7 @@ VueWrapper {
                             "parent": undefined,
                           },
                           "setupContext": {
-                            "attrs": {
-                              "class": "icon",
-                            },
+                            "attrs": {},
                             "emit": [Function],
                             "expose": [Function],
                             "slots": {},
@@ -2191,7 +2130,6 @@ VueWrapper {
                             "__v_skip": true,
                             "anchor": null,
                             "appContext": null,
-                            "ce": undefined,
                             "children": null,
                             "component": null,
                             "ctx": [Circular],
@@ -2199,16 +2137,14 @@ VueWrapper {
                             "dynamicChildren": null,
                             "dynamicProps": null,
                             "el": <icon-component-stub
-                              class="icon"
                               color="light"
                               data-v-5bcb905c=""
                               name="settings"
                               size="minimum"
                             />,
                             "key": null,
-                            "patchFlag": 16,
+                            "patchFlag": 0,
                             "props": {
-                              "class": "icon",
                               "color": "light",
                               "name": "settings",
                               "size": "minimum",
@@ -2259,7 +2195,6 @@ VueWrapper {
                         "dynamicChildren": null,
                         "dynamicProps": null,
                         "el": <icon-component-stub
-                          class="icon"
                           color="light"
                           data-v-5bcb905c=""
                           name="settings"
@@ -2268,7 +2203,6 @@ VueWrapper {
                         "key": null,
                         "patchFlag": 0,
                         "props": {
-                          "class": "icon",
                           "color": "light",
                           "name": "settings",
                           "size": "minimum",
@@ -2346,9 +2280,7 @@ VueWrapper {
                           },
                           "asyncDep": null,
                           "asyncResolved": false,
-                          "attrs": {
-                            "class": "divider",
-                          },
+                          "attrs": {},
                           "attrsProxy": null,
                           "bc": null,
                           "bm": null,
@@ -2458,9 +2390,7 @@ VueWrapper {
                             "parent": undefined,
                           },
                           "setupContext": {
-                            "attrs": {
-                              "class": "divider",
-                            },
+                            "attrs": {},
                             "emit": [Function],
                             "expose": [Function],
                             "slots": {},
@@ -2474,7 +2404,6 @@ VueWrapper {
                             "__v_skip": true,
                             "anchor": null,
                             "appContext": null,
-                            "ce": undefined,
                             "children": null,
                             "component": null,
                             "ctx": [Circular],
@@ -2482,15 +2411,13 @@ VueWrapper {
                             "dynamicChildren": null,
                             "dynamicProps": null,
                             "el": <divider-component-stub
-                              class="divider"
                               data-v-5bcb905c=""
                               height="1.5rem"
                               width="0.025rem"
                             />,
                             "key": null,
-                            "patchFlag": 16,
+                            "patchFlag": 0,
                             "props": {
-                              "class": "divider",
                               "height": "1.5rem",
                               "width": "0.025rem",
                             },
@@ -2536,7 +2463,6 @@ VueWrapper {
                         "dynamicChildren": null,
                         "dynamicProps": null,
                         "el": <divider-component-stub
-                          class="divider"
                           data-v-5bcb905c=""
                           height="1.5rem"
                           width="0.025rem"
@@ -2544,7 +2470,6 @@ VueWrapper {
                         "key": null,
                         "patchFlag": 0,
                         "props": {
-                          "class": "divider",
                           "height": "1.5rem",
                           "width": "0.025rem",
                         },
@@ -2617,9 +2542,7 @@ VueWrapper {
                           },
                           "asyncDep": null,
                           "asyncResolved": false,
-                          "attrs": {
-                            "class": "icon",
-                          },
+                          "attrs": {},
                           "attrsProxy": null,
                           "bc": null,
                           "bm": null,
@@ -2744,9 +2667,7 @@ VueWrapper {
                             "parent": undefined,
                           },
                           "setupContext": {
-                            "attrs": {
-                              "class": "icon",
-                            },
+                            "attrs": {},
                             "emit": [Function],
                             "expose": [Function],
                             "slots": {},
@@ -2760,7 +2681,6 @@ VueWrapper {
                             "__v_skip": true,
                             "anchor": null,
                             "appContext": null,
-                            "ce": undefined,
                             "children": null,
                             "component": null,
                             "ctx": [Circular],
@@ -2768,16 +2688,14 @@ VueWrapper {
                             "dynamicChildren": null,
                             "dynamicProps": null,
                             "el": <icon-component-stub
-                              class="icon"
                               color="light"
                               data-v-5bcb905c=""
                               name="locale"
                               size="minimum"
                             />,
                             "key": null,
-                            "patchFlag": 16,
+                            "patchFlag": 0,
                             "props": {
-                              "class": "icon",
                               "color": "light",
                               "name": "locale",
                               "size": "minimum",
@@ -2828,7 +2746,6 @@ VueWrapper {
                         "dynamicChildren": null,
                         "dynamicProps": null,
                         "el": <icon-component-stub
-                          class="icon"
                           color="light"
                           data-v-5bcb905c=""
                           name="locale"
@@ -2837,7 +2754,6 @@ VueWrapper {
                         "key": null,
                         "patchFlag": 0,
                         "props": {
-                          "class": "icon",
                           "color": "light",
                           "name": "locale",
                           "size": "minimum",
@@ -2915,9 +2831,7 @@ VueWrapper {
                           },
                           "asyncDep": null,
                           "asyncResolved": false,
-                          "attrs": {
-                            "class": "icon",
-                          },
+                          "attrs": {},
                           "attrsProxy": null,
                           "bc": null,
                           "bm": null,
@@ -3042,9 +2956,7 @@ VueWrapper {
                             "parent": undefined,
                           },
                           "setupContext": {
-                            "attrs": {
-                              "class": "icon",
-                            },
+                            "attrs": {},
                             "emit": [Function],
                             "expose": [Function],
                             "slots": {},
@@ -3058,7 +2970,6 @@ VueWrapper {
                             "__v_skip": true,
                             "anchor": null,
                             "appContext": null,
-                            "ce": undefined,
                             "children": null,
                             "component": null,
                             "ctx": [Circular],
@@ -3066,16 +2977,14 @@ VueWrapper {
                             "dynamicChildren": null,
                             "dynamicProps": null,
                             "el": <icon-component-stub
-                              class="icon"
                               color="light"
                               data-v-5bcb905c=""
                               name="theme"
                               size="minimum"
                             />,
                             "key": null,
-                            "patchFlag": 16,
+                            "patchFlag": 0,
                             "props": {
-                              "class": "icon",
                               "color": "light",
                               "name": "theme",
                               "size": "minimum",
@@ -3126,7 +3035,6 @@ VueWrapper {
                         "dynamicChildren": null,
                         "dynamicProps": null,
                         "el": <icon-component-stub
-                          class="icon"
                           color="light"
                           data-v-5bcb905c=""
                           name="theme"
@@ -3135,7 +3043,6 @@ VueWrapper {
                         "key": null,
                         "patchFlag": 0,
                         "props": {
-                          "class": "icon",
                           "color": "light",
                           "name": "theme",
                           "size": "minimum",
@@ -3182,41 +3089,35 @@ VueWrapper {
                       data-v-5bcb905c=""
                     >
                       <icon-component-stub
-                        class="icon"
                         color="light"
                         data-v-5bcb905c=""
                         name="notification"
                         size="minimum"
                       />
                       <icon-component-stub
-                        class="icon"
                         color="light"
                         data-v-5bcb905c=""
                         name="search"
                         size="minimum"
                       />
                       <icon-component-stub
-                        class="icon"
                         color="light"
                         data-v-5bcb905c=""
                         name="settings"
                         size="minimum"
                       />
                       <divider-component-stub
-                        class="divider"
                         data-v-5bcb905c=""
                         height="1.5rem"
                         width="0.025rem"
                       />
                       <icon-component-stub
-                        class="icon"
                         color="light"
                         data-v-5bcb905c=""
                         name="locale"
                         size="minimum"
                       />
                       <icon-component-stub
-                        class="icon"
                         color="light"
                         data-v-5bcb905c=""
                         name="theme"
@@ -3256,20 +3157,17 @@ VueWrapper {
                     data-v-5bcb905c=""
                   >
                     <icon-component-stub
-                      class="icon"
                       color="light"
                       data-v-5bcb905c=""
                       name="menu"
                       size="minimum"
                     />
                     <divider-component-stub
-                      class="divider"
                       data-v-5bcb905c=""
                       height="1.5rem"
                       width="0.025rem"
                     />
                     <typography-component-stub
-                      class="typography"
                       content="E-Bookler"
                       data-v-5bcb905c=""
                       typography="brand"
@@ -3280,41 +3178,35 @@ VueWrapper {
                     data-v-5bcb905c=""
                   >
                     <icon-component-stub
-                      class="icon"
                       color="light"
                       data-v-5bcb905c=""
                       name="notification"
                       size="minimum"
                     />
                     <icon-component-stub
-                      class="icon"
                       color="light"
                       data-v-5bcb905c=""
                       name="search"
                       size="minimum"
                     />
                     <icon-component-stub
-                      class="icon"
                       color="light"
                       data-v-5bcb905c=""
                       name="settings"
                       size="minimum"
                     />
                     <divider-component-stub
-                      class="divider"
                       data-v-5bcb905c=""
                       height="1.5rem"
                       width="0.025rem"
                     />
                     <icon-component-stub
-                      class="icon"
                       color="light"
                       data-v-5bcb905c=""
                       name="locale"
                       size="minimum"
                     />
                     <icon-component-stub
-                      class="icon"
                       color="light"
                       data-v-5bcb905c=""
                       name="theme"
@@ -3397,12 +3289,8 @@ VueWrapper {
                   },
                   "asyncDep": null,
                   "asyncResolved": false,
-                  "attrs": {
-                    "class": "icon",
-                  },
-                  "attrsProxy": {
-                    "class": "icon",
-                  },
+                  "attrs": {},
+                  "attrsProxy": {},
                   "bc": null,
                   "bm": null,
                   "bu": null,
@@ -3526,9 +3414,7 @@ VueWrapper {
                     "parent": undefined,
                   },
                   "setupContext": {
-                    "attrs": {
-                      "class": "icon",
-                    },
+                    "attrs": {},
                     "emit": [Function],
                     "expose": [Function],
                     "slots": {},
@@ -3542,7 +3428,6 @@ VueWrapper {
                     "__v_skip": true,
                     "anchor": null,
                     "appContext": null,
-                    "ce": undefined,
                     "children": null,
                     "component": null,
                     "ctx": [Circular],
@@ -3550,16 +3435,14 @@ VueWrapper {
                     "dynamicChildren": null,
                     "dynamicProps": null,
                     "el": <icon-component-stub
-                      class="icon"
                       color="light"
                       data-v-5bcb905c=""
                       name="menu"
                       size="minimum"
                     />,
                     "key": null,
-                    "patchFlag": 16,
+                    "patchFlag": 0,
                     "props": {
-                      "class": "icon",
                       "color": "light",
                       "name": "menu",
                       "size": "minimum",
@@ -3610,7 +3493,6 @@ VueWrapper {
                 "dynamicChildren": null,
                 "dynamicProps": null,
                 "el": <icon-component-stub
-                  class="icon"
                   color="light"
                   data-v-5bcb905c=""
                   name="menu"
@@ -3619,7 +3501,6 @@ VueWrapper {
                 "key": null,
                 "patchFlag": 0,
                 "props": {
-                  "class": "icon",
                   "color": "light",
                   "name": "menu",
                   "size": "minimum",
@@ -3706,12 +3587,8 @@ VueWrapper {
                   },
                   "asyncDep": null,
                   "asyncResolved": false,
-                  "attrs": {
-                    "class": "divider",
-                  },
-                  "attrsProxy": {
-                    "class": "divider",
-                  },
+                  "attrs": {},
+                  "attrsProxy": {},
                   "bc": null,
                   "bm": null,
                   "bu": null,
@@ -3820,9 +3697,7 @@ VueWrapper {
                     "parent": undefined,
                   },
                   "setupContext": {
-                    "attrs": {
-                      "class": "divider",
-                    },
+                    "attrs": {},
                     "emit": [Function],
                     "expose": [Function],
                     "slots": {},
@@ -3836,7 +3711,6 @@ VueWrapper {
                     "__v_skip": true,
                     "anchor": null,
                     "appContext": null,
-                    "ce": undefined,
                     "children": null,
                     "component": null,
                     "ctx": [Circular],
@@ -3844,15 +3718,13 @@ VueWrapper {
                     "dynamicChildren": null,
                     "dynamicProps": null,
                     "el": <divider-component-stub
-                      class="divider"
                       data-v-5bcb905c=""
                       height="1.5rem"
                       width="0.025rem"
                     />,
                     "key": null,
-                    "patchFlag": 16,
+                    "patchFlag": 0,
                     "props": {
-                      "class": "divider",
                       "height": "1.5rem",
                       "width": "0.025rem",
                     },
@@ -3898,7 +3770,6 @@ VueWrapper {
                 "dynamicChildren": null,
                 "dynamicProps": null,
                 "el": <divider-component-stub
-                  class="divider"
                   data-v-5bcb905c=""
                   height="1.5rem"
                   width="0.025rem"
@@ -3906,7 +3777,6 @@ VueWrapper {
                 "key": null,
                 "patchFlag": 0,
                 "props": {
-                  "class": "divider",
                   "height": "1.5rem",
                   "width": "0.025rem",
                 },
@@ -3988,12 +3858,8 @@ VueWrapper {
                   },
                   "asyncDep": null,
                   "asyncResolved": false,
-                  "attrs": {
-                    "class": "typography",
-                  },
-                  "attrsProxy": {
-                    "class": "typography",
-                  },
+                  "attrs": {},
+                  "attrsProxy": {},
                   "bc": null,
                   "bm": null,
                   "bu": null,
@@ -4102,9 +3968,7 @@ VueWrapper {
                     "parent": undefined,
                   },
                   "setupContext": {
-                    "attrs": {
-                      "class": "typography",
-                    },
+                    "attrs": {},
                     "emit": [Function],
                     "expose": [Function],
                     "slots": {},
@@ -4118,7 +3982,6 @@ VueWrapper {
                     "__v_skip": true,
                     "anchor": null,
                     "appContext": null,
-                    "ce": undefined,
                     "children": null,
                     "component": null,
                     "ctx": [Circular],
@@ -4126,15 +3989,13 @@ VueWrapper {
                     "dynamicChildren": null,
                     "dynamicProps": null,
                     "el": <typography-component-stub
-                      class="typography"
                       content="E-Bookler"
                       data-v-5bcb905c=""
                       typography="brand"
                     />,
                     "key": null,
-                    "patchFlag": 16,
+                    "patchFlag": 0,
                     "props": {
-                      "class": "typography",
                       "content": "E-Bookler",
                       "typography": "brand",
                     },
@@ -4180,7 +4041,6 @@ VueWrapper {
                 "dynamicChildren": null,
                 "dynamicProps": null,
                 "el": <typography-component-stub
-                  class="typography"
                   content="E-Bookler"
                   data-v-5bcb905c=""
                   typography="brand"
@@ -4188,7 +4048,6 @@ VueWrapper {
                 "key": null,
                 "patchFlag": 0,
                 "props": {
-                  "class": "typography",
                   "content": "E-Bookler",
                   "typography": "brand",
                 },
@@ -4271,12 +4130,8 @@ VueWrapper {
                   },
                   "asyncDep": null,
                   "asyncResolved": false,
-                  "attrs": {
-                    "class": "icon",
-                  },
-                  "attrsProxy": {
-                    "class": "icon",
-                  },
+                  "attrs": {},
+                  "attrsProxy": {},
                   "bc": null,
                   "bm": null,
                   "bu": null,
@@ -4400,9 +4255,7 @@ VueWrapper {
                     "parent": undefined,
                   },
                   "setupContext": {
-                    "attrs": {
-                      "class": "icon",
-                    },
+                    "attrs": {},
                     "emit": [Function],
                     "expose": [Function],
                     "slots": {},
@@ -4416,7 +4269,6 @@ VueWrapper {
                     "__v_skip": true,
                     "anchor": null,
                     "appContext": null,
-                    "ce": undefined,
                     "children": null,
                     "component": null,
                     "ctx": [Circular],
@@ -4424,16 +4276,14 @@ VueWrapper {
                     "dynamicChildren": null,
                     "dynamicProps": null,
                     "el": <icon-component-stub
-                      class="icon"
                       color="light"
                       data-v-5bcb905c=""
                       name="notification"
                       size="minimum"
                     />,
                     "key": null,
-                    "patchFlag": 16,
+                    "patchFlag": 0,
                     "props": {
-                      "class": "icon",
                       "color": "light",
                       "name": "notification",
                       "size": "minimum",
@@ -4484,7 +4334,6 @@ VueWrapper {
                 "dynamicChildren": null,
                 "dynamicProps": null,
                 "el": <icon-component-stub
-                  class="icon"
                   color="light"
                   data-v-5bcb905c=""
                   name="notification"
@@ -4493,7 +4342,6 @@ VueWrapper {
                 "key": null,
                 "patchFlag": 0,
                 "props": {
-                  "class": "icon",
                   "color": "light",
                   "name": "notification",
                   "size": "minimum",
@@ -4581,12 +4429,8 @@ VueWrapper {
                   },
                   "asyncDep": null,
                   "asyncResolved": false,
-                  "attrs": {
-                    "class": "icon",
-                  },
-                  "attrsProxy": {
-                    "class": "icon",
-                  },
+                  "attrs": {},
+                  "attrsProxy": {},
                   "bc": null,
                   "bm": null,
                   "bu": null,
@@ -4710,9 +4554,7 @@ VueWrapper {
                     "parent": undefined,
                   },
                   "setupContext": {
-                    "attrs": {
-                      "class": "icon",
-                    },
+                    "attrs": {},
                     "emit": [Function],
                     "expose": [Function],
                     "slots": {},
@@ -4726,7 +4568,6 @@ VueWrapper {
                     "__v_skip": true,
                     "anchor": null,
                     "appContext": null,
-                    "ce": undefined,
                     "children": null,
                     "component": null,
                     "ctx": [Circular],
@@ -4734,16 +4575,14 @@ VueWrapper {
                     "dynamicChildren": null,
                     "dynamicProps": null,
                     "el": <icon-component-stub
-                      class="icon"
                       color="light"
                       data-v-5bcb905c=""
                       name="search"
                       size="minimum"
                     />,
                     "key": null,
-                    "patchFlag": 16,
+                    "patchFlag": 0,
                     "props": {
-                      "class": "icon",
                       "color": "light",
                       "name": "search",
                       "size": "minimum",
@@ -4794,7 +4633,6 @@ VueWrapper {
                 "dynamicChildren": null,
                 "dynamicProps": null,
                 "el": <icon-component-stub
-                  class="icon"
                   color="light"
                   data-v-5bcb905c=""
                   name="search"
@@ -4803,7 +4641,6 @@ VueWrapper {
                 "key": null,
                 "patchFlag": 0,
                 "props": {
-                  "class": "icon",
                   "color": "light",
                   "name": "search",
                   "size": "minimum",
@@ -4891,12 +4728,8 @@ VueWrapper {
                   },
                   "asyncDep": null,
                   "asyncResolved": false,
-                  "attrs": {
-                    "class": "icon",
-                  },
-                  "attrsProxy": {
-                    "class": "icon",
-                  },
+                  "attrs": {},
+                  "attrsProxy": {},
                   "bc": null,
                   "bm": null,
                   "bu": null,
@@ -5020,9 +4853,7 @@ VueWrapper {
                     "parent": undefined,
                   },
                   "setupContext": {
-                    "attrs": {
-                      "class": "icon",
-                    },
+                    "attrs": {},
                     "emit": [Function],
                     "expose": [Function],
                     "slots": {},
@@ -5036,7 +4867,6 @@ VueWrapper {
                     "__v_skip": true,
                     "anchor": null,
                     "appContext": null,
-                    "ce": undefined,
                     "children": null,
                     "component": null,
                     "ctx": [Circular],
@@ -5044,16 +4874,14 @@ VueWrapper {
                     "dynamicChildren": null,
                     "dynamicProps": null,
                     "el": <icon-component-stub
-                      class="icon"
                       color="light"
                       data-v-5bcb905c=""
                       name="settings"
                       size="minimum"
                     />,
                     "key": null,
-                    "patchFlag": 16,
+                    "patchFlag": 0,
                     "props": {
-                      "class": "icon",
                       "color": "light",
                       "name": "settings",
                       "size": "minimum",
@@ -5104,7 +4932,6 @@ VueWrapper {
                 "dynamicChildren": null,
                 "dynamicProps": null,
                 "el": <icon-component-stub
-                  class="icon"
                   color="light"
                   data-v-5bcb905c=""
                   name="settings"
@@ -5113,7 +4940,6 @@ VueWrapper {
                 "key": null,
                 "patchFlag": 0,
                 "props": {
-                  "class": "icon",
                   "color": "light",
                   "name": "settings",
                   "size": "minimum",
@@ -5200,12 +5026,8 @@ VueWrapper {
                   },
                   "asyncDep": null,
                   "asyncResolved": false,
-                  "attrs": {
-                    "class": "divider",
-                  },
-                  "attrsProxy": {
-                    "class": "divider",
-                  },
+                  "attrs": {},
+                  "attrsProxy": {},
                   "bc": null,
                   "bm": null,
                   "bu": null,
@@ -5314,9 +5136,7 @@ VueWrapper {
                     "parent": undefined,
                   },
                   "setupContext": {
-                    "attrs": {
-                      "class": "divider",
-                    },
+                    "attrs": {},
                     "emit": [Function],
                     "expose": [Function],
                     "slots": {},
@@ -5330,7 +5150,6 @@ VueWrapper {
                     "__v_skip": true,
                     "anchor": null,
                     "appContext": null,
-                    "ce": undefined,
                     "children": null,
                     "component": null,
                     "ctx": [Circular],
@@ -5338,15 +5157,13 @@ VueWrapper {
                     "dynamicChildren": null,
                     "dynamicProps": null,
                     "el": <divider-component-stub
-                      class="divider"
                       data-v-5bcb905c=""
                       height="1.5rem"
                       width="0.025rem"
                     />,
                     "key": null,
-                    "patchFlag": 16,
+                    "patchFlag": 0,
                     "props": {
-                      "class": "divider",
                       "height": "1.5rem",
                       "width": "0.025rem",
                     },
@@ -5392,7 +5209,6 @@ VueWrapper {
                 "dynamicChildren": null,
                 "dynamicProps": null,
                 "el": <divider-component-stub
-                  class="divider"
                   data-v-5bcb905c=""
                   height="1.5rem"
                   width="0.025rem"
@@ -5400,7 +5216,6 @@ VueWrapper {
                 "key": null,
                 "patchFlag": 0,
                 "props": {
-                  "class": "divider",
                   "height": "1.5rem",
                   "width": "0.025rem",
                 },
@@ -5483,12 +5298,8 @@ VueWrapper {
                   },
                   "asyncDep": null,
                   "asyncResolved": false,
-                  "attrs": {
-                    "class": "icon",
-                  },
-                  "attrsProxy": {
-                    "class": "icon",
-                  },
+                  "attrs": {},
+                  "attrsProxy": {},
                   "bc": null,
                   "bm": null,
                   "bu": null,
@@ -5612,9 +5423,7 @@ VueWrapper {
                     "parent": undefined,
                   },
                   "setupContext": {
-                    "attrs": {
-                      "class": "icon",
-                    },
+                    "attrs": {},
                     "emit": [Function],
                     "expose": [Function],
                     "slots": {},
@@ -5628,7 +5437,6 @@ VueWrapper {
                     "__v_skip": true,
                     "anchor": null,
                     "appContext": null,
-                    "ce": undefined,
                     "children": null,
                     "component": null,
                     "ctx": [Circular],
@@ -5636,16 +5444,14 @@ VueWrapper {
                     "dynamicChildren": null,
                     "dynamicProps": null,
                     "el": <icon-component-stub
-                      class="icon"
                       color="light"
                       data-v-5bcb905c=""
                       name="locale"
                       size="minimum"
                     />,
                     "key": null,
-                    "patchFlag": 16,
+                    "patchFlag": 0,
                     "props": {
-                      "class": "icon",
                       "color": "light",
                       "name": "locale",
                       "size": "minimum",
@@ -5696,7 +5502,6 @@ VueWrapper {
                 "dynamicChildren": null,
                 "dynamicProps": null,
                 "el": <icon-component-stub
-                  class="icon"
                   color="light"
                   data-v-5bcb905c=""
                   name="locale"
@@ -5705,7 +5510,6 @@ VueWrapper {
                 "key": null,
                 "patchFlag": 0,
                 "props": {
-                  "class": "icon",
                   "color": "light",
                   "name": "locale",
                   "size": "minimum",
@@ -5793,12 +5597,8 @@ VueWrapper {
                   },
                   "asyncDep": null,
                   "asyncResolved": false,
-                  "attrs": {
-                    "class": "icon",
-                  },
-                  "attrsProxy": {
-                    "class": "icon",
-                  },
+                  "attrs": {},
+                  "attrsProxy": {},
                   "bc": null,
                   "bm": null,
                   "bu": null,
@@ -5922,9 +5722,7 @@ VueWrapper {
                     "parent": undefined,
                   },
                   "setupContext": {
-                    "attrs": {
-                      "class": "icon",
-                    },
+                    "attrs": {},
                     "emit": [Function],
                     "expose": [Function],
                     "slots": {},
@@ -5938,7 +5736,6 @@ VueWrapper {
                     "__v_skip": true,
                     "anchor": null,
                     "appContext": null,
-                    "ce": undefined,
                     "children": null,
                     "component": null,
                     "ctx": [Circular],
@@ -5946,16 +5743,14 @@ VueWrapper {
                     "dynamicChildren": null,
                     "dynamicProps": null,
                     "el": <icon-component-stub
-                      class="icon"
                       color="light"
                       data-v-5bcb905c=""
                       name="theme"
                       size="minimum"
                     />,
                     "key": null,
-                    "patchFlag": 16,
+                    "patchFlag": 0,
                     "props": {
-                      "class": "icon",
                       "color": "light",
                       "name": "theme",
                       "size": "minimum",
@@ -6006,7 +5801,6 @@ VueWrapper {
                 "dynamicChildren": null,
                 "dynamicProps": null,
                 "el": <icon-component-stub
-                  class="icon"
                   color="light"
                   data-v-5bcb905c=""
                   name="theme"
@@ -6015,7 +5809,6 @@ VueWrapper {
                 "key": null,
                 "patchFlag": 0,
                 "props": {
-                  "class": "icon",
                   "color": "light",
                   "name": "theme",
                   "size": "minimum",
@@ -6066,20 +5859,17 @@ VueWrapper {
                   data-v-5bcb905c=""
                 >
                   <icon-component-stub
-                    class="icon"
                     color="light"
                     data-v-5bcb905c=""
                     name="menu"
                     size="minimum"
                   />
                   <divider-component-stub
-                    class="divider"
                     data-v-5bcb905c=""
                     height="1.5rem"
                     width="0.025rem"
                   />
                   <typography-component-stub
-                    class="typography"
                     content="E-Bookler"
                     data-v-5bcb905c=""
                     typography="brand"
@@ -6090,41 +5880,35 @@ VueWrapper {
                   data-v-5bcb905c=""
                 >
                   <icon-component-stub
-                    class="icon"
                     color="light"
                     data-v-5bcb905c=""
                     name="notification"
                     size="minimum"
                   />
                   <icon-component-stub
-                    class="icon"
                     color="light"
                     data-v-5bcb905c=""
                     name="search"
                     size="minimum"
                   />
                   <icon-component-stub
-                    class="icon"
                     color="light"
                     data-v-5bcb905c=""
                     name="settings"
                     size="minimum"
                   />
                   <divider-component-stub
-                    class="divider"
                     data-v-5bcb905c=""
                     height="1.5rem"
                     width="0.025rem"
                   />
                   <icon-component-stub
-                    class="icon"
                     color="light"
                     data-v-5bcb905c=""
                     name="locale"
                     size="minimum"
                   />
                   <icon-component-stub
-                    class="icon"
                     color="light"
                     data-v-5bcb905c=""
                     name="theme"
@@ -6185,20 +5969,17 @@ VueWrapper {
               data-v-5bcb905c=""
             >
               <icon-component-stub
-                class="icon"
                 color="light"
                 data-v-5bcb905c=""
                 name="menu"
                 size="minimum"
               />
               <divider-component-stub
-                class="divider"
                 data-v-5bcb905c=""
                 height="1.5rem"
                 width="0.025rem"
               />
               <typography-component-stub
-                class="typography"
                 content="E-Bookler"
                 data-v-5bcb905c=""
                 typography="brand"
@@ -6209,41 +5990,35 @@ VueWrapper {
               data-v-5bcb905c=""
             >
               <icon-component-stub
-                class="icon"
                 color="light"
                 data-v-5bcb905c=""
                 name="notification"
                 size="minimum"
               />
               <icon-component-stub
-                class="icon"
                 color="light"
                 data-v-5bcb905c=""
                 name="search"
                 size="minimum"
               />
               <icon-component-stub
-                class="icon"
                 color="light"
                 data-v-5bcb905c=""
                 name="settings"
                 size="minimum"
               />
               <divider-component-stub
-                class="divider"
                 data-v-5bcb905c=""
                 height="1.5rem"
                 width="0.025rem"
               />
               <icon-component-stub
-                class="icon"
                 color="light"
                 data-v-5bcb905c=""
                 name="locale"
                 size="minimum"
               />
               <icon-component-stub
-                class="icon"
                 color="light"
                 data-v-5bcb905c=""
                 name="theme"
@@ -6347,20 +6122,17 @@ VueWrapper {
               data-v-5bcb905c=""
             >
               <icon-component-stub
-                class="icon"
                 color="light"
                 data-v-5bcb905c=""
                 name="menu"
                 size="minimum"
               />
               <divider-component-stub
-                class="divider"
                 data-v-5bcb905c=""
                 height="1.5rem"
                 width="0.025rem"
               />
               <typography-component-stub
-                class="typography"
                 content="E-Bookler"
                 data-v-5bcb905c=""
                 typography="brand"
@@ -6371,41 +6143,35 @@ VueWrapper {
               data-v-5bcb905c=""
             >
               <icon-component-stub
-                class="icon"
                 color="light"
                 data-v-5bcb905c=""
                 name="notification"
                 size="minimum"
               />
               <icon-component-stub
-                class="icon"
                 color="light"
                 data-v-5bcb905c=""
                 name="search"
                 size="minimum"
               />
               <icon-component-stub
-                class="icon"
                 color="light"
                 data-v-5bcb905c=""
                 name="settings"
                 size="minimum"
               />
               <divider-component-stub
-                class="divider"
                 data-v-5bcb905c=""
                 height="1.5rem"
                 width="0.025rem"
               />
               <icon-component-stub
-                class="icon"
                 color="light"
                 data-v-5bcb905c=""
                 name="locale"
                 size="minimum"
               />
               <icon-component-stub
-                class="icon"
                 color="light"
                 data-v-5bcb905c=""
                 name="theme"
@@ -6650,20 +6416,17 @@ VueWrapper {
         data-v-5bcb905c=""
       >
         <icon-component-stub
-          class="icon"
           color="light"
           data-v-5bcb905c=""
           name="menu"
           size="minimum"
         />
         <divider-component-stub
-          class="divider"
           data-v-5bcb905c=""
           height="1.5rem"
           width="0.025rem"
         />
         <typography-component-stub
-          class="typography"
           content="E-Bookler"
           data-v-5bcb905c=""
           typography="brand"
@@ -6674,41 +6437,35 @@ VueWrapper {
         data-v-5bcb905c=""
       >
         <icon-component-stub
-          class="icon"
           color="light"
           data-v-5bcb905c=""
           name="notification"
           size="minimum"
         />
         <icon-component-stub
-          class="icon"
           color="light"
           data-v-5bcb905c=""
           name="search"
           size="minimum"
         />
         <icon-component-stub
-          class="icon"
           color="light"
           data-v-5bcb905c=""
           name="settings"
           size="minimum"
         />
         <divider-component-stub
-          class="divider"
           data-v-5bcb905c=""
           height="1.5rem"
           width="0.025rem"
         />
         <icon-component-stub
-          class="icon"
           color="light"
           data-v-5bcb905c=""
           name="locale"
           size="minimum"
         />
         <icon-component-stub
-          class="icon"
           color="light"
           data-v-5bcb905c=""
           name="theme"

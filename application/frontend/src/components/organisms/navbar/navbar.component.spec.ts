@@ -1,6 +1,9 @@
 import { type VueWrapper, shallowMount } from '@vue/test-utils';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import NavbarComponent from './navbar.component.vue';
+import TypographyComponent from './../../atoms/typography/typography.component.vue';
+import IconComponent from './../../atoms/icon/icon.component.vue';
+import DividerComponent from './../../atoms/divider/divider.component.vue';
 
 describe('NavbarComponent', () => {
   afterEach(() => {
@@ -15,14 +18,14 @@ describe('NavbarComponent', () => {
   })
 
   it('should have Typography containing typography', () => {
-    expect(callShallowMount().find('.typography').exists()).toBe(true)
+    expect(callShallowMount().findComponent(TypographyComponent).exists()).toBe(true)
   })
 
   it('should have Icon containing icon', () => {
-    expect(callShallowMount().find('.typography').exists()).toBe(true)
+    expect(callShallowMount().findComponent(IconComponent).exists()).toBe(true)
   })
 
   it('should have DividerComponent containing divider', () => {
-    expect(callShallowMount().find('.divider').exists()).toBe(true)
+    expect(callShallowMount().findComponent(DividerComponent).exists()).toBe(true)
   })
 })

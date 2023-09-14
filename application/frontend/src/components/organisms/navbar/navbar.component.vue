@@ -2,17 +2,17 @@
     <div class="navbar">
         <div class="navbar__inner">
             <div class="navbar__inner group">
-                <IconComponent class="icon" name="menu" color="light" size="minimum"></IconComponent>
-                <DividerComponent class="divider" width="0.025rem" height="1.5rem"></DividerComponent>
-                <TypographyComponent class="typography" content="E-Bookler" :typography="'brand'"></TypographyComponent>
+                <IconComponent name="menu" color="light" size="minimum"></IconComponent>
+                <DividerComponent width="0.025rem" height="1.5rem"></DividerComponent>
+                <TypographyComponent content="E-Bookler" :typography="'brand'"></TypographyComponent>
             </div>
             <div class="navbar__inner group">
-                <IconComponent class="icon" name="notification" color="light" size="minimum"></IconComponent>
-                <IconComponent class="icon" name="search" color="light" size="minimum"></IconComponent>
-                <IconComponent class="icon" name="settings" color="light" size="minimum"></IconComponent>
-                <DividerComponent class="divider" width="0.025rem" height="1.5rem"></DividerComponent>
-                <IconComponent class="icon" name="locale" color="light" size="minimum"></IconComponent>
-                <IconComponent class="icon" name="theme" color="light" size="minimum"></IconComponent>
+                <IconComponent name="notification" color="light" size="minimum"></IconComponent>
+                <IconComponent name="search" color="light" size="minimum"></IconComponent>
+                <IconComponent name="settings" color="light" size="minimum"></IconComponent>
+                <DividerComponent width="0.025rem" height="1.5rem"></DividerComponent>
+                <IconComponent name="locale" color="light" size="minimum"></IconComponent>
+                <IconComponent name="theme" color="light" size="minimum"></IconComponent>
             </div>
         </div>
     </div>
