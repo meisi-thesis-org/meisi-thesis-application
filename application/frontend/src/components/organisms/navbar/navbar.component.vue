@@ -4,7 +4,7 @@
             <div class="navbar__inner group">
                 <IconComponent name="menu" color="light" size="minimum"></IconComponent>
                 <DividerComponent width="0.025rem" height="1.5rem"></DividerComponent>
-                <TypographyComponent content="E-Bookler" :typography="'brand'"></TypographyComponent>
+                <TypographyComponent content="E-Bookler" typography="brand"></TypographyComponent>
             </div>
             <div class="navbar__inner group">
                 <IconComponent name="notification" color="light" size="minimum"></IconComponent>
