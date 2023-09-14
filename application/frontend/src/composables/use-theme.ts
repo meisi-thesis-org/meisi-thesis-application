@@ -4,18 +4,22 @@ import { inject, ref } from 'vue'
 
 type UseThemeSignature = {
   fetchTheme: () => Theme
-  updateTheme: (nextTheme: Theme) => void
+  updateTheme: () => void
 }
 
 export const useTheme = (): UseThemeSignature => {
   const storageService = inject<StorageService>('storageService');
-  const theme = ref<Theme>(storageService?.fetchToken('THEME') ?? 'LIGHT_THEME')
+  const theme = ref<Theme>(storageService?.fetchToken('THEME') ?? 'LIGHT_THEME');
 
-  const fetchTheme = (): Theme => theme.value
-  const updateTheme = (nextTheme: Theme): void => {
-    theme.value = nextTheme
-    storageService?.saveToken('THEME', nextTheme);
+  return {
+    fetchTheme: () => theme.value,
+    updateTheme: () => {
+      const availableThemes = new Array<Theme>('DARK_THEME', 'LIGHT_THEME');
+      const themeToUpdate = availableThemes.find((foundTheme) => foundTheme !== theme.value);
+      theme.value = themeToUpdate ?? 'DARK_THEME';
+      storageService?.saveToken('THEME', themeToUpdate ?? 'DARK_THEME');
+
+      console.log(themeToUpdate ?? 'DARK_THEME')
+    }
   }
-
-  return { fetchTheme, updateTheme }
 }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import NavbarComponent from "./components/organisms/navbar/navbar.component.vue"
+    import NavbarComponent from "./components/organisms/navbar/navbar.component.vue";
 </script>
 
 <template>
@@ -10,7 +10,7 @@
 
 <style lang="scss">
     @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
-    
+
     * {
         padding: 0;
         margin: 0;
@@ -20,6 +20,10 @@
     .wrapper {
         font-family: 'Quicksand', sans-serif;
 
+        min-height: 100vh;
+        width: 100vw;
 
+        background-color: #1e1e24;
+        color: #fafafa;
     }
 </style>

@@ -1,17 +1,18 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import DividerComponent from './divider.component.vue';
+import IconComponent from './icon.component.vue';
 import { type VueWrapper, shallowMount } from '@vue/test-utils';
 
-describe('DividerComponent', () => {
+describe('IconComponent', () => {
   afterEach(() => {
     vi.clearAllMocks()
   })
 
   function callShallowMount (): VueWrapper {
-    return shallowMount(DividerComponent, {
+    return shallowMount(IconComponent, {
       props: {
-        width: 10,
-        height: 10
+        name: 'menu',
+        color: 'dark',
+        size: 'maximum'
       }
     })
   }

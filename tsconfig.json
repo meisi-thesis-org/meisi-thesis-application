@@ -7,7 +7,7 @@
         "outDir": "./dist",
         "allowSyntheticDefaultImports": true
     },
-    "include": ["./application", ".eslintrc.js"],
+    "include": ["./application", ".eslintrc.js", "vite.config.ts"],
     "exclude": [
         ".vscode",
         "node_modules",
