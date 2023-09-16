@@ -20,6 +20,16 @@
                     :form-field-collection="formGroup.formFieldCollection"
                 ></FormGroupComponent>
             </div>
+            <div class="form__inner--block">
+                <ButtonComponent 
+                    :content="definedProps.buttonLabel" 
+                    :action="definedProps.buttonAction"
+                ></ButtonComponent>
+            </div>
+            <DividerComponent :width="'100%'" :height="'0.025rem'"></DividerComponent>
+            <div class="form__inner--block link-collection">
+                <LinkComponent v-for="link of definedProps.linkCollection" :path="link.path" :content="link.content"></LinkComponent>
+            </div>
         </div>
     </div>
 </template>
@@ -28,6 +38,9 @@
     import { FormProps } from './form.component.type';
     import { TypographyComponent } from '../../atoms/typography';
     import { FormGroupComponent } from '../../molecules/form-group';
+    import { ButtonComponent } from "../../molecules/button";
+    import { DividerComponent } from '../../atoms/divider';
+    import { LinkComponent } from "../../molecules/link";
 
     const definedProps = defineProps<FormProps>();
 </script>
@@ -45,19 +58,23 @@
             flex-direction: column;
             justify-content: center;
 
-            gap: 2rem;
+            gap: 1.5rem;
+            padding: 0 2rem;
 
             &--block {
                 display: flex;
                 flex-direction: column;
                 gap: .5rem;
 
-                padding: 0 2rem;
                 &--typography {
                     &__header,
                     &__sub-header {
                         text-align: center;
                     }
+                }
+
+                &.link-collection {
+                    gap: 0.25rem;
                 }
             }
         }

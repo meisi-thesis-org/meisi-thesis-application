@@ -19,6 +19,7 @@
         box-shadow: 0px 0px 2px 0.5px rgba(0, 0, 0, 0.25); 
 
         font-family: inherit;
+        font-weight: 300;
         outline: none;
     }
 </style>

@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`FormGroupComponent > should match the snapshot 1`] = `
+exports[`ButtonComponent > should match the snapshot 1`] = `
 VueWrapper {
   "__app": {
     "_component": {
@@ -12,21 +12,14 @@ VueWrapper {
       data-v-app=""
     >
       <div
-        class="form-group"
-        data-v-37b64775=""
+        class="button"
+        data-v-7a12e89c=""
       >
-        <div
-          class="form-group__inner"
-          data-v-37b64775=""
-        >
-          <typography.component-stub
-            content="dummyName"
-            data-v-37b64775=""
-            segment="label"
-          />
-          
-          
-        </div>
+        <typography.component-stub
+          content="dummyContent"
+          data-v-7a12e89c=""
+          segment="sub-header"
+        />
       </div>
     </div>,
     "_context": {
@@ -268,29 +261,12 @@ VueWrapper {
           "c": null,
           "components": {},
           "ctx": {
-            "formFieldCollection": [],
-            "name": "dummyName",
+            "action": [Function],
+            "content": "dummyContent",
           },
           "da": null,
           "data": {},
           "devtoolsRawSetupState": {
-            "FormFieldComponent": {
-              "__file": "/Users/diogo.oliveira/Documents/@development/@meisi-thesis/application/frontend/src/components/atoms/form-field/form-field.component.vue",
-              "__name": "form-field.component",
-              "__scopeId": "data-v-b5c3e301",
-              "props": {
-                "placeholder": {
-                  "required": true,
-                  "type": [Function],
-                },
-                "type": {
-                  "required": true,
-                  "type": [Function],
-                },
-              },
-              "render": [Function],
-              "setup": [Function],
-            },
             "TypographyComponent": {
               "__file": "/Users/diogo.oliveira/Documents/@development/@meisi-thesis/application/frontend/src/components/atoms/typography/typography.component.vue",
               "__name": "typography.component",
@@ -309,8 +285,8 @@ VueWrapper {
               "setup": [Function],
             },
             "definedProps": {
-              "formFieldCollection": [],
-              "name": "dummyName",
+              "action": [Function],
+              "content": "dummyContent",
             },
           },
           "directives": null,
@@ -319,12 +295,6 @@ VueWrapper {
             "active": true,
             "allowRecurse": true,
             "deps": [
-              Set {
-                [Circular],
-              },
-              Set {
-                [Circular],
-              },
               Set {
                 [Circular],
               },
@@ -348,19 +318,19 @@ VueWrapper {
           "next": null,
           "parent": [Circular],
           "props": {
-            "formFieldCollection": [],
-            "name": "dummyName",
+            "action": [Function],
+            "content": "dummyContent",
           },
           "propsDefaults": {},
           "propsOptions": [
             {
-              "formFieldCollection": {
+              "action": {
                 "0": false,
                 "1": true,
                 "required": true,
                 "type": [Function],
               },
-              "name": {
+              "content": {
                 "0": false,
                 "1": true,
                 "required": true,
@@ -371,8 +341,8 @@ VueWrapper {
           ],
           "provides": {},
           "proxy": {
-            "formFieldCollection": [],
-            "name": "dummyName",
+            "action": [Function],
+            "content": "dummyContent",
           },
           "refs": {},
           "render": [Function],
@@ -389,12 +359,6 @@ VueWrapper {
                 "active": true,
                 "allowRecurse": true,
                 "deps": [
-                  Set {
-                    [Circular],
-                  },
-                  Set {
-                    [Circular],
-                  },
                   Set {
                     [Circular],
                   },
@@ -415,23 +379,6 @@ VueWrapper {
             "slots": {},
           },
           "setupState": {
-            "FormFieldComponent": {
-              "__file": "/Users/diogo.oliveira/Documents/@development/@meisi-thesis/application/frontend/src/components/atoms/form-field/form-field.component.vue",
-              "__name": "form-field.component",
-              "__scopeId": "data-v-b5c3e301",
-              "props": {
-                "placeholder": {
-                  "required": true,
-                  "type": [Function],
-                },
-                "type": {
-                  "required": true,
-                  "type": [Function],
-                },
-              },
-              "render": [Function],
-              "setup": [Function],
-            },
             "TypographyComponent": {
               "__file": "/Users/diogo.oliveira/Documents/@development/@meisi-thesis/application/frontend/src/components/atoms/typography/typography.component.vue",
               "__name": "typography.component",
@@ -450,8 +397,8 @@ VueWrapper {
               "setup": [Function],
             },
             "definedProps": {
-              "formFieldCollection": [],
-              "name": "dummyName",
+              "action": [Function],
+              "content": "dummyContent",
             },
           },
           "slots": {},
@@ -468,66 +415,130 @@ VueWrapper {
                 "__v_skip": true,
                 "anchor": null,
                 "appContext": null,
-                "children": [
-                  {
-                    "__v_isVNode": true,
-                    "__v_skip": true,
-                    "anchor": null,
-                    "appContext": null,
-                    "children": null,
-                    "component": {
-                      "a": null,
-                      "accessCache": {},
-                      "appContext": {
-                        "app": [Circular],
-                        "components": {
-                          "transition": {
-                            "name": "transition",
-                          },
-                          "transition-group": {
-                            "name": "transition-group",
-                          },
-                        },
-                        "config": {
-                          "compilerOptions": {},
-                          "errorHandler": undefined,
-                          "globalProperties": {},
-                          "isNativeTag": [Function],
-                          "optionMergeStrategies": {},
-                          "performance": false,
-                          "warnHandler": undefined,
-                        },
-                        "directives": {},
-                        "emitsCache": WeakMap {},
-                        "mixins": [
-                          {
-                            "beforeCreate": [Function],
-                          },
-                        ],
-                        "optionsCache": WeakMap {},
-                        "propsCache": WeakMap {},
-                        "provides": {},
-                        "reload": [Function],
+                "children": null,
+                "component": {
+                  "a": null,
+                  "accessCache": {},
+                  "appContext": {
+                    "app": [Circular],
+                    "components": {
+                      "transition": {
+                        "name": "transition",
                       },
-                      "asyncDep": null,
-                      "asyncResolved": false,
-                      "attrs": {},
-                      "attrsProxy": null,
-                      "bc": null,
-                      "bm": null,
-                      "bu": null,
-                      "bum": null,
-                      "c": null,
-                      "components": null,
-                      "ctx": {
-                        "content": "dummyName",
-                        "segment": "label",
+                      "transition-group": {
+                        "name": "transition-group",
                       },
-                      "da": null,
-                      "data": {},
-                      "directives": null,
-                      "ec": null,
-                      "effect": ReactiveEffect {
+                    },
+                    "config": {
+                      "compilerOptions": {},
+                      "errorHandler": undefined,
+                      "globalProperties": {},
+                      "isNativeTag": [Function],
+                      "optionMergeStrategies": {},
+                      "performance": false,
+                      "warnHandler": undefined,
+                    },
+                    "directives": {},
+                    "emitsCache": WeakMap {},
+                    "mixins": [
+                      {
+                        "beforeCreate": [Function],
+                      },
+                    ],
+                    "optionsCache": WeakMap {},
+                    "propsCache": WeakMap {},
+                    "provides": {},
+                    "reload": [Function],
+                  },
+                  "asyncDep": null,
+                  "asyncResolved": false,
+                  "attrs": {},
+                  "attrsProxy": null,
+                  "bc": null,
+                  "bm": null,
+                  "bu": null,
+                  "bum": null,
+                  "c": null,
+                  "components": null,
+                  "ctx": {
+                    "content": "dummyContent",
+                    "segment": "sub-header",
+                  },
+                  "da": null,
+                  "data": {},
+                  "directives": null,
+                  "ec": null,
+                  "effect": ReactiveEffect {
+                    "active": true,
+                    "allowRecurse": true,
+                    "deps": [
+                      Set {
+                        [Circular],
+                      },
+                      Set {
+                        [Circular],
+                      },
+                      Set {
+                        [Circular],
+                      },
+                    ],
+                    "fn": [Function],
+                    "onTrack": undefined,
+                    "onTrigger": undefined,
+                    "parent": undefined,
+                    "scheduler": [Function],
+                  },
+                  "emit": [Function],
+                  "emitsOptions": null,
+                  "emitted": null,
+                  "exposeProxy": null,
+                  "exposed": null,
+                  "inheritAttrs": undefined,
+                  "isDeactivated": false,
+                  "isMounted": true,
+                  "isUnmounted": false,
+                  "m": null,
+                  "next": null,
+                  "parent": [Circular],
+                  "props": {
+                    "content": "dummyContent",
+                    "segment": "sub-header",
+                  },
+                  "propsDefaults": {},
+                  "propsOptions": [
+                    {
+                      "content": {
+                        "0": false,
+                        "1": true,
+                        "required": true,
+                        "type": [Function],
+                      },
+                      "segment": {
+                        "0": false,
+                        "1": true,
+                        "required": true,
+                        "type": [Function],
+                      },
+                    },
+                    [],
+                  ],
+                  "provides": {},
+                  "proxy": {
+                    "content": "dummyContent",
+                    "segment": "sub-header",
+                  },
+                  "refs": {},
+                  "render": [Function],
+                  "renderCache": [],
+                  "root": [Circular],
+                  "rtc": null,
+                  "rtg": null,
+                  "scope": EffectScope {
+                    "_active": true,
+                    "cleanups": [],
+                    "detached": true,
+                    "effects": [
+                      ReactiveEffect {
                         "active": true,
                         "allowRecurse": true,
                         "deps": [
@@ -547,210 +558,44 @@ VueWrapper {
                         "parent": undefined,
                         "scheduler": [Function],
                       },
-                      "emit": [Function],
-                      "emitsOptions": null,
-                      "emitted": null,
-                      "exposeProxy": null,
-                      "exposed": null,
-                      "inheritAttrs": undefined,
-                      "isDeactivated": false,
-                      "isMounted": true,
-                      "isUnmounted": false,
-                      "m": null,
-                      "next": null,
-                      "parent": [Circular],
-                      "props": {
-                        "content": "dummyName",
-                        "segment": "label",
-                      },
-                      "propsDefaults": {},
-                      "propsOptions": [
-                        {
-                          "content": {
-                            "0": false,
-                            "1": true,
-                            "required": true,
-                            "type": [Function],
-                          },
-                          "segment": {
-                            "0": false,
-                            "1": true,
-                            "required": true,
-                            "type": [Function],
-                          },
-                        },
-                        [],
-                      ],
-                      "provides": {},
-                      "proxy": {
-                        "content": "dummyName",
-                        "segment": "label",
-                      },
-                      "refs": {},
-                      "render": [Function],
-                      "renderCache": [],
-                      "root": [Circular],
-                      "rtc": null,
-                      "rtg": null,
-                      "scope": EffectScope {
-                        "_active": true,
-                        "cleanups": [],
-                        "detached": true,
-                        "effects": [
-                          ReactiveEffect {
-                            "active": true,
-                            "allowRecurse": true,
-                            "deps": [
-                              Set {
-                                [Circular],
-                              },
-                              Set {
-                                [Circular],
-                              },
-                              Set {
-                                [Circular],
-                              },
-                            ],
-                            "fn": [Function],
-                            "onTrack": undefined,
-                            "onTrigger": undefined,
-                            "parent": undefined,
-                            "scheduler": [Function],
-                          },
-                        ],
-                        "parent": undefined,
-                      },
-                      "setupContext": {
-                        "attrs": {},
-                        "emit": [Function],
-                        "expose": [Function],
-                        "slots": {},
-                      },
-                      "setupState": {},
-                      "slots": {},
-                      "slotsProxy": {},
-                      "sp": null,
-                      "subTree": {
-                        "__v_isVNode": true,
-                        "__v_skip": true,
-                        "anchor": null,
-                        "appContext": null,
-                        "children": null,
-                        "component": null,
-                        "ctx": [Circular],
-                        "dirs": null,
-                        "dynamicChildren": null,
-                        "dynamicProps": null,
-                        "el": <typography.component-stub
-                          content="dummyName"
-                          data-v-37b64775=""
-                          segment="label"
-                        />,
-                        "key": null,
-                        "patchFlag": 0,
-                        "props": {
-                          "content": "dummyName",
-                          "segment": "label",
-                        },
-                        "ref": null,
-                        "scopeId": null,
-                        "shapeFlag": 1,
-                        "slotScopeIds": null,
-                        "ssContent": null,
-                        "ssFallback": null,
-                        "staticCount": 0,
-                        "suspense": null,
-                        "target": null,
-                        "targetAnchor": null,
-                        "transition": null,
-                        "type": "typography.component-stub",
-                      },
-                      "suspense": null,
-                      "suspenseId": 0,
-                      "type": {
-                        "model": undefined,
-                        "name": "typography.component",
-                        "props": {
-                          "content": {
-                            "required": true,
-                            "type": [Function],
-                          },
-                          "segment": {
-                            "required": true,
-                            "type": [Function],
-                          },
-                        },
-                        "setup": [Function],
-                      },
-                      "u": null,
-                      "uid": 2,
-                      "um": null,
-                      "update": [Function],
-                      "vnode": [Circular],
-                      "withProxy": null,
-                    },
-                    "ctx": [Circular],
-                    "dirs": null,
-                    "dynamicChildren": null,
-                    "dynamicProps": [
-                      "content",
                     ],
-                    "el": <typography.component-stub
-                      content="dummyName"
-                      data-v-37b64775=""
-                      segment="label"
-                    />,
-                    "key": null,
-                    "patchFlag": 8,
-                    "props": {
-                      "content": "dummyName",
-                      "segment": "label",
-                    },
-                    "ref": null,
-                    "scopeId": "data-v-37b64775",
-                    "shapeFlag": 4,
-                    "slotScopeIds": null,
-                    "ssContent": null,
-                    "ssFallback": null,
-                    "staticCount": 0,
-                    "suspense": null,
-                    "target": null,
-                    "targetAnchor": null,
-                    "transition": null,
-                    "type": {
-                      "model": undefined,
-                      "name": "typography.component",
-                      "props": {
-                        "content": {
-                          "required": true,
-                          "type": [Function],
-                        },
-                        "segment": {
-                          "required": true,
-                          "type": [Function],
-                        },
-                      },
-                      "setup": [Function],
-                    },
+                    "parent": undefined,
                   },
-                  {
+                  "setupContext": {
+                    "attrs": {},
+                    "emit": [Function],
+                    "expose": [Function],
+                    "slots": {},
+                  },
+                  "setupState": {},
+                  "slots": {},
+                  "slotsProxy": {},
+                  "sp": null,
+                  "subTree": {
                     "__v_isVNode": true,
                     "__v_skip": true,
-                    "anchor": ,
+                    "anchor": null,
                     "appContext": null,
-                    "children": [],
+                    "children": null,
                     "component": null,
                     "ctx": [Circular],
                     "dirs": null,
-                    "dynamicChildren": [],
+                    "dynamicChildren": null,
                     "dynamicProps": null,
-                    "el": ,
+                    "el": <typography.component-stub
+                      content="dummyContent"
+                      data-v-7a12e89c=""
+                      segment="sub-header"
+                    />,
                     "key": null,
-                    "patchFlag": 256,
-                    "props": null,
+                    "patchFlag": 0,
+                    "props": {
+                      "content": "dummyContent",
+                      "segment": "sub-header",
+                    },
                     "ref": null,
-                    "scopeId": "data-v-37b64775",
-                    "shapeFlag": 16,
+                    "scopeId": null,
+                    "shapeFlag": 1,
                     "slotScopeIds": null,
                     "ssContent": null,
                     "ssFallback": null,
@@ -759,34 +604,52 @@ VueWrapper {
                     "target": null,
                     "targetAnchor": null,
                     "transition": null,
-                    "type": Symbol(v-fgt),
+                    "type": "typography.component-stub",
                   },
-                ],
-                "component": null,
+                  "suspense": null,
+                  "suspenseId": 0,
+                  "type": {
+                    "model": undefined,
+                    "name": "typography.component",
+                    "props": {
+                      "content": {
+                        "required": true,
+                        "type": [Function],
+                      },
+                      "segment": {
+                        "required": true,
+                        "type": [Function],
+                      },
+                    },
+                    "setup": [Function],
+                  },
+                  "u": null,
+                  "uid": 2,
+                  "um": null,
+                  "update": [Function],
+                  "vnode": [Circular],
+                  "withProxy": null,
+                },
                 "ctx": [Circular],
                 "dirs": null,
                 "dynamicChildren": null,
-                "dynamicProps": null,
-                "el": <div
-                  class="form-group__inner"
-                  data-v-37b64775=""
-                >
-                  <typography.component-stub
-                    content="dummyName"
-                    data-v-37b64775=""
-                    segment="label"
-                  />
-                  
-                  
-                </div>,
+                "dynamicProps": [
+                  "content",
+                ],
+                "el": <typography.component-stub
+                  content="dummyContent"
+                  data-v-7a12e89c=""
+                  segment="sub-header"
+                />,
                 "key": null,
-                "patchFlag": 0,
+                "patchFlag": 8,
                 "props": {
-                  "class": "form-group__inner",
+                  "content": "dummyContent",
+                  "segment": "sub-header",
                 },
                 "ref": null,
-                "scopeId": "data-v-37b64775",
-                "shapeFlag": 17,
+                "scopeId": "data-v-7a12e89c",
+                "shapeFlag": 4,
                 "slotScopeIds": null,
                 "ssContent": null,
                 "ssFallback": null,
@@ -795,7 +658,21 @@ VueWrapper {
                 "target": null,
                 "targetAnchor": null,
                 "transition": null,
-                "type": "div",
+                "type": {
+                  "model": undefined,
+                  "name": "typography.component",
+                  "props": {
+                    "content": {
+                      "required": true,
+                      "type": [Function],
+                    },
+                    "segment": {
+                      "required": true,
+                      "type": [Function],
+                    },
+                  },
+                  "setup": [Function],
+                },
               },
             ],
             "component": null,
@@ -862,8 +739,8 @@ VueWrapper {
                   "c": null,
                   "components": null,
                   "ctx": {
-                    "content": "dummyName",
-                    "segment": "label",
+                    "content": "dummyContent",
+                    "segment": "sub-header",
                   },
                   "da": null,
                   "data": {},
@@ -902,8 +779,8 @@ VueWrapper {
                   "next": null,
                   "parent": [Circular],
                   "props": {
-                    "content": "dummyName",
-                    "segment": "label",
+                    "content": "dummyContent",
+                    "segment": "sub-header",
                   },
                   "propsDefaults": {},
                   "propsOptions": [
@@ -925,8 +802,8 @@ VueWrapper {
                   ],
                   "provides": {},
                   "proxy": {
-                    "content": "dummyName",
-                    "segment": "label",
+                    "content": "dummyContent",
+                    "segment": "sub-header",
                   },
                   "refs": {},
                   "render": [Function],
@@ -984,15 +861,15 @@ VueWrapper {
                     "dynamicChildren": null,
                     "dynamicProps": null,
                     "el": <typography.component-stub
-                      content="dummyName"
-                      data-v-37b64775=""
-                      segment="label"
+                      content="dummyContent"
+                      data-v-7a12e89c=""
+                      segment="sub-header"
                     />,
                     "key": null,
                     "patchFlag": 0,
                     "props": {
-                      "content": "dummyName",
-                      "segment": "label",
+                      "content": "dummyContent",
+                      "segment": "sub-header",
                     },
                     "ref": null,
                     "scopeId": null,
@@ -1038,18 +915,18 @@ VueWrapper {
                   "content",
                 ],
                 "el": <typography.component-stub
-                  content="dummyName"
-                  data-v-37b64775=""
-                  segment="label"
+                  content="dummyContent"
+                  data-v-7a12e89c=""
+                  segment="sub-header"
                 />,
                 "key": null,
                 "patchFlag": 8,
                 "props": {
-                  "content": "dummyName",
-                  "segment": "label",
+                  "content": "dummyContent",
+                  "segment": "sub-header",
                 },
                 "ref": null,
-                "scopeId": "data-v-37b64775",
+                "scopeId": "data-v-7a12e89c",
                 "shapeFlag": 4,
                 "slotScopeIds": null,
                 "ssContent": null,
@@ -1075,60 +952,25 @@ VueWrapper {
                   "setup": [Function],
                 },
               },
-              {
-                "__v_isVNode": true,
-                "__v_skip": true,
-                "anchor": ,
-                "appContext": null,
-                "children": [],
-                "component": null,
-                "ctx": [Circular],
-                "dirs": null,
-                "dynamicChildren": [],
-                "dynamicProps": null,
-                "el": ,
-                "key": null,
-                "patchFlag": 256,
-                "props": null,
-                "ref": null,
-                "scopeId": "data-v-37b64775",
-                "shapeFlag": 16,
-                "slotScopeIds": null,
-                "ssContent": null,
-                "ssFallback": null,
-                "staticCount": 0,
-                "suspense": null,
-                "target": null,
-                "targetAnchor": null,
-                "transition": null,
-                "type": Symbol(v-fgt),
-              },
             ],
             "dynamicProps": null,
             "el": <div
-              class="form-group"
-              data-v-37b64775=""
+              class="button"
+              data-v-7a12e89c=""
             >
-              <div
-                class="form-group__inner"
-                data-v-37b64775=""
-              >
-                <typography.component-stub
-                  content="dummyName"
-                  data-v-37b64775=""
-                  segment="label"
-                />
-                
-                
-              </div>
+              <typography.component-stub
+                content="dummyContent"
+                data-v-7a12e89c=""
+                segment="sub-header"
+              />
             </div>,
             "key": null,
             "patchFlag": 0,
             "props": {
-              "class": "form-group",
+              "class": "button",
             },
             "ref": null,
-            "scopeId": "data-v-37b64775",
+            "scopeId": "data-v-7a12e89c",
             "shapeFlag": 17,
             "slotScopeIds": null,
             "ssContent": null,
@@ -1143,16 +985,16 @@ VueWrapper {
           "suspense": null,
           "suspenseId": 0,
           "type": {
-            "__file": "/Users/diogo.oliveira/Documents/@development/@meisi-thesis/application/frontend/src/components/molecules/form-group/form-group.component.vue",
-            "__name": "form-group.component",
-            "__scopeId": "data-v-37b64775",
+            "__file": "/Users/diogo.oliveira/Documents/@development/@meisi-thesis/application/frontend/src/components/molecules/button/button.component.vue",
+            "__name": "button.component",
+            "__scopeId": "data-v-7a12e89c",
             "components": {},
             "props": {
-              "formFieldCollection": {
+              "action": {
                 "required": true,
                 "type": [Function],
               },
-              "name": {
+              "content": {
                 "required": true,
                 "type": [Function],
               },
@@ -1172,27 +1014,20 @@ VueWrapper {
         "dynamicChildren": null,
         "dynamicProps": null,
         "el": <div
-          class="form-group"
-          data-v-37b64775=""
+          class="button"
+          data-v-7a12e89c=""
         >
-          <div
-            class="form-group__inner"
-            data-v-37b64775=""
-          >
-            <typography.component-stub
-              content="dummyName"
-              data-v-37b64775=""
-              segment="label"
-            />
-            
-            
-          </div>
+          <typography.component-stub
+            content="dummyContent"
+            data-v-7a12e89c=""
+            segment="sub-header"
+          />
         </div>,
         "key": null,
         "patchFlag": 0,
         "props": {
-          "formFieldCollection": [],
-          "name": "dummyName",
+          "action": [Function],
+          "content": "dummyContent",
           "ref": "VTU_COMPONENT",
         },
         "ref": {
@@ -1212,16 +1047,16 @@ VueWrapper {
         "targetAnchor": null,
         "transition": null,
         "type": {
-          "__file": "/Users/diogo.oliveira/Documents/@development/@meisi-thesis/application/frontend/src/components/molecules/form-group/form-group.component.vue",
-          "__name": "form-group.component",
-          "__scopeId": "data-v-37b64775",
+          "__file": "/Users/diogo.oliveira/Documents/@development/@meisi-thesis/application/frontend/src/components/molecules/button/button.component.vue",
+          "__name": "button.component",
+          "__scopeId": "data-v-7a12e89c",
           "components": {},
           "props": {
-            "formFieldCollection": {
+            "action": {
               "required": true,
               "type": [Function],
             },
-            "name": {
+            "content": {
               "required": true,
               "type": [Function],
             },
@@ -1283,21 +1118,14 @@ VueWrapper {
         "dynamicChildren": null,
         "dynamicProps": null,
         "el": <div
-          class="form-group"
-          data-v-37b64775=""
+          class="button"
+          data-v-7a12e89c=""
         >
-          <div
-            class="form-group__inner"
-            data-v-37b64775=""
-          >
-            <typography.component-stub
-              content="dummyName"
-              data-v-37b64775=""
-              segment="label"
-            />
-            
-            
-          </div>
+          <typography.component-stub
+            content="dummyContent"
+            data-v-7a12e89c=""
+            segment="sub-header"
+          />
         </div>,
         "key": null,
         "patchFlag": 0,
@@ -1523,21 +1351,14 @@ VueWrapper {
     "VTU_COMPONENT": {},
   },
   "wrapperElement": <div
-    class="form-group"
-    data-v-37b64775=""
+    class="button"
+    data-v-7a12e89c=""
   >
-    <div
-      class="form-group__inner"
-      data-v-37b64775=""
-    >
-      <typography.component-stub
-        content="dummyName"
-        data-v-37b64775=""
-        segment="label"
-      />
-      
-      
-    </div>
+    <typography.component-stub
+      content="dummyContent"
+      data-v-7a12e89c=""
+      segment="sub-header"
+    />
   </div>,
 }
 `;

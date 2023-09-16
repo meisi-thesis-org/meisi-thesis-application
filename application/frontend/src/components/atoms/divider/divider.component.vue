@@ -11,7 +11,8 @@
         return {
             width: definedProps.width,
             height: definedProps.height,
-            'background-color': 'currentColor'
+            'background-color': 'currentColor',
+            'opacity': '0.10'
         }
     }
 </script>

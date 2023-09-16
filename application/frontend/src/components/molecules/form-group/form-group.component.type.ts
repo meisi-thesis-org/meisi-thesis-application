@@ -1,4 +1,4 @@
-import type { FormFieldProps } from '@/components/atoms/form-field'
+import type { FormFieldProps } from './../../atoms/form-field'
 
 type FormGroupProps = {
   readonly name: string

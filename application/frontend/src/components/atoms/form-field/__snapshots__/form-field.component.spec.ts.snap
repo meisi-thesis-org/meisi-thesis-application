@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`DividerComponent > should match the snapshot 1`] = `
+exports[`FormFieldComponent > should match the snapshot 1`] = `
 VueWrapper {
   "__app": {
     "_component": {
@@ -11,9 +11,11 @@ VueWrapper {
     "_container": <div
       data-v-app=""
     >
-      <div
-        class="divider"
-        style="width: 0.5rem; height: 0.5rem; background-color: currentColor; opacity: 0.1;"
+      <input
+        class="form-field"
+        data-v-b5c3e301=""
+        placeholder="dummyPlaceholder"
+        type="text"
       />
     </div>,
     "_context": {
@@ -255,16 +257,15 @@ VueWrapper {
           "c": null,
           "components": {},
           "ctx": {
-            "height": "0.5rem",
-            "width": "0.5rem",
+            "placeholder": "dummyPlaceholder",
+            "type": "text",
           },
           "da": null,
           "data": {},
           "devtoolsRawSetupState": {
-            "defineStyles": [Function],
             "definedProps": {
-              "height": "0.5rem",
-              "width": "0.5rem",
+              "placeholder": "dummyPlaceholder",
+              "type": "text",
             },
           },
           "directives": null,
@@ -299,19 +300,19 @@ VueWrapper {
           "next": null,
           "parent": [Circular],
           "props": {
-            "height": "0.5rem",
-            "width": "0.5rem",
+            "placeholder": "dummyPlaceholder",
+            "type": "text",
           },
           "propsDefaults": {},
           "propsOptions": [
             {
-              "height": {
+              "placeholder": {
                 "0": false,
                 "1": true,
                 "required": true,
                 "type": [Function],
               },
-              "width": {
+              "type": {
                 "0": false,
                 "1": true,
                 "required": true,
@@ -322,8 +323,8 @@ VueWrapper {
           ],
           "provides": {},
           "proxy": {
-            "height": "0.5rem",
-            "width": "0.5rem",
+            "placeholder": "dummyPlaceholder",
+            "type": "text",
           },
           "refs": {},
           "render": [Function],
@@ -363,10 +364,9 @@ VueWrapper {
             "slots": {},
           },
           "setupState": {
-            "defineStyles": [Function],
             "definedProps": {
-              "height": "0.5rem",
-              "width": "0.5rem",
+              "placeholder": "dummyPlaceholder",
+              "type": "text",
             },
           },
           "slots": {},
@@ -382,24 +382,25 @@ VueWrapper {
             "ctx": [Circular],
             "dirs": null,
             "dynamicChildren": [],
-            "dynamicProps": null,
-            "el": <div
-              class="divider"
-              style="width: 0.5rem; height: 0.5rem; background-color: currentColor; opacity: 0.1;"
+            "dynamicProps": [
+              "type",
+              "placeholder",
+            ],
+            "el": <input
+              class="form-field"
+              data-v-b5c3e301=""
+              placeholder="dummyPlaceholder"
+              type="text"
             />,
             "key": null,
-            "patchFlag": 4,
+            "patchFlag": 8,
             "props": {
-              "class": "divider",
-              "style": {
-                "background-color": "currentColor",
-                "height": "0.5rem",
-                "opacity": "0.10",
-                "width": "0.5rem",
-              },
+              "class": "form-field",
+              "placeholder": "dummyPlaceholder",
+              "type": "text",
             },
             "ref": null,
-            "scopeId": null,
+            "scopeId": "data-v-b5c3e301",
             "shapeFlag": 1,
             "slotScopeIds": null,
             "ssContent": null,
@@ -409,20 +410,21 @@ VueWrapper {
             "target": null,
             "targetAnchor": null,
             "transition": null,
-            "type": "div",
+            "type": "input",
           },
           "suspense": null,
           "suspenseId": 0,
           "type": {
-            "__file": "/Users/diogo.oliveira/Documents/@development/@meisi-thesis/application/frontend/src/components/atoms/divider/divider.component.vue",
-            "__name": "divider.component",
+            "__file": "/Users/diogo.oliveira/Documents/@development/@meisi-thesis/application/frontend/src/components/atoms/form-field/form-field.component.vue",
+            "__name": "form-field.component",
+            "__scopeId": "data-v-b5c3e301",
             "components": {},
             "props": {
-              "height": {
+              "placeholder": {
                 "required": true,
                 "type": [Function],
               },
-              "width": {
+              "type": {
                 "required": true,
                 "type": [Function],
               },
@@ -441,16 +443,18 @@ VueWrapper {
         "dirs": null,
         "dynamicChildren": null,
         "dynamicProps": null,
-        "el": <div
-          class="divider"
-          style="width: 0.5rem; height: 0.5rem; background-color: currentColor; opacity: 0.1;"
+        "el": <input
+          class="form-field"
+          data-v-b5c3e301=""
+          placeholder="dummyPlaceholder"
+          type="text"
         />,
         "key": null,
         "patchFlag": 0,
         "props": {
-          "height": "0.5rem",
+          "placeholder": "dummyPlaceholder",
           "ref": "VTU_COMPONENT",
-          "width": "0.5rem",
+          "type": "text",
         },
         "ref": {
           "f": false,
@@ -469,15 +473,16 @@ VueWrapper {
         "targetAnchor": null,
         "transition": null,
         "type": {
-          "__file": "/Users/diogo.oliveira/Documents/@development/@meisi-thesis/application/frontend/src/components/atoms/divider/divider.component.vue",
-          "__name": "divider.component",
+          "__file": "/Users/diogo.oliveira/Documents/@development/@meisi-thesis/application/frontend/src/components/atoms/form-field/form-field.component.vue",
+          "__name": "form-field.component",
+          "__scopeId": "data-v-b5c3e301",
           "components": {},
           "props": {
-            "height": {
+            "placeholder": {
               "required": true,
               "type": [Function],
             },
-            "width": {
+            "type": {
               "required": true,
               "type": [Function],
             },
@@ -538,9 +543,11 @@ VueWrapper {
         "dirs": null,
         "dynamicChildren": null,
         "dynamicProps": null,
-        "el": <div
-          class="divider"
-          style="width: 0.5rem; height: 0.5rem; background-color: currentColor; opacity: 0.1;"
+        "el": <input
+          class="form-field"
+          data-v-b5c3e301=""
+          placeholder="dummyPlaceholder"
+          type="text"
         />,
         "key": null,
         "patchFlag": 0,
@@ -765,9 +772,11 @@ VueWrapper {
   "rootVM": {
     "VTU_COMPONENT": {},
   },
-  "wrapperElement": <div
-    class="divider"
-    style="width: 0.5rem; height: 0.5rem; background-color: currentColor; opacity: 0.1;"
+  "wrapperElement": <input
+    class="form-field"
+    data-v-b5c3e301=""
+    placeholder="dummyPlaceholder"
+    type="text"
   />,
 }
 `;

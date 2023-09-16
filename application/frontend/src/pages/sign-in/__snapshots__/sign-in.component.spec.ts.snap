@@ -20,10 +20,25 @@ VueWrapper {
           data-v-768bad0c=""
         >
           <form.component-stub
+            buttonaction="[Function]"
+            buttonlabel="SignIn"
             data-v-768bad0c=""
             formgroupcollection="[object Object]"
-            header="Sign In"
-            subheader="Access your account to start typing!"
+            header="E-Bookler"
+            subheader="Start monetizing your writting time!"
+          />
+          <divider.component-stub
+            data-v-768bad0c=""
+            height="0.05rem"
+            width="100%"
+          />
+          <linkcomponent
+            content="Forgot your account data? Recover here!"
+            data-v-768bad0c=""
+          />
+          <linkcomponent
+            content="Forgot your account data? Recover here!"
+            data-v-768bad0c=""
           />
         </div>
       </div>
@@ -258,11 +273,35 @@ VueWrapper {
           "da": null,
           "data": {},
           "devtoolsRawSetupState": {
+            "DividerComponent": {
+              "__file": "/Users/diogo.oliveira/Documents/@development/@meisi-thesis/application/frontend/src/components/atoms/divider/divider.component.vue",
+              "__name": "divider.component",
+              "props": {
+                "height": {
+                  "required": true,
+                  "type": [Function],
+                },
+                "width": {
+                  "required": true,
+                  "type": [Function],
+                },
+              },
+              "render": [Function],
+              "setup": [Function],
+            },
             "FormComponent": {
               "__file": "/Users/diogo.oliveira/Documents/@development/@meisi-thesis/application/frontend/src/components/organisms/form/form.component.vue",
               "__name": "form.component",
               "__scopeId": "data-v-849e6ba5",
               "props": {
+                "buttonAction": {
+                  "required": true,
+                  "type": [Function],
+                },
+                "buttonLabel": {
+                  "required": true,
+                  "type": [Function],
+                },
                 "formGroupCollection": {
                   "required": true,
                   "type": [Function],
@@ -281,8 +320,13 @@ VueWrapper {
             },
             "formGroupCollection": [
               {
-                "formFieldCollection": [],
-                "name": "Access code",
+                "formFieldCollection": [
+                  {
+                    "placeholder": "Bookler Key...",
+                    "type": "password",
+                  },
+                ],
+                "name": "Account Information",
               },
             ],
           },
@@ -349,11 +393,35 @@ VueWrapper {
             "slots": {},
           },
           "setupState": {
+            "DividerComponent": {
+              "__file": "/Users/diogo.oliveira/Documents/@development/@meisi-thesis/application/frontend/src/components/atoms/divider/divider.component.vue",
+              "__name": "divider.component",
+              "props": {
+                "height": {
+                  "required": true,
+                  "type": [Function],
+                },
+                "width": {
+                  "required": true,
+                  "type": [Function],
+                },
+              },
+              "render": [Function],
+              "setup": [Function],
+            },
             "FormComponent": {
               "__file": "/Users/diogo.oliveira/Documents/@development/@meisi-thesis/application/frontend/src/components/organisms/form/form.component.vue",
               "__name": "form.component",
               "__scopeId": "data-v-849e6ba5",
               "props": {
+                "buttonAction": {
+                  "required": true,
+                  "type": [Function],
+                },
+                "buttonLabel": {
+                  "required": true,
+                  "type": [Function],
+                },
                 "formGroupCollection": {
                   "required": true,
                   "type": [Function],
@@ -372,8 +440,13 @@ VueWrapper {
             },
             "formGroupCollection": [
               {
-                "formFieldCollection": [],
-                "name": "Access code",
+                "formFieldCollection": [
+                  {
+                    "placeholder": "Bookler Key...",
+                    "type": "password",
+                  },
+                ],
+                "name": "Account Information",
               },
             ],
           },
@@ -443,14 +516,21 @@ VueWrapper {
                       "c": null,
                       "components": null,
                       "ctx": {
+                        "buttonAction": [Function],
+                        "buttonLabel": "SignIn",
                         "formGroupCollection": [
                           {
-                            "formFieldCollection": [],
-                            "name": "Access code",
+                            "formFieldCollection": [
+                              {
+                                "placeholder": "Bookler Key...",
+                                "type": "password",
+                              },
+                            ],
+                            "name": "Account Information",
                           },
                         ],
-                        "header": "Sign In",
-                        "subHeader": "Access your account to start typing!",
+                        "header": "E-Bookler",
+                        "subHeader": "Start monetizing your writting time!",
                       },
                       "da": null,
                       "data": {},
@@ -460,6 +540,12 @@ VueWrapper {
                         "active": true,
                         "allowRecurse": true,
                         "deps": [
+                          Set {
+                            [Circular],
+                          },
+                          Set {
+                            [Circular],
+                          },
                           Set {
                             [Circular],
                           },
@@ -492,18 +578,37 @@ VueWrapper {
                       "next": null,
                       "parent": [Circular],
                       "props": {
+                        "buttonAction": [Function],
+                        "buttonLabel": "SignIn",
                         "formGroupCollection": [
                           {
-                            "formFieldCollection": [],
-                            "name": "Access code",
+                            "formFieldCollection": [
+                              {
+                                "placeholder": "Bookler Key...",
+                                "type": "password",
+                              },
+                            ],
+                            "name": "Account Information",
                           },
                         ],
-                        "header": "Sign In",
-                        "subHeader": "Access your account to start typing!",
+                        "header": "E-Bookler",
+                        "subHeader": "Start monetizing your writting time!",
                       },
                       "propsDefaults": {},
                       "propsOptions": [
                         {
+                          "buttonAction": {
+                            "0": false,
+                            "1": true,
+                            "required": true,
+                            "type": [Function],
+                          },
+                          "buttonLabel": {
+                            "0": false,
+                            "1": true,
+                            "required": true,
+                            "type": [Function],
+                          },
                           "formGroupCollection": {
                             "0": false,
                             "1": true,
@@ -527,14 +632,21 @@ VueWrapper {
                       ],
                       "provides": {},
                       "proxy": {
+                        "buttonAction": [Function],
+                        "buttonLabel": "SignIn",
                         "formGroupCollection": [
                           {
-                            "formFieldCollection": [],
-                            "name": "Access code",
+                            "formFieldCollection": [
+                              {
+                                "placeholder": "Bookler Key...",
+                                "type": "password",
+                              },
+                            ],
+                            "name": "Account Information",
                           },
                         ],
-                        "header": "Sign In",
-                        "subHeader": "Access your account to start typing!",
+                        "header": "E-Bookler",
+                        "subHeader": "Start monetizing your writting time!",
                       },
                       "refs": {},
                       "render": [Function],
@@ -551,6 +663,12 @@ VueWrapper {
                             "active": true,
                             "allowRecurse": true,
                             "deps": [
+                              Set {
+                                [Circular],
+                              },
+                              Set {
+                                [Circular],
+                              },
                               Set {
                                 [Circular],
                               },
@@ -595,22 +713,31 @@ VueWrapper {
                         "dynamicChildren": null,
                         "dynamicProps": null,
                         "el": <form.component-stub
+                          buttonaction="[Function]"
+                          buttonlabel="SignIn"
                           data-v-768bad0c=""
                           formgroupcollection="[object Object]"
-                          header="Sign In"
-                          subheader="Access your account to start typing!"
+                          header="E-Bookler"
+                          subheader="Start monetizing your writting time!"
                         />,
                         "key": null,
                         "patchFlag": 0,
                         "props": {
+                          "buttonAction": "[Function]",
+                          "buttonLabel": "SignIn",
                           "formGroupCollection": [
                             {
-                              "formFieldCollection": [],
-                              "name": "Access code",
+                              "formFieldCollection": [
+                                {
+                                  "placeholder": "Bookler Key...",
+                                  "type": "password",
+                                },
+                              ],
+                              "name": "Account Information",
                             },
                           ],
-                          "header": "Sign In",
-                          "subHeader": "Access your account to start typing!",
+                          "header": "E-Bookler",
+                          "subHeader": "Start monetizing your writting time!",
                         },
                         "ref": null,
                         "scopeId": null,
@@ -631,6 +758,14 @@ VueWrapper {
                         "model": undefined,
                         "name": "form.component",
                         "props": {
+                          "buttonAction": {
+                            "required": true,
+                            "type": [Function],
+                          },
+                          "buttonLabel": {
+                            "required": true,
+                            "type": [Function],
+                          },
                           "formGroupCollection": {
                             "required": true,
                             "type": [Function],
@@ -647,7 +782,7 @@ VueWrapper {
                         "setup": [Function],
                       },
                       "u": null,
-                      "uid": 5,
+                      "uid": 6,
                       "um": null,
                       "update": [Function],
                       "vnode": [Circular],
@@ -660,22 +795,31 @@ VueWrapper {
                       "form-group-collection",
                     ],
                     "el": <form.component-stub
+                      buttonaction="[Function]"
+                      buttonlabel="SignIn"
                       data-v-768bad0c=""
                       formgroupcollection="[object Object]"
-                      header="Sign In"
-                      subheader="Access your account to start typing!"
+                      header="E-Bookler"
+                      subheader="Start monetizing your writting time!"
                     />,
                     "key": null,
                     "patchFlag": 8,
                     "props": {
+                      "button-action": [Function],
+                      "button-label": "SignIn",
                       "form-group-collection": [
                         {
-                          "formFieldCollection": [],
-                          "name": "Access code",
+                          "formFieldCollection": [
+                            {
+                              "placeholder": "Bookler Key...",
+                              "type": "password",
+                            },
+                          ],
+                          "name": "Account Information",
                         },
                       ],
-                      "header": "Sign In",
-                      "sub-header": "Access your account to start typing!",
+                      "header": "E-Bookler",
+                      "sub-header": "Start monetizing your writting time!",
                     },
                     "ref": null,
                     "scopeId": "data-v-768bad0c",
@@ -692,6 +836,14 @@ VueWrapper {
                       "model": undefined,
                       "name": "form.component",
                       "props": {
+                        "buttonAction": {
+                          "required": true,
+                          "type": [Function],
+                        },
+                        "buttonLabel": {
+                          "required": true,
+                          "type": [Function],
+                        },
                         "formGroupCollection": {
                           "required": true,
                           "type": [Function],
@@ -708,6 +860,334 @@ VueWrapper {
                       "setup": [Function],
                     },
                   },
+                  {
+                    "__v_isVNode": true,
+                    "__v_skip": true,
+                    "anchor": null,
+                    "appContext": null,
+                    "children": null,
+                    "component": {
+                      "a": null,
+                      "accessCache": {},
+                      "appContext": {
+                        "app": [Circular],
+                        "components": {
+                          "transition": {
+                            "name": "transition",
+                          },
+                          "transition-group": {
+                            "name": "transition-group",
+                          },
+                        },
+                        "config": {
+                          "compilerOptions": {},
+                          "errorHandler": undefined,
+                          "globalProperties": {},
+                          "isNativeTag": [Function],
+                          "optionMergeStrategies": {},
+                          "performance": false,
+                          "warnHandler": undefined,
+                        },
+                        "directives": {},
+                        "emitsCache": WeakMap {},
+                        "mixins": [
+                          {
+                            "beforeCreate": [Function],
+                          },
+                        ],
+                        "optionsCache": WeakMap {},
+                        "propsCache": WeakMap {},
+                        "provides": {},
+                        "reload": [Function],
+                      },
+                      "asyncDep": null,
+                      "asyncResolved": false,
+                      "attrs": {},
+                      "attrsProxy": null,
+                      "bc": null,
+                      "bm": null,
+                      "bu": null,
+                      "bum": null,
+                      "c": null,
+                      "components": null,
+                      "ctx": {
+                        "height": "0.05rem",
+                        "width": "100%",
+                      },
+                      "da": null,
+                      "data": {},
+                      "directives": null,
+                      "ec": null,
+                      "effect": ReactiveEffect {
+                        "active": true,
+                        "allowRecurse": true,
+                        "deps": [
+                          Set {
+                            [Circular],
+                          },
+                          Set {
+                            [Circular],
+                          },
+                          Set {
+                            [Circular],
+                          },
+                        ],
+                        "fn": [Function],
+                        "onTrack": undefined,
+                        "onTrigger": undefined,
+                        "parent": undefined,
+                        "scheduler": [Function],
+                      },
+                      "emit": [Function],
+                      "emitsOptions": null,
+                      "emitted": null,
+                      "exposeProxy": null,
+                      "exposed": null,
+                      "inheritAttrs": undefined,
+                      "isDeactivated": false,
+                      "isMounted": true,
+                      "isUnmounted": false,
+                      "m": null,
+                      "next": null,
+                      "parent": [Circular],
+                      "props": {
+                        "height": "0.05rem",
+                        "width": "100%",
+                      },
+                      "propsDefaults": {},
+                      "propsOptions": [
+                        {
+                          "height": {
+                            "0": false,
+                            "1": true,
+                            "required": true,
+                            "type": [Function],
+                          },
+                          "width": {
+                            "0": false,
+                            "1": true,
+                            "required": true,
+                            "type": [Function],
+                          },
+                        },
+                        [],
+                      ],
+                      "provides": {},
+                      "proxy": {
+                        "height": "0.05rem",
+                        "width": "100%",
+                      },
+                      "refs": {},
+                      "render": [Function],
+                      "renderCache": [],
+                      "root": [Circular],
+                      "rtc": null,
+                      "rtg": null,
+                      "scope": EffectScope {
+                        "_active": true,
+                        "cleanups": [],
+                        "detached": true,
+                        "effects": [
+                          ReactiveEffect {
+                            "active": true,
+                            "allowRecurse": true,
+                            "deps": [
+                              Set {
+                                [Circular],
+                              },
+                              Set {
+                                [Circular],
+                              },
+                              Set {
+                                [Circular],
+                              },
+                            ],
+                            "fn": [Function],
+                            "onTrack": undefined,
+                            "onTrigger": undefined,
+                            "parent": undefined,
+                            "scheduler": [Function],
+                          },
+                        ],
+                        "parent": undefined,
+                      },
+                      "setupContext": {
+                        "attrs": {},
+                        "emit": [Function],
+                        "expose": [Function],
+                        "slots": {},
+                      },
+                      "setupState": {},
+                      "slots": {},
+                      "slotsProxy": {},
+                      "sp": null,
+                      "subTree": {
+                        "__v_isVNode": true,
+                        "__v_skip": true,
+                        "anchor": null,
+                        "appContext": null,
+                        "children": null,
+                        "component": null,
+                        "ctx": [Circular],
+                        "dirs": null,
+                        "dynamicChildren": null,
+                        "dynamicProps": null,
+                        "el": <divider.component-stub
+                          data-v-768bad0c=""
+                          height="0.05rem"
+                          width="100%"
+                        />,
+                        "key": null,
+                        "patchFlag": 0,
+                        "props": {
+                          "height": "0.05rem",
+                          "width": "100%",
+                        },
+                        "ref": null,
+                        "scopeId": null,
+                        "shapeFlag": 1,
+                        "slotScopeIds": null,
+                        "ssContent": null,
+                        "ssFallback": null,
+                        "staticCount": 0,
+                        "suspense": null,
+                        "target": null,
+                        "targetAnchor": null,
+                        "transition": null,
+                        "type": "divider.component-stub",
+                      },
+                      "suspense": null,
+                      "suspenseId": 0,
+                      "type": {
+                        "model": undefined,
+                        "name": "divider.component",
+                        "props": {
+                          "height": {
+                            "required": true,
+                            "type": [Function],
+                          },
+                          "width": {
+                            "required": true,
+                            "type": [Function],
+                          },
+                        },
+                        "setup": [Function],
+                      },
+                      "u": null,
+                      "uid": 7,
+                      "um": null,
+                      "update": [Function],
+                      "vnode": [Circular],
+                      "withProxy": null,
+                    },
+                    "ctx": [Circular],
+                    "dirs": null,
+                    "dynamicChildren": null,
+                    "dynamicProps": null,
+                    "el": <divider.component-stub
+                      data-v-768bad0c=""
+                      height="0.05rem"
+                      width="100%"
+                    />,
+                    "key": null,
+                    "patchFlag": 0,
+                    "props": {
+                      "height": "0.05rem",
+                      "width": "100%",
+                    },
+                    "ref": null,
+                    "scopeId": "data-v-768bad0c",
+                    "shapeFlag": 4,
+                    "slotScopeIds": null,
+                    "ssContent": null,
+                    "ssFallback": null,
+                    "staticCount": 0,
+                    "suspense": null,
+                    "target": null,
+                    "targetAnchor": null,
+                    "transition": null,
+                    "type": {
+                      "model": undefined,
+                      "name": "divider.component",
+                      "props": {
+                        "height": {
+                          "required": true,
+                          "type": [Function],
+                        },
+                        "width": {
+                          "required": true,
+                          "type": [Function],
+                        },
+                      },
+                      "setup": [Function],
+                    },
+                  },
+                  {
+                    "__v_isVNode": true,
+                    "__v_skip": true,
+                    "anchor": null,
+                    "appContext": null,
+                    "children": null,
+                    "component": null,
+                    "ctx": [Circular],
+                    "dirs": null,
+                    "dynamicChildren": null,
+                    "dynamicProps": null,
+                    "el": <linkcomponent
+                      content="Forgot your account data? Recover here!"
+                      data-v-768bad0c=""
+                    />,
+                    "key": null,
+                    "patchFlag": 0,
+                    "props": {
+                      "content": "Forgot your account data? Recover here!",
+                    },
+                    "ref": null,
+                    "scopeId": "data-v-768bad0c",
+                    "shapeFlag": 1,
+                    "slotScopeIds": null,
+                    "ssContent": null,
+                    "ssFallback": null,
+                    "staticCount": 0,
+                    "suspense": null,
+                    "target": null,
+                    "targetAnchor": null,
+                    "transition": null,
+                    "type": "LinkComponent",
+                  },
+                  {
+                    "__v_isVNode": true,
+                    "__v_skip": true,
+                    "anchor": null,
+                    "appContext": null,
+                    "children": null,
+                    "component": null,
+                    "ctx": [Circular],
+                    "dirs": null,
+                    "dynamicChildren": null,
+                    "dynamicProps": null,
+                    "el": <linkcomponent
+                      content="Forgot your account data? Recover here!"
+                      data-v-768bad0c=""
+                    />,
+                    "key": null,
+                    "patchFlag": 0,
+                    "props": {
+                      "content": "Forgot your account data? Recover here!",
+                    },
+                    "ref": null,
+                    "scopeId": "data-v-768bad0c",
+                    "shapeFlag": 1,
+                    "slotScopeIds": null,
+                    "ssContent": null,
+                    "ssFallback": null,
+                    "staticCount": 0,
+                    "suspense": null,
+                    "target": null,
+                    "targetAnchor": null,
+                    "transition": null,
+                    "type": "LinkComponent",
+                  },
                 ],
                 "component": null,
                 "ctx": [Circular],
@@ -719,10 +1199,25 @@ VueWrapper {
                   data-v-768bad0c=""
                 >
                   <form.component-stub
+                    buttonaction="[Function]"
+                    buttonlabel="SignIn"
                     data-v-768bad0c=""
                     formgroupcollection="[object Object]"
-                    header="Sign In"
-                    subheader="Access your account to start typing!"
+                    header="E-Bookler"
+                    subheader="Start monetizing your writting time!"
+                  />
+                  <divider.component-stub
+                    data-v-768bad0c=""
+                    height="0.05rem"
+                    width="100%"
+                  />
+                  <linkcomponent
+                    content="Forgot your account data? Recover here!"
+                    data-v-768bad0c=""
+                  />
+                  <linkcomponent
+                    content="Forgot your account data? Recover here!"
+                    data-v-768bad0c=""
                   />
                 </div>,
                 "key": null,
@@ -760,6 +1255,8 @@ VueWrapper {
                     "@@__IMMUTABLE_ITERABLE__@@": 0,
                     "@@__IMMUTABLE_RECORD__@@": 0,
                     "_isMockFunction": 0,
+                    "buttonAction": 3,
+                    "buttonLabel": 3,
                     "constructor": 0,
                     "formGroupCollection": 3,
                     "header": 3,
@@ -809,14 +1306,21 @@ VueWrapper {
                   "c": null,
                   "components": null,
                   "ctx": {
+                    "buttonAction": [Function],
+                    "buttonLabel": "SignIn",
                     "formGroupCollection": [
                       {
-                        "formFieldCollection": [],
-                        "name": "Access code",
+                        "formFieldCollection": [
+                          {
+                            "placeholder": "Bookler Key...",
+                            "type": "password",
+                          },
+                        ],
+                        "name": "Account Information",
                       },
                     ],
-                    "header": "Sign In",
-                    "subHeader": "Access your account to start typing!",
+                    "header": "E-Bookler",
+                    "subHeader": "Start monetizing your writting time!",
                   },
                   "da": null,
                   "data": {},
@@ -826,6 +1330,12 @@ VueWrapper {
                     "active": true,
                     "allowRecurse": true,
                     "deps": [
+                      Set {
+                        [Circular],
+                      },
+                      Set {
+                        [Circular],
+                      },
                       Set {
                         [Circular],
                       },
@@ -858,18 +1368,37 @@ VueWrapper {
                   "next": null,
                   "parent": [Circular],
                   "props": {
+                    "buttonAction": [Function],
+                    "buttonLabel": "SignIn",
                     "formGroupCollection": [
                       {
-                        "formFieldCollection": [],
-                        "name": "Access code",
+                        "formFieldCollection": [
+                          {
+                            "placeholder": "Bookler Key...",
+                            "type": "password",
+                          },
+                        ],
+                        "name": "Account Information",
                       },
                     ],
-                    "header": "Sign In",
-                    "subHeader": "Access your account to start typing!",
+                    "header": "E-Bookler",
+                    "subHeader": "Start monetizing your writting time!",
                   },
                   "propsDefaults": {},
                   "propsOptions": [
                     {
+                      "buttonAction": {
+                        "0": false,
+                        "1": true,
+                        "required": true,
+                        "type": [Function],
+                      },
+                      "buttonLabel": {
+                        "0": false,
+                        "1": true,
+                        "required": true,
+                        "type": [Function],
+                      },
                       "formGroupCollection": {
                         "0": false,
                         "1": true,
@@ -893,14 +1422,21 @@ VueWrapper {
                   ],
                   "provides": {},
                   "proxy": {
+                    "buttonAction": [Function],
+                    "buttonLabel": "SignIn",
                     "formGroupCollection": [
                       {
-                        "formFieldCollection": [],
-                        "name": "Access code",
+                        "formFieldCollection": [
+                          {
+                            "placeholder": "Bookler Key...",
+                            "type": "password",
+                          },
+                        ],
+                        "name": "Account Information",
                       },
                     ],
-                    "header": "Sign In",
-                    "subHeader": "Access your account to start typing!",
+                    "header": "E-Bookler",
+                    "subHeader": "Start monetizing your writting time!",
                   },
                   "refs": {},
                   "render": [Function],
@@ -917,6 +1453,12 @@ VueWrapper {
                         "active": true,
                         "allowRecurse": true,
                         "deps": [
+                          Set {
+                            [Circular],
+                          },
+                          Set {
+                            [Circular],
+                          },
                           Set {
                             [Circular],
                           },
@@ -961,22 +1503,31 @@ VueWrapper {
                     "dynamicChildren": null,
                     "dynamicProps": null,
                     "el": <form.component-stub
+                      buttonaction="[Function]"
+                      buttonlabel="SignIn"
                       data-v-768bad0c=""
                       formgroupcollection="[object Object]"
-                      header="Sign In"
-                      subheader="Access your account to start typing!"
+                      header="E-Bookler"
+                      subheader="Start monetizing your writting time!"
                     />,
                     "key": null,
                     "patchFlag": 0,
                     "props": {
+                      "buttonAction": "[Function]",
+                      "buttonLabel": "SignIn",
                       "formGroupCollection": [
                         {
-                          "formFieldCollection": [],
-                          "name": "Access code",
+                          "formFieldCollection": [
+                            {
+                              "placeholder": "Bookler Key...",
+                              "type": "password",
+                            },
+                          ],
+                          "name": "Account Information",
                         },
                       ],
-                      "header": "Sign In",
-                      "subHeader": "Access your account to start typing!",
+                      "header": "E-Bookler",
+                      "subHeader": "Start monetizing your writting time!",
                     },
                     "ref": null,
                     "scopeId": null,
@@ -997,6 +1548,14 @@ VueWrapper {
                     "model": undefined,
                     "name": "form.component",
                     "props": {
+                      "buttonAction": {
+                        "required": true,
+                        "type": [Function],
+                      },
+                      "buttonLabel": {
+                        "required": true,
+                        "type": [Function],
+                      },
                       "formGroupCollection": {
                         "required": true,
                         "type": [Function],
@@ -1013,7 +1572,7 @@ VueWrapper {
                     "setup": [Function],
                   },
                   "u": null,
-                  "uid": 5,
+                  "uid": 6,
                   "um": null,
                   "update": [Function],
                   "vnode": [Circular],
@@ -1026,22 +1585,31 @@ VueWrapper {
                   "form-group-collection",
                 ],
                 "el": <form.component-stub
+                  buttonaction="[Function]"
+                  buttonlabel="SignIn"
                   data-v-768bad0c=""
                   formgroupcollection="[object Object]"
-                  header="Sign In"
-                  subheader="Access your account to start typing!"
+                  header="E-Bookler"
+                  subheader="Start monetizing your writting time!"
                 />,
                 "key": null,
                 "patchFlag": 8,
                 "props": {
+                  "button-action": [Function],
+                  "button-label": "SignIn",
                   "form-group-collection": [
                     {
-                      "formFieldCollection": [],
-                      "name": "Access code",
+                      "formFieldCollection": [
+                        {
+                          "placeholder": "Bookler Key...",
+                          "type": "password",
+                        },
+                      ],
+                      "name": "Account Information",
                     },
                   ],
-                  "header": "Sign In",
-                  "sub-header": "Access your account to start typing!",
+                  "header": "E-Bookler",
+                  "sub-header": "Start monetizing your writting time!",
                 },
                 "ref": null,
                 "scopeId": "data-v-768bad0c",
@@ -1058,6 +1626,14 @@ VueWrapper {
                   "model": undefined,
                   "name": "form.component",
                   "props": {
+                    "buttonAction": {
+                      "required": true,
+                      "type": [Function],
+                    },
+                    "buttonLabel": {
+                      "required": true,
+                      "type": [Function],
+                    },
                     "formGroupCollection": {
                       "required": true,
                       "type": [Function],
@@ -1067,6 +1643,277 @@ VueWrapper {
                       "type": [Function],
                     },
                     "subHeader": {
+                      "required": true,
+                      "type": [Function],
+                    },
+                  },
+                  "setup": [Function],
+                },
+              },
+              {
+                "__v_isVNode": true,
+                "__v_skip": true,
+                "anchor": null,
+                "appContext": null,
+                "children": null,
+                "component": {
+                  "a": null,
+                  "accessCache": {
+                    "@@__IMMUTABLE_ITERABLE__@@": 0,
+                    "@@__IMMUTABLE_RECORD__@@": 0,
+                    "_isMockFunction": 0,
+                    "constructor": 0,
+                    "height": 3,
+                    "toJSON": 0,
+                    "width": 3,
+                    Symbol(Symbol.toStringTag): 0,
+                  },
+                  "appContext": {
+                    "app": [Circular],
+                    "components": {
+                      "transition": {
+                        "name": "transition",
+                      },
+                      "transition-group": {
+                        "name": "transition-group",
+                      },
+                    },
+                    "config": {
+                      "compilerOptions": {},
+                      "errorHandler": undefined,
+                      "globalProperties": {},
+                      "isNativeTag": [Function],
+                      "optionMergeStrategies": {},
+                      "performance": false,
+                      "warnHandler": undefined,
+                    },
+                    "directives": {},
+                    "emitsCache": WeakMap {},
+                    "mixins": [
+                      {
+                        "beforeCreate": [Function],
+                      },
+                    ],
+                    "optionsCache": WeakMap {},
+                    "propsCache": WeakMap {},
+                    "provides": {},
+                    "reload": [Function],
+                  },
+                  "asyncDep": null,
+                  "asyncResolved": false,
+                  "attrs": {},
+                  "attrsProxy": {},
+                  "bc": null,
+                  "bm": null,
+                  "bu": null,
+                  "bum": null,
+                  "c": null,
+                  "components": null,
+                  "ctx": {
+                    "height": "0.05rem",
+                    "width": "100%",
+                  },
+                  "da": null,
+                  "data": {},
+                  "directives": null,
+                  "ec": null,
+                  "effect": ReactiveEffect {
+                    "active": true,
+                    "allowRecurse": true,
+                    "deps": [
+                      Set {
+                        [Circular],
+                      },
+                      Set {
+                        [Circular],
+                      },
+                      Set {
+                        [Circular],
+                      },
+                    ],
+                    "fn": [Function],
+                    "onTrack": undefined,
+                    "onTrigger": undefined,
+                    "parent": undefined,
+                    "scheduler": [Function],
+                  },
+                  "emit": [Function],
+                  "emitsOptions": null,
+                  "emitted": null,
+                  "exposeProxy": null,
+                  "exposed": null,
+                  "inheritAttrs": undefined,
+                  "isDeactivated": false,
+                  "isMounted": true,
+                  "isUnmounted": false,
+                  "m": null,
+                  "next": null,
+                  "parent": [Circular],
+                  "props": {
+                    "height": "0.05rem",
+                    "width": "100%",
+                  },
+                  "propsDefaults": {},
+                  "propsOptions": [
+                    {
+                      "height": {
+                        "0": false,
+                        "1": true,
+                        "required": true,
+                        "type": [Function],
+                      },
+                      "width": {
+                        "0": false,
+                        "1": true,
+                        "required": true,
+                        "type": [Function],
+                      },
+                    },
+                    [],
+                  ],
+                  "provides": {},
+                  "proxy": {
+                    "height": "0.05rem",
+                    "width": "100%",
+                  },
+                  "refs": {},
+                  "render": [Function],
+                  "renderCache": [],
+                  "root": [Circular],
+                  "rtc": null,
+                  "rtg": null,
+                  "scope": EffectScope {
+                    "_active": true,
+                    "cleanups": [],
+                    "detached": true,
+                    "effects": [
+                      ReactiveEffect {
+                        "active": true,
+                        "allowRecurse": true,
+                        "deps": [
+                          Set {
+                            [Circular],
+                          },
+                          Set {
+                            [Circular],
+                          },
+                          Set {
+                            [Circular],
+                          },
+                        ],
+                        "fn": [Function],
+                        "onTrack": undefined,
+                        "onTrigger": undefined,
+                        "parent": undefined,
+                        "scheduler": [Function],
+                      },
+                    ],
+                    "parent": undefined,
+                  },
+                  "setupContext": {
+                    "attrs": {},
+                    "emit": [Function],
+                    "expose": [Function],
+                    "slots": {},
+                  },
+                  "setupState": {},
+                  "slots": {},
+                  "slotsProxy": {},
+                  "sp": null,
+                  "subTree": {
+                    "__v_isVNode": true,
+                    "__v_skip": true,
+                    "anchor": null,
+                    "appContext": null,
+                    "children": null,
+                    "component": null,
+                    "ctx": [Circular],
+                    "dirs": null,
+                    "dynamicChildren": null,
+                    "dynamicProps": null,
+                    "el": <divider.component-stub
+                      data-v-768bad0c=""
+                      height="0.05rem"
+                      width="100%"
+                    />,
+                    "key": null,
+                    "patchFlag": 0,
+                    "props": {
+                      "height": "0.05rem",
+                      "width": "100%",
+                    },
+                    "ref": null,
+                    "scopeId": null,
+                    "shapeFlag": 1,
+                    "slotScopeIds": null,
+                    "ssContent": null,
+                    "ssFallback": null,
+                    "staticCount": 0,
+                    "suspense": null,
+                    "target": null,
+                    "targetAnchor": null,
+                    "transition": null,
+                    "type": "divider.component-stub",
+                  },
+                  "suspense": null,
+                  "suspenseId": 0,
+                  "type": {
+                    "model": undefined,
+                    "name": "divider.component",
+                    "props": {
+                      "height": {
+                        "required": true,
+                        "type": [Function],
+                      },
+                      "width": {
+                        "required": true,
+                        "type": [Function],
+                      },
+                    },
+                    "setup": [Function],
+                  },
+                  "u": null,
+                  "uid": 7,
+                  "um": null,
+                  "update": [Function],
+                  "vnode": [Circular],
+                  "withProxy": null,
+                },
+                "ctx": [Circular],
+                "dirs": null,
+                "dynamicChildren": null,
+                "dynamicProps": null,
+                "el": <divider.component-stub
+                  data-v-768bad0c=""
+                  height="0.05rem"
+                  width="100%"
+                />,
+                "key": null,
+                "patchFlag": 0,
+                "props": {
+                  "height": "0.05rem",
+                  "width": "100%",
+                },
+                "ref": null,
+                "scopeId": "data-v-768bad0c",
+                "shapeFlag": 4,
+                "slotScopeIds": null,
+                "ssContent": null,
+                "ssFallback": null,
+                "staticCount": 0,
+                "suspense": null,
+                "target": null,
+                "targetAnchor": null,
+                "transition": null,
+                "type": {
+                  "model": undefined,
+                  "name": "divider.component",
+                  "props": {
+                    "height": {
+                      "required": true,
+                      "type": [Function],
+                    },
+                    "width": {
                       "required": true,
                       "type": [Function],
                     },
@@ -1085,10 +1932,25 @@ VueWrapper {
                 data-v-768bad0c=""
               >
                 <form.component-stub
+                  buttonaction="[Function]"
+                  buttonlabel="SignIn"
                   data-v-768bad0c=""
                   formgroupcollection="[object Object]"
-                  header="Sign In"
-                  subheader="Access your account to start typing!"
+                  header="E-Bookler"
+                  subheader="Start monetizing your writting time!"
+                />
+                <divider.component-stub
+                  data-v-768bad0c=""
+                  height="0.05rem"
+                  width="100%"
+                />
+                <linkcomponent
+                  content="Forgot your account data? Recover here!"
+                  data-v-768bad0c=""
+                />
+                <linkcomponent
+                  content="Forgot your account data? Recover here!"
+                  data-v-768bad0c=""
                 />
               </div>
             </div>,
@@ -1121,7 +1983,7 @@ VueWrapper {
             "setup": [Function],
           },
           "u": null,
-          "uid": 4,
+          "uid": 5,
           "um": null,
           "update": [Function],
           "vnode": [Circular],
@@ -1140,10 +2002,25 @@ VueWrapper {
             data-v-768bad0c=""
           >
             <form.component-stub
+              buttonaction="[Function]"
+              buttonlabel="SignIn"
               data-v-768bad0c=""
               formgroupcollection="[object Object]"
-              header="Sign In"
-              subheader="Access your account to start typing!"
+              header="E-Bookler"
+              subheader="Start monetizing your writting time!"
+            />
+            <divider.component-stub
+              data-v-768bad0c=""
+              height="0.05rem"
+              width="100%"
+            />
+            <linkcomponent
+              content="Forgot your account data? Recover here!"
+              data-v-768bad0c=""
+            />
+            <linkcomponent
+              content="Forgot your account data? Recover here!"
+              data-v-768bad0c=""
             />
           </div>
         </div>,
@@ -1185,7 +2062,7 @@ VueWrapper {
         "setup": [Function],
       },
       "u": null,
-      "uid": 3,
+      "uid": 4,
       "um": null,
       "update": [Function],
       "vnode": {
@@ -1238,10 +2115,25 @@ VueWrapper {
             data-v-768bad0c=""
           >
             <form.component-stub
+              buttonaction="[Function]"
+              buttonlabel="SignIn"
               data-v-768bad0c=""
               formgroupcollection="[object Object]"
-              header="Sign In"
-              subheader="Access your account to start typing!"
+              header="E-Bookler"
+              subheader="Start monetizing your writting time!"
+            />
+            <divider.component-stub
+              data-v-768bad0c=""
+              height="0.05rem"
+              width="100%"
+            />
+            <linkcomponent
+              content="Forgot your account data? Recover here!"
+              data-v-768bad0c=""
+            />
+            <linkcomponent
+              content="Forgot your account data? Recover here!"
+              data-v-768bad0c=""
             />
           </div>
         </div>,
@@ -1477,10 +2369,25 @@ VueWrapper {
       data-v-768bad0c=""
     >
       <form.component-stub
+        buttonaction="[Function]"
+        buttonlabel="SignIn"
         data-v-768bad0c=""
         formgroupcollection="[object Object]"
-        header="Sign In"
-        subheader="Access your account to start typing!"
+        header="E-Bookler"
+        subheader="Start monetizing your writting time!"
+      />
+      <divider.component-stub
+        data-v-768bad0c=""
+        height="0.05rem"
+        width="100%"
+      />
+      <linkcomponent
+        content="Forgot your account data? Recover here!"
+        data-v-768bad0c=""
+      />
+      <linkcomponent
+        content="Forgot your account data? Recover here!"
+        data-v-768bad0c=""
       />
     </div>
   </div>,

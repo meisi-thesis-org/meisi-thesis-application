@@ -11,6 +11,8 @@
 
 <style scoped lang="scss">
     .typography {
+        color: inherit;
+        
         &.brand {
             font-size: clamp(2rem, 2rem + 0.5vw, 3rem);
         }
