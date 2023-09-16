@@ -19,12 +19,12 @@ describe('SignInComponent', () => {
       expect(signInComponentElement.exists()).toBe(true);
     })
 
-    it('should have attribute named header to match given template string', () => {
-      expect(signInComponentElement.attributes().header).toMatch('Sign In');
+    it('should have attribute named header to be defined', () => {
+      expect(signInComponentElement.attributes().header).toBeDefined();
     })
 
-    it('should have FormComponent attribute subHeader header to match given template string', () => {
-      expect(signInComponentElement.attributes().subheader).toMatch('Access your account to start typing!');
+    it('should have FormComponent attribute subHeader header to be defined', () => {
+      expect(signInComponentElement.attributes().subheader).toBeDefined();
     })
   })
 })

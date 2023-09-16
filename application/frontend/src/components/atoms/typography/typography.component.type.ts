@@ -3,7 +3,6 @@ type TypographySegment =
   'header' |
   'sub-header' |
   'label' |
-  'placeholder' |
   'paragraph';
 
 type TypographyProps = {

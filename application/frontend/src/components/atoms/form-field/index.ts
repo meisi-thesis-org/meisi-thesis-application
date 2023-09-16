@@ -1,5 +1,7 @@
-import type { FormField } from './form-field.component.type';
+import type { FormFieldProps } from './form-field.component.type';
+import FormFieldComponent from './form-field.component.vue';
 
-export type {
-  FormField
+export {
+  type FormFieldProps,
+  FormFieldComponent
 }

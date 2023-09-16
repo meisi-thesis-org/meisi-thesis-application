@@ -5,19 +5,29 @@
                 :content="definedProps.name" 
                 :segment="'label'"
             ></TypographyComponent>
-            <FormField 
+            <FormFieldComponent 
                 v-for="formField of definedProps.formFieldCollection"
-                :form-field="formField"
-            ></FormField>
+                :type="formField.type"
+                :placeholder="formField.placeholder"
+            ></FormFieldComponent>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
     import { TypographyComponent } from "./../../atoms/typography";
-    import { FormGroup } from ".";
+    import { FormFieldComponent } from "./../../atoms/form-field";
+    import { FormGroupProps } from ".";
 
-    const definedProps = defineProps<FormGroup>()
+    const definedProps = defineProps<FormGroupProps>()
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+    .form-group{
+        &__inner {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+    }
+</style>

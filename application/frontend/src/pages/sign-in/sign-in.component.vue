@@ -2,8 +2,8 @@
     <div class="container">
         <div class="container--inner">
             <FormComponent
-                :header="'Sign In'"
-                :sub-header="'Access your account to start typing!'"
+                :header="'E-Bookler'"
+                :sub-header="'Start monetizing your writting time!'"
                 :form-group-collection="formGroupCollection"
             ></FormComponent>
         </div>
@@ -11,13 +11,18 @@
 </template>
 
 <script setup lang="ts">
-    import { FormGroup } from "../../components/molecules/form-group";
+    import { FormGroupProps } from "../../components/molecules/form-group";
     import { FormComponent } from "./../../components/organisms/form";
     
-    const formGroupCollection = new Array<FormGroup>(
+    const formGroupCollection = new Array<FormGroupProps>(
         {
-            name: "Access code",
-            formFieldCollection: []
+            name: "Account Information",
+            formFieldCollection: [
+                {
+                    type: 'password',
+                    placeholder: 'Bookler Key...'
+                }
+            ]
         }
     );
 </script>

@@ -23,7 +23,7 @@
         min-height: 100vh;
         width: 100vw;
 
-        background-color: #1e1e24;
+        background-color: #343540;
         color: #fafafa;   
     }
 </style>

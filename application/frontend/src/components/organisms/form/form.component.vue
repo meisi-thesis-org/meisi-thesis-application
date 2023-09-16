@@ -45,13 +45,14 @@
             flex-direction: column;
             justify-content: center;
 
+            gap: 2rem;
+
             &--block {
                 display: flex;
                 flex-direction: column;
                 gap: .5rem;
 
-                padding: .5rem 3.5rem;
-
+                padding: 0 2rem;
                 &--typography {
                     &__header,
                     &__sub-header {

@@ -12,26 +12,21 @@
 <style scoped lang="scss">
     .typography {
         &.brand {
-            font-size: clamp(1rem, 1rem + 0.5vw, 2rem);
+            font-size: clamp(2rem, 2rem + 0.5vw, 3rem);
         }
 
         &.header {
-            font-size: clamp(0.90rem, 0.90rem + 0.5vw, 1.90rem);
+            font-size: clamp(1rem, 1rem + 0.5vw, 2rem);
             font-weight: 700;
         }
 
         &.sub-header {
-            font-size: clamp(0.80rem, 0.80rem + 0.5vw, 1.80rem);
+            font-size: clamp(0.85rem, 0.85rem + 0.5vw, 1.85rem);
             font-weight: 100;
         }
 
         &.label {
-            font-size: clamp(0.70rem, 0.70rem + 0.5vw, 1.70rem);
-            opacity: 0.50;
-        }
-
-        &.placeholder {
-            font-size: clamp(0.60rem, 0.60rem + 0.5vw, 1.60rem);
+            font-size: clamp(0.5rem, 0.5rem + 0.5vw, 1.5rem);
             opacity: 0.50;
         }
 

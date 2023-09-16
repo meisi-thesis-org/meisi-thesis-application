@@ -1,10 +1,10 @@
-import type { FormField } from '@/components/atoms/form-field'
+import type { FormFieldProps } from '@/components/atoms/form-field'
 
-type FormGroup = {
+type FormGroupProps = {
   readonly name: string
-  readonly formFieldCollection: FormField[]
+  readonly formFieldCollection: FormFieldProps[]
 }
 
 export type {
-  FormGroup
+  FormGroupProps
 }
