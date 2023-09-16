@@ -10,8 +10,8 @@ describe('DividerComponent', () => {
   function callShallowMount (): VueWrapper {
     return shallowMount(DividerComponent, {
       props: {
-        width: 10,
-        height: 10
+        width: '0.5rem',
+        height: '0.5rem'
       }
     })
   }

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-    import NavbarComponent from "./components/organisms/navbar/navbar.component.vue";
+    import { SignInComponent } from "./pages/sign-in";
 </script>
 
 <template>
     <div class="wrapper">
-        <NavbarComponent></NavbarComponent>
+        <SignInComponent></SignInComponent>
     </div>
 </template>
 
@@ -24,6 +24,6 @@
         width: 100vw;
 
         background-color: #1e1e24;
-        color: #fafafa;
+        color: #fafafa;   
     }
 </style>

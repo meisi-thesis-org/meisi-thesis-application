@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`TypographyComponent > should match the snapshot 1`] = `
+exports[`TypographyComponent > should have a snapshot 1`] = `
 VueWrapper {
   "__app": {
     "_component": {
@@ -12,11 +12,9 @@ VueWrapper {
       data-v-app=""
     >
       <span
-        class="brand"
+        class="typography"
         data-v-395649b3=""
-      >
-        dummyContent
-      </span>
+      />
     </div>,
     "_context": {
       "app": [Circular],
@@ -122,12 +120,6 @@ VueWrapper {
           Set {
             [Circular],
           },
-          Set {
-            [Circular],
-          },
-          Set {
-            [Circular],
-          },
         ],
         "fn": [Function],
         "onTrack": undefined,
@@ -174,12 +166,6 @@ VueWrapper {
             "active": true,
             "allowRecurse": true,
             "deps": [
-              Set {
-                [Circular],
-              },
-              Set {
-                [Circular],
-              },
               Set {
                 [Circular],
               },
@@ -257,15 +243,15 @@ VueWrapper {
           "c": null,
           "components": {},
           "ctx": {
-            "content": "dummyContent",
-            "typography": "brand",
+            "content": undefined,
+            "segment": undefined,
           },
           "da": null,
           "data": {},
           "devtoolsRawSetupState": {
-            "props": {
-              "content": "dummyContent",
-              "typography": "brand",
+            "definedProps": {
+              "content": undefined,
+              "segment": undefined,
             },
           },
           "directives": null,
@@ -300,8 +286,8 @@ VueWrapper {
           "next": null,
           "parent": [Circular],
           "props": {
-            "content": "dummyContent",
-            "typography": "brand",
+            "content": undefined,
+            "segment": undefined,
           },
           "propsDefaults": {},
           "propsOptions": [
@@ -312,7 +298,7 @@ VueWrapper {
                 "required": true,
                 "type": [Function],
               },
-              "typography": {
+              "segment": {
                 "0": false,
                 "1": true,
                 "required": true,
@@ -323,8 +309,8 @@ VueWrapper {
           ],
           "provides": {},
           "proxy": {
-            "content": "dummyContent",
-            "typography": "brand",
+            "content": undefined,
+            "segment": undefined,
           },
           "refs": {},
           "render": [Function],
@@ -364,9 +350,9 @@ VueWrapper {
             "slots": {},
           },
           "setupState": {
-            "props": {
-              "content": "dummyContent",
-              "typography": "brand",
+            "definedProps": {
+              "content": undefined,
+              "segment": undefined,
             },
           },
           "slots": {},
@@ -377,26 +363,24 @@ VueWrapper {
             "__v_skip": true,
             "anchor": null,
             "appContext": null,
-            "children": "dummyContent",
+            "children": "",
             "component": null,
             "ctx": [Circular],
             "dirs": null,
             "dynamicChildren": [],
             "dynamicProps": null,
             "el": <span
-              class="brand"
+              class="typography"
               data-v-395649b3=""
-            >
-              dummyContent
-            </span>,
+            />,
             "key": null,
             "patchFlag": 3,
             "props": {
-              "class": "brand",
+              "class": "typography",
             },
             "ref": null,
             "scopeId": "data-v-395649b3",
-            "shapeFlag": 9,
+            "shapeFlag": 1,
             "slotScopeIds": null,
             "ssContent": null,
             "ssFallback": null,
@@ -419,7 +403,7 @@ VueWrapper {
                 "required": true,
                 "type": [Function],
               },
-              "typography": {
+              "segment": {
                 "required": true,
                 "type": [Function],
               },
@@ -439,17 +423,13 @@ VueWrapper {
         "dynamicChildren": null,
         "dynamicProps": null,
         "el": <span
-          class="brand"
+          class="typography"
           data-v-395649b3=""
-        >
-          dummyContent
-        </span>,
+        />,
         "key": null,
         "patchFlag": 0,
         "props": {
-          "content": "dummyContent",
           "ref": "VTU_COMPONENT",
-          "typography": "brand",
         },
         "ref": {
           "f": false,
@@ -477,7 +457,7 @@ VueWrapper {
               "required": true,
               "type": [Function],
             },
-            "typography": {
+            "segment": {
               "required": true,
               "type": [Function],
             },
@@ -539,11 +519,9 @@ VueWrapper {
         "dynamicChildren": null,
         "dynamicProps": null,
         "el": <span
-          class="brand"
+          class="typography"
           data-v-395649b3=""
-        >
-          dummyContent
-        </span>,
+        />,
         "key": null,
         "patchFlag": 0,
         "props": null,
@@ -768,10 +746,8 @@ VueWrapper {
     "VTU_COMPONENT": {},
   },
   "wrapperElement": <span
-    class="brand"
+    class="typography"
     data-v-395649b3=""
-  >
-    dummyContent
-  </span>,
+  />,
 }
 `;

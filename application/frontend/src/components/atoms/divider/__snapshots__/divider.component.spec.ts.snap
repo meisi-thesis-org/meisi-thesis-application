@@ -11,7 +11,10 @@ VueWrapper {
     "_container": <div
       data-v-app=""
     >
-      <div />
+      <div
+        class="divider"
+        style="width: 0.5rem; height: 0.5rem; background-color: currentColor;"
+      />
     </div>,
     "_context": {
       "app": [Circular],
@@ -252,16 +255,16 @@ VueWrapper {
           "c": null,
           "components": {},
           "ctx": {
-            "height": 10,
-            "width": 10,
+            "height": "0.5rem",
+            "width": "0.5rem",
           },
           "da": null,
           "data": {},
           "devtoolsRawSetupState": {
             "defineStyles": [Function],
-            "props": {
-              "height": 10,
-              "width": 10,
+            "definedProps": {
+              "height": "0.5rem",
+              "width": "0.5rem",
             },
           },
           "directives": null,
@@ -296,8 +299,8 @@ VueWrapper {
           "next": null,
           "parent": [Circular],
           "props": {
-            "height": 10,
-            "width": 10,
+            "height": "0.5rem",
+            "width": "0.5rem",
           },
           "propsDefaults": {},
           "propsOptions": [
@@ -319,8 +322,8 @@ VueWrapper {
           ],
           "provides": {},
           "proxy": {
-            "height": 10,
-            "width": 10,
+            "height": "0.5rem",
+            "width": "0.5rem",
           },
           "refs": {},
           "render": [Function],
@@ -361,9 +364,9 @@ VueWrapper {
           },
           "setupState": {
             "defineStyles": [Function],
-            "props": {
-              "height": 10,
-              "width": 10,
+            "definedProps": {
+              "height": "0.5rem",
+              "width": "0.5rem",
             },
           },
           "slots": {},
@@ -380,13 +383,18 @@ VueWrapper {
             "dirs": null,
             "dynamicChildren": [],
             "dynamicProps": null,
-            "el": <div />,
+            "el": <div
+              class="divider"
+              style="width: 0.5rem; height: 0.5rem; background-color: currentColor;"
+            />,
             "key": null,
             "patchFlag": 4,
             "props": {
+              "class": "divider",
               "style": {
-                "height": 10,
-                "width": 10,
+                "background-color": "currentColor",
+                "height": "0.5rem",
+                "width": "0.5rem",
               },
             },
             "ref": null,
@@ -432,13 +440,16 @@ VueWrapper {
         "dirs": null,
         "dynamicChildren": null,
         "dynamicProps": null,
-        "el": <div />,
+        "el": <div
+          class="divider"
+          style="width: 0.5rem; height: 0.5rem; background-color: currentColor;"
+        />,
         "key": null,
         "patchFlag": 0,
         "props": {
-          "height": 10,
+          "height": "0.5rem",
           "ref": "VTU_COMPONENT",
-          "width": 10,
+          "width": "0.5rem",
         },
         "ref": {
           "f": false,
@@ -526,7 +537,10 @@ VueWrapper {
         "dirs": null,
         "dynamicChildren": null,
         "dynamicProps": null,
-        "el": <div />,
+        "el": <div
+          class="divider"
+          style="width: 0.5rem; height: 0.5rem; background-color: currentColor;"
+        />,
         "key": null,
         "patchFlag": 0,
         "props": null,
@@ -750,6 +764,9 @@ VueWrapper {
   "rootVM": {
     "VTU_COMPONENT": {},
   },
-  "wrapperElement": <div />,
+  "wrapperElement": <div
+    class="divider"
+    style="width: 0.5rem; height: 0.5rem; background-color: currentColor;"
+  />,
 }
 `;

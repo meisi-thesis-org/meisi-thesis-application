@@ -1,19 +1,19 @@
 <template>
-    <div :style="defineStyles()"></div>
+    <div class="divider" :style="defineStyles()"></div>
 </template>
 
 <script setup lang="ts">
-    type DividerComponentProps = {
-        readonly width: string;
-        readonly height: string;
-    }
-    
-    const props = defineProps<DividerComponentProps>();
+    import { DividerProps } from './divider.component.type';
 
-    const defineStyles = () => ({
-        height: props.height,
-        width: props.width,
-        'background-color': 'currentColor',
-        'opacity': '0.15'
-    })
+    const definedProps = defineProps<DividerProps>()
+
+    const defineStyles = (): Record<string, string> => {
+        return {
+            width: definedProps.width,
+            height: definedProps.height,
+            'background-color': 'currentColor'
+        }
+    }
 </script>
+
+<style scoped lang="scss"></style>

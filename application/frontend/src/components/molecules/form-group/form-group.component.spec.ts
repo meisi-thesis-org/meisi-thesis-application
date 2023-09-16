@@ -1,18 +1,17 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import IconComponent from './icon.component.vue';
 import { type VueWrapper, shallowMount } from '@vue/test-utils';
+import { FormGroupComponent } from '.';
 
-describe('IconComponent', () => {
+describe('FormGroupComponent', () => {
   afterEach(() => {
     vi.clearAllMocks()
   })
 
   function callShallowMount (): VueWrapper {
-    return shallowMount(IconComponent, {
+    return shallowMount(FormGroupComponent, {
       props: {
-        name: 'menu',
-        color: 'dark',
-        size: 'maximum'
+        name: 'dummyName',
+        formFieldCollection: []
       }
     })
   }
