@@ -3,9 +3,9 @@
 </template>
 
 <script setup lang="ts">
-    import { DividerProps } from './divider.component.type';
+    import { DividerComponentProps } from './divider.component.type';
 
-    const definedProps = defineProps<DividerProps>()
+    const definedProps = defineProps<DividerComponentProps>()
 
     const defineStyles = (): Record<string, string> => {
         return {

@@ -5,9 +5,9 @@
 </template>
 
 <script setup lang="ts">
-    import { LinkProps } from './link.component.type';
+    import { LinkComponentProps } from './link.component.type';
     import { TypographyComponent } from "./../../atoms/typography";
-    const definedProps = defineProps<LinkProps>();
+    const definedProps = defineProps<LinkComponentProps>();
 </script>
 
 <style scoped lang="scss">

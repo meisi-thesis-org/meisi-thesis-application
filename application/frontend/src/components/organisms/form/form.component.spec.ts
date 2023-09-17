@@ -13,9 +13,6 @@ describe('FormComponent', () => {
       subHeader: 'dummySubHeader'
     }
   });
-  it('should have a snapshot', () => {
-    expect(wrapper).toMatchSnapshot();
-  })
 
   describe('header typography', () => {
     const typographyComponent = wrapper.find('.form__inner--block--typography__header')

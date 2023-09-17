@@ -1,8 +1,8 @@
-type DividerProps = {
+type DividerComponentProps = {
   readonly height: string
   readonly width: string
 }
 
 export type {
-  DividerProps
+  DividerComponentProps
 }

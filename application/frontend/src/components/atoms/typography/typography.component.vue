@@ -5,8 +5,8 @@
 </template>
 
 <script setup lang="ts">
-    import { TypographyProps } from './typography.component.type';
-    const definedProps = defineProps<TypographyProps>();
+    import { TypographyComponentProps } from './typography.component.type';
+    const definedProps = defineProps<TypographyComponentProps>();
 </script>
 
 <style scoped lang="scss">

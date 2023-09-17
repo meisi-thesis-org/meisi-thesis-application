@@ -1,82 +1,74 @@
 <template>
-    <div class="form">
+    <form class="form" @submit.prevent="definedProps.submitAction">
         <div class="form__inner">
             <div class="form__inner--block">
-                <TypographyComponent 
-                    class="form__inner--block--typography__header" 
-                    :content="definedProps.header" 
+                <TypographyComponent class="form__inner--block--typography__header" :content="definedProps.header"
                     :segment="'header'">
                 </TypographyComponent>
-                <TypographyComponent 
-                    class="form__inner--block--typography__sub-header" 
-                    :content="definedProps.subHeader" 
+                <TypographyComponent class="form__inner--block--typography__sub-header" :content="definedProps.subHeader"
                     :segment="'sub-header'">
                 </TypographyComponent>
             </div>
             <div class="form__inner--block">
-                <FormGroupComponent 
-                    v-for="formGroup of definedProps.formGroupCollection" 
-                    :name="formGroup.name" 
-                    :form-control-collection="formGroup.formControlCollection"
-                ></FormGroupComponent>
+                <FormGroupComponent v-for="formGroup of definedProps.formGroupCollection" :name="formGroup.name"
+                    :form-control-collection="formGroup.formControlCollection"></FormGroupComponent>
             </div>
             <div class="form__inner--block">
-                <ButtonComponent 
-                    :content="definedProps.buttonLabel" 
-                    :action="definedProps.buttonAction"
-                ></ButtonComponent>
+                <FormControlComponent :type="'submit'" :value="definedProps.submitLabel"></FormControlComponent>
             </div>
             <DividerComponent :width="'100%'" :height="'0.025rem'"></DividerComponent>
             <div class="form__inner--block link-collection">
-                <LinkComponent v-for="link of definedProps.linkCollection" :path="link.path" :content="link.content"></LinkComponent>
+                <LinkComponent v-for="link of definedProps.linkCollection" :path="link.path" :content="link.content">
+                </LinkComponent>
             </div>
         </div>
-    </div>
+    </form>
 </template>
 
 <script setup lang="ts">
-    import { FormProps } from './form.component.type';
-    import { TypographyComponent } from '../../atoms/typography';
-    import { FormGroupComponent } from '../../molecules/form-group';
-    import { ButtonComponent } from "../../molecules/button";
-    import { DividerComponent } from '../../atoms/divider';
-    import { LinkComponent } from "../../molecules/link";
+import { FormComponentProps } from './form.component.type';
+import { TypographyComponent } from '../../atoms/typography';
+import { FormGroupComponent } from '../../molecules/form-group';
+import { DividerComponent } from '../../atoms/divider';
+import { LinkComponent } from "../../molecules/link";
+import { FormControlComponent } from '../../atoms/form-control';
 
-    const definedProps = defineProps<FormProps>();
+const definedProps = defineProps<FormComponentProps>();
 </script>
 
 <style scoped lang="scss">
-    .form {
-        height: 100vh;
-        width: 100vw;
+.form {
+    height: 100vh;
+    width: 100vw;
 
-        &__inner {
-            height: inherit;
-            width: inherit;
+    &__inner {
+        height: inherit;
+        width: inherit;
 
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        gap: 1.5rem;
+        padding: 0 2rem;
+
+        &--block {
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            gap: .5rem;
 
-            gap: 1.5rem;
-            padding: 0 2rem;
+            &--typography {
 
-            &--block {
-                display: flex;
-                flex-direction: column;
-                gap: .5rem;
-
-                &--typography {
-                    &__header,
-                    &__sub-header {
-                        text-align: center;
-                    }
+                &__header,
+                &__sub-header {
+                    text-align: center;
                 }
+            }
 
-                &.link-collection {
-                    gap: 0.25rem;
-                }
+            &.link-collection {
+                gap: 0.25rem;
             }
         }
     }
+}
 </style>

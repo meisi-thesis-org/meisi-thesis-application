@@ -1,14 +1,15 @@
-import type { FormGroupProps } from '@/components/molecules/form-group'
+import type { FormGroupComponentProps } from '@/components/molecules/form-group'
+import type { LinkComponentProps } from '@/components/molecules/link'
 
-type FormProps = {
+type FormComponentProps = {
   readonly header: string
   readonly subHeader: string
-  readonly formGroupCollection: FormGroupProps[]
-  readonly buttonAction: () => void
-  readonly buttonLabel: string
-  readonly linkCollection: LinkProps[]
+  readonly formGroupCollection: FormGroupComponentProps[]
+  readonly submitAction: (event: any) => void
+  readonly submitLabel: string
+  readonly linkCollection: LinkComponentProps[]
 }
 
 export type {
-  FormProps
+  FormComponentProps
 }

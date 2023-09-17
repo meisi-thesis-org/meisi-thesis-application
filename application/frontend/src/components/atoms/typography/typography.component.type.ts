@@ -5,11 +5,11 @@ type TypographySegment =
   'label' |
   'paragraph';
 
-type TypographyProps = {
+type TypographyComponentProps = {
   readonly content: string
   readonly segment: TypographySegment
 }
 
 export type {
-  TypographyProps
+  TypographyComponentProps
 }

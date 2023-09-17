@@ -1,9 +1,14 @@
 <template>
     <div class="container">
         <div class="container--inner">
-            <FormComponent :header="'E-Bookler'" :sub-header="'Start monetizing your writting time!'"
-                :button-label="'Sign In To Account'" :button-action="signIn" :form-group-collection="formGroupCollection"
-                :link-collection="linkCollection"></FormComponent>
+            <FormComponent 
+                :header="'E-Bookler'" 
+                :sub-header="'Start monetizing your writting time!'"
+                :form-group-collection="formGroupCollection"
+                :submit-label="'Continue'" 
+                :submit-action="signIn" 
+                :link-collection="linkCollection"
+            ></FormComponent>
             <DividerComponent :width="'100%'" :height="'0.05rem'"></DividerComponent>
         </div>
     </div>
@@ -11,26 +16,27 @@
 
 <script setup lang="ts">
 import { DividerComponent } from "../../components/atoms/divider";
-import { FormGroupProps } from "../../components/molecules/form-group";
-import { LinkProps } from "../../components/molecules/link";
+import { FormGroupComponentProps } from "../../components/molecules/form-group";
+import { LinkComponentProps } from "../../components/molecules/link";
 import { FormComponent } from "./../../components/organisms/form";
 
-const formGroupCollection = new Array<FormGroupProps>(
+const formGroupCollection = new Array<FormGroupComponentProps>(
     {
         name: "Account Information",
         formControlCollection: [
             {
                 type: 'password',
-                placeholder: 'Bookler Key...'
+                placeholder: 'Bookler Key...',
+                required: true
             }
         ]
     }
 );
 
-const linkCollection = new Array<LinkProps>(
+const linkCollection = new Array<LinkComponentProps>(
     {
         path: '/sign-up',
-        content: 'Don’t have an account? Register here!'
+        content: 'No account? Register here!'
     },
     {
         path: '/refresh-access-code',
@@ -38,7 +44,9 @@ const linkCollection = new Array<LinkProps>(
     }
 )
 
-const signIn = () => { }
+const signIn = (event: any) => {
+    const accessCode = event.target[0].value;
+}
 </script>
 
 <style scoped lang="scss">

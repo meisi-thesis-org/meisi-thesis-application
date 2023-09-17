@@ -2,8 +2,13 @@
     <div class="form-group">
         <div class="form-group__inner">
             <TypographyComponent :content="definedProps.name" :segment="'label'"></TypographyComponent>
-            <FormControlComponent v-for="formControl of definedProps.formControlCollection" :type="formControl.type"
-                :placeholder="formControl.placeholder"></FormControlComponent>
+            <FormControlComponent 
+                v-for="formControl of definedProps.formControlCollection" 
+                :type="formControl.type"
+                :placeholder="formControl.placeholder"
+                :value="formControl.value"
+                :required="formControl.required"
+            ></FormControlComponent>
         </div>
     </div>
 </template>
@@ -11,9 +16,9 @@
 <script setup lang="ts">
 import { TypographyComponent } from "./../../atoms/typography";
 import { FormControlComponent } from "../../atoms/form-control";
-import { FormGroupProps } from ".";
+import { FormGroupComponentProps } from ".";
 
-const definedProps = defineProps<FormGroupProps>()
+const definedProps = defineProps<FormGroupComponentProps>()
 </script>
 
 <style scoped lang="scss">
