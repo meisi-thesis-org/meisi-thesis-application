@@ -22,7 +22,7 @@ export class GatewayApplication {
 
   public defineRoutes (): void {
     const availableHosts = new Map<string, string>();
-    availableHosts.set('/security/users', 'http://localhost:8001');
+    availableHosts.set('/security/users/:uuid', 'http://localhost:8001');
     availableHosts.set('/security/devices', 'http://localhost:8002');
     availableHosts.set('/security/locations', 'http://localhost:8003');
     availableHosts.set('/commerce/dossiers', 'http://localhost:8004');
@@ -33,6 +33,7 @@ export class GatewayApplication {
       this.application.use(key, AccessTokenGuard, createProxyMiddleware({ target: value, changeOrigin: true }))
     }
 
+    this.application.use('/security/users', createProxyMiddleware({ target: 'http://localhost:8001', changeOrigin: true }))
     this.application.put('/session/sign-in/:userUuid', SchemaValidator(SignInSchema), async (request: Request, response: Response) => await this.gatewayController.signIn(request, response))
     this.application.put('/session/sign-out', AccessTokenGuard, async (request: Request, response: Response) => await this.gatewayController.signOut(request as AuthenticatedRequest, response))
     this.application.put('/session/refresh-tokens', RefreshTokenGuard, async (request: Request, response: Response) => await this.gatewayController.refreshTokens(request as AuthenticatedRequest, response))

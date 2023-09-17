@@ -28,6 +28,7 @@ export class QueueProvider {
     try {
       const connection = await this.defineConnection(connectionURL);
       const channel = await this.defineChannel(connection);
+
       await this.assertQueue(queue, channel);
 
       await channel.consume(queue, callback);
