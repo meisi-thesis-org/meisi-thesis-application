@@ -18,7 +18,7 @@ const CreateUserSchema = z.object({
     email: z.string().email(),
     phoneNumber: z.string(),
     name: z.string(),
-    dateBirth: z.date()
+    dateBirth: z.string().transform((value) => new Date(value).toISOString())
   })
 })
 
@@ -31,7 +31,7 @@ const UpdateUserByUuidSchema = z.object({
     email: z.string().email().optional(),
     phoneNumber: z.string().optional(),
     name: z.string().optional(),
-    dateBirth: z.string().optional()
+    dateBirth: z.string().transform((value) => new Date(value).toISOString()).optional()
   })
 })
 

@@ -29,10 +29,9 @@ export class QueueProvider {
       const connection = await this.defineConnection(connectionURL);
       const channel = await this.defineChannel(connection);
 
-      await this.assertQueue(queue, channel);
-
       await channel.consume(queue, callback);
       await this.purgeQueue(queue, channel);
+      channel.ackAll();
     } catch (error) {
       throw new InternalServerException();
     }

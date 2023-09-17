@@ -39,11 +39,12 @@ export class UserController {
         email: request.body.email,
         phoneNumber: request.body.phoneNumber,
         name: request.body.name,
-        dateBirth: new Date(request.body.dateBirth).toISOString()
+        dateBirth: request.body.dateBirth
       }
       const user = await this.userService.createUser(createUserRequest);
       return response.status(201).json(user)
     } catch (error: any) {
+      console.log(error)
       await this.sendExceptionQueue('security.users::createUser', error);
       return response.status(error.getHttpCode()).json()
     }
@@ -57,7 +58,7 @@ export class UserController {
         email: request.body.email,
         phoneNumber: request.body.phoneNumber,
         name: request.body.name,
-        dateBirth: request.body.dateBirth !== undefined ? new Date(request.body.dateBirth).toISOString() : undefined
+        dateBirth: request.body.dateBirth !== undefined ? request.body.dateBirth : undefined
       }
       const user = await this.userService.updateUserByUuid(updateUserByUuidRequest);
       return response.status(201).json(user)
