@@ -15,10 +15,12 @@
 </template>
 
 <script setup lang="ts">
+import { inject } from "vue";
 import { DividerComponent } from "../../components/atoms/divider";
 import { FormGroupComponentProps } from "../../components/molecules/form-group";
 import { LinkComponentProps } from "../../components/molecules/link";
 import { FormComponent } from "./../../components/organisms/form";
+import { HttpService } from "../../services/http.service";
 
 const formGroupCollection = new Array<FormGroupComponentProps>(
     {
@@ -65,7 +67,17 @@ const linkCollection = new Array<LinkComponentProps>(
     }
 )
 
-const signUp = () => { }
+const signUp = async (event: any) => {
+    const data: Record<string, string> = {
+        email: event.target[0].value,
+        username: event.target[1].value,
+        phoneNumber: event.target[2].value
+    }
+
+    const userDTO = new HttpService().doRequest('POST', '/security/users', data).catch((error) => {
+        console.log(error)
+    });
+}
 </script>
 
 <style scoped lang="scss">

@@ -7,6 +7,7 @@ import { AccessTokenGuard } from './guards/access-token.guard';
 import { SchemaValidator } from '@meisi-thesis/application-backend-utilities-shared/src/middlewares/schema-validator.middleware';
 import { SignInSchema } from './domain/session.schema';
 import { type AuthenticatedRequest } from '@meisi-thesis/application-backend-utilities-shared/src/types/authenticated-request.type';
+import cors from 'cors';
 
 export class GatewayApplication {
   private readonly application: Application;
@@ -15,7 +16,8 @@ export class GatewayApplication {
 
   public constructor () {
     this.application = Express();
-    this.serverPort = parseInt(process.env.SERVER_PORT ?? '8000')
+    this.serverPort = parseInt(process.env.SERVER_PORT ?? '8000');
+    this.application.use(cors())
   }
 
   public defineRoutes (): void {
