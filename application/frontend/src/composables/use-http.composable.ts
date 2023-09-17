@@ -1,15 +1,22 @@
 type HttpMethod = 'GET' | 'POST' | 'PUT';
 
-export class HttpService {
-  private readonly baseURL: string = 'http://localhost:8000';
-
-  public async doRequest <T>(
+type UseHttpSignature = {
+  readonly doRequest: <T>(
     httpMethod: HttpMethod,
     httpPath: string,
     httpBody?: Record<string, unknown>,
     httpHeaders?: Record<string, string>
-  ): Promise<T> {
-    const response = await fetch(this.baseURL + httpPath, {
+  ) => Promise<T>
+}
+
+export const useHttp = (): UseHttpSignature => {
+  const doRequest = async <T>(
+    httpMethod: HttpMethod,
+    httpPath: string,
+    httpBody?: Record<string, unknown>,
+    httpHeaders?: Record<string, string>
+  ): Promise<T> => {
+    const response = await fetch('http://localhost:8000' + httpPath, {
       method: httpMethod,
       headers: {
         'Content-Type': 'application/json',
@@ -21,4 +28,6 @@ export class HttpService {
 
     return await response.json();
   }
+
+  return { doRequest }
 }

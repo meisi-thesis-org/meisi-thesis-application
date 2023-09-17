@@ -1,26 +1,20 @@
 <template>
     <div class="container">
         <div class="container--inner">
-            <FormComponent 
-                :header="'E-Bookler'" 
-                :sub-header="'Start monetizing your writting time!'"
-                :form-group-collection="formGroupCollection"
-                :submit-label="'Continue'" 
-                :submit-action="signUp" 
-                :link-collection="linkCollection"
-            ></FormComponent>
+            <FormComponent :header="'E-Bookler'" :sub-header="'Start monetizing your writting time!'"
+                :form-group-collection="formGroupCollection" :submit-label="'Continue'" :submit-action="signUp"
+                :link-collection="linkCollection"></FormComponent>
             <DividerComponent :width="'100%'" :height="'0.05rem'"></DividerComponent>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { inject } from "vue";
 import { DividerComponent } from "../../components/atoms/divider";
 import { FormGroupComponentProps } from "../../components/molecules/form-group";
 import { LinkComponentProps } from "../../components/molecules/link";
 import { FormComponent } from "./../../components/organisms/form";
-import { HttpService } from "../../services/http.service";
+import { useHttp } from "./../../composables/use-http.composable";
 
 const formGroupCollection = new Array<FormGroupComponentProps>(
     {
@@ -74,9 +68,7 @@ const signUp = async (event: any) => {
         phoneNumber: event.target[2].value
     }
 
-    const userDTO = new HttpService().doRequest('POST', '/security/users', data).catch((error) => {
-        console.log(error)
-    });
+    const userDTO = await useHttp().doRequest('POST', '/security/users', data);
 }
 </script>
 
