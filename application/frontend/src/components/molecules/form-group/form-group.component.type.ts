@@ -1,8 +1,8 @@
-import type { FormFieldProps } from './../../atoms/form-field'
+import type { FormControlComponentProps } from '../../atoms/form-control'
 
 type FormGroupProps = {
   readonly name: string
-  readonly formFieldCollection: FormFieldProps[]
+  readonly formControlCollection: FormControlComponentProps[]
 }
 
 export type {

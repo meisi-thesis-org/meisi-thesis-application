@@ -1,15 +1,15 @@
 <template>
-    <input class="form-field" :type="definedProps.type" :placeholder="definedProps.placeholder">
+    <input class="form-control" :type="definedProps.type" :placeholder="definedProps.placeholder">
 </template>
 
 <script setup lang="ts">
-    import { FormFieldProps } from './form-field.component.type';
+    import { FormControlComponentProps } from './form-control.component.type';
 
-    const definedProps = defineProps<FormFieldProps>()
+    const definedProps = defineProps<FormControlComponentProps>()
 </script>
 
 <style scoped>
-    .form-field {
+    .form-control {
         border: none;
         padding: 1rem 0.75rem;
         border-radius: 2px;

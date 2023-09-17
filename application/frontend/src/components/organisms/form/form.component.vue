@@ -17,7 +17,7 @@
                 <FormGroupComponent 
                     v-for="formGroup of definedProps.formGroupCollection" 
                     :name="formGroup.name" 
-                    :form-field-collection="formGroup.formFieldCollection"
+                    :form-control-collection="formGroup.formControlCollection"
                 ></FormGroupComponent>
             </div>
             <div class="form__inner--block">

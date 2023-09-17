@@ -11,7 +11,7 @@ describe('FormGroupComponent', () => {
     return shallowMount(FormGroupComponent, {
       props: {
         name: 'dummyName',
-        formFieldCollection: []
+        formControlCollection: []
       }
     })
   }

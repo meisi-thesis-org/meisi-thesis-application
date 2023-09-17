@@ -1,10 +1,8 @@
-<script setup lang="ts">
-    import { SignInComponent } from "./pages/sign-in";
-</script>
+<script setup lang="ts"></script>
 
 <template>
     <div class="wrapper">
-        <SignInComponent></SignInComponent>
+        <router-view></router-view>
     </div>
 </template>
 
@@ -23,7 +21,7 @@
         min-height: 100vh;
         width: 100vw;
 
-        background-color: #343540;
-        color: #fafafa;   
+        color: #343540;
+        background-color: #fafafa;   
     }
 </style>

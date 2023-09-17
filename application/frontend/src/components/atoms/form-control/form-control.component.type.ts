@@ -1,8 +1,8 @@
-type FormFieldProps = {
+type FormControlComponentProps = {
   readonly type: string
   readonly placeholder: string
 }
 
 export type {
-  FormFieldProps
+  FormControlComponentProps
 }

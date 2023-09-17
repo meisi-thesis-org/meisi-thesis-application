@@ -1,14 +1,14 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { type VueWrapper, shallowMount } from '@vue/test-utils';
-import { FormFieldComponent } from '.';
+import { FormControlComponent } from '.';
 
-describe('FormFieldComponent', () => {
+describe('FormControlComponent', () => {
   afterEach(() => {
     vi.clearAllMocks()
   })
 
   function callShallowMount (): VueWrapper {
-    return shallowMount(FormFieldComponent, {
+    return shallowMount(FormControlComponent, {
       props: {
         type: 'text',
         placeholder: 'dummyPlaceholder'
