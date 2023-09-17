@@ -73,9 +73,8 @@ export class UserService {
       email: createUserRequest.email,
       phoneNumber: createUserRequest.phoneNumber,
       accessCode: randomHashedAccessCode,
-      firstName: '',
-      lastName: '',
-      dateBirth: '',
+      name: createUserRequest.name,
+      dateBirth: createUserRequest.dateBirth,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     }
@@ -108,8 +107,7 @@ export class UserService {
       email: updateUserByUuidRequest.email ?? foundUser.email,
       phoneNumber: updateUserByUuidRequest.phoneNumber ?? foundUser.phoneNumber,
       accessCode: foundUser.accessCode,
-      firstName: updateUserByUuidRequest.firstName ?? foundUser.firstName,
-      lastName: updateUserByUuidRequest.lastName ?? foundUser.lastName,
+      name: updateUserByUuidRequest.name ?? foundUser.name,
       dateBirth: updateUserByUuidRequest.dateBirth ?? foundUser.dateBirth,
       createdAt: foundUser.createdAt,
       updatedAt: new Date().toISOString()
@@ -144,8 +142,7 @@ export class UserService {
       email: foundUser.email,
       phoneNumber: foundUser.phoneNumber,
       accessCode: randomHashedAccessCode,
-      firstName: foundUser.firstName,
-      lastName: foundUser.lastName,
+      name: foundUser.name,
       dateBirth: foundUser.dateBirth,
       createdAt: foundUser.createdAt,
       updatedAt: new Date().toISOString()

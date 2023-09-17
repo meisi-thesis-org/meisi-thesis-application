@@ -5,7 +5,7 @@ type FindUserByUuidRequest =
 type FindUserByAccessCodeRequest =
   Readonly<Pick<UserEntity, 'accessCode'>>
 type CreateUserRequest =
-  Readonly<Pick<UserEntity, 'username' | 'email' | 'phoneNumber'>>
+  Readonly<Pick<UserEntity, 'username' | 'email' | 'phoneNumber' | 'name' | 'dateBirth'>>
 type UpdateUserByUuidRequest =
   Readonly<Pick<UserEntity, 'uuid'>> &
   Partial<Readonly<Omit<UserEntity, 'createdAt' | 'updatedAt'>>>

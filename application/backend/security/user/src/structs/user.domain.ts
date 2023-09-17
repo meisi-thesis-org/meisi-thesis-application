@@ -4,8 +4,7 @@ type UserEntity = {
   email: string
   phoneNumber: string
   accessCode: string
-  firstName: string
-  lastName: string
+  name: string
   dateBirth: string
   createdAt: string
   updatedAt: string
@@ -17,8 +16,7 @@ const userMapper = (userEntity: UserEntity): UserDTO => {
     username: userEntity.username,
     email: userEntity.email,
     phoneNumber: userEntity.phoneNumber,
-    firstName: userEntity.firstName,
-    lastName: userEntity.lastName,
+    name: userEntity.name,
     dateBirth: userEntity.dateBirth,
     createdAt: userEntity.createdAt,
     updatedAt: userEntity.updatedAt

@@ -27,8 +27,7 @@ describe('UserService', () => {
     email: randomString,
     phoneNumber: randomString,
     accessCode: randomString,
-    firstName: randomString,
-    lastName: randomString,
+    name: randomString,
     dateBirth: randomString,
     createdAt: randomDateBirth,
     updatedAt: randomDateBirth
@@ -39,8 +38,7 @@ describe('UserService', () => {
     username: randomString,
     email: randomString,
     phoneNumber: randomString,
-    firstName: randomString,
-    lastName: randomString,
+    name: randomString,
     dateBirth: randomString,
     createdAt: randomDateBirth,
     updatedAt: randomDateBirth
@@ -77,7 +75,9 @@ describe('UserService', () => {
       return await instance.createUser({
         username: randomString,
         email: randomString,
-        phoneNumber: randomString
+        phoneNumber: randomString,
+        name: randomString,
+        dateBirth: randomDateBirth
       });
     }
 
@@ -125,8 +125,7 @@ describe('UserService', () => {
         username: randomString,
         email: randomString,
         phoneNumber: randomString,
-        firstName: randomString,
-        lastName: randomString,
+        name: randomString,
         dateBirth: randomString
       })
     }

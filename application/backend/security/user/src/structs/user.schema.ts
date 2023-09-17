@@ -16,7 +16,9 @@ const CreateUserSchema = z.object({
   body: z.object({
     username: z.string(),
     email: z.string().email(),
-    phoneNumber: z.string()
+    phoneNumber: z.string(),
+    name: z.string(),
+    dateBirth: z.date()
   })
 })
 
@@ -28,8 +30,7 @@ const UpdateUserByUuidSchema = z.object({
     username: z.string().optional(),
     email: z.string().email().optional(),
     phoneNumber: z.string().optional(),
-    firstName: z.string().optional(),
-    lastName: z.string().optional(),
+    name: z.string().optional(),
     dateBirth: z.string().optional()
   })
 })

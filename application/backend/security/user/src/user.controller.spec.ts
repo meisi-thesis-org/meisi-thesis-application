@@ -31,8 +31,7 @@ describe('UserController', () => {
     username: randomString,
     email: randomString,
     phoneNumber: randomString,
-    firstName: randomString,
-    lastName: randomString,
+    name: randomString,
     dateBirth: randomString,
     createdAt: randomDateBirth,
     updatedAt: randomDateBirth
@@ -68,7 +67,9 @@ describe('UserController', () => {
         ...requestMock.body,
         username: randomString,
         email: randomString,
-        phoneNumber: randomString
+        phoneNumber: randomString,
+        name: randomString,
+        dateBirth: randomDateBirth
       }
     })
 
@@ -99,8 +100,7 @@ describe('UserController', () => {
         username: randomString,
         email: randomString,
         phoneNumber: randomString,
-        firstName: randomString,
-        lastName: randomString,
+        name: randomString,
         dateBirth: randomDateBirth
       }
     })

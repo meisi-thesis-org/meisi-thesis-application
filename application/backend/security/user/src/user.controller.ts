@@ -37,7 +37,9 @@ export class UserController {
       const createUserRequest: CreateUserRequest = {
         username: request.body.username,
         email: request.body.email,
-        phoneNumber: request.body.phoneNumber
+        phoneNumber: request.body.phoneNumber,
+        name: request.body.name,
+        dateBirth: new Date(request.body.dateBirth).toISOString()
       }
       const user = await this.userService.createUser(createUserRequest);
       return response.status(201).json(user)
@@ -54,9 +56,8 @@ export class UserController {
         username: request.body.username,
         email: request.body.email,
         phoneNumber: request.body.phoneNumber,
-        firstName: request.body.firstName,
-        lastName: request.body.lastName,
-        dateBirth: request.body.dateBirth
+        name: request.body.name,
+        dateBirth: request.body.dateBirth !== undefined ? new Date(request.body.dateBirth).toISOString() : undefined
       }
       const user = await this.userService.updateUserByUuid(updateUserByUuidRequest);
       return response.status(201).json(user)
