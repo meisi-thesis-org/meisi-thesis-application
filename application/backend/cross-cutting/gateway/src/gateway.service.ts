@@ -15,6 +15,7 @@ export class GatewayService {
   public async signIn (signInRequest: SignInRequest): Promise<SessionDTO> {
     try {
       await this.redisProvider.connect();
+      await this.redisProvider.clear();
 
       const userSessionExists = await this.redisProvider
         .keyExists(`userSession::${signInRequest.userUuid}`)
@@ -29,14 +30,14 @@ export class GatewayService {
 
       const sessionEntity: SessionEntity = {
         userUuid: signInRequest.userUuid,
-        hashedAccessToken: await this.hashToken.hash(accessToken),
-        hashedRefreshToken: await this.hashToken.hash(refreshToken)
+        accessToken: await this.hashToken.hash(accessToken),
+        refreshToken: await this.hashToken.hash(refreshToken)
       };
 
       await this.redisProvider.addMap(`userSession::${signInRequest.userUuid}`, sessionEntity)
 
-      sessionEntity.hashedAccessToken = accessToken;
-      sessionEntity.hashedRefreshToken = refreshToken;
+      sessionEntity.accessToken = accessToken;
+      sessionEntity.refreshToken = refreshToken;
 
       await this.redisProvider.disconnect()
 
@@ -63,8 +64,8 @@ export class GatewayService {
 
       const sessionEntity: SessionEntity = {
         userUuid: signOutRequest.userUuid,
-        hashedAccessToken: '',
-        hashedRefreshToken: ''
+        accessToken: '',
+        refreshToken: ''
       };
 
       await this.redisProvider.removeByKey(`userSession::${signOutRequest.userUuid}`)
@@ -97,14 +98,14 @@ export class GatewayService {
 
       const sessionEntity: SessionEntity = {
         userUuid: refreshTokensRequest.userUuid,
-        hashedAccessToken: await this.hashToken.hash(accessToken),
-        hashedRefreshToken: await this.hashToken.hash(refreshToken)
+        accessToken: await this.hashToken.hash(accessToken),
+        refreshToken: await this.hashToken.hash(refreshToken)
       };
 
       await this.redisProvider.addMap(`userSession::${refreshTokensRequest.userUuid}`, sessionEntity)
 
-      sessionEntity.hashedAccessToken = accessToken;
-      sessionEntity.hashedRefreshToken = refreshToken;
+      sessionEntity.accessToken = accessToken;
+      sessionEntity.refreshToken = refreshToken;
       await this.redisProvider.disconnect()
 
       return sessionMapper(sessionEntity);

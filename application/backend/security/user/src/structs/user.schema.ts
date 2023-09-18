@@ -16,7 +16,7 @@ const CreateUserSchema = z.object({
   body: z.object({
     username: z.string(),
     email: z.string().email(),
-    phoneNumber: z.string(),
+    phoneNumber: z.string().regex(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/),
     name: z.string(),
     dateBirth: z.string().transform((value) => new Date(value).toISOString())
   })
@@ -29,7 +29,7 @@ const UpdateUserByUuidSchema = z.object({
   body: z.object({
     username: z.string().optional(),
     email: z.string().email().optional(),
-    phoneNumber: z.string().optional(),
+    phoneNumber: z.string().regex(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/).optional(),
     name: z.string().optional(),
     dateBirth: z.string().transform((value) => new Date(value).toISOString()).optional()
   })
@@ -39,7 +39,7 @@ const UpdateUserAccessCodeSchema = z.object({
   body: z.object({
     username: z.string().optional(),
     email: z.string().email().optional(),
-    phoneNumber: z.string().optional()
+    phoneNumber: z.string().regex(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/).optional()
   })
 })
 

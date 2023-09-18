@@ -15,10 +15,16 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from "vue-router";
 import { DividerComponent } from "../../components/atoms/divider";
 import { FormGroupComponentProps } from "../../components/molecules/form-group";
 import { LinkComponentProps } from "../../components/molecules/link";
+import { useHttp } from "../../composables/use-http.composable";
 import { FormComponent } from "./../../components/organisms/form";
+import { SessionEntity, UserEntity } from "./../../types/entities";
+
+const { doRequest } = useHttp();
+const { push } = useRouter();
 
 const formGroupCollection = new Array<FormGroupComponentProps>(
     {
@@ -44,8 +50,14 @@ const linkCollection = new Array<LinkComponentProps>(
     }
 )
 
-const signIn = (event: any) => {
-    const accessCode = event.target[0].value;
+const signIn = async (event: any) => {
+    try {
+        const accessCode = event.target[0].value;
+        const userEntity: UserEntity = await doRequest('GET', `/security/users/access-code/${accessCode}`);
+        const sessionEntity: SessionEntity = await doRequest('PUT', `/session/sign-in/${userEntity.uuid}`);
+    } catch (error) {
+        throw error;
+    }
 }
 </script>
 

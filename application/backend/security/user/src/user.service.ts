@@ -23,6 +23,7 @@ export class UserService {
       content: string
     }
   ): Promise<void> {
+    /*
     const message = {
       routeURL: path,
       correlationUuid: this.randomProvider.randomUUID(),
@@ -34,8 +35,8 @@ export class UserService {
         process.env.RABBITMQ_URL ?? 'amqp://localhost',
         'create_email',
         Buffer.from(JSON.stringify(message))
-      )
-      .catch(() => { throw new InternalServerException() });
+      ).catch(() => { throw new InternalServerException() });
+    */
   }
 
   public async findUserByUuid (findUserByUuidRequest: FindUserByUuidRequest): Promise<UserDTO> {

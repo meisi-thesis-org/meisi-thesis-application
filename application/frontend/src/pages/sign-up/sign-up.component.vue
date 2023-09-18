@@ -10,11 +10,15 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from "vue-router";
 import { DividerComponent } from "../../components/atoms/divider";
 import { FormGroupComponentProps } from "../../components/molecules/form-group";
 import { LinkComponentProps } from "../../components/molecules/link";
 import { FormComponent } from "./../../components/organisms/form";
 import { useHttp } from "./../../composables/use-http.composable";
+
+const { doRequest } = useHttp();
+const { push } = useRouter();
 
 const formGroupCollection = new Array<FormGroupComponentProps>(
     {
@@ -62,13 +66,20 @@ const linkCollection = new Array<LinkComponentProps>(
 )
 
 const signUp = async (event: any) => {
-    const data: Record<string, string> = {
-        email: event.target[0].value,
-        username: event.target[1].value,
-        phoneNumber: event.target[2].value
-    }
+    try {
+        const data: Record<string, string> = {
+            email: event.target[0].value,
+            username: event.target[1].value,
+            phoneNumber: event.target[2].value,
+            name: event.target[3].value,
+            dateBirth: new Date(event.target[4].value).toISOString()
+        }
 
-    const userDTO = await useHttp().doRequest('POST', '/security/users', data);
+        await doRequest('POST', '/security/users', data)
+        await push('/sign-in')    
+    } catch (error) {
+        throw error;
+    }
 }
 </script>
 

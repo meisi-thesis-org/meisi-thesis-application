@@ -1,14 +1,14 @@
 type SessionEntity = {
   userUuid: string
-  hashedAccessToken: string
-  hashedRefreshToken: string
+  accessToken: string
+  refreshToken: string
 }
 type SessionDTO = Readonly<SessionEntity>
 const sessionMapper = (sessionEntity: SessionEntity): SessionDTO => {
   return {
     userUuid: sessionEntity.userUuid,
-    hashedAccessToken: sessionEntity.hashedAccessToken,
-    hashedRefreshToken: sessionEntity.hashedRefreshToken
+    accessToken: sessionEntity.accessToken,
+    refreshToken: sessionEntity.refreshToken
   }
 }
 
