@@ -2,7 +2,7 @@
     <div class="container">
         <div class="container--inner">
             <FormComponent :header="'E-Bookler'" :sub-header="'Start monetizing your writting time!'"
-                :form-group-collection="formGroupCollection" :submit-label="'Continue'" :submit-action="signUp"
+                :form-group-collection="formGroupCollection" :submit-label="'Continue'" :submit-action="onSubmit"
                 :link-collection="linkCollection"></FormComponent>
             <DividerComponent :width="'100%'" :height="'0.05rem'"></DividerComponent>
         </div>
@@ -15,10 +15,10 @@ import { DividerComponent } from "../../components/atoms/divider";
 import { FormGroupComponentProps } from "../../components/molecules/form-group";
 import { LinkComponentProps } from "../../components/molecules/link";
 import { FormComponent } from "./../../components/organisms/form";
-import { useHttp } from "./../../composables/use-http.composable";
+import { useUserStore } from "./../../store/use-user.store";
 
-const { doRequest } = useHttp();
 const { push } = useRouter();
+const { createUser } = useUserStore();
 
 const formGroupCollection = new Array<FormGroupComponentProps>(
     {
@@ -65,7 +65,7 @@ const linkCollection = new Array<LinkComponentProps>(
     }
 )
 
-const signUp = async (event: any) => {
+const onSubmit = async (event: any) => {
     try {
         const data: Record<string, string> = {
             email: event.target[0].value,
@@ -75,7 +75,7 @@ const signUp = async (event: any) => {
             dateBirth: new Date(event.target[4].value).toISOString()
         }
 
-        await doRequest('POST', '/security/users', data)
+        await createUser(data);
         await push('/sign-in')    
     } catch (error) {
         throw error;
