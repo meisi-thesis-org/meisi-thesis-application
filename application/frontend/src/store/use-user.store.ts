@@ -19,75 +19,75 @@ export const useUserStore = defineStore('user', {
   actions: {
     async findUserByUuid (userUuid: string): Promise<UserEntity> {
       const { doRequest } = useHttp();
-      const { toggleState } = useSpinner();
+      const useSpinnerComposable = useSpinner();
 
       try {
-        toggleState();
+        useSpinnerComposable.updateState();
         return await doRequest('GET', `/security/users/${userUuid}`);
       } catch (error) {
         console.log(error)
         throw error;
       } finally {
-        toggleState();
+        useSpinnerComposable.updateState();
       }
     },
     async findUserByAccessCode (accessCode: string): Promise<UserEntity> {
       const { doRequest } = useHttp();
-      const { toggleState } = useSpinner();
+      const useSpinnerComposable = useSpinner();
 
       try {
-        toggleState();
+        useSpinnerComposable.updateState();
         return await doRequest('GET', `/security/users/access-code/${accessCode}`);
       } catch (error) {
         console.log(error)
         throw error;
       } finally {
-        // toggleState();
+        useSpinnerComposable.updateState();
       }
     },
     async createUser (data: Record<string, string>): Promise<void> {
       const { doRequest } = useHttp();
-      const { toggleState } = useSpinner();
+      const useSpinnerComposable = useSpinner();
 
       try {
-        toggleState();
+        useSpinnerComposable.updateState();
         const userEntity = await doRequest<UserEntity>('POST', '/security/users', data);
         this.$state.user = { ...userEntity };
       } catch (error) {
         console.log(error)
         throw error;
       } finally {
-        toggleState();
+        useSpinnerComposable.updateState();
       }
     },
     async updateUser (userUuid: string, data: Record<string, string>): Promise<void> {
       const { doRequest } = useHttp();
-      const { toggleState } = useSpinner();
+      const useSpinnerComposable = useSpinner();
 
       try {
-        toggleState();
+        useSpinnerComposable.updateState();
         const userEntity = await doRequest<UserEntity>('PUT', `/security/users/:${userUuid}`, data)
         this.user = { ...userEntity };
       } catch (error) {
         console.log(error)
         throw error;
       } finally {
-        toggleState();
+        useSpinnerComposable.updateState();
       }
     },
     async updateAccessCode (data: Record<string, string | undefined>): Promise<void> {
       const { doRequest } = useHttp();
-      const { toggleState } = useSpinner();
+      const useSpinnerComposable = useSpinner();
 
       try {
-        toggleState();
+        useSpinnerComposable.updateState();
         const userEntity = await doRequest<UserEntity>('PUT', '/security/users/access-code', data)
         this.user = { ...userEntity };
       } catch (error) {
         console.log(error)
         throw error;
       } finally {
-        toggleState();
+        useSpinnerComposable.updateState();
       }
     }
   }

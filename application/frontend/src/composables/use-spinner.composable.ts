@@ -1,15 +1,8 @@
-import { computed, ref, type Ref } from 'vue';
+import { ref } from 'vue';
 
-type UseSpinnerSignature = {
-  getState: Ref<boolean>
-  toggleState: () => void
-};
+const state = ref<boolean>(false);
 
-export const useSpinner = (): UseSpinnerSignature => {
-  const state = ref<boolean>(false);
-
-  return {
-    getState: computed(() => state.value),
-    toggleState: () => { state.value = !state.value; }
-  }
+export const useSpinner = () => {
+  const updateState = (): void => { state.value = !state.value };
+  return { state, updateState }
 };

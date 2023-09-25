@@ -15,10 +15,10 @@ export const useSessionStore = defineStore('session', {
   actions: {
     async createSession (userUuid: Readonly<string>): Promise<SessionEntity> {
       const { doRequest } = useHttp();
-      const { toggleState } = useSpinner();
+      const useSpinnerComposable = useSpinner();
 
       try {
-        toggleState();
+        useSpinnerComposable.updateState();
         const session = await doRequest<SessionEntity>('PUT', `/session/sign-in/${userUuid}`);
         this.session = { ...session };
         return this.session;
@@ -26,15 +26,15 @@ export const useSessionStore = defineStore('session', {
         console.log(error)
         throw error;
       } finally {
-        toggleState();
+        useSpinnerComposable.updateState();
       }
     },
     async destroySession (): Promise<SessionEntity> {
       const { doRequest } = useHttp();
-      const { toggleState } = useSpinner();
+      const useSpinnerComposable = useSpinner();
 
       try {
-        toggleState();
+        useSpinnerComposable.updateState();
         const session = await doRequest<SessionEntity>('PUT', '/session/sign-out');
         this.session = { ...session };
         return this.session;
@@ -42,15 +42,15 @@ export const useSessionStore = defineStore('session', {
         console.log(error)
         throw error;
       } finally {
-        toggleState();
+        useSpinnerComposable.updateState();
       }
     },
     async refreshSession (): Promise<SessionEntity> {
       const { doRequest } = useHttp();
-      const { toggleState } = useSpinner();
+      const useSpinnerComposable = useSpinner();
 
       try {
-        toggleState();
+        useSpinnerComposable.updateState();
         const session = await doRequest<SessionEntity>('PUT', '/session/refresh-tokens');
         this.session = { ...session };
         return this.session;
@@ -58,7 +58,7 @@ export const useSessionStore = defineStore('session', {
         console.log(error)
         throw error;
       } finally {
-        toggleState();
+        useSpinnerComposable.updateState();
       }
     }
   }
