@@ -3,6 +3,7 @@ type FormControlComponentProps = {
   readonly placeholder?: string
   readonly value?: string
   readonly required?: boolean
+  readonly autocomplete?: string
 }
 
 export type {

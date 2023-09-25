@@ -1,26 +1,18 @@
 <template>
     <div class="container">
         <div class="container--inner">
-            <FormComponent 
-                :header="'E-Bookler'" 
-                :sub-header="'Start monetizing your writting time!'"
-                :form-group-collection="formGroupCollection"
-                :submit-label="'Continue'" 
-                :submit-action="onSubmit" 
-                :link-collection="linkCollection"
-            ></FormComponent>
-            <DividerComponent :width="'100%'" :height="'0.05rem'"></DividerComponent>
+            <FormComponent :header="'E-Bookler'" :sub-header="'Start monetizing your writting time!'"
+                :form-group-collection="formGroupCollection" :submit-label="'Continue'" :submit-action="onSubmit"
+                :link-collection="linkCollection"></FormComponent>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { useRouter } from "vue-router";
-import { DividerComponent } from "../../components/atoms/divider";
 import { FormGroupComponentProps } from "../../components/molecules/form-group";
 import { LinkComponentProps } from "../../components/molecules/link";
 import { FormComponent } from "./../../components/organisms/form";
-import { SessionEntity, UserEntity } from "./../../types/entities";
+import { UserEntity } from "./../../types/entities";
 import { useUserStore } from "../../store/use-user.store";
 import { useSessionStore } from "../../store/use-session.store";
 
@@ -34,7 +26,8 @@ const formGroupCollection = new Array<FormGroupComponentProps>(
             {
                 type: 'password',
                 placeholder: 'Bookler Key...',
-                required: true
+                required: true,
+                autocomplete: 'username current-password'
             }
         ]
     }
@@ -47,7 +40,7 @@ const linkCollection = new Array<LinkComponentProps>(
     },
     {
         path: '/refresh-access-code',
-        content: 'Forgot your account data? Recover here!'
+        content: 'Forgot your account data? Refresh it here!'
     }
 )
 

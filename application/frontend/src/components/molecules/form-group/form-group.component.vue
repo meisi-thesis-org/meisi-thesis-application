@@ -8,6 +8,7 @@
                 :placeholder="formControl.placeholder"
                 :value="formControl.value"
                 :required="formControl.required"
+                :autocomplete="formControl.autocomplete"
             ></FormControlComponent>
         </div>
     </div>

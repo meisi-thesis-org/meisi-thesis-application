@@ -17,8 +17,9 @@ import { LinkComponentProps } from "../../components/molecules/link";
 import { FormComponent } from "./../../components/organisms/form";
 import { useUserStore } from "./../../store/use-user.store";
 
-const { push } = useRouter();
 const { createUser } = useUserStore();
+const { push } = useRouter();
+
 
 const formGroupCollection = new Array<FormGroupComponentProps>(
     {
@@ -27,17 +28,20 @@ const formGroupCollection = new Array<FormGroupComponentProps>(
             {
                 type: 'email',
                 placeholder: 'Email...',
-                required: true
+                required: true,
+                autocomplete: 'email'
             },
             {
                 type: 'text',
                 placeholder: 'Username...',
-                required: true
+                required: true,
+                autocomplete: 'username'
             },
             {
                 type: 'text',
                 placeholder: 'Phone Number...',
-                required: true
+                required: true,
+                autocomplete: 'mobile'
             }
         ]
     },
@@ -47,12 +51,14 @@ const formGroupCollection = new Array<FormGroupComponentProps>(
             {
                 type: 'text',
                 placeholder: 'Name...',
-                required: true
+                required: true,
+                autocomplete: 'name'
             },
             {
                 type: 'date',
                 placeholder: 'Date of Birth...',
-                required: true
+                required: true,
+                autocomplete: 'bday'
             }
         ]
     }
@@ -62,6 +68,10 @@ const linkCollection = new Array<LinkComponentProps>(
     {
         path: '/sign-in',
         content: 'Already have an account? Sign In here!'
+    },
+    {
+        path: '/refresh-access-code',
+        content: 'Forgot your account data? Refresh it here!'
     }
 )
 

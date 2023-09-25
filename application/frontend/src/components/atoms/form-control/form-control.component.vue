@@ -1,9 +1,6 @@
 <template>
-    <input 
-        class="form-control" 
-        :type="definedProps.type" 
-        :required="definedProps.required"
-        :placeholder="definedProps.placeholder"
+    <input class="form-control" :autocomplete="definedProps.autocomplete" :type="definedProps.type"
+        :required="definedProps.required" :placeholder="definedProps.placeholder"
         :value="definedProps.type === 'submit' ? definedProps.value : ''">
 </template>
 
