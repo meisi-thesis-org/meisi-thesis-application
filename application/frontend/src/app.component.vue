@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { SpinnerComponent } from "./components/atoms/spinner";
-import { useSpinner } from "./composables/use-spinner.composable";
-const useSpinnerComposable = useSpinner()
+import { useSpinnerComposable } from "./composables/use-spinner.composable";
+const { state } = useSpinnerComposable()
 </script>
 
 <template>
     <div class="wrapper">
         <SpinnerComponent></SpinnerComponent>
-        <router-view :class="useSpinnerComposable.state.value ? 'spinner--active' : 'spinner--deactive'"></router-view>
+        <router-view :class="state ? 'spinner--active' : 'spinner--deactive'"></router-view>
     </div>
 </template>
 

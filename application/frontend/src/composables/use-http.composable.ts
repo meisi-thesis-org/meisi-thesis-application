@@ -1,6 +1,6 @@
 type HttpMethod = 'GET' | 'POST' | 'PUT';
 
-export const useHttp = () => {
+export const useHttpComposable = () => {
   const doRequest = async <T>(
     httpMethod: HttpMethod,
     httpPath: string,

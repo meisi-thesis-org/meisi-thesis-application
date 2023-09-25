@@ -1,5 +1,5 @@
-import { useHttp } from './../composables/use-http.composable';
-import { useSpinner } from './../composables/use-spinner.composable';
+import { useHttpComposable } from './../composables/use-http.composable';
+import { useSpinnerComposable } from './../composables/use-spinner.composable';
 import { type SessionEntity } from './../types/entities';
 import { useStorage } from '@vueuse/core';
 import { defineStore } from 'pinia';
@@ -14,11 +14,11 @@ export const useSessionStore = defineStore('session', {
   }),
   actions: {
     async createSession (userUuid: Readonly<string>): Promise<SessionEntity> {
-      const { doRequest } = useHttp();
-      const useSpinnerComposable = useSpinner();
+      const { doRequest } = useHttpComposable();
+      const { updateState } = useSpinnerComposable();
 
       try {
-        useSpinnerComposable.updateState();
+        updateState()
         const session = await doRequest<SessionEntity>('PUT', `/session/sign-in/${userUuid}`);
         this.session = { ...session };
         return this.session;
@@ -26,15 +26,15 @@ export const useSessionStore = defineStore('session', {
         console.log(error)
         throw error;
       } finally {
-        useSpinnerComposable.updateState();
+        updateState()
       }
     },
     async destroySession (): Promise<SessionEntity> {
-      const { doRequest } = useHttp();
-      const useSpinnerComposable = useSpinner();
+      const { doRequest } = useHttpComposable();
+      const { updateState } = useSpinnerComposable();
 
       try {
-        useSpinnerComposable.updateState();
+        updateState()
         const session = await doRequest<SessionEntity>('PUT', '/session/sign-out');
         this.session = { ...session };
         return this.session;
@@ -42,15 +42,15 @@ export const useSessionStore = defineStore('session', {
         console.log(error)
         throw error;
       } finally {
-        useSpinnerComposable.updateState();
+        updateState()
       }
     },
     async refreshSession (): Promise<SessionEntity> {
-      const { doRequest } = useHttp();
-      const useSpinnerComposable = useSpinner();
+      const { doRequest } = useHttpComposable();
+      const { updateState } = useSpinnerComposable();
 
       try {
-        useSpinnerComposable.updateState();
+        updateState()
         const session = await doRequest<SessionEntity>('PUT', '/session/refresh-tokens');
         this.session = { ...session };
         return this.session;
@@ -58,7 +58,7 @@ export const useSessionStore = defineStore('session', {
         console.log(error)
         throw error;
       } finally {
-        useSpinnerComposable.updateState();
+        updateState()
       }
     }
   }

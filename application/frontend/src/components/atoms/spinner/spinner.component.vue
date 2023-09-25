@@ -1,10 +1,10 @@
 <template>
-    <div class="spinner" v-if="useSpinnerComposable.state.value"></div>
+    <div class="spinner" v-if="state"></div>
 </template>
 
 <script setup lang="ts">
-import { useSpinner } from '../../../composables/use-spinner.composable';
-const useSpinnerComposable = useSpinner();
+import {  useSpinnerComposable } from '../../../composables/use-spinner.composable';
+const { state} = useSpinnerComposable();
 </script>
 
 <style scoped lang="scss">

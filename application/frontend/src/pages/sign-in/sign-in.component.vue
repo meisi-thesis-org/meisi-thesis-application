@@ -15,11 +15,9 @@ import { FormComponent } from "./../../components/organisms/form";
 import { UserEntity } from "./../../types/entities";
 import { useUserStore } from "../../store/use-user.store";
 import { useSessionStore } from "../../store/use-session.store";
-import { useSpinner } from "../../composables/use-spinner.composable";
 
 const { findUserByAccessCode } = useUserStore();
 const { createSession } = useSessionStore();
-const { toggleState } = useSpinner();
 
 const formGroupCollection = new Array<FormGroupComponentProps>(
     {
