@@ -11,7 +11,6 @@ describe('UseSpinnerComposable', () => {
   describe('updateState', () => {
     it('should change state to true', () => {
       updateState();
-
       expect(state.value).toBe(true)
     })
   })

@@ -8,6 +8,7 @@ type FormComponentProps = {
   readonly submitAction: (event: any) => void
   readonly submitLabel: string
   readonly linkCollection: LinkComponentProps[]
+  readonly hasError: boolean
 }
 
 export type {

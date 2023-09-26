@@ -10,6 +10,14 @@
                 </TypographyComponent>
             </div>
             <div class="form__inner--block">
+                <TypographyComponent
+                    v-show="definedProps.hasError"
+                    class="form__inner--block--typography__has-error"
+                    content="Something went wrong. Please, confirm the provided data. In case the problem persists try again later."
+                    :segment="'paragraph'">
+                </TypographyComponent>
+            </div>
+            <div class="form__inner--block">
                 <FormGroupComponent v-for="formGroup of definedProps.formGroupCollection" :name="formGroup.name"
                     :form-control-collection="formGroup.formControlCollection"></FormGroupComponent>
             </div>
@@ -60,8 +68,13 @@ const definedProps = defineProps<FormComponentProps>();
             &--typography {
 
                 &__header,
-                &__sub-header {
+                &__sub-header,
+                &__has-error {
                     text-align: center;
+                }
+
+                &__has-error {
+                    color: rgb(244, 53, 53);
                 }
             }
 

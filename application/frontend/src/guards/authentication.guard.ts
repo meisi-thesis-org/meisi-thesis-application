@@ -23,5 +23,5 @@ export const AuthenticationGuard = (
     next({ path: '/sign-in' });
   }
 
-  return next();
+  return next({ path: to.path });
 }

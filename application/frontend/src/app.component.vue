@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { SpinnerComponent } from "./components/atoms/spinner";
 import { useSpinnerComposable } from "./composables/use-spinner.composable";
+import { NavbarComponent } from "./components/organisms/navbar"
 const { state } = useSpinnerComposable()
 </script>
 
 <template>
     <div class="wrapper">
+        <NavbarComponent></NavbarComponent>
         <SpinnerComponent></SpinnerComponent>
         <router-view :class="state ? 'spinner--active' : 'spinner--deactive'"></router-view>
     </div>

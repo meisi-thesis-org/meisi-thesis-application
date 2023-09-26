@@ -2,8 +2,8 @@
     <div class="container">
         <div class="container--inner">
             <FormComponent :header="'E-Bookler'" :sub-header="'Start monetizing your writting time!'"
-                :form-group-collection="formGroupCollection" :submit-label="'Continue'" :submit-action="onSubmit"
-                :link-collection="linkCollection"></FormComponent>
+                :has-error="submitActionError" :form-group-collection="formGroupCollection" :submit-label="'Continue'"
+                :submit-action="onSubmit" :link-collection="linkCollection"></FormComponent>
         </div>
     </div>
 </template>
@@ -15,9 +15,13 @@ import { FormComponent } from "./../../components/organisms/form";
 import { UserEntity } from "./../../types/entities";
 import { useUserStore } from "../../store/use-user.store";
 import { useSessionStore } from "../../store/use-session.store";
+import { useRouter } from "vue-router";
+import { ref } from "vue";
 
 const { findUserByAccessCode } = useUserStore();
 const { createSession } = useSessionStore();
+const { push } = useRouter();
+
 
 const formGroupCollection = new Array<FormGroupComponentProps>(
     {
@@ -44,10 +48,17 @@ const linkCollection = new Array<LinkComponentProps>(
     }
 )
 
+const submitActionError = ref<boolean>(false);
+
 const onSubmit = async (event: any) => {
-    const accessCode = event.target[0].value;
-    const userEntity: UserEntity = await findUserByAccessCode(accessCode);
-    await createSession(userEntity.uuid);
+    try {
+        const accessCode = event.target[0].value;
+        const userEntity: UserEntity = await findUserByAccessCode(accessCode);
+        await createSession(userEntity.uuid);
+        await push('/dashboard');
+    } catch (error) {
+        submitActionError.value = true
+    }
 }
 </script>
 

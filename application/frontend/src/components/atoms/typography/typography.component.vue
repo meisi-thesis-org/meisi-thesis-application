@@ -14,7 +14,7 @@
         color: inherit;
         
         &.brand {
-            font-size: clamp(2rem, 2rem + 0.5vw, 3rem);
+            font-size: clamp(0.85rem, 0.85rem + 0.5vw, 1.85rem);
         }
 
         &.header {
