@@ -1,4 +1,4 @@
-import { type Connection, connect, type Channel, type Replies, type ConsumeMessage } from 'amqplib';
+import { type Connection, connect, type Channel, type Replies, type ConsumeMessage, type Message } from 'amqplib';
 import { InternalServerException } from '../exceptions/internal-server.exception';
 
 type Queues = 'create_exception' | 'create_email'
@@ -20,6 +20,10 @@ export class QueueProvider {
     return await channel.purgeQueue(queue);
   }
 
+  public ackMessage (channel: Channel, message: Message): void {
+    return channel.ack(message);
+  }
+
   public async consumeQueue (
     connectionURL: string,
     queue: Queues,
@@ -31,7 +35,6 @@ export class QueueProvider {
 
       await channel.consume(queue, callback);
       await this.purgeQueue(queue, channel);
-      channel.ackAll();
     } catch (error) {
       throw new InternalServerException();
     }

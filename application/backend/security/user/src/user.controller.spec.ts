@@ -37,6 +37,10 @@ describe('UserController', () => {
     updatedAt: randomDateBirth
   }
 
+  function updateProcessEnvExceptionQueueActive (status: boolean) {
+    process.env.EXCEPTION_QUEUE_ACTIVE = String(status);
+  }
+
   describe('findUserByUuid', () => {
     beforeEach(() => {
       requestMock.params = { ...requestMock.params, uuid: 'dummyUuid' }
@@ -46,9 +50,18 @@ describe('UserController', () => {
       return await instance.findUserByUuid(requestMock, responseMock)
     }
 
+    it('should throw an exception because it tried to record an exception when the queue is nonActive', async () => {
+      vi.spyOn(UserService.prototype, 'findUserByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
+      defineResponseMock(new Error())
+      updateProcessEnvExceptionQueueActive(true)
+
+      await expect(callFindUserByUuid()).rejects.toEqual(new Error());
+    })
+
     it('should throw an exception because an error ocurred while making a service request', async () => {
       vi.spyOn(UserService.prototype, 'findUserByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
+      updateProcessEnvExceptionQueueActive(false)
 
       await expect(callFindUserByUuid()).resolves.toEqual(new Error());
     })
@@ -56,6 +69,7 @@ describe('UserController', () => {
     it('should return an UserDTO collection', async () => {
       vi.spyOn(UserService.prototype, 'findUserByUuid').mockResolvedValue(userDTO);
       defineResponseMock(userDTO);
+      updateProcessEnvExceptionQueueActive(false)
 
       await expect(callFindUserByUuid()).resolves.toEqual(userDTO);
     })
@@ -77,9 +91,18 @@ describe('UserController', () => {
       return await instance.createUser(requestMock, responseMock)
     }
 
+    it('should throw an exception because it tried to record an exception when the queue is nonActive', async () => {
+      vi.spyOn(UserService.prototype, 'createUser').mockRejectedValue({ getHttpCode: vi.fn() });
+      defineResponseMock(new Error())
+      updateProcessEnvExceptionQueueActive(true)
+
+      await expect(callCreateUser()).rejects.toEqual(new Error());
+    })
+
     it('should throw an exception because an error ocurred while making a service request', async () => {
       vi.spyOn(UserService.prototype, 'createUser').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
+      updateProcessEnvExceptionQueueActive(false)
 
       await expect(callCreateUser()).resolves.toEqual(new Error());
     })
@@ -87,6 +110,7 @@ describe('UserController', () => {
     it('should return an UserDTO collection', async () => {
       vi.spyOn(UserService.prototype, 'createUser').mockResolvedValue(userDTO);
       defineResponseMock(userDTO);
+      updateProcessEnvExceptionQueueActive(false)
 
       await expect(callCreateUser()).resolves.toEqual(userDTO);
     })
@@ -109,9 +133,18 @@ describe('UserController', () => {
       return await instance.updateUserByUuid(requestMock, responseMock)
     }
 
+    it('should throw an exception because it tried to record an exception when the queue is nonActive', async () => {
+      vi.spyOn(UserService.prototype, 'updateUserByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
+      defineResponseMock(new Error())
+      updateProcessEnvExceptionQueueActive(true)
+
+      await expect(callUpdateUserByUuid()).rejects.toEqual(new Error());
+    })
+
     it('should throw an exception because an error ocurred while making a service request', async () => {
       vi.spyOn(UserService.prototype, 'updateUserByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
+      updateProcessEnvExceptionQueueActive(false)
 
       await expect(callUpdateUserByUuid()).resolves.toEqual(new Error());
     })
@@ -119,6 +152,7 @@ describe('UserController', () => {
     it('should return an UserDTO collection', async () => {
       vi.spyOn(UserService.prototype, 'updateUserByUuid').mockResolvedValue(userDTO);
       defineResponseMock(userDTO);
+      updateProcessEnvExceptionQueueActive(false)
 
       await expect(callUpdateUserByUuid()).resolves.toEqual(userDTO);
     })
@@ -136,9 +170,18 @@ describe('UserController', () => {
       return await instance.updateUserAccessCode(requestMock, responseMock)
     }
 
+    it('should throw an exception because it tried to record an exception when the queue is nonActive', async () => {
+      vi.spyOn(UserService.prototype, 'updateUserAccessCode').mockRejectedValue({ getHttpCode: vi.fn() });
+      defineResponseMock(new Error())
+      updateProcessEnvExceptionQueueActive(true)
+
+      await expect(callUpdateUserAccessCode()).rejects.toEqual(new Error());
+    })
+
     it('should throw an exception because an error ocurred while making a service request', async () => {
       vi.spyOn(UserService.prototype, 'updateUserAccessCode').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
+      updateProcessEnvExceptionQueueActive(false)
 
       await expect(callUpdateUserAccessCode()).resolves.toEqual(new Error());
     })
@@ -146,6 +189,7 @@ describe('UserController', () => {
     it('should return an UserDTO collection', async () => {
       vi.spyOn(UserService.prototype, 'updateUserAccessCode').mockResolvedValue(userDTO);
       defineResponseMock(userDTO);
+      updateProcessEnvExceptionQueueActive(false)
 
       await expect(callUpdateUserAccessCode()).resolves.toEqual(userDTO);
     })
@@ -160,9 +204,18 @@ describe('UserController', () => {
       return await instance.findUserByAccessCode(requestMock, responseMock)
     }
 
+    it('should throw an exception because it tried to record an exception when the queue is nonActive', async () => {
+      vi.spyOn(UserService.prototype, 'findUserByAccessCode').mockRejectedValue({ getHttpCode: vi.fn() });
+      defineResponseMock(new Error())
+      updateProcessEnvExceptionQueueActive(true)
+
+      await expect(callFindUserByAccessCode()).rejects.toEqual(new Error());
+    })
+
     it('should throw an exception because an error ocurred while making a service request', async () => {
       vi.spyOn(UserService.prototype, 'findUserByAccessCode').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
+      updateProcessEnvExceptionQueueActive(false)
 
       await expect(callFindUserByAccessCode()).resolves.toEqual(new Error());
     })
@@ -170,6 +223,7 @@ describe('UserController', () => {
     it('should return an UserDTO collection', async () => {
       vi.spyOn(UserService.prototype, 'findUserByAccessCode').mockResolvedValue(userDTO);
       defineResponseMock(userDTO);
+      updateProcessEnvExceptionQueueActive(false)
 
       await expect(callFindUserByAccessCode()).resolves.toEqual(userDTO);
     })

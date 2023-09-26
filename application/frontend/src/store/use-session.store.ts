@@ -60,6 +60,13 @@ export const useSessionStore = defineStore('session', {
       } finally {
         updateState()
       }
+    },
+    clearSession (): void {
+      this.session = {
+        userUuid: '',
+        accessToken: '',
+        refreshToken: ''
+      }
     }
   }
 });

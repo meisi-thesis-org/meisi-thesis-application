@@ -10,6 +10,12 @@ export class UserController {
   private readonly randomProvider: RandomProvider = new RandomProvider();
 
   private async sendExceptionQueue (path: string, error: any): Promise<void> {
+    const isExceptionQueueActive = process.env.EXCEPTION_QUEUE_ACTIVE
+
+    if (isExceptionQueueActive === undefined || isExceptionQueueActive === 'false') {
+      return;
+    }
+
     await this.queueProvider.sendQueue(
       process.env.RABBITMQ_URL ?? 'amqp://localhost',
       'create_exception',
