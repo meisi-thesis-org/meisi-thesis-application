@@ -2,11 +2,13 @@
 import { SpinnerComponent } from "./components/atoms/spinner";
 import { useSpinnerComposable } from "./composables/use-spinner.composable";
 import { NavbarComponent } from "./components/organisms/navbar"
+import { useThemeComposable } from "./composables/use-theme.composable";
 const { state } = useSpinnerComposable()
+const { getTheme } = useThemeComposable();
 </script>
 
 <template>
-    <div class="wrapper">
+    <div class="wrapper" :class="'theme-' + getTheme()">
         <NavbarComponent></NavbarComponent>
         <SpinnerComponent></SpinnerComponent>
         <router-view :class="state ? 'spinner--active' : 'spinner--deactive'"></router-view>
@@ -28,8 +30,15 @@ const { state } = useSpinnerComposable()
     min-height: 100vh;
     width: 100vw;
 
-    color: #343540;
-    background-color: #fafafa;
+    &.theme-dark {
+        background-color: #343540;
+        color: #fafafa;
+    }
+
+    &.theme-light {
+        color: #343540;
+        background-color: #fafafa;
+    }
 }
 
 .spinner {

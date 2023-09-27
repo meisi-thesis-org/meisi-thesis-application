@@ -1,14 +1,13 @@
-type IconName = 'menu' |
-'theme' |
-'locale' |
-'search' |
-'settings';
-
-type IconSize = 'sm' | 'md' | 'lg' | 'xl'
+type IconName =
+  'menu' |
+  'sun' |
+  'moon' |
+  'locale' |
+  'search' |
+  'settings';
 
 type IconComponentProps = {
   readonly name: IconName
-  readonly size: IconSize
 }
 
 export type {

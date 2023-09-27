@@ -46,11 +46,11 @@ const definedProps = defineProps<FormComponentProps>();
 
 <style scoped lang="scss">
 .form {
-    height: 100vh;
-    width: 100vw;
+    min-height: inherit;
+    width: inherit;
 
     &__inner {
-        height: inherit;
+        min-height: inherit;
         width: inherit;
 
         display: flex;
