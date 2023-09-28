@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { SpinnerComponent } from "./components/atoms/spinner";
 import { useSpinnerComposable } from "./composables/use-spinner.composable";
-import { NavbarComponent } from "./components/organisms/navbar"
+import { NavbarComponent } from "./components/organisms/navbar";
 import { useThemeComposable } from "./composables/use-theme.composable";
-const { state } = useSpinnerComposable()
+const { state } = useSpinnerComposable();
 const { getTheme } = useThemeComposable();
 </script>
 
 <template>
-    <div class="wrapper" :class="'theme-' + getTheme()">
+    <div class="wrapper" :class="'theme-' + getTheme().toLocaleLowerCase()">
         <NavbarComponent></NavbarComponent>
         <SpinnerComponent></SpinnerComponent>
         <router-view :class="state ? 'spinner--active' : 'spinner--deactive'"></router-view>

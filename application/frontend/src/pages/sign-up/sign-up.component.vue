@@ -3,7 +3,7 @@
         <div class="container--inner">
             <FormComponent :header="'E-Bookler'" :sub-header="'Start monetizing your writting time!'"
                 :form-group-collection="formGroupCollection" :submit-label="'Continue'" :submit-action="onSubmit"
-                :link-collection="linkCollection"></FormComponent>
+                :link-collection="linkCollection" :has-error="submitActionError"></FormComponent>
             <DividerComponent :width="'100%'" :height="'0.05rem'"></DividerComponent>
         </div>
     </div>
@@ -16,6 +16,7 @@ import { FormGroupComponentProps } from "../../components/molecules/form-group";
 import { LinkComponentProps } from "../../components/molecules/link";
 import { FormComponent } from "./../../components/organisms/form";
 import { useUserStore } from "./../../store/use-user.store";
+import { ref } from "vue";
 
 const { createUser } = useUserStore();
 const { push } = useRouter();
@@ -75,6 +76,8 @@ const linkCollection = new Array<LinkComponentProps>(
     }
 )
 
+const submitActionError = ref<boolean>(false);
+
 const onSubmit = async (event: any) => {
     try {
         const data: Record<string, string> = {
@@ -88,7 +91,7 @@ const onSubmit = async (event: any) => {
         await createUser(data);
         await push('/sign-in')    
     } catch (error) {
-        throw error;
+        submitActionError.value = true
     }
 }
 </script>
@@ -96,6 +99,10 @@ const onSubmit = async (event: any) => {
 <style scoped lang="scss">
 .container {
     width: 100vw;
-    height: 100vh;
+    min-height: 95vh;
+
+    &--inner {
+        min-height: inherit;
+    }
 }
 </style>
