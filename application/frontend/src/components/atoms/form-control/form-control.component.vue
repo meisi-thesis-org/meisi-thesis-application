@@ -11,6 +11,8 @@ const definedProps = defineProps<FormControlComponentProps>();
 
 <style scoped>
 .form-control {
+    cursor: pointer;
+
     border: none;
     padding: 1rem 0.75rem;
     border-radius: 2px;

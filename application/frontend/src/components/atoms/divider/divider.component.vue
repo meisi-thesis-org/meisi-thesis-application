@@ -12,7 +12,7 @@
             width: definedProps.width,
             height: definedProps.height,
             'background-color': 'currentColor',
-            'opacity': '0.10'
+            'opacity': '0.25'
         }
     }
 </script>

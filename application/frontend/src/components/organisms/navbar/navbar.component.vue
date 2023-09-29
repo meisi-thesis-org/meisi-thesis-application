@@ -38,7 +38,7 @@ import { DividerComponent } from '../../atoms/divider';
 
     &__inner {
         height: inherit;
-        padding: 0 1.5rem;
+        padding: 1.5rem;
         display: flex;
         flex-direction: row;
         align-items: center;

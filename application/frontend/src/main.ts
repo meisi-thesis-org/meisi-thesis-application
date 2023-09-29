@@ -9,10 +9,10 @@ import { AuthenticationGuard } from './guards/authentication.guard';
 
 const routes = [
   { path: '/dashboard', component: SignUpComponent, beforeEnter: AuthenticationGuard },
-  { path: '/sign-up', component: SignUpComponent },
-  { path: '/sign-in', component: SignInComponent },
+  { path: '/sign-up', component: SignUpComponent, beforeEnter: AuthenticationGuard },
+  { path: '/sign-in', component: SignInComponent, beforeEnter: AuthenticationGuard },
   { path: '/refresh-access-code', component: RefreshAccessCodeComponent },
-  { path: '/', component: SignInComponent }
+  { path: '/', component: SignInComponent, beforeEnter: AuthenticationGuard }
 ]
 
 const createdRouter = createRouter({ history: createWebHistory(), routes });
