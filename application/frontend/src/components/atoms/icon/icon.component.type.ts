@@ -1,15 +1,10 @@
-type IconName =
-  'menu' |
-  'sun' |
-  'moon' |
-  'locale' |
-  'search' |
-  'settings';
+type IconName = 'sun' | 'moon' | 'locale';
 
 type IconComponentProps = {
   readonly name: IconName
 }
 
 export type {
+  IconName,
   IconComponentProps
 }

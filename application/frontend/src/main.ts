@@ -6,9 +6,10 @@ import { SignUpComponent } from './pages/sign-up';
 import { SignInComponent } from './pages/sign-in';
 import { RefreshAccessCodeComponent } from './pages/refresh-access-code';
 import { AuthenticationGuard } from './guards/authentication.guard';
+import { DashboardComponent } from './pages/dashboard';
 
 const routes = [
-  { path: '/dashboard', component: SignUpComponent, beforeEnter: AuthenticationGuard },
+  { path: '/dashboard', component: DashboardComponent, beforeEnter: AuthenticationGuard },
   { path: '/sign-up', component: SignUpComponent, beforeEnter: AuthenticationGuard },
   { path: '/sign-in', component: SignInComponent, beforeEnter: AuthenticationGuard },
   { path: '/refresh-access-code', component: RefreshAccessCodeComponent },

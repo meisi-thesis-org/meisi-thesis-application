@@ -65,7 +65,7 @@ const onSubmit = async (event: any) => {
 <style scoped lang="scss">
 .container {
     width: 100vw;
-    min-height: 95vh;
+    min-height: inherit;
 
     &--inner {
         min-height: inherit;

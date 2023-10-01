@@ -13,12 +13,13 @@ export const AuthenticationGuard = (
   const { isAuthenticated } = useAuthenticationComposable();
   const { isOpenRoute } = useLocalRouterComposable();
 
-  if (isOpenRoute(toRoute.path as OpenRoute) === true) return next();
-
-  if (isAuthenticated() === false) {
-    clearSession();
-    return next({ path: '/sign-in' })
+  if (isAuthenticated() === true) {
+    if (isOpenRoute(toRoute.path as OpenRoute) === true) return next({ path: '/dashboard' });
+    return next();
   }
 
-  return next({ path: toRoute.path });
+  if (isOpenRoute(toRoute.path as OpenRoute) === true) return next();
+
+  clearSession();
+  return next({ path: '/sign-in' })
 }

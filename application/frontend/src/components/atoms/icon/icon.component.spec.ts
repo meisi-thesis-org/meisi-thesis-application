@@ -13,16 +13,6 @@ describe('IconComponent', () => {
     expect(wrapper).toBeInstanceOf(IconComponent);
   })
 
-  it('should have Bars4IconComponent because props name equals menu', () => {
-    const wrapper = createShallowMountWrapper(IconComponent, {
-      props: {
-        name: 'menu'
-      }
-    });
-
-    expect(wrapper.find('Bars4Icon').exists()).toBe(true);
-  })
-
   it('should have MagnifyingGlassIcon because props name equals search', () => {
     const wrapper = createShallowMountWrapper(IconComponent, {
       props: {

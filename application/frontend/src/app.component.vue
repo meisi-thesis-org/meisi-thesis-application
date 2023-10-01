@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { SpinnerComponent } from "./components/atoms/spinner";
 import { useSpinnerComposable } from "./composables/use-spinner.composable";
-import { NavbarComponent } from "./components/organisms/navbar";
 import { useThemeComposable } from "./composables/use-theme.composable";
 const { state } = useSpinnerComposable();
 const { getTheme } = useThemeComposable();
@@ -9,9 +8,10 @@ const { getTheme } = useThemeComposable();
 
 <template>
     <div class="wrapper" :class="'theme-' + getTheme().toLocaleLowerCase()">
-        <NavbarComponent></NavbarComponent>
-        <SpinnerComponent></SpinnerComponent>
-        <router-view :class="state ? 'spinner--active' : 'spinner--deactive'"></router-view>
+        <div class="wrapper__inner">
+            <router-view :class="state ? 'spinner--active' : 'spinner--deactive'"></router-view>
+            <SpinnerComponent></SpinnerComponent>
+        </div>
     </div>
 </template>
 
@@ -22,32 +22,40 @@ const { getTheme } = useThemeComposable();
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: 'Quicksand', sans-serif;
 }
 
 .wrapper {
-    font-family: 'Quicksand', sans-serif;
-
     min-height: 100vh;
     width: 100vw;
 
+    &__inner {
+        width: inherit;
+
+        display: flex;
+        flex-direction: row;
+        min-height: inherit;
+
+    }
+
     &.theme-dark {
-        background-color: #343540;
+        background-color: #0d0c22;
         color: #fafafa;
     }
 
     &.theme-light {
-        color: #343540;
+        color: #0d0c22;
         background-color: #fafafa;
     }
 }
 
 .spinner {
-        &--active {
-            opacity: 0.25;
-        }
-
-        &--deactive {
-            opacity: 1;
-        }
+    &--active {
+        opacity: 0.25;
     }
+
+    &--deactive {
+        opacity: 1;
+    }
+}
 </style>
