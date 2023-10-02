@@ -5,9 +5,6 @@
 </template>
 
 <script setup lang="ts">
-
 </script>
 
-<style scoped lang="scss">
-
-</style>ß
+<style scoped lang="scss"></style>

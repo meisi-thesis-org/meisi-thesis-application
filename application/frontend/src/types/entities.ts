@@ -11,6 +11,29 @@ export type UserEntity = {
   updatedAt: string
 }
 
+export type LocationEntity = {
+  uuid: string
+  userUuid: string
+  coordinateX: string
+  coordinateY: string
+  visible: boolean
+  active: boolean
+  createdAt: string
+  updatedAt: string
+}
+
+export type DeviceEntity = {
+  uuid: string
+  userUuid: string
+  ipAddress: string
+  platform: string
+  model: string
+  visible: boolean
+  active: boolean
+  createdAt: string
+  updatedAt: string
+}
+
 export type SessionEntity = {
   userUuid: string
   accessToken: string

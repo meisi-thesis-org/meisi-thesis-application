@@ -2,18 +2,18 @@ import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import App from './app.component.vue';
 import { createRouter, createWebHistory } from 'vue-router';
-import { SignUpComponent } from './pages/sign-up';
-import { SignInComponent } from './pages/sign-in';
-import { RefreshAccessCodeComponent } from './pages/refresh-access-code';
 import { AuthenticationGuard } from './guards/authentication.guard';
-import { DashboardComponent } from './pages/dashboard';
+import { CheckDeviceResolver } from './resolvers/check-device.resolver';
+import { CheckLocationResolver } from './resolvers/check-location.resolver';
 
 const routes = [
-  { path: '/dashboard', component: DashboardComponent, beforeEnter: AuthenticationGuard },
-  { path: '/sign-up', component: SignUpComponent, beforeEnter: AuthenticationGuard },
-  { path: '/sign-in', component: SignInComponent, beforeEnter: AuthenticationGuard },
-  { path: '/refresh-access-code', component: RefreshAccessCodeComponent },
-  { path: '/', component: SignInComponent, beforeEnter: AuthenticationGuard }
+  { path: '/dashboard', component: async () => await import('@/pages/dashboard/dashboard.component.vue'), beforeEnter: AuthenticationGuard },
+  { path: '/sign-up', component: async () => await import('@/pages/sign-up/sign-up.component.vue'), beforeEnter: AuthenticationGuard },
+  { path: '/sign-in', component: async () => await import('@/pages/sign-in/sign-in.component.vue'), beforeEnter: AuthenticationGuard },
+  { path: '/refresh-access-code', component: async () => await import('@/pages/refresh-access-code/refresh-access-code.component.vue'), beforeEnter: AuthenticationGuard },
+  { path: '/check-device', component: async () => await import('@/pages/check-device/check-device.component.vue'), beforeEnter: [AuthenticationGuard, CheckDeviceResolver] },
+  { path: '/check-location', component: async () => await import('@/pages/check-location/check-location.component.vue'), beforeEnter: [AuthenticationGuard, CheckLocationResolver] },
+  { path: '/', component: async () => await import('@/pages/check-location/check-location.component.vue'), beforeEnter: AuthenticationGuard }
 ]
 
 const createdRouter = createRouter({ history: createWebHistory(), routes });

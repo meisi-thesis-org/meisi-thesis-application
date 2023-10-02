@@ -55,7 +55,7 @@ const onSubmit = async (event: any) => {
         const accessCode = event.target[0].value;
         const userEntity: UserEntity = await findUserByAccessCode(accessCode);
         await createSession(userEntity.uuid);
-        await push('/dashboard');
+        await push('/check-device');
     } catch (error) {
         submitActionError.value = true
     }

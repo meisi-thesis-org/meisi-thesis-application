@@ -1,4 +1,4 @@
-type IconName = 'sun' | 'moon' | 'locale';
+type IconName = 'sun' | 'moon' | 'locale' | 'device';
 
 type IconComponentProps = {
   readonly name: IconName
