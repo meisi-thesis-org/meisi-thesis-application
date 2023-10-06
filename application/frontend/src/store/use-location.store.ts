@@ -12,52 +12,36 @@ const useLocationStore = defineStore('location', {
       const { doRequest } = useHttpComposable();
       const { updateState } = useSpinnerComposable();
 
-      try {
-        updateState();
-        const response = await doRequest<LocationEntity>('GET', `/security/locations/${uuid}`);
-        return response;
-      } catch (error) {
-        return undefined;
-      } finally {
-        updateState();
-      }
+      updateState();
+      const response = await doRequest<LocationEntity>('GET', `/security/locations/${uuid}`);
+      updateState();
+      return response;
     },
     async findLocationByUserUuid (userUuid: string): Promise<LocationEntity | undefined> {
       const { doRequest } = useHttpComposable();
       const { updateState } = useSpinnerComposable();
 
-      try {
-        updateState();
-        const response = await doRequest<LocationEntity>('GET', `/security/locations/${userUuid}`);
-        return response;
-      } catch (error) {
-        return undefined;
-      } finally {
-        updateState();
-      }
+      updateState();
+      const response = await doRequest<LocationEntity>('GET', `/security/locations/${userUuid}`);
+      updateState();
+      return response;
     },
     async createLocation (data: Record<string, string>): Promise<void> {
       const { doRequest } = useHttpComposable();
       const { updateState } = useSpinnerComposable();
 
-      try {
-        updateState();
-        const response = await doRequest<LocationEntity>('POST', '/security/locations', data);
-        this.$state.locationCollection.push(response)
-      } catch (error) {
-        console.log(error)
-        throw error;
-      } finally {
-        updateState();
-      }
+      updateState();
+      const response = await doRequest<LocationEntity>('POST', '/security/locations', data);
+      if (response !== undefined) this.$state.locationCollection.push(response);
+      updateState();
     },
     async updateLocationByUuid (uuid: string, data: Record<string, string>): Promise<void> {
       const { doRequest } = useHttpComposable();
       const { updateState } = useSpinnerComposable();
 
-      try {
-        updateState();
-        const response = await doRequest<LocationEntity>('PUT', `/security/locations/${uuid}`, data);
+      updateState();
+      const response = await doRequest<LocationEntity>('PUT', `/security/locations/${uuid}`, data);
+      if (response !== undefined) {
         this.$state.locationCollection.find((location) => {
           if (location.uuid === response.uuid) {
             location = { ...location, ...response };
@@ -65,12 +49,8 @@ const useLocationStore = defineStore('location', {
 
           return location;
         })
-      } catch (error) {
-        console.log(error)
-        throw error;
-      } finally {
-        updateState();
       }
+      updateState();
     }
   }
 });

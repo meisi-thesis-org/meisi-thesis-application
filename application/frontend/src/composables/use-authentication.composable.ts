@@ -10,8 +10,8 @@ export const useAuthenticationComposable = () => {
   };
 
   const isAuthenticated = (): boolean => {
-    const anyEmptyAttribute = Object.values(session.value).every((attribute) => attribute === '');
-    if (anyEmptyAttribute) return false;
+    const attributeEmpty = Object.values(session.value).every((attribute) => attribute === '');
+    if (attributeEmpty) return false;
 
     const isAccessTokenExpired: boolean = isTokenExpired(session.value.accessToken);
     const isRefreshTokenExpired: boolean = isTokenExpired(session.value.refreshToken);

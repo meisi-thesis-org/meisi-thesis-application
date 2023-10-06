@@ -11,53 +11,36 @@ const useDeviceStore = defineStore('device', {
     async findDeviceByUuid (uuid: string): Promise<DeviceEntity | undefined> {
       const { doRequest } = useHttpComposable();
       const { updateState } = useSpinnerComposable();
-
-      try {
-        updateState();
-        const response = await doRequest<DeviceEntity>('GET', `/security/devices/${uuid}`);
-        return response;
-      } catch (error) {
-        return undefined;
-      } finally {
-        updateState();
-      }
+      updateState();
+      const response = await doRequest<DeviceEntity>('GET', `/security/devices/${uuid}`);
+      updateState();
+      return response;
     },
     async findDeviceByUserUuid (userUuid: string): Promise<DeviceEntity | undefined> {
       const { doRequest } = useHttpComposable();
       const { updateState } = useSpinnerComposable();
 
-      try {
-        updateState();
-        const response = await doRequest<DeviceEntity>('GET', `/security/devices/${userUuid}`);
-        return response;
-      } catch (error) {
-        return undefined;
-      } finally {
-        updateState();
-      }
+      updateState();
+      const response = await doRequest<DeviceEntity>('GET', `/security/devices/${userUuid}`);
+      updateState();
+      return response;
     },
     async createDevice (data: Record<string, string>): Promise<void> {
       const { doRequest } = useHttpComposable();
       const { updateState } = useSpinnerComposable();
 
-      try {
-        updateState();
-        const response = await doRequest<DeviceEntity>('POST', '/security/devices', data);
-        this.$state.deviceCollection.push(response)
-      } catch (error) {
-        console.log(error)
-        throw error;
-      } finally {
-        updateState();
-      }
+      updateState();
+      const response = await doRequest<DeviceEntity>('POST', '/security/devices', data);
+      if (response !== undefined) this.$state.deviceCollection.push(response)
+      updateState();
     },
     async updateDeviceByUuid (uuid: string, data: Record<string, string>): Promise<void> {
       const { doRequest } = useHttpComposable();
       const { updateState } = useSpinnerComposable();
 
-      try {
-        updateState();
-        const response = await doRequest<DeviceEntity>('PUT', `/security/devices/${uuid}`, data);
+      updateState();
+      const response = await doRequest<DeviceEntity>('PUT', `/security/devices/${uuid}`, data);
+      if (response !== undefined) {
         this.$state.deviceCollection.find((device) => {
           if (device.uuid === response.uuid) {
             device = { ...device, ...response };
@@ -65,12 +48,8 @@ const useDeviceStore = defineStore('device', {
 
           return device;
         })
-      } catch (error) {
-        console.log(error)
-        throw error;
-      } finally {
-        updateState();
       }
+      updateState();
     }
   }
 });

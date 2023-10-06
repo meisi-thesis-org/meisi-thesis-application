@@ -7,6 +7,7 @@ import { CheckDeviceResolver } from './resolvers/check-device.resolver';
 import { CheckLocationResolver } from './resolvers/check-location.resolver';
 
 const routes = [
+  { path: '/devices', component: async () => await import('@/pages/device-collection/device-collection.component.vue'), beforeEnter: AuthenticationGuard },
   { path: '/dashboard', component: async () => await import('@/pages/dashboard/dashboard.component.vue'), beforeEnter: AuthenticationGuard },
   { path: '/sign-up', component: async () => await import('@/pages/sign-up/sign-up.component.vue'), beforeEnter: AuthenticationGuard },
   { path: '/sign-in', component: async () => await import('@/pages/sign-in/sign-in.component.vue'), beforeEnter: AuthenticationGuard },

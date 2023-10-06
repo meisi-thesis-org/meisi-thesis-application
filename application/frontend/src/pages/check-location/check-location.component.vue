@@ -20,14 +20,12 @@ const { push } = useRouter();
 const { meta } = useRoute();
 
 const typographySegment = (): string => {
-    return meta.location === undefined ?
+    return meta.location !== undefined ?
         "Authorized location! You will have full permissions during your visit to the platform." :
         "Unauthorized location! You will have restricted actions permissions during your visit to the platform."
 };
 
-const doNavigationCheckLocation = async () => {
-    await push('/dashboard');
-};
+const doNavigationCheckLocation = async () => await push('/dashboard');
 </script>
 
 <style scoped lang="scss">

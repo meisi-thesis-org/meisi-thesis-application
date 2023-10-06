@@ -6,7 +6,7 @@ import { defineStore } from 'pinia';
 export const useSettingStore = defineStore('setting', {
   state: () => ({
     setting: useStorage<UserSettingEntity>('setting', {
-      theme: 'DARK',
+      theme: 'LIGHT',
       locale: 'EN'
     })
   }),

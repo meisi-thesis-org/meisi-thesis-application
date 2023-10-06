@@ -23,6 +23,11 @@ const { getTheme } = useThemeComposable();
     margin: 0;
     box-sizing: border-box;
     font-family: 'Quicksand', sans-serif;
+
+    --dark-primary: #0d0c22;
+    --light-primary: #fafafa;
+    --purple-primary: #6558D3;
+    --purple-secondary: #F1EEFF;
 }
 
 .wrapper {
@@ -39,13 +44,13 @@ const { getTheme } = useThemeComposable();
     }
 
     &.theme-dark {
-        background-color: #0d0c22;
-        color: #fafafa;
+        background-color: var(--dark-primary);
+        color: var(--light-primary);
     }
 
     &.theme-light {
-        color: #0d0c22;
-        background-color: #fafafa;
+        color: var(--dark-primary);
+        background-color: var(--light-primary);
     }
 }
 

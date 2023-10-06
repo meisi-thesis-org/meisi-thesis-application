@@ -13,53 +13,32 @@ export const useSessionStore = defineStore('session', {
     })
   }),
   actions: {
-    async createSession (userUuid: Readonly<string>): Promise<SessionEntity> {
+    async createSession (userUuid: Readonly<string>): Promise<void> {
       const { doRequest } = useHttpComposable();
       const { updateState } = useSpinnerComposable();
 
-      try {
-        updateState()
-        const session = await doRequest<SessionEntity>('PUT', `/session/sign-in/${userUuid}`);
-        this.session = { ...session };
-        return this.session;
-      } catch (error) {
-        console.log(error)
-        throw error;
-      } finally {
-        updateState()
-      }
+      updateState();
+      const response = await doRequest<SessionEntity>('PUT', `/session/sign-in/${userUuid}`);
+      if (response !== undefined) this.session = { ...response };
+      updateState();
     },
-    async destroySession (): Promise<SessionEntity> {
+    async destroySession (): Promise<void> {
       const { doRequest } = useHttpComposable();
       const { updateState } = useSpinnerComposable();
 
-      try {
-        updateState()
-        const session = await doRequest<SessionEntity>('PUT', '/session/sign-out');
-        this.session = { ...session };
-        return this.session;
-      } catch (error) {
-        console.log(error)
-        throw error;
-      } finally {
-        updateState()
-      }
+      updateState();
+      const response = await doRequest<SessionEntity>('PUT', '/session/sign-out');
+      if (response !== undefined) this.session = { ...response };
+      updateState();
     },
-    async refreshSession (): Promise<SessionEntity> {
+    async refreshSession (): Promise<void> {
       const { doRequest } = useHttpComposable();
       const { updateState } = useSpinnerComposable();
 
-      try {
-        updateState()
-        const session = await doRequest<SessionEntity>('PUT', '/session/refresh-tokens');
-        this.session = { ...session };
-        return this.session;
-      } catch (error) {
-        console.log(error)
-        throw error;
-      } finally {
-        updateState()
-      }
+      updateState();
+      const response = await doRequest<SessionEntity>('PUT', '/session/refresh-tokens');
+      if (response !== undefined) this.session = { ...response };
+      updateState();
     },
     clearSession (): void {
       this.session = {
