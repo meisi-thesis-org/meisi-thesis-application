@@ -29,7 +29,7 @@ export class GatewayApplication {
     const availableHosts = new Map<string, string>();
     availableHosts.set('/security/users/:uuid', 'http://localhost:8001');
     availableHosts.set('/security/devices', 'http://localhost:8002');
-    availableHosts.set('/security/locations', 'http://localhost:8003');
+    availableHosts.set('/security/networks', 'http://localhost:8003');
     availableHosts.set('/commerce/dossiers', 'http://localhost:8004');
     availableHosts.set('/commerce/books', 'http://localhost:8005');
     availableHosts.set('/commerce/chapters', 'http://localhost:8006');

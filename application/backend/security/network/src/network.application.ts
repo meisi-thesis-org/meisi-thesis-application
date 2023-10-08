@@ -1,8 +1,8 @@
 import Express, { json, type Application } from 'express';
 import 'dotenv/config';
-import { LocationGateway } from './location.gateway';
+import { NetworkGateway } from './network.gateway';
 
-export class LocationApplication {
+export class NetworkApplication {
   private readonly application: Application;
   private readonly serverPort: number;
 
@@ -11,17 +11,17 @@ export class LocationApplication {
     this.serverPort = parseInt(process.env.SERVER_PORT ?? '8003')
   }
 
-  public defineMiddlewares (): LocationApplication {
+  public defineMiddlewares (): NetworkApplication {
     this.application.use(json());
     return this;
   }
 
-  public defineRoutes (): LocationApplication {
-    this.application.use('/security/locations', new LocationGateway().subscribe())
+  public defineRoutes (): NetworkApplication {
+    this.application.use('/security/networks', new NetworkGateway().subscribe())
     return this;
   }
 
-  public defineListner (): LocationApplication {
+  public defineListner (): NetworkApplication {
     this.application.listen((this.serverPort), async () => {
       console.log(`Server initialized on PORT: ${this.serverPort}!`)
     })
@@ -30,4 +30,4 @@ export class LocationApplication {
   }
 }
 
-new LocationApplication().defineMiddlewares().defineRoutes().defineListner();
+new NetworkApplication().defineMiddlewares().defineRoutes().defineListner();

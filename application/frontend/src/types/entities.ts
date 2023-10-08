@@ -11,7 +11,7 @@ export type UserEntity = {
   updatedAt: string
 }
 
-export type LocationEntity = {
+export type NetworkEntity = {
   uuid: string
   userUuid: string
   coordinateX: string

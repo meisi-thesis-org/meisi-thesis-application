@@ -1,3 +1,3 @@
-import CheckLocationComponent from './check-location.component.vue';
+import CheckNetworkComponent from './check-network.component.vue';
 
-export { CheckLocationComponent };
+export { CheckNetworkComponent };

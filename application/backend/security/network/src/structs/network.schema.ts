@@ -1,18 +1,18 @@
 import { z } from 'zod';
 
-const FindLocationByUuidSchema = z.object({
+const FindNetworkByUuidSchema = z.object({
   params: z.object({
     uuid: z.string()
   })
 });
 
-const FindLocationsByUserUuidSchema = z.object({
+const FindNetworksByUserUuidSchema = z.object({
   query: z.object({
     userUuid: z.string()
   })
 });
 
-const CreateLocationSchema = z.object({
+const CreateNetworkSchema = z.object({
   body: z.object({
     userUuid: z.string(),
     coordinateX: z.string(),
@@ -20,7 +20,7 @@ const CreateLocationSchema = z.object({
   })
 })
 
-const UpdateLocationByUuidSchema = z.object({
+const UpdateNetworkByUuidSchema = z.object({
   params: z.object({
     uuid: z.string()
   }),
@@ -33,8 +33,8 @@ const UpdateLocationByUuidSchema = z.object({
 })
 
 export {
-  FindLocationByUuidSchema,
-  FindLocationsByUserUuidSchema,
-  CreateLocationSchema,
-  UpdateLocationByUuidSchema
+  FindNetworkByUuidSchema,
+  FindNetworksByUserUuidSchema,
+  CreateNetworkSchema,
+  UpdateNetworkByUuidSchema
 }

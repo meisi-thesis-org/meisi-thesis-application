@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { CheckLocationComponent } from '.';
+import { CheckNetworkComponent } from '.';
 import { createShallowMountWrapper } from '../../wrappers';
 
-describe('CheckLocation', () => {
-  const component = createShallowMountWrapper(CheckLocationComponent);
+describe('CheckNetwork', () => {
+  const component = createShallowMountWrapper(CheckNetworkComponent);
 
   it('should exist', () => {
     expect(component.exists()).toBe(true);

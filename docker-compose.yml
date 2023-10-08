@@ -11,8 +11,8 @@ services:
     container_name: meisi-thesis-application-backend-security-user
   meisi-thesis-application-backend-security-device:
     container_name: meisi-thesis-application-backend-security-device
-  meisi-thesis-application-backend-security-location:
-    container_name: meisi-thesis-application-backend-security-location
+  meisi-thesis-application-backend-security-network:
+    container_name: meisi-thesis-application-backend-security-network
   meisi-thesis-application-backend-commerce-dossier:
     container_name: meisi-thesis-application-backend-commerce-dossier
   meisi-thesis-application-backend-commerce-book:

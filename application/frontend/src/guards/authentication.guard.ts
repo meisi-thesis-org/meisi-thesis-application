@@ -2,11 +2,11 @@ import { useAuthenticationComposable } from '@/composables/use-authentication.co
 import { useLocalRouterComposable } from '@/composables/use-local-router.composable';
 import { useSessionStore } from '@/store/use-session.store';
 import type { OpenRoute } from '@/types/collections';
-import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router';
+import type { NavigationGuardNext, RouteNetworkNormalized } from 'vue-router';
 
 export const AuthenticationGuard = (
-  toRoute: Readonly<RouteLocationNormalized>,
-  _fromRoute: Readonly<RouteLocationNormalized>,
+  toRoute: Readonly<RouteNetworkNormalized>,
+  _fromRoute: Readonly<RouteNetworkNormalized>,
   next: NavigationGuardNext
 ) => {
   const { clearSession } = useSessionStore();

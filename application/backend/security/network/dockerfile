@@ -4,12 +4,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 
 WORKDIR /usr/src/app
 
-COPY application/backend/security/location/package.json application/backend/security/location/yarn.lock ./
+COPY application/backend/security/network/package.json application/backend/security/network/yarn.lock ./
 RUN yarn install --frozen-lockfile
 
 COPY . .
 
-RUN cd application/backend/security/location && yarn build
+RUN cd application/backend/security/network && yarn build
 
 EXPOSE 8003
 

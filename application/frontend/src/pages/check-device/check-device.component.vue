@@ -3,7 +3,7 @@
         <div class="container__inner">
             <IconComponent :name="'device'"></IconComponent>
             <TypographyComponent class="container__inner--block" :segment="'paragraph'" :content="typographySegment()"></TypographyComponent>
-            <FormControlComponent v-on:click="doNavigationCheckLocation()" class="container__inner--button" :type="'submit'" :value="'Continue'"></FormControlComponent>
+            <FormControlComponent v-on:click="doNavigationCheckNetwork()" class="container__inner--button" :type="'submit'" :value="'Continue'"></FormControlComponent>
         </div>
     </div>
 </template>
@@ -18,12 +18,12 @@ const { push } = useRouter();
 const { meta } = useRoute();
 
 const typographySegment = (): string => {
-    return meta.location !== undefined ?
+    return meta.network !== undefined ?
         "Authorized device! You will have full permissions during your visit to the platform." :
         "Unauthorized device! You will have restricted actions permissions during your visit to the platform."
 };
 
-const doNavigationCheckLocation = async () => await push('/check-location')
+const doNavigationCheckNetwork = async () => await push('/check-network')
 </script>
 
 <style scoped lang="scss">

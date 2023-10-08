@@ -50,7 +50,6 @@ export class UserController {
       const user = await this.userService.createUser(createUserRequest);
       return response.status(201).json(user)
     } catch (error: any) {
-      console.log(error)
       await this.sendExceptionQueue('security.users::createUser', error);
       return response.status(error.getHttpCode()).json()
     }

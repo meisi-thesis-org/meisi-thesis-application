@@ -1,10 +1,10 @@
 import { useDeviceStore } from '@/store/use-device.store';
 import { useSessionStore } from '@/store/use-session.store';
-import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router';
+import type { NavigationGuardNext, RouteNetworkNormalized } from 'vue-router';
 
 export const CheckDeviceResolver = async (
-  toRoute: Readonly<RouteLocationNormalized>,
-  _fromRoute: Readonly<RouteLocationNormalized>,
+  toRoute: Readonly<RouteNetworkNormalized>,
+  _fromRoute: Readonly<RouteNetworkNormalized>,
   next: NavigationGuardNext
 ) => {
   const { findDeviceByUserUuid } = useDeviceStore();

@@ -1,13 +1,13 @@
-import { useLocationStore } from '@/store/use-location.store';
+import { useNetworkStore } from '@/store/use-network.store';
 import { useSessionStore } from '@/store/use-session.store';
-import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router';
+import type { NavigationGuardNext, RouteNetworkNormalized } from 'vue-router';
 
-export const CheckLocationResolver = async (
-  toRoute: Readonly<RouteLocationNormalized>,
-  _fromRoute: Readonly<RouteLocationNormalized>,
+export const CheckNetworkResolver = async (
+  toRoute: Readonly<RouteNetworkNormalized>,
+  _fromRoute: Readonly<RouteNetworkNormalized>,
   next: NavigationGuardNext
 ) => {
-  const { findLocationByUserUuid } = useLocationStore();
+  const { findNetworkByUserUuid } = useNetworkStore();
   const { session, clearSession } = useSessionStore();
 
   if (session.userUuid === '') {
@@ -15,7 +15,7 @@ export const CheckLocationResolver = async (
     return next({ path: '/sign-in' })
   }
 
-  toRoute.meta.location = await findLocationByUserUuid(session.userUuid);
+  toRoute.meta.network = await findNetworkByUserUuid(session.userUuid);
 
   return next();
 }
