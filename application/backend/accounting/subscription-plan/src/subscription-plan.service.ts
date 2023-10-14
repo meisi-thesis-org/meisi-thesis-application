@@ -79,7 +79,7 @@ export class SubscriptionPlanService {
       visible: args.visible ?? foundSubscriptionPlan.visible,
       active: args.active ?? foundSubscriptionPlan.active,
       createdAt: foundSubscriptionPlan.createdAt,
-      updatedAt: new Date().toString()
+      updatedAt: this.randomProvider.randomDateToIsoString()
     }
 
     await this.repository

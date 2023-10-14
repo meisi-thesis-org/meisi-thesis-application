@@ -8,7 +8,7 @@ export class SubscriptionPlanApplication {
 
   public constructor () {
     this.application = Express();
-    this.serverPort = parseInt(process.env.SERVER_PORT ?? '8001')
+    this.serverPort = parseInt(process.env.SERVER_PORT ?? '8007')
   }
 
   public defineMiddlewares (): SubscriptionPlanApplication {
@@ -17,7 +17,7 @@ export class SubscriptionPlanApplication {
   }
 
   public defineRoutes (): SubscriptionPlanApplication {
-    this.application.use('/security/users', new SubscriptionPlanGateway().subscribe())
+    this.application.use('/security/subscription-plans', new SubscriptionPlanGateway().subscribe())
     return this;
   }
 
