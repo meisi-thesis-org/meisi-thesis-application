@@ -1,8 +1,8 @@
 import Express, { json, type Application } from 'express';
 import 'dotenv/config';
-import { PromotionGateway } from './promotion.gateway';
+import { CampaignGateway } from './campaign.gateway';
 
-export class PromotionApplication {
+export class CampaignApplication {
   private readonly application: Application;
   private readonly serverPort: number;
 
@@ -11,17 +11,17 @@ export class PromotionApplication {
     this.serverPort = parseInt(process.env.SERVER_PORT ?? '8008')
   }
 
-  public defineMiddlewares (): PromotionApplication {
+  public defineMiddlewares (): CampaignApplication {
     this.application.use(json());
     return this;
   }
 
-  public defineRoutes (): PromotionApplication {
-    this.application.use('/security/promotions', new PromotionGateway().subscribe())
+  public defineRoutes (): CampaignApplication {
+    this.application.use('/security/campaigns', new CampaignGateway().subscribe())
     return this;
   }
 
-  public defineListner (): PromotionApplication {
+  public defineListner (): CampaignApplication {
     this.application.listen((this.serverPort), async () => {
       console.log(`Server initialized on PORT: ${this.serverPort}!`)
     })
@@ -30,4 +30,4 @@ export class PromotionApplication {
   }
 }
 
-new PromotionApplication().defineMiddlewares().defineRoutes().defineListner();
+new CampaignApplication().defineMiddlewares().defineRoutes().defineListner();

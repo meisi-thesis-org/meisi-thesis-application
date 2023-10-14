@@ -1,15 +1,15 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { type Request, type Response } from 'express';
 import { RandomProvider } from '@meisi-thesis/application-backend-utilities-shared/src/providers/random.provider';
-import { PromotionController } from './promotion.controller';
-import { type PromotionDTO } from './domain/promotion.domain';
-import { PromotionService } from './promotion.service';
+import { CampaignController } from './campaign.controller';
+import { type CampaignDTO } from './domain/campaign.domain';
+import { CampaignService } from './campaign.service';
 
-describe('PromotionController', () => {
-  const instance = new PromotionController();
+describe('CampaignController', () => {
+  const instance = new CampaignController();
 
-  it('should have an instanceOf PromotionController', () => {
-    expect(instance).toBeInstanceOf(PromotionController)
+  it('should have an instanceOf CampaignController', () => {
+    expect(instance).toBeInstanceOf(CampaignController)
   })
 
   const requestMock = {} as unknown as Request;
@@ -28,11 +28,10 @@ describe('PromotionController', () => {
   const randomBoolean = randomProvider.randomBoolean();
   const randomDateBirth = randomProvider.randomDateToIsoString();
 
-  const promotionDTO: PromotionDTO = {
+  const promotionDTO: CampaignDTO = {
     uuid: randomUuid,
     designation: randomString,
     description: randomString,
-    priceReduction: randomNumber,
     visible: randomBoolean,
     active: randomBoolean,
     createdAt: randomDateBirth,
@@ -53,7 +52,7 @@ describe('PromotionController', () => {
     }
 
     it('should throw an exception because it tried to record an exception when the queue is nonActive', async () => {
-      vi.spyOn(PromotionService.prototype, 'findOneByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
+      vi.spyOn(CampaignService.prototype, 'findOneByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
       updateProcessEnvExceptionQueueActive(true)
 
@@ -61,15 +60,15 @@ describe('PromotionController', () => {
     })
 
     it('should throw an exception because an error ocurred while making a service request', async () => {
-      vi.spyOn(PromotionService.prototype, 'findOneByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
+      vi.spyOn(CampaignService.prototype, 'findOneByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
       updateProcessEnvExceptionQueueActive(false)
 
       await expect(callFindOneByUuid()).resolves.toEqual(new Error());
     })
 
-    it('should return an PromotionDTO', async () => {
-      vi.spyOn(PromotionService.prototype, 'findOneByUuid').mockResolvedValue(promotionDTO);
+    it('should return an CampaignDTO', async () => {
+      vi.spyOn(CampaignService.prototype, 'findOneByUuid').mockResolvedValue(promotionDTO);
       defineResponseMock(promotionDTO);
       updateProcessEnvExceptionQueueActive(false)
 
@@ -81,8 +80,7 @@ describe('PromotionController', () => {
       requestMock.body = {
         ...requestMock.body,
         designation: randomString,
-        description: randomString,
-        priceReduction: 0
+        description: randomString
       }
     })
 
@@ -91,7 +89,7 @@ describe('PromotionController', () => {
     }
 
     it('should throw an exception because it tried to record an exception when the queue is nonActive', async () => {
-      vi.spyOn(PromotionService.prototype, 'createOne').mockRejectedValue({ getHttpCode: vi.fn() });
+      vi.spyOn(CampaignService.prototype, 'createOne').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
       updateProcessEnvExceptionQueueActive(true)
 
@@ -99,15 +97,15 @@ describe('PromotionController', () => {
     })
 
     it('should throw an exception because an error ocurred while making a service request', async () => {
-      vi.spyOn(PromotionService.prototype, 'createOne').mockRejectedValue({ getHttpCode: vi.fn() });
+      vi.spyOn(CampaignService.prototype, 'createOne').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
       updateProcessEnvExceptionQueueActive(false)
 
       await expect(callCreateOne()).resolves.toEqual(new Error());
     })
 
-    it('should return an PromotionDTO', async () => {
-      vi.spyOn(PromotionService.prototype, 'createOne').mockResolvedValue(promotionDTO);
+    it('should return an CampaignDTO', async () => {
+      vi.spyOn(CampaignService.prototype, 'createOne').mockResolvedValue(promotionDTO);
       defineResponseMock(promotionDTO);
       updateProcessEnvExceptionQueueActive(false)
 
@@ -132,7 +130,7 @@ describe('PromotionController', () => {
     }
 
     it('should throw an exception because it tried to record an exception when the queue is nonActive', async () => {
-      vi.spyOn(PromotionService.prototype, 'updateOneByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
+      vi.spyOn(CampaignService.prototype, 'updateOneByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
       updateProcessEnvExceptionQueueActive(true)
 
@@ -140,15 +138,15 @@ describe('PromotionController', () => {
     })
 
     it('should throw an exception because an error ocurred while making a service request', async () => {
-      vi.spyOn(PromotionService.prototype, 'updateOneByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
+      vi.spyOn(CampaignService.prototype, 'updateOneByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
       updateProcessEnvExceptionQueueActive(false)
 
       await expect(callUpdateOneByUuid()).resolves.toEqual(new Error());
     })
 
-    it('should return an PromotionDTO', async () => {
-      vi.spyOn(PromotionService.prototype, 'updateOneByUuid').mockResolvedValue(promotionDTO);
+    it('should return an CampaignDTO', async () => {
+      vi.spyOn(CampaignService.prototype, 'updateOneByUuid').mockResolvedValue(promotionDTO);
       defineResponseMock(promotionDTO);
       updateProcessEnvExceptionQueueActive(false)
 
