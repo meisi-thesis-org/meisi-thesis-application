@@ -1,0 +1,16 @@
+FROM node:18
+
+RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
+
+WORKDIR /usr/src/app
+
+COPY application/backend/accounting/subscriptions/package.json application/backend/accounting/subscriptions/yarn.lock ./
+RUN yarn install --frozen-lockfile
+
+COPY . .
+
+RUN cd application/backend/accounting/subscriptions && yarn build
+
+EXPOSE 8010
+
+CMD ["yarn","start"]
