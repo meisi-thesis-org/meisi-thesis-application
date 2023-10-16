@@ -51,7 +51,7 @@ describe('SubscriptionController', () => {
     it('should throw an exception because it tried to record an exception when the queue is nonActive', async () => {
       vi.spyOn(SubscriptionService.prototype, 'findOneByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
-      updateProcessEnvExceptionQueueActive(true)
+      updateProcessEnvExceptionQueueActive(false)
 
       await expect(callFindOneByUuid()).resolves.toEqual(new Error());
     })
@@ -88,7 +88,7 @@ describe('SubscriptionController', () => {
     it('should throw an exception because it tried to record an exception when the queue is nonActive', async () => {
       vi.spyOn(SubscriptionService.prototype, 'createOne').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
-      updateProcessEnvExceptionQueueActive(true)
+      updateProcessEnvExceptionQueueActive(false)
 
       await expect(callCreateOne()).resolves.toEqual(new Error());
     })
@@ -127,7 +127,7 @@ describe('SubscriptionController', () => {
     it('should throw an exception because it tried to record an exception when the queue is nonActive', async () => {
       vi.spyOn(SubscriptionService.prototype, 'updateOneByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
-      updateProcessEnvExceptionQueueActive(true)
+      updateProcessEnvExceptionQueueActive(false)
 
       await expect(callUpdateOneByUuid()).resolves.toEqual(new Error());
     })

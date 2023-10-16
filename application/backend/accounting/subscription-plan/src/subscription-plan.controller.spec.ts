@@ -49,7 +49,7 @@ describe('SubscriptionPlanController', () => {
     it('should throw an exception because it tried to record an exception when the queue is nonActive', async () => {
       vi.spyOn(SubscriptionPlanService.prototype, 'findBulk').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
-      updateProcessEnvExceptionQueueActive(true)
+      updateProcessEnvExceptionQueueActive(false)
 
       await expect(callFindBulk()).resolves.toEqual(new Error());
     })
@@ -83,7 +83,7 @@ describe('SubscriptionPlanController', () => {
     it('should throw an exception because it tried to record an exception when the queue is nonActive', async () => {
       vi.spyOn(SubscriptionPlanService.prototype, 'findOneByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
-      updateProcessEnvExceptionQueueActive(true)
+      updateProcessEnvExceptionQueueActive(false)
 
       await expect(callFindOneByUuid()).resolves.toEqual(new Error());
     })
@@ -121,7 +121,7 @@ describe('SubscriptionPlanController', () => {
     it('should throw an exception because it tried to record an exception when the queue is nonActive', async () => {
       vi.spyOn(SubscriptionPlanService.prototype, 'createOne').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
-      updateProcessEnvExceptionQueueActive(true)
+      updateProcessEnvExceptionQueueActive(false)
 
       await expect(callCreateOne()).resolves.toEqual(new Error());
     })
@@ -162,7 +162,7 @@ describe('SubscriptionPlanController', () => {
     it('should throw an exception because it tried to record an exception when the queue is nonActive', async () => {
       vi.spyOn(SubscriptionPlanService.prototype, 'updateOneByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
-      updateProcessEnvExceptionQueueActive(true)
+      updateProcessEnvExceptionQueueActive(false)
 
       await expect(callUpdateOneByUuid()).resolves.toEqual(new Error());
     })

@@ -10,10 +10,12 @@ import { type CampaignPromotionDTO, campaignPromotionMapper, type CampaignPromot
 import { RandomProvider } from '@meisi-thesis/application-backend-utilities-shared/src/providers/random.provider';
 import { CampaignPromotionStateRepository } from './repositories/campaign-promotion-state.repository';
 import { type CampaignPromotionRepository } from './campaign-promotion.repository';
+import { NetworkProvider } from '@meisi-thesis/application-backend-utilities-shared/src/providers/network.provider';
 
 export class CampaignPromotionService {
   private readonly repository: CampaignPromotionRepository = new CampaignPromotionStateRepository();
   private readonly randomProvider: RandomProvider = new RandomProvider();
+  private readonly networkProvider: NetworkProvider = new NetworkProvider();
 
   public async findOneByUuid (
     findCampaignPromotionByUuidRequest: FindCampaignPromotionByUuidRequest
@@ -38,6 +40,22 @@ export class CampaignPromotionService {
   }
 
   public async createOne (createCampaignPromotionRequest: CreateCampaignPromotionRequest): Promise<CampaignPromotionDTO> {
+    await this.networkProvider.doHttpRequest(
+      '8000',
+      'accounting/promotions',
+      'GET',
+      undefined,
+      { promotionUuid: createCampaignPromotionRequest.promotionUuid }
+    )
+
+    await this.networkProvider.doHttpRequest(
+      '8000',
+      'accounting/campaigns',
+      'GET',
+      undefined,
+      { campaignUuid: createCampaignPromotionRequest.campaignUuid }
+    )
+
     const createCampaignPromotion: CampaignPromotionEntity = {
       uuid: this.randomProvider.randomUUID(),
       promotionUuid: createCampaignPromotionRequest.promotionUuid,

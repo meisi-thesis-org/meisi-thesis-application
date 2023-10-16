@@ -3,6 +3,7 @@ import { RandomProvider } from '@meisi-thesis/application-backend-utilities-shar
 import { CampaignPromotionService } from './campaign-promotion.service';
 import { type CampaignPromotionEntity } from './structs/campaign-promotion.domain';
 import { CampaignPromotionStateRepository } from './repositories/campaign-promotion-state.repository';
+import { NetworkProvider } from '@meisi-thesis/application-backend-utilities-shared/src/providers/network.provider';
 
 describe('CampaignPromotionService', () => {
   const instance = new CampaignPromotionService();
@@ -54,12 +55,14 @@ describe('CampaignPromotionService', () => {
     }
 
     it('should have an InternalServerException because service createOne threw an error', async () => {
+      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({})
       vi.spyOn(CampaignPromotionStateRepository.prototype, 'createOne').mockRejectedValue(new Error());
 
       await expect(async () => await callCreateOne()).rejects.toThrow()
     })
 
     it('should have a campaign-promotion entity', async () => {
+      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({})
       vi.spyOn(CampaignPromotionStateRepository.prototype, 'createOne').mockResolvedValue();
 
       await expect(callCreateOne()).resolves.toBeTruthy();

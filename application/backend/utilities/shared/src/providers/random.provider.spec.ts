@@ -11,6 +11,7 @@ describe('RandomProvider', () => {
 
   beforeEach(() => {
     vi.mock('crypto', () => ({
+      ...vi.importActual('crypto'),
       randomUUID: vi.fn(),
       randomBytes: vi.fn()
     }))

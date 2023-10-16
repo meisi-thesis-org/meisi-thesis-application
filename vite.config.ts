@@ -5,7 +5,5 @@ export default defineConfig({
   test: {
     environment: 'jsdom'
   },
-  plugins: [
-    vue()
-  ]
+  plugins: []
 })

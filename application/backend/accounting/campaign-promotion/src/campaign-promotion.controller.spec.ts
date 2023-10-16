@@ -51,7 +51,7 @@ describe('CampaignPromotionController', () => {
     it('should throw an exception because it tried to record an exception when the queue is nonActive', async () => {
       vi.spyOn(CampaignPromotionService.prototype, 'findOneByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
-      updateProcessEnvExceptionQueueActive(true)
+      updateProcessEnvExceptionQueueActive(false)
 
       await expect(callFindOneByUuid()).resolves.toEqual(new Error());
     })
@@ -89,7 +89,7 @@ describe('CampaignPromotionController', () => {
     it('should throw an exception because it tried to record an exception when the queue is nonActive', async () => {
       vi.spyOn(CampaignPromotionService.prototype, 'findBulkByForeignsUuid').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
-      updateProcessEnvExceptionQueueActive(true)
+      updateProcessEnvExceptionQueueActive(false)
 
       await expect(callFindBulkByForeignsUuid()).resolves.toEqual(new Error());
     })
@@ -127,7 +127,7 @@ describe('CampaignPromotionController', () => {
     it('should throw an exception because it tried to record an exception when the queue is nonActive', async () => {
       vi.spyOn(CampaignPromotionService.prototype, 'createOne').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
-      updateProcessEnvExceptionQueueActive(true)
+      updateProcessEnvExceptionQueueActive(false)
 
       await expect(callCreateOne()).resolves.toEqual(new Error());
     })
@@ -167,7 +167,7 @@ describe('CampaignPromotionController', () => {
     it('should throw an exception because it tried to record an exception when the queue is nonActive', async () => {
       vi.spyOn(CampaignPromotionService.prototype, 'updateOneByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
-      updateProcessEnvExceptionQueueActive(true)
+      updateProcessEnvExceptionQueueActive(false)
 
       await expect(callUpdateOneByUuid()).resolves.toEqual(new Error());
     })
