@@ -33,10 +33,11 @@ export class GatewayApplication {
     availableHosts.set('/commerce/dossiers', 'http://localhost:8004');
     availableHosts.set('/commerce/books', 'http://localhost:8005');
     availableHosts.set('/commerce/chapters', 'http://localhost:8006');
-    availableHosts.set('/accounting/subscription-plans', 'http://localhost:8007');
+    availableHosts.set('/accounting/proposals', 'http://localhost:8007');
     availableHosts.set('/accounting/campaigns', 'http://localhost:8008');
     availableHosts.set('/accounting/promotions', 'http://localhost:8009');
     availableHosts.set('/accounting/subscriptions', 'http://localhost:8010');
+    availableHosts.set('/accounting/campaign-promotions', 'http://localhost:8011');
 
     for (const [key, value] of availableHosts.entries()) {
       this.application.use(key, AccessTokenGuard, createProxyMiddleware({ target: value, changeOrigin: true }))
