@@ -1,17 +1,12 @@
-import { RandomProvider } from '@meisi-thesis/application-backend-utilities-shared/src/providers/random.provider';
 import { QueueProvider } from '@meisi-thesis/application-backend-utilities-shared/src/providers/queue.provider';
+import { RandomProvider } from '@meisi-thesis/application-backend-utilities-shared/src/providers/random.provider';
 import { type Request, type Response } from 'express';
-import {
-  type UpdateSubscriptionPlanByUuidRequest,
-  type CreateSubscritionPlanRequest,
-  type FindSubscritionPlanByUuidRequest
-} from './domain/subscription-plan.request';
-import { SubscriptionPlanService } from './subscription-plan.service';
+import { type UpdateProposalByUuidRequest, type CreateProposalRequest, type FindProposalByUuidRequest } from './structs/proposal.request';
 
-export class SubscriptionPlanController {
+export class ProposalController {
   private readonly queueProvider: QueueProvider = new QueueProvider();
   private readonly randomProvider: RandomProvider = new RandomProvider();
-  private readonly service: SubscriptionPlanService = new SubscriptionPlanService();
+  private readonly service: ProposalController = new ProposalController();
 
   private async sendExceptionQueue (path: string, error: any): Promise<void> {
     const isExceptionQueueActive = process.env.EXCEPTION_QUEUE_ACTIVE
@@ -36,25 +31,25 @@ export class SubscriptionPlanController {
       const responseArgs = await this.service.findBulk();
       return response.status(200).json(responseArgs)
     } catch (error: any) {
-      await this.sendExceptionQueue('accounting:subscriptionPlan::findBulk', error);
+      await this.sendExceptionQueue('accounting:proposal::findBulk', error);
       return response.status(error.getHttpCode()).json()
     }
   }
 
   public async findOneByUuid (request: Request, response: Response): Promise<Response> {
     try {
-      const requestArgs: FindSubscritionPlanByUuidRequest = { uuid: request.params.uuid };
+      const requestArgs: FindProposalByUuidRequest = { uuid: request.params.uuid };
       const responseArgs = await this.service.findOneByUuid(requestArgs);
       return response.status(200).json(responseArgs)
     } catch (error: any) {
-      await this.sendExceptionQueue('accounting:subscriptionPlan::findOneByUuid', error);
+      await this.sendExceptionQueue('accounting:proposal::findOneByUuid', error);
       return response.status(error.getHttpCode()).json()
     }
   }
 
   public async createOne (request: Request, response: Response): Promise<Response> {
     try {
-      const requestArgs: CreateSubscritionPlanRequest = {
+      const requestArgs: CreateProposalRequest = {
         designation: request.body.designation,
         description: request.body.description,
         price: request.body.price
@@ -62,14 +57,14 @@ export class SubscriptionPlanController {
       const responseArgs = await this.service.createOne(requestArgs);
       return response.status(201).json(responseArgs);
     } catch (error: any) {
-      await this.sendExceptionQueue('accounting:subscriptionPlan::createOne', error);
+      await this.sendExceptionQueue('accounting:proposal::createOne', error);
       return response.status(error.getHttpCode()).json()
     }
   }
 
   public async updateOneByUuid (request: Request, response: Response): Promise<Response> {
     try {
-      const requestArgs: UpdateSubscriptionPlanByUuidRequest = {
+      const requestArgs: UpdateProposalByUuidRequest = {
         uuid: request.params.uuid,
         designation: request.body.designation,
         description: request.body.description,
@@ -80,7 +75,7 @@ export class SubscriptionPlanController {
       const responseArgs = await this.service.updateOneByUuid(requestArgs);
       return response.status(201).json(responseArgs);
     } catch (error: any) {
-      await this.sendExceptionQueue('accounting:subscriptionPlan::updateOneByUuid', error);
+      await this.sendExceptionQueue('accounting:proposal::updateOneByUuid', error);
       return response.status(error.getHttpCode()).json()
     }
   }

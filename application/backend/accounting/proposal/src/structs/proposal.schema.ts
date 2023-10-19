@@ -1,12 +1,12 @@
 import { z } from 'zod';
 
-const FindSubscriptionPlanByUuidSchema = z.object({
+const FindProposalByUuidSchema = z.object({
   params: z.object({
     uuid: z.string()
   })
 })
 
-const CreateSubscriptionPlanSchema = z.object({
+const CreateProposalSchema = z.object({
   body: z.object({
     designation: z.string(),
     description: z.string(),
@@ -14,7 +14,7 @@ const CreateSubscriptionPlanSchema = z.object({
   })
 });
 
-const UpdateSubscriptionPlanByUuidSchema = z.object({
+const UpdateProposalByUuidSchema = z.object({
   params: z.object({
     uuid: z.string()
   }),
@@ -28,7 +28,7 @@ const UpdateSubscriptionPlanByUuidSchema = z.object({
 });
 
 export {
-  FindSubscriptionPlanByUuidSchema,
-  CreateSubscriptionPlanSchema,
-  UpdateSubscriptionPlanByUuidSchema
+  FindProposalByUuidSchema,
+  CreateProposalSchema,
+  UpdateProposalByUuidSchema
 }

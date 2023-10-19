@@ -1,4 +1,4 @@
-type SubscriptionPlanEntity = {
+type ProposalEntity = {
   readonly uuid: string
   designation: string
   description: string
@@ -8,10 +8,10 @@ type SubscriptionPlanEntity = {
   readonly createdAt: string
   updatedAt: string
 };
-type SubscriptionPlanDTO = Readonly<SubscriptionPlanEntity>;
-const subscriptionPlanMapper = (
-  entity: SubscriptionPlanEntity
-): SubscriptionPlanDTO => {
+type ProposalDTO = Readonly<ProposalEntity>;
+const proposalMapper = (
+  entity: ProposalEntity
+): ProposalDTO => {
   return {
     uuid: entity.uuid,
     designation: entity.designation,
@@ -25,7 +25,7 @@ const subscriptionPlanMapper = (
 };
 
 export {
-  type SubscriptionPlanEntity,
-  type SubscriptionPlanDTO,
-  subscriptionPlanMapper
+  type ProposalEntity,
+  type ProposalDTO,
+  proposalMapper
 }

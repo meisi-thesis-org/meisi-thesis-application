@@ -1,12 +1,12 @@
 {
-    "name": "@meisi-thesis/application-backend-accounting-subscription-plan",
+    "name": "@meisi-thesis/application-backend-accounting-proposal",
     "version": "1.0.0",
     "repository": "https://github.com/meisi-thesis-org/meisi-thesis-application.git",
     "author": "Diogo <diogorafaellourencooliveira97@gmail.com>",
     "license": "MIT",
     "scripts": {
-        "start": "node dist/subscription-plan.application.js",
-        "start:watch": "tsx --watch src/subscription-plan.application.ts",
+        "start": "node dist/proposal.application.js",
+        "start:watch": "tsx --watch src/proposal.application.ts",
         "build": "rimraf dist && tsup src"
     },
     "dependencies": {

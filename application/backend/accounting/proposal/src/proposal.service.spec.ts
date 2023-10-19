@@ -1,11 +1,11 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { SubscriptionPlanStateRepository } from './repositories/subscription-plan-state.repository';
-import { type SubscriptionPlanEntity } from './domain/subscription-plan.domain';
+import { ProposalService } from './proposal.service';
 import { RandomProvider } from '@meisi-thesis/application-backend-utilities-shared/src/providers/random.provider';
-import { SubscriptionPlanService } from './subscription-plan.service';
+import { type ProposalEntity } from './structs/proposal.domain';
+import { ProposalStateRepository } from './repositories/proposal-state.repository';
 
-describe('SubscriptionPlanService', () => {
-  const instance = new SubscriptionPlanService();
+describe('ProposalService', () => {
+  const instance = new ProposalService();
 
   afterEach(() => {
     vi.clearAllMocks();
@@ -13,7 +13,7 @@ describe('SubscriptionPlanService', () => {
 
   const randomProvider = new RandomProvider();
 
-  const subscriptionPlanEntity: SubscriptionPlanEntity = {
+  const proposalEntity: ProposalEntity = {
     uuid: randomProvider.randomUUID(),
     designation: randomProvider.randomString(10),
     description: randomProvider.randomString(10),
@@ -30,13 +30,13 @@ describe('SubscriptionPlanService', () => {
     }
 
     it('should have an InternalServerException because service threw an error', async () => {
-      vi.spyOn(SubscriptionPlanStateRepository.prototype, 'findBulk').mockRejectedValue(new Error());
+      vi.spyOn(ProposalStateRepository.prototype, 'findBulk').mockRejectedValue(new Error());
 
       await expect(async () => await callFindBulk()).rejects.toThrow()
     })
 
     it('should have a SubscriptionPlan collection', async () => {
-      vi.spyOn(SubscriptionPlanStateRepository.prototype, 'findBulk').mockResolvedValue([subscriptionPlanEntity]);
+      vi.spyOn(ProposalStateRepository.prototype, 'findBulk').mockResolvedValue([proposalEntity]);
       await expect(callFindBulk()).resolves.resolves.toBeTruthy();
     })
   })
@@ -47,19 +47,19 @@ describe('SubscriptionPlanService', () => {
     }
 
     it('should have an InternalServerException because service threw an error', async () => {
-      vi.spyOn(SubscriptionPlanStateRepository.prototype, 'findOneByUuid').mockRejectedValue(new Error());
+      vi.spyOn(ProposalStateRepository.prototype, 'findOneByUuid').mockRejectedValue(new Error());
 
       await expect(async () => await callFindOneByUuid()).rejects.toThrow()
     })
 
     it('should have an NonFoundException because service threw an error', async () => {
-      vi.spyOn(SubscriptionPlanStateRepository.prototype, 'findOneByUuid').mockResolvedValue(undefined);
+      vi.spyOn(ProposalStateRepository.prototype, 'findOneByUuid').mockResolvedValue(undefined);
 
       await expect(async () => await callFindOneByUuid()).rejects.toThrow()
     })
 
     it('should have a SubscriptionPlan collection', async () => {
-      vi.spyOn(SubscriptionPlanStateRepository.prototype, 'findOneByUuid').mockResolvedValue(subscriptionPlanEntity);
+      vi.spyOn(ProposalStateRepository.prototype, 'findOneByUuid').mockResolvedValue(proposalEntity);
       await expect(callFindOneByUuid()).resolves.toBeTruthy();
     })
   })
@@ -67,35 +67,35 @@ describe('SubscriptionPlanService', () => {
   describe('createOne', () => {
     async function callCreateOne () {
       return await instance.createOne({
-        designation: subscriptionPlanEntity.designation,
-        description: subscriptionPlanEntity.description,
-        price: subscriptionPlanEntity.price
+        designation: proposalEntity.designation,
+        description: proposalEntity.description,
+        price: proposalEntity.price
       });
     }
 
     it('should have an InternalServerException because service findOneByDesignation threw an error', async () => {
-      vi.spyOn(SubscriptionPlanStateRepository.prototype, 'findOneByDesignation').mockRejectedValue(new Error());
+      vi.spyOn(ProposalStateRepository.prototype, 'findOneByDesignation').mockRejectedValue(new Error());
 
       await expect(async () => await callCreateOne()).rejects.toThrow()
     })
 
     it('should have an ConflictException because service findOneByDesignation returned an entity', async () => {
-      vi.spyOn(SubscriptionPlanStateRepository.prototype, 'findOneByDesignation').mockResolvedValue(subscriptionPlanEntity);
-      vi.spyOn(SubscriptionPlanStateRepository.prototype, 'createOne').mockRejectedValue(new Error());
+      vi.spyOn(ProposalStateRepository.prototype, 'findOneByDesignation').mockResolvedValue(proposalEntity);
+      vi.spyOn(ProposalStateRepository.prototype, 'createOne').mockRejectedValue(new Error());
 
       await expect(async () => await callCreateOne()).rejects.toThrow()
     })
 
     it('should have an InternalServerException because service createOne threw an error', async () => {
-      vi.spyOn(SubscriptionPlanStateRepository.prototype, 'findOneByDesignation').mockResolvedValue(undefined);
-      vi.spyOn(SubscriptionPlanStateRepository.prototype, 'createOne').mockRejectedValue(new Error());
+      vi.spyOn(ProposalStateRepository.prototype, 'findOneByDesignation').mockResolvedValue(undefined);
+      vi.spyOn(ProposalStateRepository.prototype, 'createOne').mockRejectedValue(new Error());
 
       await expect(async () => await callCreateOne()).rejects.toThrow()
     })
 
     it('should have a SubscriptionPlan entity', async () => {
-      vi.spyOn(SubscriptionPlanStateRepository.prototype, 'findOneByDesignation').mockResolvedValue(undefined);
-      vi.spyOn(SubscriptionPlanStateRepository.prototype, 'createOne').mockResolvedValue();
+      vi.spyOn(ProposalStateRepository.prototype, 'findOneByDesignation').mockResolvedValue(undefined);
+      vi.spyOn(ProposalStateRepository.prototype, 'createOne').mockResolvedValue();
 
       await expect(callCreateOne()).resolves.toBeTruthy();
     })
@@ -104,32 +104,32 @@ describe('SubscriptionPlanService', () => {
   describe('updateOneByUuid', () => {
     async function callUpdateOneByUuid () {
       return await instance.updateOneByUuid({
-        uuid: subscriptionPlanEntity.uuid
+        uuid: proposalEntity.uuid
       });
     }
 
     it('should have an InternalServerException because service findOneByUuid threw an error', async () => {
-      vi.spyOn(SubscriptionPlanStateRepository.prototype, 'findOneByUuid').mockRejectedValue(new Error());
+      vi.spyOn(ProposalStateRepository.prototype, 'findOneByUuid').mockRejectedValue(new Error());
 
       await expect(async () => await callUpdateOneByUuid()).rejects.toThrow()
     })
 
     it('should have an NonFoundException because service findOneByUuid returned undefined', async () => {
-      vi.spyOn(SubscriptionPlanStateRepository.prototype, 'findOneByUuid').mockResolvedValue(undefined);
+      vi.spyOn(ProposalStateRepository.prototype, 'findOneByUuid').mockResolvedValue(undefined);
 
       await expect(async () => await callUpdateOneByUuid()).rejects.toThrow()
     })
 
     it('should have an NonFoundException because service updateOneByUuid returned undefined', async () => {
-      vi.spyOn(SubscriptionPlanStateRepository.prototype, 'findOneByUuid').mockResolvedValue(undefined);
-      vi.spyOn(SubscriptionPlanStateRepository.prototype, 'updateOneByUuid').mockRejectedValue(new Error());
+      vi.spyOn(ProposalStateRepository.prototype, 'findOneByUuid').mockResolvedValue(undefined);
+      vi.spyOn(ProposalStateRepository.prototype, 'updateOneByUuid').mockRejectedValue(new Error());
 
       await expect(async () => await callUpdateOneByUuid()).rejects.toThrow()
     })
 
     it('should have a SubscriptionPlan entity', async () => {
-      vi.spyOn(SubscriptionPlanStateRepository.prototype, 'findOneByUuid').mockResolvedValue(subscriptionPlanEntity);
-      vi.spyOn(SubscriptionPlanStateRepository.prototype, 'updateOneByUuid').mockResolvedValue();
+      vi.spyOn(ProposalStateRepository.prototype, 'findOneByUuid').mockResolvedValue(proposalEntity);
+      vi.spyOn(ProposalStateRepository.prototype, 'updateOneByUuid').mockResolvedValue();
 
       await expect(callUpdateOneByUuid()).resolves.toBeTruthy();
     })

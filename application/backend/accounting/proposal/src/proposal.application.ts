@@ -1,8 +1,8 @@
 import Express, { json, type Application } from 'express';
-import { SubscriptionPlanGateway } from './subscription-plan.gateway';
+import { ProposalGateway } from './proposal.gateway';
 import 'dotenv/config';
 
-export class SubscriptionPlanApplication {
+export class ProposalApplication {
   private readonly application: Application;
   private readonly serverPort: number;
 
@@ -11,17 +11,17 @@ export class SubscriptionPlanApplication {
     this.serverPort = parseInt(process.env.SERVER_PORT ?? '8007')
   }
 
-  public defineMiddlewares (): SubscriptionPlanApplication {
+  public defineMiddlewares (): ProposalApplication {
     this.application.use(json());
     return this;
   }
 
-  public defineRoutes (): SubscriptionPlanApplication {
-    this.application.use('/security/subscription-plans', new SubscriptionPlanGateway().subscribe())
+  public defineRoutes (): ProposalApplication {
+    this.application.use('/security/proposals', new ProposalGateway().subscribe())
     return this;
   }
 
-  public defineListner (): SubscriptionPlanApplication {
+  public defineListner (): ProposalApplication {
     this.application.listen((this.serverPort), async () => {
       console.log(`Server initialized on PORT: ${this.serverPort}!`)
     })
@@ -30,4 +30,4 @@ export class SubscriptionPlanApplication {
   }
 }
 
-new SubscriptionPlanApplication().defineMiddlewares().defineRoutes().defineListner();
+new ProposalApplication().defineMiddlewares().defineRoutes().defineListner();

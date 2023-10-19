@@ -1,15 +1,14 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { SubscriptionPlanController } from './subscription-plan.controller';
 import { type Request, type Response } from 'express';
 import { RandomProvider } from '@meisi-thesis/application-backend-utilities-shared/src/providers/random.provider';
-import { type SubscriptionPlanDTO } from './domain/subscription-plan.domain';
-import { SubscriptionPlanService } from './subscription-plan.service';
+import { ProposalController } from './proposal.controller';
+import { type ProposalDTO } from './structs/proposal.domain';
 
-describe('SubscriptionPlanController', () => {
-  const instance = new SubscriptionPlanController();
+describe('ProposalController', () => {
+  const instance = new ProposalController();
 
-  it('should have an instanceOf SubscriptionPlanController', () => {
-    expect(instance).toBeInstanceOf(SubscriptionPlanController)
+  it('should have an instanceOf ProposalController', () => {
+    expect(instance).toBeInstanceOf(ProposalController)
   })
 
   const requestMock = {} as unknown as Request;
@@ -26,7 +25,7 @@ describe('SubscriptionPlanController', () => {
   const randomUuid = randomProvider.randomUUID();
   const randomDateBirth = new Date().toISOString();
 
-  const subscriptionPlanDTO: SubscriptionPlanDTO = {
+  const proposalDTO: ProposalDTO = {
     uuid: randomUuid,
     designation: randomString,
     description: randomString,
@@ -47,7 +46,7 @@ describe('SubscriptionPlanController', () => {
     }
 
     it('should throw an exception because it tried to record an exception when the queue is nonActive', async () => {
-      vi.spyOn(SubscriptionPlanService.prototype, 'findBulk').mockRejectedValue({ getHttpCode: vi.fn() });
+      vi.spyOn(ProposalService.prototype, 'findBulk').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
       updateProcessEnvExceptionQueueActive(false)
 
@@ -55,19 +54,19 @@ describe('SubscriptionPlanController', () => {
     })
 
     it('should throw an exception because an error ocurred while making a service request', async () => {
-      vi.spyOn(SubscriptionPlanService.prototype, 'findBulk').mockRejectedValue({ getHttpCode: vi.fn() });
+      vi.spyOn(ProposalService.prototype, 'findBulk').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
       updateProcessEnvExceptionQueueActive(false)
 
       await expect(callFindBulk()).resolves.toEqual(new Error());
     })
 
-    it('should return an SubscriptionPlanDTO collection', async () => {
-      vi.spyOn(SubscriptionPlanService.prototype, 'findBulk').mockResolvedValue([subscriptionPlanDTO]);
-      defineResponseMock([subscriptionPlanDTO]);
+    it('should return an proposalDTO collection', async () => {
+      vi.spyOn(ProposalService.prototype, 'findBulk').mockResolvedValue([proposalDTO]);
+      defineResponseMock([proposalDTO]);
       updateProcessEnvExceptionQueueActive(false)
 
-      await expect(callFindBulk()).resolves.toEqual([subscriptionPlanDTO]);
+      await expect(callFindBulk()).resolves.toEqual([proposalDTO]);
     })
   })
 
@@ -81,7 +80,7 @@ describe('SubscriptionPlanController', () => {
     }
 
     it('should throw an exception because it tried to record an exception when the queue is nonActive', async () => {
-      vi.spyOn(SubscriptionPlanService.prototype, 'findOneByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
+      vi.spyOn(ProposalService.prototype, 'findOneByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
       updateProcessEnvExceptionQueueActive(false)
 
@@ -89,19 +88,19 @@ describe('SubscriptionPlanController', () => {
     })
 
     it('should throw an exception because an error ocurred while making a service request', async () => {
-      vi.spyOn(SubscriptionPlanService.prototype, 'findOneByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
+      vi.spyOn(ProposalService.prototype, 'findOneByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
       updateProcessEnvExceptionQueueActive(false)
 
       await expect(callFindOneByUuid()).resolves.toEqual(new Error());
     })
 
-    it('should return an SubscriptionPlanDTO', async () => {
-      vi.spyOn(SubscriptionPlanService.prototype, 'findOneByUuid').mockResolvedValue(subscriptionPlanDTO);
-      defineResponseMock(subscriptionPlanDTO);
+    it('should return an proposalDTO', async () => {
+      vi.spyOn(ProposalService.prototype, 'findOneByUuid').mockResolvedValue(proposalDTO);
+      defineResponseMock(proposalDTO);
       updateProcessEnvExceptionQueueActive(false)
 
-      await expect(callFindOneByUuid()).resolves.toEqual(subscriptionPlanDTO);
+      await expect(callFindOneByUuid()).resolves.toEqual(proposalDTO);
     })
   })
   describe('createOne', () => {
@@ -119,7 +118,7 @@ describe('SubscriptionPlanController', () => {
     }
 
     it('should throw an exception because it tried to record an exception when the queue is nonActive', async () => {
-      vi.spyOn(SubscriptionPlanService.prototype, 'createOne').mockRejectedValue({ getHttpCode: vi.fn() });
+      vi.spyOn(ProposalService.prototype, 'createOne').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
       updateProcessEnvExceptionQueueActive(false)
 
@@ -127,19 +126,19 @@ describe('SubscriptionPlanController', () => {
     })
 
     it('should throw an exception because an error ocurred while making a service request', async () => {
-      vi.spyOn(SubscriptionPlanService.prototype, 'createOne').mockRejectedValue({ getHttpCode: vi.fn() });
+      vi.spyOn(ProposalService.prototype, 'createOne').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
       updateProcessEnvExceptionQueueActive(false)
 
       await expect(callCreateOne()).resolves.toEqual(new Error());
     })
 
-    it('should return an SubscriptionPlanDTO', async () => {
-      vi.spyOn(SubscriptionPlanService.prototype, 'createOne').mockResolvedValue(subscriptionPlanDTO);
-      defineResponseMock(subscriptionPlanDTO);
+    it('should return an proposalDTO', async () => {
+      vi.spyOn(ProposalService.prototype, 'createOne').mockResolvedValue(proposalDTO);
+      defineResponseMock(proposalDTO);
       updateProcessEnvExceptionQueueActive(false)
 
-      await expect(callCreateOne()).resolves.toEqual(subscriptionPlanDTO);
+      await expect(callCreateOne()).resolves.toEqual(proposalDTO);
     })
   })
   describe('updateOneByUuid', () => {
@@ -160,7 +159,7 @@ describe('SubscriptionPlanController', () => {
     }
 
     it('should throw an exception because it tried to record an exception when the queue is nonActive', async () => {
-      vi.spyOn(SubscriptionPlanService.prototype, 'updateOneByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
+      vi.spyOn(ProposalService.prototype, 'updateOneByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
       updateProcessEnvExceptionQueueActive(false)
 
@@ -168,19 +167,19 @@ describe('SubscriptionPlanController', () => {
     })
 
     it('should throw an exception because an error ocurred while making a service request', async () => {
-      vi.spyOn(SubscriptionPlanService.prototype, 'updateOneByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
+      vi.spyOn(ProposalService.prototype, 'updateOneByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
       updateProcessEnvExceptionQueueActive(false)
 
       await expect(callUpdateOneByUuid()).resolves.toEqual(new Error());
     })
 
-    it('should return an SubscriptionPlanDTO', async () => {
-      vi.spyOn(SubscriptionPlanService.prototype, 'updateOneByUuid').mockResolvedValue(subscriptionPlanDTO);
-      defineResponseMock(subscriptionPlanDTO);
+    it('should return an proposalDTO', async () => {
+      vi.spyOn(ProposalService.prototype, 'updateOneByUuid').mockResolvedValue(proposalDTO);
+      defineResponseMock(proposalDTO);
       updateProcessEnvExceptionQueueActive(false)
 
-      await expect(callUpdateOneByUuid()).resolves.toEqual(subscriptionPlanDTO);
+      await expect(callUpdateOneByUuid()).resolves.toEqual(proposalDTO);
     })
   })
 })
