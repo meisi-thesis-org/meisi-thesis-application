@@ -1,5 +1,5 @@
+import { type NextFunction, type Request, type Response } from 'express';
 import { type AnyZodObject } from 'zod';
-import { type Request, type Response, type NextFunction } from 'express';
 
 export const SchemaValidator = (schema: AnyZodObject) => async (request: Request, response: Response, next: NextFunction) => {
   try {

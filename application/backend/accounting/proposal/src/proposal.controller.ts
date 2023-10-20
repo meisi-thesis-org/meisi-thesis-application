@@ -2,11 +2,12 @@ import { QueueProvider } from '@meisi-thesis/application-backend-utilities-share
 import { RandomProvider } from '@meisi-thesis/application-backend-utilities-shared/src/providers/random.provider';
 import { type Request, type Response } from 'express';
 import { type UpdateProposalByUuidRequest, type CreateProposalRequest, type FindProposalByUuidRequest } from './structs/proposal.request';
+import { ProposalService } from './proposal.service';
 
 export class ProposalController {
   private readonly queueProvider: QueueProvider = new QueueProvider();
   private readonly randomProvider: RandomProvider = new RandomProvider();
-  private readonly service: ProposalController = new ProposalController();
+  private readonly service: ProposalService = new ProposalService();
 
   private async sendExceptionQueue (path: string, error: any): Promise<void> {
     const isExceptionQueueActive = process.env.EXCEPTION_QUEUE_ACTIVE

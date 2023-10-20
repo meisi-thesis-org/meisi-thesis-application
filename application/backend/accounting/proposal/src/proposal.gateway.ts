@@ -1,8 +1,8 @@
 import { Gateway } from '@meisi-thesis/application-backend-utilities-shared/src/abstracts/gateway.abstract'
-import { type Request, type Response, Router } from 'express';
 import { ProposalController } from './proposal.controller';
-import { SchemaValidator } from '@meisi-thesis/application-backend-utilities-shared/src/middlewares/schema-validator.middleware';
 import { CreateProposalSchema, FindProposalByUuidSchema, UpdateProposalByUuidSchema } from './structs/proposal.schema';
+import { type Request, type Response, Router } from 'express';
+import { SchemaValidator } from '@meisi-thesis/application-backend-utilities-shared/src/middlewares/schema-validator.middleware';
 
 export class ProposalGateway extends Gateway<Router> {
   private readonly controller: ProposalController = new ProposalController();
