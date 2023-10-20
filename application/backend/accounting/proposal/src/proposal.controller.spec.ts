@@ -3,6 +3,7 @@ import { type Request, type Response } from 'express';
 import { RandomProvider } from '@meisi-thesis/application-backend-utilities-shared/src/providers/random.provider';
 import { ProposalController } from './proposal.controller';
 import { type ProposalDTO } from './structs/proposal.domain';
+import { ProposalService } from './proposal.service';
 
 describe('ProposalController', () => {
   const instance = new ProposalController();
