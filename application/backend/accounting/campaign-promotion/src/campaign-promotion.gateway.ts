@@ -6,6 +6,7 @@ import { CreateCampaignPromotionSchema, FindCampaignPromotionByUuidSchema, FindC
 
 export class CampaignPromotionGateway extends Gateway<Router> {
   private readonly controller: CampaignPromotionController = new CampaignPromotionController();
+
   public constructor () {
     super(Router())
   }
