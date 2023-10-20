@@ -11,7 +11,7 @@ const campaignPromotionMapper = (entity: CampaignPromotionEntity): CampaignPromo
   return {
     uuid: entity.uuid,
     campaignUuid: entity.campaignUuid,
-    promotionUuid: entity.campaignUuid,
+    promotionUuid: entity.promotionUuid,
     active: entity.active,
     createdAt: entity.createdAt,
     updatedAt: entity.updatedAt

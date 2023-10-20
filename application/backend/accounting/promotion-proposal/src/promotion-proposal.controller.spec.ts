@@ -1,15 +1,15 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { type Request, type Response } from 'express';
 import { RandomProvider } from '@meisi-thesis/application-backend-utilities-shared/src/providers/random.provider';
-import { CampaignPromotionController } from './campaign-promotion.controller';
-import { type CampaignPromotionDTO } from './structs/campaign-promotion.domain';
-import { CampaignPromotionService } from './campaign-promotion.service';
+import { PromotionProposalController } from './promotion-proposal.controller';
+import { type PromotionProposalDTO } from './structs/promotion-proposal.domain';
+import { PromotionProposalService } from './promotion-proposal.service';
 
-describe('CampaignPromotionController', () => {
-  const instance = new CampaignPromotionController();
+describe('PromotionProposalController', () => {
+  const instance = new PromotionProposalController();
 
-  it('should have an instanceOf CampaignPromotionController', () => {
-    expect(instance).toBeInstanceOf(CampaignPromotionController)
+  it('should have an instanceOf PromotionProposalController', () => {
+    expect(instance).toBeInstanceOf(PromotionProposalController)
   })
 
   const requestMock = {} as unknown as Request;
@@ -25,9 +25,9 @@ describe('CampaignPromotionController', () => {
   const randomUuid = randomProvider.randomUUID();
   const randomDateBirth = new Date().toISOString();
 
-  const campaignPromotionDTO: CampaignPromotionDTO = {
+  const promotionProposalDTO: PromotionProposalDTO = {
     uuid: randomUuid,
-    campaignUuid: randomUuid,
+    proposalUuid: randomUuid,
     promotionUuid: randomUuid,
     active: false,
     createdAt: randomDateBirth,
@@ -42,7 +42,7 @@ describe('CampaignPromotionController', () => {
     beforeEach(() => {
       requestMock.query = {
         ...requestMock.query,
-        campaignUuid: randomUuid,
+        proposalUuid: randomUuid,
         promotionUuid: randomUuid
       }
     })
@@ -51,7 +51,7 @@ describe('CampaignPromotionController', () => {
     }
 
     it('should throw an exception because it tried to record an exception when the queue is nonActive', async () => {
-      vi.spyOn(CampaignPromotionService.prototype, 'findBulkByForeignsUuid').mockRejectedValue({ getHttpCode: vi.fn() });
+      vi.spyOn(PromotionProposalService.prototype, 'findBulkByForeignsUuid').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
       updateProcessEnvExceptionQueueActive(false)
 
@@ -59,19 +59,19 @@ describe('CampaignPromotionController', () => {
     })
 
     it('should throw an exception because an error ocurred while making a service request', async () => {
-      vi.spyOn(CampaignPromotionService.prototype, 'findBulkByForeignsUuid').mockRejectedValue({ getHttpCode: vi.fn() });
+      vi.spyOn(PromotionProposalService.prototype, 'findBulkByForeignsUuid').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
       updateProcessEnvExceptionQueueActive(false)
 
       await expect(callFindBulkByForeignsUuid()).resolves.toEqual(new Error());
     })
 
-    it('should return an campaignPromotionDTO collection', async () => {
-      vi.spyOn(CampaignPromotionService.prototype, 'findBulkByForeignsUuid').mockResolvedValue([campaignPromotionDTO]);
-      defineResponseMock([campaignPromotionDTO]);
+    it('should return an promotionProposalDTO collection', async () => {
+      vi.spyOn(PromotionProposalService.prototype, 'findBulkByForeignsUuid').mockResolvedValue([promotionProposalDTO]);
+      defineResponseMock([promotionProposalDTO]);
       updateProcessEnvExceptionQueueActive(false)
 
-      await expect(callFindBulkByForeignsUuid()).resolves.toEqual([campaignPromotionDTO]);
+      await expect(callFindBulkByForeignsUuid()).resolves.toEqual([promotionProposalDTO]);
     })
   })
 
@@ -85,7 +85,7 @@ describe('CampaignPromotionController', () => {
     }
 
     it('should throw an exception because it tried to record an exception when the queue is nonActive', async () => {
-      vi.spyOn(CampaignPromotionService.prototype, 'findOneByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
+      vi.spyOn(PromotionProposalService.prototype, 'findOneByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
       updateProcessEnvExceptionQueueActive(false)
 
@@ -93,19 +93,19 @@ describe('CampaignPromotionController', () => {
     })
 
     it('should throw an exception because an error ocurred while making a service request', async () => {
-      vi.spyOn(CampaignPromotionService.prototype, 'findOneByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
+      vi.spyOn(PromotionProposalService.prototype, 'findOneByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
       updateProcessEnvExceptionQueueActive(false)
 
       await expect(callFindOneByUuid()).resolves.toEqual(new Error());
     })
 
-    it('should return an campaignPromotionDTO', async () => {
-      vi.spyOn(CampaignPromotionService.prototype, 'findOneByUuid').mockResolvedValue(campaignPromotionDTO);
-      defineResponseMock(campaignPromotionDTO);
+    it('should return an promotionProposalDTO', async () => {
+      vi.spyOn(PromotionProposalService.prototype, 'findOneByUuid').mockResolvedValue(promotionProposalDTO);
+      defineResponseMock(promotionProposalDTO);
       updateProcessEnvExceptionQueueActive(false)
 
-      await expect(callFindOneByUuid()).resolves.toEqual(campaignPromotionDTO);
+      await expect(callFindOneByUuid()).resolves.toEqual(promotionProposalDTO);
     })
   })
 
@@ -113,7 +113,7 @@ describe('CampaignPromotionController', () => {
     beforeEach(() => {
       requestMock.body = {
         ...requestMock.body,
-        campaignUuid: randomUuid,
+        proposalUuid: randomUuid,
         promotionUuid: randomUuid
       }
     })
@@ -123,7 +123,7 @@ describe('CampaignPromotionController', () => {
     }
 
     it('should throw an exception because it tried to record an exception when the queue is nonActive', async () => {
-      vi.spyOn(CampaignPromotionService.prototype, 'createOne').mockRejectedValue({ getHttpCode: vi.fn() });
+      vi.spyOn(PromotionProposalService.prototype, 'createOne').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
       updateProcessEnvExceptionQueueActive(false)
 
@@ -131,19 +131,19 @@ describe('CampaignPromotionController', () => {
     })
 
     it('should throw an exception because an error ocurred while making a service request', async () => {
-      vi.spyOn(CampaignPromotionService.prototype, 'createOne').mockRejectedValue({ getHttpCode: vi.fn() });
+      vi.spyOn(PromotionProposalService.prototype, 'createOne').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
       updateProcessEnvExceptionQueueActive(false)
 
       await expect(callCreateOne()).resolves.toEqual(new Error());
     })
 
-    it('should return an campaignPromotionDTO', async () => {
-      vi.spyOn(CampaignPromotionService.prototype, 'createOne').mockResolvedValue(campaignPromotionDTO);
-      defineResponseMock(campaignPromotionDTO);
+    it('should return an promotionProposalDTO', async () => {
+      vi.spyOn(PromotionProposalService.prototype, 'createOne').mockResolvedValue(promotionProposalDTO);
+      defineResponseMock(promotionProposalDTO);
       updateProcessEnvExceptionQueueActive(false)
 
-      await expect(callCreateOne()).resolves.toEqual(campaignPromotionDTO);
+      await expect(callCreateOne()).resolves.toEqual(promotionProposalDTO);
     })
   })
 
@@ -161,7 +161,7 @@ describe('CampaignPromotionController', () => {
     }
 
     it('should throw an exception because it tried to record an exception when the queue is nonActive', async () => {
-      vi.spyOn(CampaignPromotionService.prototype, 'updateOneByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
+      vi.spyOn(PromotionProposalService.prototype, 'updateOneByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
       updateProcessEnvExceptionQueueActive(false)
 
@@ -169,19 +169,19 @@ describe('CampaignPromotionController', () => {
     })
 
     it('should throw an exception because an error ocurred while making a service request', async () => {
-      vi.spyOn(CampaignPromotionService.prototype, 'updateOneByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
+      vi.spyOn(PromotionProposalService.prototype, 'updateOneByUuid').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
       updateProcessEnvExceptionQueueActive(false)
 
       await expect(callUpdateOneByUuid()).resolves.toEqual(new Error());
     })
 
-    it('should return an campaignPromotionDTO', async () => {
-      vi.spyOn(CampaignPromotionService.prototype, 'updateOneByUuid').mockResolvedValue(campaignPromotionDTO);
-      defineResponseMock(campaignPromotionDTO);
+    it('should return an promotionProposalDTO', async () => {
+      vi.spyOn(PromotionProposalService.prototype, 'updateOneByUuid').mockResolvedValue(promotionProposalDTO);
+      defineResponseMock(promotionProposalDTO);
       updateProcessEnvExceptionQueueActive(false)
 
-      await expect(callUpdateOneByUuid()).resolves.toEqual(campaignPromotionDTO);
+      await expect(callUpdateOneByUuid()).resolves.toEqual(promotionProposalDTO);
     })
   })
 })
