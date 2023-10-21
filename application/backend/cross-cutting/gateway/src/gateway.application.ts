@@ -39,6 +39,7 @@ export class GatewayApplication {
     availableHosts.set('/accounting/subscriptions', 'http://localhost:8010');
     availableHosts.set('/accounting/campaign-promotions', 'http://localhost:8011');
     availableHosts.set('/accounting/promotion-proposals', 'http://localhost:8012');
+    availableHosts.set('/accounting/proposals-commerces', 'http://localhost:8013');
 
     for (const [key, value] of availableHosts.entries()) {
       this.application.use(key, AccessTokenGuard, createProxyMiddleware({ target: value, changeOrigin: true }))
