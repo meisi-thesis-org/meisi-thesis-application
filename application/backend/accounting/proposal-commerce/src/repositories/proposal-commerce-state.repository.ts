@@ -11,32 +11,59 @@ export class ProposalCommerceStateRepository implements ProposalCommerceReposito
   }
 
   public async findBulkByForeignsUuid (
-    proposalCommerceEntity:
+    entity:
     Partial<Pick<ProposalCommerceEntity, 'proposalUuid' | 'chapterUuid' | 'bookUuid' | 'dossierUuid'>>
   ): Promise<ProposalCommerceEntity[]> {
-    throw new Error('Method not implemented.');
+    /** Find By Proposal Uuid */
+    const foundByProposalUuid = this.proposalCommerces.filter(({ proposalUuid }) => proposalUuid === entity.proposalUuid)
+    const sanitizedFoundByProposalUuidResults = foundByProposalUuid.length > 0 ? foundByProposalUuid : this.proposalCommerces;
+
+    /** Find By Chapter Uuid */
+    const foundByChapterUuid = sanitizedFoundByProposalUuidResults.filter(({ chapterUuid }) => chapterUuid === entity.chapterUuid)
+    const sanitizedFoundByChapterUuid = foundByChapterUuid.length > 0 ? foundByChapterUuid : sanitizedFoundByProposalUuidResults;
+
+    /** Find By Book Uuid */
+    const foundByBookUuid = sanitizedFoundByChapterUuid.filter(({ bookUuid }) => bookUuid === entity.bookUuid)
+    const sanitizedFoundByBookUuid = foundByBookUuid.length > 0 ? foundByBookUuid : sanitizedFoundByChapterUuid;
+
+    /** Find By Dossier Uuid */
+    const foundByDossierUuid = sanitizedFoundByBookUuid.filter(({ dossierUuid }) => dossierUuid === entity.dossierUuid)
+    return foundByDossierUuid.length > 0 ? foundByDossierUuid : sanitizedFoundByBookUuid;
   }
 
   public async findOneByForeignsUuid (
-    proposalCommerceEntity:
+    entity:
     Readonly<Pick<ProposalCommerceEntity, 'proposalUuid'>> &
     Partial<Readonly<Pick<ProposalCommerceEntity, 'chapterUuid' | 'bookUuid' | 'dossierUuid'>>>
   ): Promise<ProposalCommerceEntity | undefined> {
-    throw new Error('Method not implemented.');
+    /** Find By Proposal Uuid */
+    return this.proposalCommerces.find((proposalCommerce) => {
+      if (proposalCommerce.proposalUuid === entity.proposalUuid &&
+        (
+          proposalCommerce.chapterUuid === entity.chapterUuid ||
+          proposalCommerce.bookUuid === entity.bookUuid ||
+          proposalCommerce.dossierUuid === entity.dossierUuid
+        )
+      ) {
+        return proposalCommerce;
+      }
+
+      return undefined;
+    })
   }
 
   public async createOne (
-    proposalCommerceEntity: ProposalCommerceEntity
+    entity: ProposalCommerceEntity
   ): Promise<void> {
-    this.proposalCommerces.push(proposalCommerceEntity);
+    this.proposalCommerces.push(entity);
   }
 
   public async updateOneByUuid (
-    proposalCommerceEntity: ProposalCommerceEntity
+    entity: ProposalCommerceEntity
   ): Promise<void> {
     this.proposalCommerces.filter((proposalCommerce) => {
-      if (proposalCommerce.uuid === proposalCommerceEntity.uuid) {
-        proposalCommerce = { ...proposalCommerce, ...proposalCommerceEntity }
+      if (proposalCommerce.uuid === entity.uuid) {
+        proposalCommerce = { ...proposalCommerce, ...entity }
       }
 
       return proposalCommerce;
