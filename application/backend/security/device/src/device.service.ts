@@ -55,7 +55,7 @@ export class DeviceService {
     if (foundDevice !== undefined) throw new ConflictException();
 
     await this.networkProvider.doHttpRequest(
-      '8001',
+      '8000',
       'security/users',
       'GET',
       undefined,

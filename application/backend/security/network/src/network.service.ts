@@ -54,7 +54,7 @@ export class NetworkService {
     if (foundNetwork !== undefined) throw new ConflictException();
 
     await this.networkProvider.doHttpRequest(
-      '8001',
+      '8000',
       'security/users',
       'GET',
       undefined,

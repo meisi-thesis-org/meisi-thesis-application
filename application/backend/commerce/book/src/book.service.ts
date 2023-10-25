@@ -60,7 +60,7 @@ export class BookService {
     if (foundBook !== undefined) throw new ConflictException()
 
     await this.networkProvider.doHttpRequest(
-      '8004',
+      '8000',
       'commerce/dossiers',
       'GET',
       undefined,

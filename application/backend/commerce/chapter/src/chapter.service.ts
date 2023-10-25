@@ -60,7 +60,7 @@ export class ChapterService {
     if (foundChapter !== undefined) throw new ConflictException()
 
     await this.networkProvider.doHttpRequest(
-      '8005',
+      '8000',
       'commerce/books',
       'GET',
       undefined,
