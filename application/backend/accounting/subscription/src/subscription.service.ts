@@ -48,14 +48,14 @@ export class SubscriptionService {
       'accounting/wallets',
       'GET',
       undefined,
-      { walletUuid: requestArgs.walletUuid }
+      { uuid: requestArgs.walletUuid }
     ).catch((error) => { throw error }) as { uuid: string, price: number }
 
     const existenceCalls = [];
-    existenceCalls.push({ condition: requestArgs.dossierUuid, path: 'commerce/dossiers', method: 'GET', args: { dossierUuid: requestArgs.dossierUuid } })
-    existenceCalls.push({ condition: requestArgs.bookUuid, path: 'commerce/books', method: 'GET', args: { bookUuid: requestArgs.bookUuid } })
-    existenceCalls.push({ condition: requestArgs.chapterUuid, path: 'commerce/chapters', method: 'GET', args: { chapterUuid: requestArgs.chapterUuid } })
-    existenceCalls.push({ condition: requestArgs.pageUuid, path: 'commerce/pages', method: 'GET', args: { pageUuid: requestArgs.pageUuid } })
+    existenceCalls.push({ condition: requestArgs.dossierUuid, path: 'commerce/dossiers', method: 'GET', args: { uuid: requestArgs.dossierUuid } })
+    existenceCalls.push({ condition: requestArgs.bookUuid, path: 'commerce/books', method: 'GET', args: { uuid: requestArgs.bookUuid } })
+    existenceCalls.push({ condition: requestArgs.chapterUuid, path: 'commerce/chapters', method: 'GET', args: { uuid: requestArgs.chapterUuid } })
+    existenceCalls.push({ condition: requestArgs.pageUuid, path: 'commerce/pages', method: 'GET', args: { uuid: requestArgs.pageUuid } })
 
     for (const existenceCall of existenceCalls) {
       if (existenceCall.condition !== undefined) {
@@ -79,7 +79,7 @@ export class SubscriptionService {
       'accounting/wallets',
       'PUT',
       undefined,
-      { walletUuid: wallet.uuid },
+      { uuid: wallet.uuid },
       { funds: wallet.price - removeAmount }
     ).catch((error) => { throw error }) as Record<string, string | boolean | number>
 

@@ -58,7 +58,7 @@ export class NetworkService {
       'security/users',
       'GET',
       undefined,
-      { userUuid: createNetworkRequest.userUuid }
+      { uuid: createNetworkRequest.userUuid }
     )
 
     const createdNetwork: NetworkEntity = {

@@ -64,7 +64,7 @@ export class ChapterService {
       'commerce/books',
       'GET',
       undefined,
-      { bookUuid: createChapterRequest.bookUuid }
+      { uuid: createChapterRequest.bookUuid }
     )
 
     const toCreateChapter: ChapterEntity = {

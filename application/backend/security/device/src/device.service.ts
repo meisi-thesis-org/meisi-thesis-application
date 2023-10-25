@@ -59,7 +59,7 @@ export class DeviceService {
       'security/users',
       'GET',
       undefined,
-      { userUuid: createDeviceRequest.userUuid }
+      { uuid: createDeviceRequest.userUuid }
     )
 
     const createDevice: DeviceEntity = {

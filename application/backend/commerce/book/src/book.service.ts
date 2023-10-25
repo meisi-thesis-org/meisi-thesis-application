@@ -64,7 +64,7 @@ export class BookService {
       'commerce/dossiers',
       'GET',
       undefined,
-      { dossierUuid: createBookRequest.dossierUuid }
+      { uuid: createBookRequest.dossierUuid }
     )
 
     const toCreateBook: BookEntity = {

@@ -32,8 +32,8 @@ export class WalletController {
       const requestArgs: FindWalletByUuidRequest = {
         uuid: request.params.userUuid
       }
-      const signInResponse = await this.service.findWalletByUuid(requestArgs);
-      return response.status(200).json(signInResponse)
+      const responseArgs = await this.service.findWalletByUuid(requestArgs);
+      return response.status(200).json(responseArgs)
     } catch (error: any) {
       await this.sendExceptionQueue('accounting::wallet::findWalletByUuid', error);
       return response.status(error.getHttpCode()).json()
@@ -45,8 +45,8 @@ export class WalletController {
       const requestArgs: FindWalletByUserUuidRequest = {
         userUuid: String(request.query.userUuid) ?? undefined
       }
-      const signInResponse = await this.service.findWalletByUserUuid(requestArgs);
-      return response.status(200).json(signInResponse)
+      const responseArgs = await this.service.findWalletByUserUuid(requestArgs);
+      return response.status(200).json(responseArgs)
     } catch (error: any) {
       await this.sendExceptionQueue('accounting::wallet::findWalletByUserUuid', error);
       return response.status(error.getHttpCode()).json()
@@ -58,8 +58,8 @@ export class WalletController {
       const requestArgs: CreateWalletRequest = {
         userUuid: request.body.userUuid
       }
-      const signInResponse = await this.service.createWallet(requestArgs);
-      return response.status(201).json(signInResponse)
+      const responseArgs = await this.service.createWallet(requestArgs);
+      return response.status(201).json(responseArgs)
     } catch (error: any) {
       await this.sendExceptionQueue('accounting::wallet::createWallet', error);
       return response.status(error.getHttpCode()).json()
@@ -73,8 +73,8 @@ export class WalletController {
         active: request.body.active,
         enabled: request.body.enabled
       }
-      const signInResponse = await this.service.updateWalletByUuid(requestArgs);
-      return response.status(201).json(signInResponse)
+      const responseArgs = await this.service.updateWalletByUuid(requestArgs);
+      return response.status(201).json(responseArgs)
     } catch (error: any) {
       await this.sendExceptionQueue('accounting::wallet::updateWalletByUuid', error);
       return response.status(error.getHttpCode()).json()

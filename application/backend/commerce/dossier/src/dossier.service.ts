@@ -56,7 +56,7 @@ export class DossierService {
       'security/users',
       'GET',
       undefined,
-      { userUuid: createDossierRequest.userUuid }
+      { uuid: createDossierRequest.userUuid }
     )
 
     const createdDossier: DossierEntity = {

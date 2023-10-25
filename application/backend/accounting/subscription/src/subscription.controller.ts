@@ -32,8 +32,8 @@ export class SubscriptionController {
       const requestArgs: FindSubscriptionByUuidRequest = {
         uuid: request.params.userUuid
       }
-      const signInResponse = await this.service.findSubscriptionByUuid(requestArgs);
-      return response.status(200).json(signInResponse)
+      const responseArgs = await this.service.findSubscriptionByUuid(requestArgs);
+      return response.status(200).json(responseArgs)
     } catch (error: any) {
       await this.sendExceptionQueue('accounting::subscription::findSubscriptionByUuid', error);
       return response.status(error.getHttpCode()).json()
@@ -49,8 +49,8 @@ export class SubscriptionController {
         chapterUuid: String(request.query.chapterUuid) ?? undefined,
         pageUuid: String(request.query.pageUuid) ?? undefined
       }
-      const signInResponse = await this.service.findSubscriptionsByForeignsUuid(requestArgs);
-      return response.status(200).json(signInResponse)
+      const responseArgs = await this.service.findSubscriptionsByForeignsUuid(requestArgs);
+      return response.status(200).json(responseArgs)
     } catch (error: any) {
       await this.sendExceptionQueue('accounting::subscription::findSubscriptionsByForeignsUuid', error);
       return response.status(error.getHttpCode()).json()
@@ -66,8 +66,8 @@ export class SubscriptionController {
         chapterUuid: request.body.chapterUuid,
         pageUuid: request.body.pageUuid
       }
-      const signInResponse = await this.service.createSubscription(requestArgs);
-      return response.status(201).json(signInResponse)
+      const responseArgs = await this.service.createSubscription(requestArgs);
+      return response.status(201).json(responseArgs)
     } catch (error: any) {
       await this.sendExceptionQueue('accounting::subscription::createSubscription', error);
       return response.status(error.getHttpCode()).json()
@@ -81,8 +81,8 @@ export class SubscriptionController {
         active: request.body.active,
         enabled: request.body.enabled
       }
-      const signInResponse = await this.service.updateSubscriptionByUuid(requestArgs);
-      return response.status(201).json(signInResponse)
+      const responseArgs = await this.service.updateSubscriptionByUuid(requestArgs);
+      return response.status(201).json(responseArgs)
     } catch (error: any) {
       await this.sendExceptionQueue('accounting::subscription::updateSubscriptionByUuid', error);
       return response.status(error.getHttpCode()).json()

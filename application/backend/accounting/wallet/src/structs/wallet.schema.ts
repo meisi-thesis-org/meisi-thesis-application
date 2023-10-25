@@ -23,9 +23,9 @@ const UpdateWalletByUuidSchema = z.object({
     uuid: z.string()
   }),
   body: z.object({
-    funds: z.number(),
-    active: z.boolean(),
-    enabled: z.boolean()
+    funds: z.number().optional(),
+    active: z.boolean().optional(),
+    enabled: z.boolean().optional()
   })
 })
 

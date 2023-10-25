@@ -42,7 +42,7 @@ export class WalletService {
     if (foundEntity !== undefined) throw new ConflictException();
 
     const user = await this.networkProvider
-      .doHttpRequest('8000', 'security/users', 'GET', undefined, { userUuid: requestArgs.userUuid })
+      .doHttpRequest('8000', 'security/users', 'GET', undefined, { uuid: requestArgs.userUuid })
       .catch((error) => { throw error }) as { active: boolean, enabled: boolean }
 
     if (!user.enabled || !user.active) {
