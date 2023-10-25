@@ -64,7 +64,7 @@ describe('PageService', () => {
 
     it('should have returned a pageDTO collection', async () => {
       vi.spyOn(PageStateRepository.prototype, 'findPagesByChapterUuid').mockResolvedValue([pageEntity])
-      await expect(callFindPageByForeignsUuid()).resolves.toEqual(pageEntity)
+      await expect(callFindPageByForeignsUuid()).resolves.toEqual([pageEntity])
     })
 
     it('should throw a NonFoundException because Repository.findPagesByChapterUuid returned an empty array', async () => {
