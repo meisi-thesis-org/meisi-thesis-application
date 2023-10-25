@@ -30,8 +30,6 @@ describe('DeviceController', () => {
     uuid: randomUuid,
     userUuid: randomUuid,
     ipAddress: randomString,
-    platform: randomString,
-    model: randomString,
     visible: true,
     active: true,
     createdAt: randomDate,
@@ -91,8 +89,7 @@ describe('DeviceController', () => {
       requestMock.body = {
         ...requestMock.body,
         userUuid: randomUuid,
-        coordinateX: randomString,
-        coordinateY: randomString
+        ipAddress: randomString
       }
     })
 
@@ -117,11 +114,10 @@ describe('DeviceController', () => {
 
   describe('updateDeviceByUuid', () => {
     beforeEach(() => {
+      requestMock.params = { ...requestMock.params, uuid: randomUuid }
       requestMock.body = {
         ...requestMock.body,
-        uuid: randomUuid,
-        coordinateX: randomString,
-        coordinateY: randomString,
+        ipAddress: randomString,
         visible: true,
         active: true
       }

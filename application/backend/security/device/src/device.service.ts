@@ -47,9 +47,7 @@ export class DeviceService {
     const foundDevice = await this.repository
       .findDeviceByProps(
         createDeviceRequest.userUuid,
-        createDeviceRequest.ipAddress,
-        createDeviceRequest.platform,
-        createDeviceRequest.model
+        createDeviceRequest.ipAddress
       ).catch(() => { throw new InternalServerException(); })
 
     if (foundDevice !== undefined) throw new ConflictException();
@@ -66,8 +64,6 @@ export class DeviceService {
       uuid: this.randomProvider.randomUUID(),
       userUuid: createDeviceRequest.userUuid,
       ipAddress: createDeviceRequest.ipAddress,
-      platform: createDeviceRequest.platform,
-      model: createDeviceRequest.model,
       visible: true,
       active: true,
       createdAt: new Date().toISOString(),
@@ -92,8 +88,6 @@ export class DeviceService {
 
     const toUpdateDevice: Omit<DeviceEntity, 'uuid' | 'userUuid' | 'createdAt'> = {
       ipAddress: updateDeviceByUuidRequest.ipAddress ?? foundDevice.ipAddress,
-      platform: updateDeviceByUuidRequest.platform ?? foundDevice.platform,
-      model: updateDeviceByUuidRequest.model ?? foundDevice.model,
       visible: updateDeviceByUuidRequest.visible ?? foundDevice.visible,
       active: updateDeviceByUuidRequest.active ?? foundDevice.active,
       updatedAt: new Date().toISOString()

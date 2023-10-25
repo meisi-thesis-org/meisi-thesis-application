@@ -18,16 +18,12 @@ export class DeviceStateRepository implements DeviceRepository {
 
   public async findDeviceByProps (
     userUuid: string,
-    ipAddress: string,
-    platform: string,
-    model: string
+    ipAddress: string
   ): Promise<DeviceDTO | undefined> {
     return this.deviceCollection.find((device) => {
       if (
         device.userUuid === userUuid &&
-        device.ipAddress === ipAddress &&
-        device.platform === platform &&
-        device.model === model
+        device.ipAddress === ipAddress
       ) return device
 
       return undefined

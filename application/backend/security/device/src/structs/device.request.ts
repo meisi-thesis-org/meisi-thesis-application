@@ -5,10 +5,10 @@ type FindDevicesByUserUuidRequest =
 type FindDeviceByUuidRequest =
   Readonly<Pick<DeviceEntity, 'uuid'>>
 type CreateDeviceRequest =
-  Readonly<Pick<DeviceEntity, 'userUuid' | 'ipAddress' | 'platform' | 'model'>>
+  Readonly<Pick<DeviceEntity, 'userUuid' | 'ipAddress'>>
 type UpdateDeviceByUuidRequest =
   Readonly<Pick<DeviceEntity, 'uuid'>> &
-  Partial<Readonly<Pick<DeviceEntity, 'ipAddress' | 'platform' | 'model' | 'visible' | 'active'>>>
+  Partial<Readonly<Pick<DeviceEntity, 'ipAddress' | 'visible' | 'active'>>>
 
 export type {
   FindDevicesByUserUuidRequest,
