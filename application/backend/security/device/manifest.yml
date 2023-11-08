@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: meisi-thesis/application-backend-security-device
+spec:
+  containers:
+     - name: meisi-thesis/application-backend-security-device
+       image: node:18
+       ports:
+         - containerPort: 8002

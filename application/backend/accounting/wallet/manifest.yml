@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: meisi-thesis/application-backend-accounting-wallet
+spec:
+  containers:
+     - name: meisi-thesis/application-backend-accounting-wallet
+       image: node:18
+       ports:
+         - containerPort: 8008

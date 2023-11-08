@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: meisi-thesis/application-backend-accounting-subscription
+spec:
+  containers:
+     - name: meisi-thesis/application-backend-accounting-subscription
+       image: node:18
+       ports:
+         - containerPort: 8007

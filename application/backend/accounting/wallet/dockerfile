@@ -11,6 +11,6 @@ COPY . .
 
 RUN cd application/backend/accounting/wallet && yarn build
 
-EXPOSE 8007
+EXPOSE 8008
 
 CMD ["yarn","start"]

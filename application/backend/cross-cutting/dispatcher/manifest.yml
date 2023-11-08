@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: meisi-thesis/application-backend-cross-cutting-dispatcher
+spec:
+  containers:
+     - name: meisi-thesis/application-backend-cross-cutting-dispatcher
+       image: node:18
+       ports:
+         - containerPort: 8021
