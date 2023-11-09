@@ -8,7 +8,7 @@ export class SubscriptionApplication {
 
   public constructor () {
     this.application = Express();
-    this.serverPort = parseInt(process.env.SERVER_PORT ?? '8007')
+    this.serverPort = parseInt(process.env.SERVER_PORT ?? '8009')
   }
 
   public defineMiddlewares (): SubscriptionApplication {

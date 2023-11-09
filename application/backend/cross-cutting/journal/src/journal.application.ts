@@ -9,7 +9,7 @@ export class JournalApplication {
 
   public constructor () {
     this.application = Express();
-    this.serverPort = parseInt(process.env.SERVER_PORT ?? '8020')
+    this.serverPort = parseInt(process.env.SERVER_PORT ?? '8011')
   }
 
   public defineListner (): JournalApplication {

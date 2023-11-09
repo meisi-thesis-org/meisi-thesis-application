@@ -33,9 +33,9 @@ export class GatewayApplication {
     availableHosts.set('/commerce/dossiers', 'http://localhost:8004');
     availableHosts.set('/commerce/books', 'http://localhost:8005');
     availableHosts.set('/commerce/chapters', 'http://localhost:8006');
-    availableHosts.set('/accounting/subscriptions', 'http://localhost:8007');
+    availableHosts.set('/accounting/pages', 'http://localhost:8007');
     availableHosts.set('/accounting/wallets', 'http://localhost:8008');
-    availableHosts.set('/accounting/pages', 'http://localhost:8009');
+    availableHosts.set('/accounting/subscriptions', 'http://localhost:8009');
 
     for (const [key, value] of availableHosts.entries()) {
       this.application.use(key, AccessTokenGuard, createProxyMiddleware({ target: value, changeOrigin: true }))
