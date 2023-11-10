@@ -2,20 +2,73 @@ version: '3.8'
 
 services:
   meisi-thesis-application-backend-gateway:
-    container_name: meisi-thesis-application-backend-gateway
+    container_name: meisi-thesis-application-backend-cross-cutting-gateway
+    build: 
+      context: ./
+      dockerfile: ./application/backend/cross-cutting/gateway
+
   meisi-thesis-application-backend-dispatcher:
-    container_name: meisi-thesis-application-backend-dispatcher
+    container_name: meisi-thesis-application-backend-cross-cutting-dispatcher
+    build: 
+      context: ./
+      dockerfile: ./application/backend/cross-cutting/dispatcher
+
   meisi-thesis-application-backend-journal:
-    container_name: meisi-thesis-application-backend-journal
+    container_name: meisi-thesis-application-backend-cross-cutting-journal
+    build: 
+      context: ./
+      dockerfile: ./application/backend/cross-cutting/journal
+
   meisi-thesis-application-backend-security-user:
     container_name: meisi-thesis-application-backend-security-user
+    build: 
+      context: ./
+      dockerfile: ./application/backend/security/user
+
   meisi-thesis-application-backend-security-device:
     container_name: meisi-thesis-application-backend-security-device
+    build: 
+      context: ./
+      dockerfile: ./application/backend/security/device
+
   meisi-thesis-application-backend-security-network:
     container_name: meisi-thesis-application-backend-security-network
+    build: 
+      context: ./
+      dockerfile: ./application/backend/security/network
+
   meisi-thesis-application-backend-commerce-dossier:
     container_name: meisi-thesis-application-backend-commerce-dossier
+    build:
+      context: ./
+      dockerfile: ./application/backend/commerce/dossier
+
   meisi-thesis-application-backend-commerce-book:
     container_name: meisi-thesis-application-backend-commerce-book
+    build:
+      context: ./
+      dockerfile: ./application/backend/commerce/book
+
   meisi-thesis-application-backend-commerce-chapter:
     container_name: meisi-thesis-application-backend-commerce-chapter
+    build:
+      context: ./
+      dockerfile: ./application/backend/commerce/chapter
+
+  meisi-thesis-application-backend-commerce-page:
+    container_name: meisi-thesis-application-backend-commerce-page
+    build:
+      context: ./
+      dockerfile: ./application/backend/commerce/page
+
+  meisi-thesis-application-backend-accounting-wallet:
+    container_name: meisi-thesis-application-backend-accounting-wallet
+    build:
+      context: ./
+      dockerfile: ./application/backend/accounting/wallet
+
+  meisi-thesis-application-backend-accounting-subscription:
+    container_name: meisi-thesis-application-backend-accounting-subscription
+    build:
+      context: ./
+      dockerfile: ./application/backend/accounting/subscription

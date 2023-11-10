@@ -10,7 +10,7 @@ export class DispatcherApplication {
 
   public constructor () {
     this.application = Express();
-    this.serverPort = parseInt(process.env.SERVER_PORT ?? '8021')
+    this.serverPort = parseInt(process.env.SERVER_PORT ?? '8010')
   }
 
   public defineListner (): DispatcherApplication {

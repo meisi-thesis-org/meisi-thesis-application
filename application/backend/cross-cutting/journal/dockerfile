@@ -11,6 +11,6 @@ COPY . .
 
 RUN cd application/backend/journal && yarn build
 
-EXPOSE 8020
+EXPOSE 8011
 
 CMD ["yarn","start"]
