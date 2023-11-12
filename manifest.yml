@@ -8,46 +8,57 @@ spec:
        image: node:18
        ports:
          - containerPort: 8000
+
      - name: meisi-thesis-application-security-user
        image: node:18
        ports:
          - containerPort: 8001
+
      - name: meisi-thesis-application-security-device
        image: node:18
        ports:
          - containerPort: 8002
+
      - name: meisi-thesis-application-security-network
        image: node:18
        ports:
          - containerPort: 8003
+
      - name: meisi-thesis-application-commerce-dossier
        image: node:18
        ports:
          - containerPort: 8004
+
      - name: meisi-thesis-application-commerce-book
        image: node:18
        ports:
          - containerPort: 8005
+
      - name: meisi-thesis-application-commerce-chapter
        image: node:18
        ports:
          - containerPort: 8006
+
      - name: meisi-thesis-application-commerce-page
        image: node:18
        ports:
          - containerPort: 8007
+
      - name: meisi-thesis-application-accounting-wallet
        image: node:18
        ports:
          - containerPort: 8008
+
      - name: meisi-thesis-application-accounting-subscription
        image: node:18
        ports:
          - containerPort: 8009
+
      - name: meisi-thesis-application-cross-cutting-dispatcher
        image: node:18
        ports:
          - containerPort: 8010
+         
      - name: meisi-thesis-application-cross-cutting-journal
        image: node:18
        ports:
