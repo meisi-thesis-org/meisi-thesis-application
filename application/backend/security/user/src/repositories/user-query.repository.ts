@@ -29,12 +29,18 @@ export class UserQueryRepository implements UserRepository {
     return await this.db.selectFrom('user').where('uuid', '=', uuid).selectAll().executeTakeFirst()
   }
 
-  async findUserByAuthCredentials (username: string, email: string, phoneNumber: string): Promise<UserEntity | undefined> {
+  async findUserByAuthCredentials (
+    username: string | undefined,
+    email: string | undefined,
+    phoneNumber: string | undefined
+  ): Promise<UserEntity | undefined> {
     return await this.db
       .selectFrom('user')
-      .where('username', '=', username)
-      .where('email', '=', email)
-      .where('phoneNumber', '=', phoneNumber)
+      .where((condition) => condition.or([
+        condition('username', '=', username ?? ''),
+        condition('email', '=', email ?? ''),
+        condition('phoneNumber', '=', phoneNumber ?? '')
+      ]))
       .selectAll()
       .executeTakeFirst()
   }

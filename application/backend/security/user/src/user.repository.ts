@@ -4,9 +4,9 @@ export interface UserRepository {
   findBulk(): Promise<UserEntity[] | undefined>
   findUserByUuid(uuid: string): Promise<UserEntity | undefined>
   findUserByAuthCredentials(
-    username: string,
-    email: string,
-    phoneNumber: string
+    username: string | undefined,
+    email: string | undefined,
+    phoneNumber: string | undefined
   ): Promise<UserEntity | undefined>
   createUser(userEntity: UserEntity): Promise<void>
   updateUser(userEntity: UserEntity): Promise<void>
