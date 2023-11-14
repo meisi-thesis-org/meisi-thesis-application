@@ -15,9 +15,9 @@ export class UserStateRepository implements UserRepository {
   }
 
   public async findUserByAuthCredentials (
-    username: string | undefined,
-    email: string | undefined,
-    phoneNumber: string | undefined
+    username: string,
+    email: string,
+    phoneNumber: string
   ): Promise<UserEntity | undefined> {
     return this.userEntityCollection.find((userEntity) => {
       if (
