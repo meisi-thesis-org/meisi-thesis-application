@@ -1,8 +1,7 @@
-import type { InputTypeHTMLAttribute } from "vue"
+import type { InputTypeHTMLAttribute } from 'vue'
 
 type FormControlProps = {
-    type: InputTypeHTMLAttribute
-    placeholder: string
-    rules: Array<string>
+  type: InputTypeHTMLAttribute
+  placeholder: string
 }
 export type { FormControlProps }

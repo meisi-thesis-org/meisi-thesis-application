@@ -1,8 +1,8 @@
-import type { FormControlProps } from "@/components/atoms/FormControl/FormControl.type"
+import type { FormControlProps } from '@/components/atoms/FormControl/FormControl.type'
 
 type FormGroupProps = {
-    designation: string
-    formControls: Array<FormControlProps>
+  designation: string
+  formControls: FormControlProps[]
 }
 
 export type { FormGroupProps }

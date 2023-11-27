@@ -3,7 +3,7 @@
         <Typography :content="definedProps.designation" :segment="'designation'" />
         <div id="form-group--controls">
             <div id="form-group--controls__item" v-for="formControl of definedProps.formControls">
-                <FormControl :type="formControl.type" :placeholder="formControl.placeholder" :rules="formControl.rules" />
+                <FormControl :type="formControl.type" :placeholder="formControl.placeholder" />
             </div>
         </div>
     </div>

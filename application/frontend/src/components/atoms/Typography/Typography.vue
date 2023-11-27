@@ -32,6 +32,6 @@ const definedProps = defineProps<TypographyProps>()
 .designation {
     font-size: clamp(0.60rem, 0.60rem + 0.5vw, 1.60rem);
     font-weight: 300;
-    opacity: 0.40;
+    opacity: 0.60;
 }
 </style>
