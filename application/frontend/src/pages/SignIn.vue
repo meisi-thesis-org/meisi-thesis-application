@@ -15,7 +15,7 @@ const defineFormProps: FormProps = ({
         {
             designation: 'Account Information',
             formControls: [
-                { type: 'password', placeholder: 'Access Code...', rules: ['required'] }
+                { type: 'password', placeholder: 'Access Code...' }
             ]
         }
     ),

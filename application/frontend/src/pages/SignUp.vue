@@ -15,16 +15,16 @@ const defineFormProps: FormProps = ({
         {
             designation: 'Account Information',
             formControls: [
-                { type: 'email', placeholder: 'Email...', rules: ['required'] },
-                { type: 'text', placeholder: 'Username...', rules: ['required'] },
-                { type: 'text', placeholder: 'Phone Number...', rules: ['required'] }
+                { type: 'email', placeholder: 'Email...' },
+                { type: 'text', placeholder: 'Username...' },
+                { type: 'text', placeholder: 'Phone Number...' }
             ]
         },
         {
             designation: 'Personal Information',
             formControls: [
-                { type: 'text', placeholder: 'Name...', rules: ['required'] },
-                { type: 'date', placeholder: 'Birth Date...', rules: ['required'] }
+                { type: 'text', placeholder: 'Name...' },
+                { type: 'date', placeholder: 'Birth Date...' }
             ]
         }
     ),
