@@ -1,6 +1,6 @@
 <template>
     <div id="wrapper">
-        <div id="wrapper__innner">
+        <div id="wrapper__inner">
             <Form :form-groups="defineFormProps.formGroups" :form-actions="defineFormProps.formActions" />
         </div>
     </div>
@@ -32,4 +32,12 @@ const defineFormProps: FormProps = ({
 
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+#wrapper {
+    min-height: inherit;
+
+    &__inner {
+        min-height: inherit;
+    }
+}
+</style>

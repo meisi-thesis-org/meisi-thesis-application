@@ -5,7 +5,6 @@
                 <Typography :content="'E-Bookler'" :segment="'header'" />
                 <Typography :content="'Start typing on E-Bookler to monetize your content'" :segment="'sub-header'" />
             </div>
-            <Divider :width="'100%'" :height="'0.025rem'" :background-color="'dark-theme'" />
             <div id="form__inner--groups">
                 <div id="form__inner--groups__item" v-for="formGroup of definedProps.formGroups">
                     <FormGroup :designation="formGroup.designation" :form-controls="formGroup.formControls" />
@@ -43,15 +42,29 @@ const onSubmit = () => { }
 
 <style scoped lang="scss">
 #form {
+    min-height: inherit;
+    
     &__inner {
+        min-height: inherit;
         padding: 1.5rem;
 
         display: flex;
         flex-direction: column;
+        justify-content: center;
         gap: 1.5rem;
 
         &--header {
-            text-align: center;
+            text-align: left;
+
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        &--groups {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
 
         &--actions {

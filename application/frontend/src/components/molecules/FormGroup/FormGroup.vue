@@ -22,5 +22,11 @@ const definedProps = defineProps<FormGroupProps>()
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+
+    &--controls {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
 }
 </style>

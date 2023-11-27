@@ -13,5 +13,7 @@ const definedProps = defineProps<FormControlProps>()
     color: inherit;
     background-color: inherit;
     text-align: left;
+
+    padding: 1rem;
 }
 </style>

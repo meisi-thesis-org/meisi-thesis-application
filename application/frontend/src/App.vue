@@ -22,11 +22,11 @@ html, body, #app {
 }
 
 .card {
-    padding: 1.5rem;
+    padding: 1.25rem;
     border: none;
     box-shadow: 0 0 0.15rem 0 var(--dark--primary--color);
     text-align: center;
-    border-radius: 0.25rem;
+    border-radius: 0.050rem;
 
     width: 100%;
 }
