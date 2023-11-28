@@ -393,15 +393,6 @@
     "@typescript-eslint/types" "5.62.0"
     eslint-visitor-keys "^3.3.0"
 
-"@vee-validate/zod@^4.12.0":
-  version "4.12.0"
-  resolved "https://registry.yarnpkg.com/@vee-validate/zod/-/zod-4.12.0.tgz#d8a982139699c0471c421a41ee4c6d5fe94d8d29"
-  integrity sha512-78BZQbCAtQckPscHRim8FRipPb2A9sYLaSldbIzM8bmr0b3UOtlff35/kBNmFOJ1lQcZ2jbiJOUbaROzzJtKiQ==
-  dependencies:
-    type-fest "^4.8.2"
-    vee-validate "4.12.0"
-    zod "^3.22.4"
-
 "@vitejs/plugin-vue@^4.4.0":
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/@vitejs/plugin-vue/-/plugin-vue-4.4.0.tgz#8ae96573236cdb12de6850a6d929b5537ec85390"
@@ -513,11 +504,6 @@
   dependencies:
     "@vue/compiler-dom" "3.3.8"
     "@vue/shared" "3.3.8"
-
-"@vue/devtools-api@^6.5.0", "@vue/devtools-api@^6.5.1":
-  version "6.5.1"
-  resolved "https://registry.yarnpkg.com/@vue/devtools-api/-/devtools-api-6.5.1.tgz#7f71f31e40973eeee65b9a64382b13593fdbd697"
-  integrity sha512-+KpckaAQyfbvshdDW5xQylLni1asvNSGme1JFs8I1+/H5pHEhqUKMEQD/qn3Nx5+/nycBq11qAEi8lk+LXI2dA==
 
 "@vue/language-core@1.8.22":
   version "1.8.22"
@@ -2847,11 +2833,6 @@ type-fest@^4.2.0:
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-4.8.1.tgz#2a5bf1074abb580d2d6eb5c1e79c11147fd11d4f"
   integrity sha512-ShaaYnjf+0etG8W/FumARKMjjIToy/haCaTjN2dvcewOSoNqCQzdgG7m2JVOlM5qndGTHjkvsrWZs+k/2Z7E0Q==
 
-type-fest@^4.8.2:
-  version "4.8.2"
-  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-4.8.2.tgz#20d4cc287745723dbabf925de644eeb7de0349c1"
-  integrity sha512-mcvrCjixA5166hSrUoJgGb9gBQN4loMYyj9zxuMs/66ibHNEFd5JXMw37YVDx58L4/QID9jIzdTBB4mDwDJ6KQ==
-
 typed-array-buffer@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/typed-array-buffer/-/typed-array-buffer-1.0.0.tgz#18de3e7ed7974b0a729d3feecb94338d1472cd60"
@@ -2949,14 +2930,6 @@ validate-npm-package-license@^3.0.4:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
 
-vee-validate@4.12.0, vee-validate@^4.12.0:
-  version "4.12.0"
-  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-4.12.0.tgz#a361864231ae7fba4c7764f70090b5f4cea5a076"
-  integrity sha512-hQtSziTN/l70uq8Y8X4ZayGwHtJo0VPLXImzUbvl0OqEdX6jlgrnePSmQIZlu1HeEjDfOVvCJCDACKerJzRVSw==
-  dependencies:
-    "@vue/devtools-api" "^6.5.1"
-    type-fest "^4.8.2"
-
 vite-node@0.34.2:
   version "0.34.2"
   resolved "https://registry.yarnpkg.com/vite-node/-/vite-node-0.34.2.tgz#1daa025f8cee8a141c9b4d051e979cf61adaba2c"
@@ -3025,13 +2998,6 @@ vue-component-type-helpers@^1.8.21:
   version "1.8.22"
   resolved "https://registry.yarnpkg.com/vue-component-type-helpers/-/vue-component-type-helpers-1.8.22.tgz#24c1f324885e5652c7bcc5d9cbd76800b0af3809"
   integrity sha512-LK3wJHs3vJxHG292C8cnsRusgyC5SEZDCzDCD01mdE/AoREFMl2tzLRuzwyuEsOIz13tqgBcnvysN3Lxsa14Fw==
-
-vue-router@4:
-  version "4.2.5"
-  resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-4.2.5.tgz#b9e3e08f1bd9ea363fdd173032620bc50cf0e98a"
-  integrity sha512-DIUpKcyg4+PTQKfFPX88UWhlagBEBEfJ5A8XDXRJLUnZOvcpMF8o/dnL90vpVkGaPbjvXazV/rC1qBKrZlFugw==
-  dependencies:
-    "@vue/devtools-api" "^6.5.0"
 
 vue-template-compiler@^2.7.14:
   version "2.7.15"
@@ -3182,8 +3148,3 @@ yocto-queue@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-1.0.0.tgz#7f816433fb2cbc511ec8bf7d263c3b58a1a3c251"
   integrity sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==
-
-zod@^3.22.4:
-  version "3.22.4"
-  resolved "https://registry.yarnpkg.com/zod/-/zod-3.22.4.tgz#f31c3a9386f61b1f228af56faa9255e845cf3fff"
-  integrity sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==
