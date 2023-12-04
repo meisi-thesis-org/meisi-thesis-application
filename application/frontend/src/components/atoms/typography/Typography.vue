@@ -9,10 +9,10 @@ const definedProps = defineProps<TypographyProps>()
 </script>
 
 <style scoped lang="scss">
-#brand { font-size: clamp(1rem, 1rem + 0.5vw, 2rem); font-weight: 700; }
-#header { font-size: clamp(0.90rem, 0.90rem + 0.5vw, 1.90rem); font-weight: 600; }
-#sub-header { font-size: clamp(0.80rem, 0.80rem + 0.5vw, 1.80rem); font-weight: 500; }
-#paragraph { font-size: clamp(0.80rem, 0.80rem + 0.5vw, 1.80rem); font-weight: 400; }
-#label { font-size: clamp(0.70rem, 0.70rem + 0.5vw, 1.70rem); font-weight: 600; opacity: 0.40; }
-#placeholder { font-size: clamp(0.80rem, 0.80rem + 0.5vw, 1.80rem); font-weight: 400; }
+.brand { font-size: clamp(1.25rem, 1.25rem + 0.5vw, 2.25rem); font-weight: 700; }
+.header { font-size: clamp(1rem, 1rem + 0.5vw, 2rem); font-weight: 600; }
+.sub-header { font-size: clamp(0.9rem, 0.9rem + 0.5vw, 1.9rem); font-weight: 500; }
+.paragraph { font-size: clamp(0.8rem, 0.8rem + 0.5vw, 1.8rem); font-weight: 400; }
+.label { font-size: clamp(0.7rem, 0.7rem + 0.5vw, 1.7rem); font-weight: 500; opacity: 0.75; }
+.placeholder { font-size: clamp(0.8rem, 0.8rem + 0.5vw, 1.8rem); font-weight: 400; }
 </style>
