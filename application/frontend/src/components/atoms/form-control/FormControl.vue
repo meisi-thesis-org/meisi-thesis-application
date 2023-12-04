@@ -14,6 +14,7 @@ const definedProps = defineProps<FormControlProps>()
     width: 100%;
     border: hidden;
     box-shadow: 0 0 0 0.020rem var(--dark--theme--color);
-    border-radius: 0.15rem;
+    border-radius: 0.050rem;
+    outline: none;
 }
 </style>

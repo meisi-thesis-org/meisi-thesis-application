@@ -1,8 +1,9 @@
-import type { TypographyProps } from "@/components/atoms/typography/Typography.type"
+import type { ButtonProps } from "@/components/atoms/button/Button.type"
+import type { LinkProps } from "@/components/atoms/link/Link.type"
 
 type FormActionProps = {
-    readonly buttons: Array<TypographyProps>
-    readonly links: Array<TypographyProps>
+    readonly buttons: Array<ButtonProps>
+    readonly links: Array<LinkProps>
 }
 
 export type { FormActionProps }

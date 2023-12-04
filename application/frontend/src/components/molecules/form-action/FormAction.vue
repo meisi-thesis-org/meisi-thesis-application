@@ -3,12 +3,12 @@
         <div id="form-action__inner">
             <div id="form-action__inner--buttons">
                 <div id="form-action__inner--buttons__item" v-for="button of definedProps.buttons">
-                    <Button />
+                    <Button :content="button.content" :type="button.type" />
                 </div>
             </div>
             <div id="form-action__inner--links">
                 <div id="form-action__inner--links__item" v-for="link of definedProps.links">
-                    <Link />
+                    <Link :content="link.content" :href="link.href" />
                 </div>
             </div>
         </div>
@@ -18,9 +18,23 @@
 <script setup lang="ts">
 import type { FormActionProps } from './FormAction.type';
 import Button from "@/components/atoms/button/Button.vue";
-import Link from "@/components/atoms/button/Link.vue";
+import Link from "@/components/atoms/link/Link.vue";
 
 const definedProps = defineProps<FormActionProps>()
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+#form-action {
+    &__inner {
+        display: flex;
+        flex-direction: column;
+        gap: .75rem;
+
+        &--links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+    }
+}
+</style>

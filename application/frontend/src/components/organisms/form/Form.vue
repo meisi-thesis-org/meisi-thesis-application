@@ -1,13 +1,10 @@
 <template>
-    <form id="form">
+    <form id="form" @submit.prevent="definedProps.onSubmit()">
         <div id="form__inner">
             <FormHeader :header="definedProps.formHeader.header" :sub-header="definedProps.formHeader.subHeader" />
-            <div id="form__inner--form__sections">
-                <div id="form__inner--form__sections__item" v-for="formSection of definedProps.formSections">
-                    <FormSection :designation="formSection.designation" :form-controls="formSection.formControls" />
-                </div>
-            </div>
-            <div id="form__inner--form__action"></div>
+            <FormSection v-for="formSection of definedProps.formSections" :designation="formSection.designation"
+                :form-controls="formSection.formControls" />
+            <FormAction :buttons="definedProps.formAction.buttons" :links="definedProps.formAction.links" />
         </div>
     </form>
 </template>
@@ -16,6 +13,7 @@
 import FormHeader from '@/components/molecules/form-header/FormHeader.vue';
 import type { FormProps } from './Form.type';
 import FormSection from '@/components/molecules/form-section/FormSection.vue';
+import FormAction from '@/components/molecules/form-action/FormAction.vue';
 
 const definedProps = defineProps<FormProps>();
 </script>
