@@ -10,11 +10,20 @@ import type { FormHeaderProps } from "@/components/molecules/form-header/FormHea
 import type { FormSectionProps } from "@/components/molecules/form-section/FormSection.type";
 import Form from "@/components/organisms/form/Form.vue";
 
-const onSubmit = () => {}
+const onSubmit = () => { }
 
 const formHeader: FormHeaderProps = { header: 'E-Bookler', subHeader: 'Start typing on E-Bookler to monetize your content' }
-const formSections: Array<FormSectionProps> = [{ designation: "Account Information", formControls: [{ name: 'accessCode', type: 'password', placeholder: 'Access Code...' }] }]
-const formAction: FormActionProps = { buttons: [{ type: 'submit', content: 'Continue' }], links: [{ content: 'No Account? Create one here!', href: "/sign-up" }, { content: 'Forgot AcessCode? Recover it here!', href: "/recover-access-code" }]}
+const formSections: Array<FormSectionProps> = [
+    {
+        designation: "Account Information",
+        formControls: [
+            { name: 'email', type: 'email', placeholder: 'Email...' },
+            { name: 'username', type: 'text', placeholder: 'Username...' },
+            { name: 'phoneNumber', type: 'text', placeholder: 'PhoneNumber...' },
+        ]
+    }
+]
+const formAction: FormActionProps = { buttons: [{ type: 'submit', content: 'Continue' }], links: [{ content: 'No Account? Create one here!', href: "/sign-up" }, { content: 'Account already exists? Enter here!', href: "/sign-in" }] }
 </script>
 
 <style scoped lang="scss">
