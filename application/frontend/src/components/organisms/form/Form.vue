@@ -3,7 +3,7 @@
         <div id="form__inner">
             <FormHeader :header="definedProps.formHeader.header" :sub-header="definedProps.formHeader.subHeader" />
             <FormSection v-for="formSection of definedProps.formSections" :designation="formSection.designation"
-                :form-controls="formSection.formControls" />
+                :form-controls="formSection.formControls" @update-state="(data) => console.log(data)" />
             <FormAction :buttons="definedProps.formAction.buttons" :links="definedProps.formAction.links" />
         </div>
     </form>

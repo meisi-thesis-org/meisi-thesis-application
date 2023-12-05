@@ -6,6 +6,7 @@ type TypographyProps = {
   'sub-header' |
   'paragraph' |
   'label' |
+  'error' |
   'placeholder'
 }
 

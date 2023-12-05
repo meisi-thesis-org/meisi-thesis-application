@@ -9,12 +9,13 @@ import type { FormActionProps } from "@/components/molecules/form-action/FormAct
 import type { FormHeaderProps } from "@/components/molecules/form-header/FormHeader.type";
 import type { FormSectionProps } from "@/components/molecules/form-section/FormSection.type";
 import Form from "@/components/organisms/form/Form.vue";
-
-const onSubmit = () => {}
+import { required } from '@vuelidate/validators'
 
 const formHeader: FormHeaderProps = { header: 'E-Bookler', subHeader: 'Start typing on E-Bookler to monetize your content' }
-const formSections: Array<FormSectionProps> = [{ designation: "Account Information", formControls: [{ name: 'accessCode', type: 'password', placeholder: 'Access Code...' }] }]
-const formAction: FormActionProps = { buttons: [{ type: 'submit', content: 'Continue' }], links: [{ content: 'No Account? Create one here!', href: "/sign-up" }, { content: 'Forgot AcessCode? Recover it here!', href: "/recover-access-code" }]}
+const formSections: Array<FormSectionProps> = [{ designation: "Account Information", formControls: [{ name: 'accessCode', type: 'password', placeholder: 'Access Code...', rules: { required } }] }]
+const formAction: FormActionProps = { buttons: [{ type: 'submit', content: 'Continue' }], links: [{ content: 'No Account? Create one here!', href: "/sign-up" }, { content: 'Forgot AcessCode? Recover it here!', href: "/recover-access-code" }] }
+const onSubmit = () => {}
+
 </script>
 
 <style scoped lang="scss">

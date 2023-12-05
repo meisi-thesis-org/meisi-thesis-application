@@ -3,7 +3,7 @@
         <div id="form-section__inner">
             <Typography :content="definedProps.designation" :segment="'label'" />
             <div id="form-section__inner--form__control" v-for="formControl of definedProps.formControls">
-                <FormControl :type="formControl.type" :name="formControl.name" :placeholder="formControl.placeholder"/>
+                <FormControl :type="formControl.type" :name="formControl.name" :placeholder="formControl.placeholder" :rules="formControl.rules" @update-state="(errors) => $emit('updateState', errors)"/>
             </div>
         </div>
     </div>
@@ -14,6 +14,7 @@ import Typography from '@/components/atoms/typography/Typography.vue';
 import type { FormSectionProps } from './FormSection.type';
 import FormControl from "@/components/atoms/form-control/FormControl.vue"
 const definedProps = defineProps<FormSectionProps>()
+const definedEmits = defineEmits(['updateState'])
 </script>
 
 <style scoped lang="scss">
