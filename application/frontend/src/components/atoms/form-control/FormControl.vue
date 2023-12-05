@@ -1,7 +1,7 @@
 <template>
     <div id="form-control">
         <input :name="definedProps.name" :type="definedProps.type" :placeholder="definedProps.placeholder"
-            v-model="state[definedProps.name]" @blur="$emit('updateState', emitterAction())">
+            v-model="state[definedProps.name]" @blur="$emit('isInvalid', emitterAction())">
         <Typography v-if="$v.$dirty === true" v-for="error of $v.$errors" :content="(error.$message as string)"
             :segment="'error'" />
     </div>
@@ -13,7 +13,7 @@ import type { FormControlProps } from './FormControl.type';
 import useVuelidate, { type ValidationRuleWithoutParams } from '@vuelidate/core';
 import Typography from '../typography/Typography.vue';
 const definedProps = defineProps<FormControlProps>()
-const definedEmits = defineEmits(['updateState'])
+const definedEmits = defineEmits(['isInvalid'])
 
 const createdRules = computed(() => {
     const rules: Record<string, Record<string, ValidationRuleWithoutParams<any>>> = {}

@@ -1,5 +1,5 @@
 <template>
-    <button :type="definedProps.type" id="button">
+    <button :disabled="definedProps.disabled" :type="definedProps.type" id="button">
         <Typography :content="definedProps.content" :segment="'placeholder'" />
     </button>
 </template>
