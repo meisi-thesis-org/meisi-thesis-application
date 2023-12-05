@@ -14,6 +14,6 @@ const definedProps = defineProps<TypographyProps>()
 .sub-header { font-size: clamp(0.9rem, 0.9rem + 0.5vw, 1.9rem); font-weight: 500; }
 .paragraph { font-size: clamp(0.8rem, 0.8rem + 0.5vw, 1.8rem); font-weight: 400; }
 .label { font-size: clamp(0.7rem, 0.7rem + 0.5vw, 1.7rem); font-weight: 500; opacity: 0.75; }
-.error { font-size: clamp(0.7rem, 0.7rem + 0.5vw, 1.7rem); font-weight: 600; opacity: 0.75; color: rgb(255, 79, 79); }
+.error { font-size: clamp(0.7rem, 0.7rem + 0.5vw, 1.7rem); font-weight: 800; opacity: 0.75; }
 .placeholder { font-size: clamp(0.8rem, 0.8rem + 0.5vw, 1.8rem); font-weight: 400; }
 </style>

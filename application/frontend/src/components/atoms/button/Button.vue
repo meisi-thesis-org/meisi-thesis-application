@@ -17,7 +17,11 @@ const definedProps = defineProps<ButtonProps>()
     padding: 1.5rem;
     width: 100%;
     border: hidden;
-    box-shadow: 0 0 0 0.020rem var(--dark--theme--color);
+    box-shadow: 0 0 0.15rem 0 var(--dark--theme--color);
     border-radius: 0.15rem;
+
+    &:disabled {
+        opacity: 0.25;
+    }
 }
 </style>
