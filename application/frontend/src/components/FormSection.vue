@@ -27,7 +27,7 @@ const definedEmits = defineEmits(['isInvalid'])
     &__controls {
         display: inherit;
         flex-direction: inherit;
-        gap: 0.50rem;
+        gap: 0.25rem;
     }
 }
 </style>

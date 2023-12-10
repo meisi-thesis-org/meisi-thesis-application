@@ -1,12 +1,20 @@
 <template>
-    <input :id="definedId" :type="definedProps.type" :name="definedProps.name"
-        :placeholder="definedProps.placeholder" v-model="state[definedProps.name]" @input="$emit('isInvalid', onInputEmitter())">
+    <div class="form-control" :id="definedId">
+        <input class="form-control__input" :class="classes" :type="definedProps.type" :name="definedProps.name"
+            :placeholder="definedProps.placeholder" v-model="state[definedProps.name]"
+            @input="$emit('isInvalid', onInputEmitter())">
+        <div v-if="isInvalid" class="form-control__errors">
+            <Typography v-if="isInvalid" v-for="error of $v.$errors" :content="'* ' + error.$message.toString()"
+                :segment="'error'" />
+        </div>
+    </div>
 </template>
 
 <script setup lang="ts">
 import type { FormControlProps } from '@/types/FormControl';
 import { useVuelidate, type ValidationRuleWithoutParams } from '@vuelidate/core';
 import { computed, ref } from 'vue';
+import Typography from './Typography.vue';
 
 const definedProps = defineProps<FormControlProps>()
 const definedEmits = defineEmits(['isInvalid'])
@@ -30,15 +38,39 @@ const touchField = () => $v.value[definedProps.name].$touch();
 const onInputEmitter = () => { console.log($v.value); touchField(); return isInvalid.value; }
 const isDirty = computed<boolean>(() => $v.value[definedProps.name].$dirty);
 const isInvalid = computed<boolean>(() => isDirty.value === true && $v.value[definedProps.name].$errors.length > 0);
+const classes = computed(() => {
+    if (isDirty.value === false) return
+    return isInvalid.value && isDirty.value ? 'invalid' : 'valid'
+})
 </script>
 
 <style scoped lang="scss">
-input {
-    padding: 1rem;
+.form-control {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
 
-    border: none;
-    border-radius: 0.15rem;
-    box-shadow: 0 0 0 0.025rem currentColor;
-    outline: none;
-}
-</style>
+    &__input {
+        padding: 1rem;
+
+        border: none;
+        border-radius: 0.15rem;
+        box-shadow: 0 0 0 0.025rem currentColor;
+        outline: none;
+
+        &.valid {
+            box-shadow: 0 0 0 0.050rem green;
+        }
+
+        &.invalid {
+            box-shadow: 0 0 0 0.050rem red;
+        }
+    }
+
+    &__errors {
+        padding: 0.25rem 0.5rem;
+        display: inherit;
+        flex-direction: inherit;
+        gap: 0.5rem;
+    }
+}</style>
