@@ -1,7 +1,7 @@
 <template>
     <div id="wrapper">
         <div id="wrapper__inner">
-            <Form :form-header="formHeader" :form-sections="formSections" :form-action="formAction" />
+            <Form :form-header="formHeader" :form-sections="formSections" :form-action="formAction" :on-submit="onSubmit" />
         </div>
     </div>
 </template>
@@ -13,6 +13,10 @@ import type { FormHeaderProps } from "@/types/FormHeader";
 import type { FormSectionProps } from "@/types/FormSection";
 import { computed } from "vue";
 import { required } from "@vuelidate/validators"
+import { useRouter } from "vue-router";
+import { useUser } from "@/stores/useUser";
+const router = useRouter();
+const { findUserByAcessCode } = useUser()
 
 const formHeader = computed<FormHeaderProps>(() => ({ header: "E-Bookler", subHeader: "Create an account to start monetizing your content." }))
 const formSections = computed<Array<FormSectionProps>>(() => ([
@@ -32,6 +36,16 @@ const formAction = computed<FormActionProps>(() => ({
         { placeholder: "Forgot your access code? Recover it here", href: "/recover-account" },
     ]
 }))
+const onSubmit = async (
+    event: Event
+) => {
+    try {
+        const user = await findUserByAcessCode({ accessCode: (event.target as any)[0].value });
+        return router.push('/check-device')
+    } catch (error) {
+        throw error;
+    }
+}
 </script>
 
 <style scoped lang="scss">

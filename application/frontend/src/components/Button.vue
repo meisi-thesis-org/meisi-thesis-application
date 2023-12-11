@@ -1,5 +1,5 @@
 <template>
-    <button id="button" type="submit">
+    <button @click="onClick()" id="button" type="submit">
         <Typography :content="definedProps.placeholder" :segment="'placeholder'" />
     </button>
 </template>
@@ -9,6 +9,11 @@ import type { ButtonProps } from '@/types/Button';
 import Typography from './Typography.vue';
 
 const definedProps = defineProps<ButtonProps>()
+const onClick = () => {
+    if(definedProps.onClick) {
+        definedProps.onClick()
+    }
+}
 </script>
 
 <style scoped lang="scss">
@@ -19,7 +24,6 @@ const definedProps = defineProps<ButtonProps>()
     padding: 1.5rem;
 
     border: none;
-    border-radius: 0.15rem;
-    box-shadow: 0 0 0 0.025rem currentColor;
+    box-shadow: 0 0 0.25rem 0 currentColor;
 }
 </style>

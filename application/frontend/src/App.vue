@@ -1,7 +1,5 @@
 <template>
-  <div id="wrapper">
     <router-view></router-view>
-  </div>
 </template>
 
 <script setup lang="ts">
@@ -24,7 +22,7 @@
   font-family: 'Quicksand', sans-serif;
 }
 
-html, body, #wrapper {
+html, body, #app {
   width: 100vw;
   min-height: 100vh;
 }

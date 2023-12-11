@@ -1,9 +1,9 @@
-import type { ButtonProps } from "./Button"
-import type { LinkProps } from "./Link"
+import type { ButtonProps } from './Button'
+import type { LinkProps } from './Link'
 
 type FormActionProps = {
-    buttons: Array<ButtonProps>
-    links: Array<LinkProps>
+  readonly buttons: ButtonProps[]
+  readonly links: LinkProps[]
 }
 
 export type { FormActionProps }

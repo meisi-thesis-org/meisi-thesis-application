@@ -1,11 +1,13 @@
 <template>
-    <form @submit.prevent="onSubmit()" id="form">
+    <form @submit.prevent="onSubmit($event)" id="form">
         <FormHeader :header="definedProps.formHeader.header" :sub-header="definedProps.formHeader.subHeader" />
-        <div id="form--sections">
-            <FormSection v-for="formSection of definedProps.formSections" :designation="formSection.designation"
-                :form-controls="formSection.formControls" @is-invalid="(data) => updateInvalidity(data)" />
+        <div id="form__body">
+            <div id="form__body--sections">
+                <FormSection v-for="formSection of definedProps.formSections" :designation="formSection.designation"
+                    :form-controls="formSection.formControls" @is-invalid="(data) => updateInvalidity(data)" />
+            </div>
+            <FormAction :buttons="definedProps.formAction.buttons" :links="definedProps.formAction.links" />
         </div>
-        <FormAction :buttons="definedProps.formAction.buttons" :links="definedProps.formAction.links" />
     </form>
 </template>
 
@@ -19,8 +21,9 @@ import { ref } from 'vue';
 const definedProps = defineProps<FormProps>()
 const isInvalid = ref<boolean>(false)
 const updateInvalidity = (invalid: boolean) => isInvalid.value = invalid;
-const onSubmit = () => {
-    if (isInvalid.value) return
+const onSubmit = (data: Event) => {
+    if (isInvalid.value) return;
+    return definedProps.onSubmit(data);
 }
 </script>
 
@@ -30,12 +33,18 @@ const onSubmit = () => {
 
     display: flex;
     flex-direction: column;
-    gap: 0.50rem;
+    gap: 1.5rem;
 
-    &--sections {
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
+    &__body {
+        display: inherit;
+        flex-direction: inherit;
+        gap: 0.5rem;
+        
+        &--sections {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
     }
 }
 </style>

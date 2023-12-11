@@ -1,7 +1,7 @@
 <template>
     <div id="wrapper">
         <div id="wrapper__inner">
-            <Form :form-header="formHeader" :form-sections="formSections" :form-action="formAction" />
+            <Form :form-header="formHeader" :form-sections="formSections" :form-action="formAction" :on-submit="onSubmit" />
         </div>
     </div>
 </template>
@@ -13,6 +13,8 @@ import type { FormHeaderProps } from "@/types/FormHeader";
 import type { FormSectionProps } from "@/types/FormSection";
 import { computed } from "vue";
 import { email } from "@vuelidate/validators"
+import { useRouter } from "vue-router";
+const router = useRouter();
 
 const formHeader = computed<FormHeaderProps>(() => ({ header: "E-Bookler", subHeader: "Create an account to start monetizing your content." }))
 const formSections = computed<Array<FormSectionProps>>(() => ([
@@ -30,10 +32,13 @@ const formAction = computed<FormActionProps>(() => ({
         { placeholder: "Continue" }
     ],
     links: [
-        { placeholder: "Already have an account? Acess here!", href: "/access-account" },
+        { placeholder: "Already have an account? Acess here!", href: "/access-code" },
         { placeholder: "No account? Create one here!", href: "/create-account" },
     ]
 }))
+const onSubmit = () => {
+    return router.push('/access-code')
+}
 </script>
 
 <style scoped lang="scss">
