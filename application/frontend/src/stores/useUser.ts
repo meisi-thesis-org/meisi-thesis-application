@@ -2,7 +2,7 @@ import { useFetch } from "@/composables/useFetch";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
-export type UserEntity = {
+type UserEntity = {
     readonly uuid: string
     readonly username: string
     readonly email: string
@@ -14,66 +14,46 @@ export type UserEntity = {
     readonly updatedAt: string
 }
 
-export type FindUserByUuidRequest =
-    Readonly<Pick<UserEntity, 'uuid'>>
-export type FindUserByAccessCodeRequest =
-    Readonly<Pick<UserEntity, 'accessCode'>>
-export type CreateUserRequest =
-    Readonly<Pick<UserEntity, 'username' | 'email' | 'phoneNumber' | 'name' | 'dateBirth'>>
-export type UpdateUserByUuidRequest =
-    Readonly<Pick<UserEntity, 'uuid'>> &
-    Partial<Readonly<Omit<UserEntity, 'createdAt' | 'updatedAt'>>>
-export type UpdateUserAccessCodeRequest =
-    Partial<Readonly<Pick<UserEntity, 'username' | 'email' | 'phoneNumber'>>>
-
 export const useUser = defineStore('user', () => {
     const { createRequest } = useFetch();
     const user = ref<UserEntity>();
 
-    const findUserByUuid = async (params: FindUserByUuidRequest) => {
-        try {
-            const response = await createRequest(`localhost:8000/security/users/${params.uuid}`, 'GET');
-            const userEntity = await response.json() as UserEntity;
-            return userEntity;
-        } catch (error) {
-            throw error;
-        }
+    const findUserByUuid = async (uuid: string) => {
+        const response = await createRequest(`localhost:8000/security/users/${uuid}`, 'GET');
+        return await response.json() as UserEntity;
     }
-    const findUserByAcessCode = async (params: FindUserByAccessCodeRequest) => {
-        try {
-            const response = await createRequest(`localhost:8000/security/users/access-code/${params.accessCode}`, 'GET');
-            const userEntity = await response.json() as UserEntity;
-            return userEntity;
-        } catch (error) {
-            throw error;
-        }
+    const findUserByAcessCode = async (accessCode: string) => {
+        const response = await createRequest(`localhost:8000/security/users/access-code/${accessCode}`, 'GET');
+        return await response.json() as UserEntity;
     }
-    const createUser = async (params: CreateUserRequest) => {
-        try {
-            const response = await createRequest(`localhost:8000/security/users`, 'POST', params);
-            const userEntity = await response.json() as UserEntity;
-            return userEntity;
-        } catch (error) {
-            throw error;
-        }
+    const createUser = async (
+        username: string,
+        email: string,
+        phoneNumber: string,
+        dateBirth: string,
+        name: string
+    ) => {
+        const response = await createRequest(`localhost:8000/security/users`, 'POST', { username, email, phoneNumber, dateBirth, name });
+        return await response.json() as UserEntity;
     }
-    const updateUserByUuid = async (uuid: string, params: Omit<UpdateUserByUuidRequest, 'uuid'>) => {
-        try {
-            const response = await createRequest(`localhost:8000/security/users/${uuid}`, 'PUT', params);
-            const userEntity = await response.json() as UserEntity;
-            return userEntity;
-        } catch (error) {
-            throw error;
-        }
+    const updateUserByUuid = async (
+        uuid: string,
+        username: string,
+        email: string,
+        phoneNumber: string,
+        dateBirth: string,
+        name: string
+    ) => {
+        const response = await createRequest(`localhost:8000/security/users/${uuid}`, 'PUT', { username, email, phoneNumber, dateBirth, name });
+        return await response.json() as UserEntity;
     }
-    const updateUserAccessCode = async (params: UpdateUserAccessCodeRequest) => {
-        try {
-            const response = await createRequest(`localhost:8000/security/users/access-code`, 'PUT', params);
-            const userEntity = await response.json() as UserEntity;
-            return userEntity;
-        } catch (error) {
-            throw error;
-        }
+    const updateUserAccessCode = async (
+        username: string,
+        email: string,
+        phoneNumber: string
+    ) => {
+        const response = await createRequest(`localhost:8000/security/users/access-code`, 'PUT', { username, email, phoneNumber });
+        return await response.json() as UserEntity;
     }
 
     return { user, findUserByUuid, findUserByAcessCode, createUser, updateUserByUuid, updateUserAccessCode };
