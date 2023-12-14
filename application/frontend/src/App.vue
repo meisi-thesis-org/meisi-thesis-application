@@ -1,8 +1,12 @@
 <template>
-    <router-view></router-view>
+    <Loader v-show="isLoading" />
+    <router-view v-show="!isLoading"></router-view>
 </template>
 
 <script setup lang="ts">
+import Loader from '@/components/Loader.vue';
+import { useLoader } from "@/composables/useLoader";
+const { isLoading } = useLoader();
 </script>
 
 <style lang="scss">
@@ -15,6 +19,7 @@
 
   --dark--theme--color: #394053;
   --light--theme--color: #FFFFFF;
+  --blue--theme--color: #5382A1;
 
   background-color: var(--light--theme--color);
   color: var(--dark--theme--color);
@@ -26,4 +31,5 @@ html, body, #app {
   width: 100vw;
   min-height: 100vh;
 }
+
 </style>

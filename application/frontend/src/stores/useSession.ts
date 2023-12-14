@@ -10,8 +10,8 @@ type SessionEntity = {
 }
 
 const useSession = defineStore('session', () => {
-  const { createRequest } = useFetch()
-  const { findUserByAccessCode } = useUser()
+  const { createRequest } = useFetch();
+  const { findUserByAccessCode } = useUser();
   const session = ref<SessionEntity>();
 
   const signIn = async (accessCode: string) => {
@@ -20,12 +20,12 @@ const useSession = defineStore('session', () => {
     session.value = await response.json() as SessionEntity
   };
 
-  const refreshTokens = async (accessCode: string) => {
+  const refreshTokens = async () => {
     const response = await createRequest('localhost:8000/session/refresh-tokens', 'PUT');
     session.value = await response.json() as SessionEntity
   };
 
-  const signOut = async (accessCode: string) => {
+  const signOut = async () => {
     await createRequest('localhost:8000/session/sign-out', 'PUT');
     session.value = { accessToken: '', refreshToken: '', userUuid: '' }
   };

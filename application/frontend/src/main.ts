@@ -2,11 +2,8 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import AccessAccount from '@/pages/AccessAccount.vue'
-import CreateAccount from '@/pages/SignUp.vue'
+import CreateAccount from '@/pages/CreateAccount.vue'
 import RecoverAccount from '@/pages/RecoverAccount.vue'
-import CheckDevice from '@/pages/CheckDevice.vue'
-import CheckNetwork from '@/pages/CheckNetwork.vue'
-import Dashboard from '@/pages/Dashboard.vue'
 import { createPinia } from 'pinia'
 
 const router = createRouter({
@@ -23,18 +20,6 @@ const router = createRouter({
     {
       path: '/recover-account',
       component: RecoverAccount
-    },
-    {
-      path: '/check-device',
-      component: CheckDevice
-    },
-    {
-      path: '/check-network',
-      component: CheckNetwork
-    },
-    {
-      path: '/dashboard',
-      component: Dashboard
     }
   ]
 })

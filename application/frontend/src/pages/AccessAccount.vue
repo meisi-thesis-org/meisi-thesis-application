@@ -13,6 +13,9 @@ import type { FormHeaderProps } from "@/types/FormHeader";
 import type { FormSectionProps } from "@/types/FormSection";
 import { computed } from "vue";
 import { required } from "@vuelidate/validators"
+import { useLoader } from "@/composables/useLoader";
+
+const { isLoading } = useLoader();
 
 const formHeader = computed<FormHeaderProps>(() => ({ header: "E-Bookler", subHeader: "Create an account to start monetizing your content." }))
 const formSections = computed<Array<FormSectionProps>>(() => ([
@@ -32,7 +35,7 @@ const formAction = computed<FormActionProps>(() => ({
         { placeholder: "Forgot your access code? Recover it here", href: "/recover-account" },
     ]
 }))
-const onSubmit = async (event: Event) => {}
+const onSubmit = (event: Event) => isLoading.value = !isLoading.value
 </script>
 
 <style scoped lang="scss">
