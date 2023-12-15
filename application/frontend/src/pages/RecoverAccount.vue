@@ -13,6 +13,31 @@ import type { FormHeaderProps } from "@/types/FormHeader";
 import type { FormSectionProps } from "@/types/FormSection";
 import { computed } from "vue";
 import { email } from "@vuelidate/validators"
+import { useLoader } from "@/composables/useLoader";
+import { useRouter } from "vue-router";
+import { useUser } from "@/stores/useUser";
+
+const router = useRouter();
+const { isLoading } = useLoader()
+const { updateUserAccessCode } = useUser()
+const onSubmit = async (event: Event) => {
+    try {
+        isLoading.value = !isLoading.value;
+        const targetElements = (event.target as any).elements;
+        const recoverAccountRecord: Record<string, string> = {};
+
+        for (const targetElement of targetElements) {
+            if (targetElement.name) {
+                recoverAccountRecord[targetElement.name] = targetElement.value;
+            }
+        }
+
+        await updateUserAccessCode(recoverAccountRecord);
+        return router.push('/access-account')
+    } catch (error) {
+        isLoading.value = !isLoading.value;
+    }
+}
 
 const formHeader = computed<FormHeaderProps>(() => ({ header: "E-Bookler", subHeader: "Create an account to start monetizing your content." }))
 const formSections = computed<Array<FormSectionProps>>(() => ([
@@ -34,7 +59,6 @@ const formAction = computed<FormActionProps>(() => ({
         { placeholder: "No account? Create one here!", href: "/create-account" },
     ]
 }))
-const onSubmit = async (event: Event) => {}
 </script>
 
 <style scoped lang="scss">

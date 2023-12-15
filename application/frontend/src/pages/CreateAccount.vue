@@ -13,6 +13,31 @@ import type { FormHeaderProps } from "@/types/FormHeader";
 import type { FormSectionProps } from "@/types/FormSection";
 import { computed } from "vue";
 import { required, email } from "@vuelidate/validators"
+import { useUser } from "@/stores/useUser";
+import { useRouter } from "vue-router";
+import { useLoader } from "@/composables/useLoader";
+
+const router = useRouter();
+const { isLoading } = useLoader()
+const { createUser } = useUser()
+const onSubmit = async (event: Event) => {
+    try {
+        isLoading.value = !isLoading.value;
+        const targetElements = (event.target as any).elements;
+        const createAccountRecord: Record<string, string> = {};
+
+        for (const targetElement of targetElements) {
+            if (targetElement.name) {
+                createAccountRecord[targetElement.name] = targetElement.value;
+            }
+        }
+
+        await createUser(createAccountRecord);
+        return router.push('/access-account')
+    } catch (error) {
+        isLoading.value = !isLoading.value;
+    }
+};
 
 const formHeader = computed<FormHeaderProps>(() => ({ header: "E-Bookler", subHeader: "Create an account to start monetizing your content." }))
 const formSections = computed<Array<FormSectionProps>>(() => ([
@@ -21,7 +46,7 @@ const formSections = computed<Array<FormSectionProps>>(() => ([
         formControls: [
             { name: "username", placeholder: "Username...", type: "text", rules: { required } },
             { name: "email", placeholder: "Email...", type: "email", rules: { required, email } },
-            { name: "phoneNumber", placeholder: "PhoneNumber...", type: "text", rules: { required } },
+            { name: "phoneNumber", placeholder: "PhoneNumber...", type: "number", rules: { required } },
         ]
     },
     {
@@ -40,7 +65,6 @@ const formAction = computed<FormActionProps>(() => ({
         { placeholder: "Forgot your access code? Recover it here!", href: "/recover-account" },
     ]
 }))
-const onSubmit = async (event: Event) => {}
 </script>
 
 <style scoped lang="scss">

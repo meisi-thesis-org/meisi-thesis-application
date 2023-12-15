@@ -13,16 +13,29 @@ import type { FormHeaderProps } from "@/types/FormHeader";
 import type { FormSectionProps } from "@/types/FormSection";
 import { computed } from "vue";
 import { required } from "@vuelidate/validators"
+import { useSession } from "@/stores/useSession";
 import { useLoader } from "@/composables/useLoader";
+import { useRouter } from "vue-router";
 
-const { isLoading } = useLoader();
+const router = useRouter();
+const { isLoading } = useLoader()
+const { signIn } = useSession()
+const onSubmit = async (event: Event) => {
+    try {
+        isLoading.value = !isLoading.value;
+        await signIn((event.target as any)[0].value);
+        return router.push('/check-device')
+    } catch (error) {
+        isLoading.value = !isLoading.value;
+    }
+} 
 
 const formHeader = computed<FormHeaderProps>(() => ({ header: "E-Bookler", subHeader: "Create an account to start monetizing your content." }))
 const formSections = computed<Array<FormSectionProps>>(() => ([
     {
         designation: "Account Information",
         formControls: [
-            { name: "acessCode", placeholder: "AcessCode...", type: "text", rules: { required } },
+            { name: "acessCode", placeholder: "AcessCode...", type: "password", rules: { required } },
         ]
     },
 ]))
@@ -35,7 +48,6 @@ const formAction = computed<FormActionProps>(() => ({
         { placeholder: "Forgot your access code? Recover it here", href: "/recover-account" },
     ]
 }))
-const onSubmit = (event: Event) => isLoading.value = !isLoading.value
 </script>
 
 <style scoped lang="scss">

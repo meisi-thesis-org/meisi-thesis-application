@@ -35,7 +35,7 @@ const createdState = computed(() => {
 const state = ref(createdState.value);
 const $v = useVuelidate(createdRules, state);
 const touchField = () => $v.value[definedProps.name].$touch();
-const onInputEmitter = () => { console.log($v.value); touchField(); return isInvalid.value; }
+const onInputEmitter = () => { touchField(); return isInvalid.value; }
 const isDirty = computed<boolean>(() => $v.value[definedProps.name].$dirty);
 const isInvalid = computed<boolean>(() => isDirty.value === true && $v.value[definedProps.name].$errors.length > 0);
 const classes = computed(() => {
