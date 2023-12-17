@@ -1,13 +1,21 @@
 <template>
-    <img :src="icon" alt="icon" :id="componentId">
+    <ComputerDesktopIcon class="icon" v-if="definedProps.name === 'device'" :style="definedStyle" />
+    <WifiIcon class="icon" v-if="definedProps.name === 'network'" :style="definedStyle" />
 </template>
 
 <script setup lang="ts">
-import type { IconProps } from '@/types/Icon';
-import { computed } from 'vue';
+import type { IconProps } from "@/types/Icon";
+import { ComputerDesktopIcon, WifiIcon } from "@heroicons/vue/24/solid";
+import { computed } from "vue";
 const definedProps = defineProps<IconProps>();
-const componentId = computed(() => `icon__${definedProps.designation}`)
-const icon = computed(() => `./../svgs/${definedProps.designation}.svg`)
+const definedStyle = computed(() => ({
+    width: definedProps.width,
+    height: definedProps.height
+}))
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.icon {
+    color: currentColor;
+}
+</style>
