@@ -1,5 +1,6 @@
 import { useFetch } from '@/composables/useFetch';
 import { useLoader } from '@/composables/useLoader';
+import type { Primitive } from '@/types/Primitive';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
@@ -19,33 +20,33 @@ export const useUser = defineStore('user', () => {
   const user = ref<UserEntity>();
 
   const findUserByUuid = async (uuid: string) => {
-    const response = await createRequest(`http://localhost:8000/security/users/${uuid}`, 'GET');
-    return await response.json() as UserEntity;
+    const response = await createRequest<UserEntity>(`security/users/${uuid}`, 'GET');
+    return response.data;
   }
 
   const findUserByAccessCode = async (accessCode: string) => {
-    const response = await createRequest(`http://localhost:8000/security/users/access-code/${accessCode}`, 'GET');
-    return await response.json() as UserEntity;
+    const response = await createRequest<UserEntity>(`security/users/access-code/${accessCode}`, 'GET');
+    return response.data;
   }
 
-  const createUser = async <T>(params: Record<string, T>) => {
-    const response = await createRequest('http://localhost:8000/security/users', 'POST', params);
-    user.value = await response.json() as UserEntity;
+  const createUser = async (params: Record<string, Primitive>) => {
+    const response = await createRequest<UserEntity>('security/users', 'POST', params);
+    user.value = response.data;
   }
 
-  const updateUserByUuid = async <T>(
+  const updateUserByUuid = async (
     uuid: string,
-    params: Record<string, T>
+    params: Record<string, Primitive>
   ) => {
-    const response = await createRequest(`http://localhost:8000/security/users/${uuid}`, 'PUT', params);
-    user.value = await response.json() as UserEntity;
+    const response = await createRequest<UserEntity>(`security/users/${uuid}`, 'PUT', params);
+    user.value = response.data;
   }
 
-  const updateUserAccessCode = async <T>(
-    params: Record<string, T>
+  const updateUserAccessCode = async (
+    params: Record<string, Primitive>
   ) => {
-    const response = await createRequest(`http://localhost:8000/security/users/access-code`, 'PUT', params);
-    user.value = await response.json() as UserEntity;
+    const response = await createRequest<UserEntity>(`security/users/access-code`, 'PUT', params);
+    user.value = response.data;
   }
 
   return { user, findUserByUuid, findUserByAccessCode, createUser, updateUserByUuid, updateUserAccessCode };
