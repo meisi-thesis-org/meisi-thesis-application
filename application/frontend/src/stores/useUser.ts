@@ -24,7 +24,7 @@ export const useUser = defineStore('user', () => {
   }
 
   const findUserByAccessCode = async (accessCode: string) => {
-    const response = await createRequest(`http://localhost:8000/security/users/${accessCode}`, 'GET');
+    const response = await createRequest(`http://localhost:8000/security/users/access-code/${accessCode}`, 'GET');
     return await response.json() as UserEntity;
   }
 

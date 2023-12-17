@@ -33,6 +33,7 @@ const onSubmit = async (event: Event) => {
         }
 
         await createUser(createAccountRecord);
+        isLoading.value = !isLoading.value;
         return router.push('/access-account')
     } catch (error) {
         isLoading.value = !isLoading.value;

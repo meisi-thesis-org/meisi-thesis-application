@@ -24,6 +24,7 @@ const onSubmit = async (event: Event) => {
     try {
         isLoading.value = !isLoading.value;
         await signIn((event.target as any)[0].value);
+        isLoading.value = !isLoading.value;
         return router.push('/check-device')
     } catch (error) {
         isLoading.value = !isLoading.value;
