@@ -6,10 +6,11 @@ export const useAuthenticationResolver = async (
   _from: RouteLocation,
   next: NavigationGuardNext
 ) => {
-  const { isAuthenticated } = useAuthentication()
+  const { isSessionExpired } = useAuthentication()
+  const isExpired = await isSessionExpired()
 
-  if (isAuthenticated() === false && to.meta.requiresSession === true) return next({ name: 'access-account' });
-  if (isAuthenticated() === true && to.meta.requiresSession === false) return next({ name: 'dashboard' });
+  if (isExpired === true && to.meta.requiresSession === true) return next({ name: 'access-account' });
+  if (isExpired === false && to.meta.requiresSession === false) return next({ name: 'dashboard' });
 
   return next();
 }

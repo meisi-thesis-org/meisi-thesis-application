@@ -2,7 +2,7 @@ import { useNetwork } from '@/stores/useNetwork';
 import { useSession } from '@/stores/useSession';
 import type { NavigationGuardNext, RouteLocation } from 'vue-router';
 
-export const useAuthenticationResolver = async (
+export const useNetworkResolver = async (
   _to: RouteLocation,
   _from: RouteLocation,
   next: NavigationGuardNext

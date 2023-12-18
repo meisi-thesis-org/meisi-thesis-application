@@ -8,7 +8,9 @@ import CheckDevice from '@/pages/CheckDevice.vue'
 import CheckNetwork from '@/pages/CheckNetwork.vue'
 import Dashboard from '@/pages/Dashboard.vue'
 import { createPinia } from 'pinia'
-import { useAuthenticationResolver } from './resolvers/useAuthenticationResolver'
+import { useAuthenticationResolver } from '@/resolvers/useAuthenticationResolver'
+import { useDeviceResolver } from '@/resolvers/useDeviceResolver'
+import { useNetworkResolver } from '@/resolvers/useNetworkResolver'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -43,7 +45,8 @@ const router = createRouter({
       component: CheckDevice,
       meta: {
         requiresSession: true
-      }
+      },
+      beforeEnter: useDeviceResolver
     },
     {
       name: 'check-network',
@@ -51,7 +54,8 @@ const router = createRouter({
       component: CheckNetwork,
       meta: {
         requiresSession: true
-      }
+      },
+      beforeEnter: useNetworkResolver
     },
     {
       name: 'dashboard',
@@ -64,7 +68,7 @@ const router = createRouter({
   ]
 })
 
-// router.beforeEach((to, from, next) => useAuthenticationResolver(to, from, next))
+router.beforeEach((to, from, next) => useAuthenticationResolver(to, from, next))
 const pinia = createPinia()
 
 createApp(App).use(router).use(pinia).mount('#app')

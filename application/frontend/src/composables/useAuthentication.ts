@@ -1,13 +1,21 @@
 import { useSession } from "@/stores/useSession";
 
 export const useAuthentication = () => {
-    const { session } = useSession();
+    const { session, refreshTokens } = useSession();
 
-    const isAuthenticated = () => {
-        if (!session?.accessToken || !session?.refreshToken || !session?.userUuid) return false;
-        const expiry = (JSON.parse(atob(session.accessToken.split('.')[1]))).exp;
-        return (Math.floor((new Date).getTime() / 1000)) <= expiry;
+    const isTokenExpired = (accessToken: string) => {
+        const expiry = (JSON.parse(atob(accessToken.split('.')[1]))).exp;
+        return (Math.floor((new Date).getTime() / 1000)) >= expiry;
     }
 
-    return { isAuthenticated }
+    const isSessionExpired = async () => {
+        if (isTokenExpired(session.accessToken)) {
+            await refreshTokens()
+            return isTokenExpired(session.accessToken)
+        }
+
+        return false;
+    }
+
+    return { isSessionExpired }
 }

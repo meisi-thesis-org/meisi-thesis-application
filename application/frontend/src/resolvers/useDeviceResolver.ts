@@ -2,8 +2,8 @@ import { useDevice } from '@/stores/useDevice';
 import { useSession } from '@/stores/useSession';
 import type { NavigationGuardNext, RouteLocation } from 'vue-router';
 
-export const useAuthenticationResolver = async (
-  to: RouteLocation,
+export const useDeviceResolver = async (
+  _to: RouteLocation,
   _from: RouteLocation,
   next: NavigationGuardNext
 ) => {
