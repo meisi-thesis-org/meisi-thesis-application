@@ -1,7 +1,7 @@
 type DeviceEntity = {
   readonly uuid: string
   readonly userUuid: string
-  ipAddress: string
+  userAgent: string
   visible: boolean
   active: boolean
   readonly createdAt: string
@@ -14,7 +14,7 @@ const deviceMapper = (deviceEntity: DeviceEntity): DeviceDTO => {
   return {
     uuid: deviceEntity.uuid,
     userUuid: deviceEntity.userUuid,
-    ipAddress: deviceEntity.ipAddress,
+    userAgent: deviceEntity.userAgent,
     visible: deviceEntity.visible,
     active: deviceEntity.active,
     createdAt: deviceEntity.createdAt,

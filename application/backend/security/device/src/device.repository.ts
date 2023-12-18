@@ -5,7 +5,7 @@ export interface DeviceRepository {
   findDeviceByUuid(uuid: string): Promise<DeviceDTO | undefined>
   findDeviceByProps(
     userUuid: string,
-    ipAddress: string,
+    userAgent: string,
   ): Promise<DeviceDTO | undefined>
   createDevice(deviceEntity: DeviceEntity): Promise<void>
   updateDeviceByUuid(uuid: string, deviceEntity: Omit<DeviceEntity, 'uuid' | 'userUuid' | 'createdAt'>): Promise<DeviceEntity | undefined>

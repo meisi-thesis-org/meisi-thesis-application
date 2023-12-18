@@ -5,10 +5,10 @@ type FindNetworksByUserUuidRequest =
 type FindNetworkByUuidRequest =
   Readonly<Pick<NetworkEntity, 'uuid'>>
 type CreateNetworkRequest =
-  Readonly<Pick<NetworkEntity, 'userUuid' | 'coordinateX' | 'coordinateY'>>
+  Readonly<Pick<NetworkEntity, 'userUuid' | 'latitude' | 'longitude'>>
 type UpdateNetworkByUuidRequest =
   Readonly<Pick<NetworkEntity, 'uuid'>> &
-  Partial<Readonly<Pick<NetworkEntity, 'coordinateX' | 'coordinateY' | 'visible' | 'active'>>>
+  Partial<Readonly<Pick<NetworkEntity, 'latitude' | 'longitude' | 'visible' | 'active'>>>
 
 export type {
   FindNetworksByUserUuidRequest,

@@ -15,7 +15,7 @@ const FindDevicesByUserUuidSchema = z.object({
 const CreateDeviceSchema = z.object({
   body: z.object({
     userUuid: z.string(),
-    ipAddress: z.string()
+    userAgent: z.string()
   })
 })
 
@@ -24,7 +24,7 @@ const UpdateDeviceByUuidSchema = z.object({
     uuid: z.string()
   }),
   body: z.object({
-    ipAddress: z.string().optional(),
+    userAgent: z.string().optional(),
     visible: z.boolean().optional(),
     active: z.boolean().optional()
   })

@@ -5,8 +5,8 @@ export interface NetworkRepository {
   findNetworkByUuid(uuid: string): Promise<NetworkDTO | undefined>
   findNetworkByProps(
     userUuid: string,
-    coordinateX: string,
-    coordinateY: string
+    latitude: number,
+    longitude: number
   ): Promise<NetworkDTO | undefined>
   createNetwork(networkEntity: NetworkEntity): Promise<void>
   updateNetworkByUuid(uuid: string, networkEntity: Omit<NetworkEntity, 'uuid' | 'userUuid' | 'createdAt'>): Promise<NetworkEntity | undefined>

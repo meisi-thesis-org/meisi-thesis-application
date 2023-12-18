@@ -1,8 +1,8 @@
 type NetworkEntity = {
   readonly uuid: string
   readonly userUuid: string
-  coordinateX: string
-  coordinateY: string
+  latitude: number
+  longitude: number
   visible: boolean
   active: boolean
   readonly createdAt: string
@@ -14,8 +14,8 @@ const networkMapper = (networkEntity: NetworkEntity): NetworkDTO => {
   return {
     uuid: networkEntity.uuid,
     userUuid: networkEntity.userUuid,
-    coordinateX: networkEntity.coordinateX,
-    coordinateY: networkEntity.coordinateY,
+    latitude: networkEntity.latitude,
+    longitude: networkEntity.longitude,
     visible: networkEntity.visible,
     active: networkEntity.active,
     createdAt: networkEntity.createdAt,

@@ -33,8 +33,8 @@ export class NetworkController {
     try {
       const createNetworkRequest: CreateNetworkRequest = {
         userUuid: request.body.userUuid,
-        coordinateX: request.body.coordinateX,
-        coordinateY: request.body.coordinateY
+        latitude: request.body.latitude,
+        longitude: request.body.longitude
       }
       const network = await this.service.createNetwork(createNetworkRequest);
       return response.status(201).json(network)
@@ -47,8 +47,8 @@ export class NetworkController {
     try {
       const updateNetworkByUuidRequest: UpdateNetworkByUuidRequest = {
         uuid: request.params.uuid,
-        coordinateX: request.body.coordinateX,
-        coordinateY: request.body.coordinateY,
+        latitude: request.body.latitude,
+        longitude: request.body.longitude,
         visible: request.body.visible,
         active: request.body.active
       }

@@ -16,16 +16,21 @@ import { required } from "@vuelidate/validators"
 import { useSession } from "@/stores/useSession";
 import { useLoader } from "@/composables/useLoader";
 import { useRouter } from "vue-router";
+import { useDevice } from "@/stores/useDevice";
 
 const router = useRouter();
 const { isLoading } = useLoader()
-const { signIn } = useSession()
+const { session, signIn } = useSession()
+const { devices, findDevicesByUserUuid } = useDevice()
 const onSubmit = async (event: Event) => {
     try {
         isLoading.value = !isLoading.value;
         await signIn((event.target as any)[0].value);
         isLoading.value = !isLoading.value;
-        return router.push('/check-device')
+        await findDevicesByUserUuid(session.userUuid)
+
+        console.log(devices)
+        // return router.push('/check-device')
     } catch (error) {
         isLoading.value = !isLoading.value;
     }

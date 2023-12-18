@@ -8,7 +8,7 @@ import CheckDevice from '@/pages/CheckDevice.vue'
 import CheckNetwork from '@/pages/CheckNetwork.vue'
 import Dashboard from '@/pages/Dashboard.vue'
 import { createPinia } from 'pinia'
-import { useAuthenticationGuard } from './guards/useAuthenticationGuard'
+import { useAuthenticationResolver } from './resolvers/useAuthenticationResolver'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -18,7 +18,7 @@ const router = createRouter({
       path: '/access-account',
       component: AccessAccount,
       meta: {
-        requiresSession: false,
+        requiresSession: false
       }
     },
     {
@@ -26,7 +26,7 @@ const router = createRouter({
       path: '/create-account',
       component: CreateAccount,
       meta: {
-        requiresSession: false,
+        requiresSession: false
       }
     },
     {
@@ -34,7 +34,7 @@ const router = createRouter({
       path: '/recover-account',
       component: RecoverAccount,
       meta: {
-        requiresSession: false,
+        requiresSession: false
       }
     },
     {
@@ -42,7 +42,7 @@ const router = createRouter({
       path: '/check-device',
       component: CheckDevice,
       meta: {
-        requiresSession: true,
+        requiresSession: true
       }
     },
     {
@@ -50,7 +50,7 @@ const router = createRouter({
       path: '/check-network',
       component: CheckNetwork,
       meta: {
-        requiresSession: true,
+        requiresSession: true
       }
     },
     {
@@ -58,13 +58,13 @@ const router = createRouter({
       path: '/dashboard',
       component: Dashboard,
       meta: {
-        requiresSession: true,
+        requiresSession: true
       }
     }
   ]
 })
 
-router.beforeEach((to, from, next) => useAuthenticationGuard(to, from, next))
+// router.beforeEach((to, from, next) => useAuthenticationResolver(to, from, next))
 const pinia = createPinia()
 
 createApp(App).use(router).use(pinia).mount('#app')

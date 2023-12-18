@@ -17,15 +17,14 @@ describe('NetworkService', () => {
 
   const randomProvider = new RandomProvider();
 
-  const randomString = randomProvider.randomString(16);
   const randomUuid = randomProvider.randomUUID();
   const randomDate = new Date().toISOString();
 
   const networkDTO: NetworkDTO = {
     uuid: randomUuid,
     userUuid: randomUuid,
-    coordinateX: randomString,
-    coordinateY: randomString,
+    latitude: 10,
+    longitude: 10,
     visible: true,
     active: true,
     createdAt: randomDate,
@@ -72,8 +71,8 @@ describe('NetworkService', () => {
     async function callCreateCollection (): Promise<NetworkDTO> {
       return await instance.createNetwork({
         userUuid: randomUuid,
-        coordinateX: randomString,
-        coordinateY: randomString
+        latitude: 10,
+        longitude: 10
       })
     }
 
@@ -122,8 +121,8 @@ describe('NetworkService', () => {
     async function callUpdateNetworkByUuid (): Promise<NetworkDTO> {
       return await instance.updateNetworkByUuid({
         uuid: randomUuid,
-        coordinateX: randomString,
-        coordinateY: randomString,
+        latitude: 10,
+        longitude: 10,
         active: true,
         visible: true
       })

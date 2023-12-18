@@ -15,8 +15,8 @@ const FindNetworksByUserUuidSchema = z.object({
 const CreateNetworkSchema = z.object({
   body: z.object({
     userUuid: z.string(),
-    coordinateX: z.string(),
-    coordinateY: z.string()
+    latitude: z.number(),
+    longitude: z.number()
   })
 })
 
@@ -25,8 +25,8 @@ const UpdateNetworkByUuidSchema = z.object({
     uuid: z.string()
   }),
   body: z.object({
-    coordinateX: z.string().optional(),
-    coordinateY: z.string().optional(),
+    latitude: z.string().optional(),
+    longitude: z.string().optional(),
     visible: z.boolean().optional(),
     active: z.boolean().optional()
   })

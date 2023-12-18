@@ -22,15 +22,14 @@ describe('NetworkController', () => {
 
   const randomProvider = new RandomProvider();
 
-  const randomString = randomProvider.randomString(16);
   const randomUuid = randomProvider.randomUUID();
   const randomDate = new Date().toISOString();
 
   const networkDTO: NetworkDTO = {
     uuid: randomUuid,
     userUuid: randomUuid,
-    coordinateX: randomString,
-    coordinateY: randomString,
+    latitude: 10,
+    longitude: 10,
     visible: true,
     active: true,
     createdAt: randomDate,
@@ -90,8 +89,8 @@ describe('NetworkController', () => {
       requestMock.body = {
         ...requestMock.body,
         userUuid: randomUuid,
-        coordinateX: randomString,
-        coordinateY: randomString
+        latitude: 10,
+        longitude: 10
       }
     })
 
@@ -119,8 +118,8 @@ describe('NetworkController', () => {
       requestMock.body = {
         ...requestMock.body,
         uuid: randomUuid,
-        coordinateX: randomString,
-        coordinateY: randomString,
+        latitude: 10,
+        longitude: 10,
         visible: true,
         active: true
       }

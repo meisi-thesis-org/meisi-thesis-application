@@ -29,7 +29,7 @@ describe('DeviceController', () => {
   const deviceDTO: DeviceDTO = {
     uuid: randomUuid,
     userUuid: randomUuid,
-    ipAddress: randomString,
+    userAgent: randomString,
     visible: true,
     active: true,
     createdAt: randomDate,
@@ -89,7 +89,7 @@ describe('DeviceController', () => {
       requestMock.body = {
         ...requestMock.body,
         userUuid: randomUuid,
-        ipAddress: randomString
+        userAgent: randomString
       }
     })
 
@@ -117,7 +117,7 @@ describe('DeviceController', () => {
       requestMock.params = { ...requestMock.params, uuid: randomUuid }
       requestMock.body = {
         ...requestMock.body,
-        ipAddress: randomString,
+        userAgent: randomString,
         visible: true,
         active: true
       }

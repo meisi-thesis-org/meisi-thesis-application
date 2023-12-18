@@ -1,5 +1,4 @@
 import { useFetch } from '@/composables/useFetch';
-import { useLoader } from '@/composables/useLoader';
 import type { Primitive } from '@/types/Primitive';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
@@ -45,7 +44,7 @@ export const useUser = defineStore('user', () => {
   const updateUserAccessCode = async (
     params: Record<string, Primitive>
   ) => {
-    const response = await createRequest<UserEntity>(`security/users/access-code`, 'PUT', params);
+    const response = await createRequest<UserEntity>('security/users/access-code', 'PUT', params);
     user.value = response.data;
   }
 

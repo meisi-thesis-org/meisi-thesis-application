@@ -47,8 +47,8 @@ export class NetworkService {
     const foundNetwork = await this.repository
       .findNetworkByProps(
         createNetworkRequest.userUuid,
-        createNetworkRequest.coordinateX,
-        createNetworkRequest.coordinateY
+        createNetworkRequest.latitude,
+        createNetworkRequest.longitude
       ).catch(() => { throw new InternalServerException(); })
 
     if (foundNetwork !== undefined) throw new ConflictException();
@@ -64,8 +64,8 @@ export class NetworkService {
     const createdNetwork: NetworkEntity = {
       uuid: this.randomProvider.randomUUID(),
       userUuid: createNetworkRequest.userUuid,
-      coordinateX: createNetworkRequest.coordinateX,
-      coordinateY: createNetworkRequest.coordinateY,
+      latitude: createNetworkRequest.latitude,
+      longitude: createNetworkRequest.longitude,
       visible: true,
       active: true,
       createdAt: new Date().toISOString(),
@@ -89,8 +89,8 @@ export class NetworkService {
     if (foundNetwork === undefined) throw new NonFoundException();
 
     const toUpdateNetwork: Omit<NetworkEntity, 'uuid' | 'userUuid' | 'createdAt'> = {
-      coordinateX: updateNetworkByUuidRequest.coordinateX ?? foundNetwork.coordinateX,
-      coordinateY: updateNetworkByUuidRequest.coordinateY ?? foundNetwork.coordinateY,
+      latitude: updateNetworkByUuidRequest.latitude ?? foundNetwork.latitude,
+      longitude: updateNetworkByUuidRequest.longitude ?? foundNetwork.longitude,
       visible: updateNetworkByUuidRequest.visible ?? foundNetwork.visible,
       active: updateNetworkByUuidRequest.active ?? foundNetwork.active,
       updatedAt: new Date().toISOString()

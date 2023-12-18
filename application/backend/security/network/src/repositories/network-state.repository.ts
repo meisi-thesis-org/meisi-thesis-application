@@ -18,14 +18,14 @@ export class NetworkStateRepository implements NetworkRepository {
 
   public async findNetworkByProps (
     userUuid: string,
-    coordinateX: string,
-    coordinateY: string
+    latitude: number,
+    longitude: number
   ): Promise<NetworkDTO | undefined> {
     return this.networkCollection.find((network) => {
       if (
         network.userUuid === userUuid &&
-        network.coordinateX === coordinateX &&
-        network.coordinateY === coordinateY
+        network.latitude === latitude &&
+        network.longitude === longitude
       ) return network
 
       return undefined

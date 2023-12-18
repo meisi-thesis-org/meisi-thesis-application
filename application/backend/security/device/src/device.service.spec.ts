@@ -24,7 +24,7 @@ describe('DeviceService', () => {
   const deviceDTO: DeviceDTO = {
     uuid: randomUuid,
     userUuid: randomUuid,
-    ipAddress: randomString,
+    userAgent: randomString,
     visible: true,
     active: true,
     createdAt: randomDate,
@@ -71,7 +71,7 @@ describe('DeviceService', () => {
     async function callCreateDevice (): Promise<DeviceDTO> {
       return await instance.createDevice({
         userUuid: randomUuid,
-        ipAddress: randomString
+        userAgent: randomString
       })
     }
 
@@ -120,7 +120,7 @@ describe('DeviceService', () => {
     async function callUpdateDeviceByUuid (): Promise<DeviceDTO> {
       return await instance.updateDeviceByUuid({
         uuid: randomUuid,
-        ipAddress: randomString,
+        userAgent: randomString,
         active: true,
         visible: true
       })

@@ -33,7 +33,7 @@ export class DeviceController {
     try {
       const createDeviceRequest: CreateDeviceRequest = {
         userUuid: request.body.userUuid,
-        ipAddress: request.body.ipAddress
+        userAgent: request.body.userAgent
       }
       const device = await this.service.createDevice(createDeviceRequest);
       return response.status(201).json(device)
@@ -46,7 +46,7 @@ export class DeviceController {
     try {
       const updateDeviceByUuidRequest: UpdateDeviceByUuidRequest = {
         uuid: request.params.uuid,
-        ipAddress: request.body.ipAddress,
+        userAgent: request.body.userAgent,
         visible: request.body.visible,
         active: request.body.active
       }
