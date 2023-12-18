@@ -17,7 +17,7 @@ const useDevice = defineStore('devices', () => {
   const devices = ref<DeviceEntity[]>();
 
   const findDevicesByUserUuid = async (userUuid: string) => {
-    const response = await createRequest<DeviceEntity[]>('security/devices', 'GET', { userUuid });
+    const response = await createRequest<DeviceEntity[]>('security/devices', 'GET', undefined, { userUuid });
     devices.value = response.data;
   }
 

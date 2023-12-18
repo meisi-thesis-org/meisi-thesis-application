@@ -11,6 +11,6 @@ export const useDeviceResolver = async (
   const { devices, findDevicesByUserUuid } = useDevice();
   await findDevicesByUserUuid(session.userUuid);
   const hasDevice = devices?.find((device) => device.userAgent === navigator.userAgent);
-  if (hasDevice !== undefined) return next({ name: 'check-network' });
-  return next();
+  if (hasDevice === undefined) return next();
+  return next({ name: "check-network" });
 }

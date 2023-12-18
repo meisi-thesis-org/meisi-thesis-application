@@ -18,7 +18,7 @@ const useNetwork = defineStore('networks', () => {
   const networks = ref<NetworkEntity[]>();
 
   const findNetworksByUserUuid = async (userUuid: string) => {
-    const response = await createRequest<NetworkEntity[]>('security/networks', 'GET', { userUuid });
+    const response = await createRequest<NetworkEntity[]>('security/networks', 'GET', undefined, { userUuid });
     networks.value = response.data;
   }
 

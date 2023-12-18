@@ -10,6 +10,7 @@ export const useNetworkResolver = async (
   const { session } = useSession();
   const { networks, findNetworksByUserUuid } = useNetwork();
   await findNetworksByUserUuid(session.userUuid);
+
   navigator.geolocation.getCurrentPosition((position) => {
     const coordinates = {
       minLatitude: position.coords.latitude - 10,
@@ -25,8 +26,7 @@ export const useNetworkResolver = async (
       network.longitude <= coordinates.maxLongitude
     );
 
-    if (hasNetwork !== undefined) return next({ name: 'dashboard' })
+    if (hasNetwork !== undefined) return next({ name: "dashboard" });
   })
-
   return next();
 }
