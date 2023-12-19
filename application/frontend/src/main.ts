@@ -7,6 +7,8 @@ import RecoverAccount from '@/pages/RecoverAccount.vue'
 import CheckDevice from '@/pages/CheckDevice.vue'
 import CheckNetwork from '@/pages/CheckNetwork.vue'
 import Dashboard from '@/pages/Dashboard.vue'
+import RegisterDevice from '@/pages/RegisterDevice.vue'
+import RegisterNetwork from '@/pages/RegisterNetwork.vue'
 import { createPinia } from 'pinia'
 import { useAuthenticationResolver } from '@/resolvers/useAuthenticationResolver'
 import { useDeviceResolver } from '@/resolvers/useDeviceResolver'
@@ -56,6 +58,23 @@ const router = createRouter({
         requiresSession: true
       },
       beforeEnter: useNetworkResolver
+    },
+
+    {
+      name: 'register-device',
+      path: '/register-device',
+      component: RegisterDevice,
+      meta: {
+        requiresSession: true
+      },
+    },
+    {
+      name: 'register-network',
+      path: '/register-network',
+      component: RegisterNetwork,
+      meta: {
+        requiresSession: true
+      },
     },
     {
       name: 'dashboard',
