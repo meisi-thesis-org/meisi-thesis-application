@@ -15,26 +15,23 @@ import { computed } from "vue";
 import { required } from "@vuelidate/validators"
 import { useSession } from "@/stores/useSession";
 import { useLoader } from "@/composables/useLoader";
-import { useRouter } from "vue-router";
 import { useDevice } from "@/stores/useDevice";
+import { useRouter } from "vue-router";
 
-const router = useRouter();
 const { isLoading } = useLoader()
-const { session, signIn } = useSession()
-const { devices, findDevicesByUserUuid } = useDevice()
+const { signIn } = useSession()
+const router = useRouter()
+const { findDevicesByUserUuid } = useDevice()
 const onSubmit = async (event: Event) => {
     try {
         isLoading.value = !isLoading.value;
         await signIn((event.target as any)[0].value);
-        isLoading.value = !isLoading.value;
-        await findDevicesByUserUuid(session.userUuid)
-
-        console.log(devices)
-        // return router.push('/check-device')
-    } catch (error) {
+        const devices = await findDevicesByUserUuid();
+        return devices.value && devices.value.length > 0 ? router.push('/check-device') : router.push('/register-device');
+    } finally {
         isLoading.value = !isLoading.value;
     }
-} 
+}
 
 const formHeader = computed<FormHeaderProps>(() => ({ header: "E-Bookler", subHeader: "Create an account to start monetizing your content." }))
 const formSections = computed<Array<FormSectionProps>>(() => ([

@@ -22,7 +22,7 @@ const useSession = defineStore('session', () => {
     const response = await createRequest<SessionEntity>(`session/sign-in/${uuid}`, 'PUT');
     session.value = response.data;
     save('session', session.value);
-    console.log(session)
+    console.log(session.value)
   };
 
   const refreshTokens = async () => {

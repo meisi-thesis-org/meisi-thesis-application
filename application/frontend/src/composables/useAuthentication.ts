@@ -9,12 +9,16 @@ export const useAuthentication = () => {
     }
 
     const isSessionExpired = async () => {
-        if (isTokenExpired(session.accessToken)) {
-            await refreshTokens()
-            return isTokenExpired(session.accessToken)
+        if(session.accessToken) {
+            if (isTokenExpired(session.accessToken)) {
+                await refreshTokens()
+                return isTokenExpired(session.accessToken)
+            }
+    
+            return false;
         }
-
-        return false;
+        
+        return true;
     }
 
     return { isSessionExpired }
