@@ -1,22 +1,12 @@
 import { useFetch } from '@/composables/useFetch';
+import type { UserEntity } from '@/types/Entities';
 import type { Primitive } from '@/types/Primitive';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
-type UserEntity = {
-  readonly uuid: string
-  username: string
-  email: string
-  phoneNumber: string
-  name: string
-  dateBirth: string
-  createdAt: string
-  updatedAt: string
-}
-
 export const useUser = defineStore('user', () => {
   const { createRequest } = useFetch()
-  const user = ref<UserEntity>();
+  const state = ref<UserEntity>();
 
   const findUserByUuid = async (uuid: string) => {
     const response = await createRequest<UserEntity>(`security/users/${uuid}`, 'GET');
@@ -30,7 +20,7 @@ export const useUser = defineStore('user', () => {
 
   const createUser = async (params: Record<string, Primitive>) => {
     const response = await createRequest<UserEntity>('security/users', 'POST', params);
-    user.value = response.data;
+    state.value = response.data;
   }
 
   const updateUserByUuid = async (
@@ -38,15 +28,22 @@ export const useUser = defineStore('user', () => {
     params: Record<string, Primitive>
   ) => {
     const response = await createRequest<UserEntity>(`security/users/${uuid}`, 'PUT', params);
-    user.value = response.data;
+    state.value = response.data;
   }
 
   const updateUserAccessCode = async (
     params: Record<string, Primitive>
   ) => {
     const response = await createRequest<UserEntity>('security/users/access-code', 'PUT', params);
-    user.value = response.data;
+    state.value = response.data;
   }
 
-  return { user, findUserByUuid, findUserByAccessCode, createUser, updateUserByUuid, updateUserAccessCode };
+  return {
+    user: state.value,
+    findUserByUuid,
+    findUserByAccessCode,
+    createUser,
+    updateUserByUuid,
+    updateUserAccessCode
+  };
 });

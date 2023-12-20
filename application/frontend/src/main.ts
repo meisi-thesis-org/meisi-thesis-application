@@ -10,9 +10,9 @@ import Dashboard from '@/pages/Dashboard.vue'
 import RegisterDevice from '@/pages/RegisterDevice.vue'
 import RegisterNetwork from '@/pages/RegisterNetwork.vue'
 import { createPinia } from 'pinia'
-import { useAuthenticationResolver } from '@/resolvers/useAuthenticationResolver'
-import { useDeviceResolver } from '@/resolvers/useDeviceResolver'
-import { useNetworkResolver } from '@/resolvers/useNetworkResolver'
+import { isDeviceRegistered } from './guards/isDeviceRegistered'
+import { isNetworkRegistered } from './guards/isNetworkRegistered'
+import { isSessionExpired } from './guards/isSessionExpired'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -48,7 +48,7 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
-      beforeEnter: useDeviceResolver
+      beforeEnter: [isSessionExpired, isDeviceRegistered, isNetworkRegistered]
     },
     {
       name: 'check-network',
@@ -57,7 +57,7 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
-      beforeEnter: useNetworkResolver
+      beforeEnter: [isSessionExpired, isDeviceRegistered, isNetworkRegistered]
     },
 
     {
@@ -67,6 +67,7 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
+      beforeEnter: [isSessionExpired, isDeviceRegistered, isNetworkRegistered]
     },
     {
       name: 'register-network',
@@ -75,6 +76,7 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
+      beforeEnter: [isSessionExpired, isDeviceRegistered, isNetworkRegistered]
     },
     {
       name: 'dashboard',
@@ -82,12 +84,10 @@ const router = createRouter({
       component: Dashboard,
       meta: {
         requiresSession: true
-      }
+      },
+      beforeEnter: [isSessionExpired, isDeviceRegistered, isNetworkRegistered]
     }
   ]
 })
 
-router.beforeEach((to, from, next) => useAuthenticationResolver(to, from, next))
-const pinia = createPinia()
-
-createApp(App).use(router).use(pinia).mount('#app')
+createApp(App).use(router).use(createPinia()).mount('#app')

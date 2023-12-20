@@ -21,13 +21,11 @@ import { useRouter } from "vue-router";
 const { isLoading } = useLoader()
 const { signIn } = useSession()
 const router = useRouter()
-const { findDevicesByUserUuid } = useDevice()
 const onSubmit = async (event: Event) => {
     try {
         isLoading.value = !isLoading.value;
         await signIn((event.target as any)[0].value);
-        const devices = await findDevicesByUserUuid();
-        return devices.value && devices.value.length > 0 ? router.push('/check-device') : router.push('/register-device');
+        return router.push('/dashboard')
     } finally {
         isLoading.value = !isLoading.value;
     }
