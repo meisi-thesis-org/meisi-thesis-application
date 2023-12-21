@@ -8,7 +8,7 @@
                 <Typography :content="'Should it be registered?'" :segment="'paragraph'" />
             </div>
             <Button :placeholder="'Register'" :on-click="onContinue" />
-            <Link :placeholder="'I will do this later...'" :href="''" />
+            <Link :placeholder="'I will do this later...'" :href="onSkip()" />
         </div>
     </div>
 </template>
@@ -19,8 +19,23 @@ import Icon from '@/components/Icon.vue';
 import Typography from '@/components/Typography.vue';
 import Link from '@/components/Link.vue';
 import { useRouter } from 'vue-router';
+import { useLoader } from '@/composables/useLoader';
+import { useNetwork } from '@/stores/useNetwork';
 const router = useRouter();
-const onContinue = () => router.push("/dashboard");
+const { isLoading } = useLoader()
+const { createNetwork } = useNetwork()
+const onContinue = async () => {
+    try {
+        isLoading.value = !isLoading.value;
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            await createNetwork(position.coords.latitude, position.coords.longitude);
+        })
+        return router.push("/dashboard")
+    } finally {
+        isLoading.value = !isLoading.value;
+    }
+};
+const onSkip = () => "/dashboard"
 </script>
 
 <style scoped lang="scss">

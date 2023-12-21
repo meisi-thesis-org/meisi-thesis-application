@@ -10,13 +10,22 @@ const useNetwork = defineStore('networks', () => {
 
   const findNetworksByUserUuid = async () => {
     const { session } = useSession();
-    const response = await createRequest<NetworkEntity[]>('security/networks', 'GET', undefined, { userUuid: session.accessToken });
+    const response = await createRequest<NetworkEntity[]>('security/networks', 'GET', undefined, { userUuid: session.userUuid });
     state.value = response.data;
+  }
+
+  const createNetwork = async (
+    latitude: number,
+    longitude: number
+  ) => {
+    const { session } = useSession();
+    await createRequest<NetworkEntity[]>('security/networks', 'POST', { userUuid: session.userUuid, latitude, longitude }, undefined);
   }
 
   return {
     networks: state.value,
-    findNetworksByUserUuid
+    findNetworksByUserUuid,
+    createNetwork
   };
 })
 

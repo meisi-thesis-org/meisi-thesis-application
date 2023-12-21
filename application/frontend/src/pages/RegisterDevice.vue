@@ -8,7 +8,7 @@
                 <Typography :content="'Should it be registered?'" :segment="'paragraph'" />
             </div>
             <Button :placeholder="'Register'" :on-click="onContinue" />
-            <Link :placeholder="'I will do this later...'" :href="''" />
+            <Link :placeholder="'I will do this later...'" :href="onSkip()" />
         </div>
     </div>
 </template>
@@ -19,8 +19,21 @@ import Icon from '@/components/Icon.vue';
 import Typography from '@/components/Typography.vue';
 import Link from '@/components/Link.vue';
 import { useRouter } from 'vue-router';
+import { useLoader } from '@/composables/useLoader';
+import { useDevice } from '@/stores/useDevice';
 const router = useRouter();
-const onContinue = () => router.push("/dashboard");
+const { isLoading } = useLoader()
+const { createDevice } = useDevice();
+const onContinue = async () => {
+    try {
+        isLoading.value = !isLoading.value;
+        await createDevice(navigator.userAgent);
+        return router.push("/dashboard")
+    } finally {
+        isLoading.value = !isLoading.value;
+    }
+};
+const onSkip = () => "/dashboard"
 </script>
 
 <style scoped lang="scss">

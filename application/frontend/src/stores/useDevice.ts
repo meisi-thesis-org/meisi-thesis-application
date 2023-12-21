@@ -14,9 +14,17 @@ const useDevice = defineStore('devices', () => {
     state.value = response.data;
   }
 
+  const createDevice = async (
+    userAgent: string
+  ) => {
+    const { session } = useSession();
+    await createRequest<DeviceEntity[]>('security/devices', 'POST', { userUuid: session.userUuid, userAgent }, undefined);
+  }
+
   return {
     devices: state.value,
-    findDevicesByUserUuid
+    findDevicesByUserUuid,
+    createDevice
   };
 })
 
