@@ -1,29 +1,30 @@
 import { useFetch } from '@/composables/useFetch';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { useSession } from './useSession';
 import type { NetworkEntity } from '@/types/Entities';
 
 const useNetwork = defineStore('networks', () => {
   const { createRequest } = useFetch();
-  const state = ref<NetworkEntity[]>();
+  const state = ref<NetworkEntity[]>([]);
 
-  const findNetworksByUserUuid = async () => {
-    const { session } = useSession();
-    const response = await createRequest<NetworkEntity[]>('security/networks', 'GET', undefined, { userUuid: session.userUuid });
+  const findNetworksByUserUuid = async (
+    userUuid: string
+  ) => {
+    const response = await createRequest<NetworkEntity[]>('security/networks', 'GET', undefined, { userUuid });
+    console.log(response)
     state.value = response.data;
   }
 
   const createNetwork = async (
+    userUuid: string,
     latitude: number,
     longitude: number
   ) => {
-    const { session } = useSession();
-    await createRequest<NetworkEntity[]>('security/networks', 'POST', { userUuid: session.userUuid, latitude, longitude }, undefined);
+    await createRequest<NetworkEntity[]>('security/networks', 'POST', { userUuid, latitude, longitude }, undefined);
   }
 
   return {
-    networks: state.value,
+    networks: state,
     findNetworksByUserUuid,
     createNetwork
   };

@@ -21,14 +21,17 @@ import Link from '@/components/Link.vue';
 import { useRouter } from 'vue-router';
 import { useLoader } from '@/composables/useLoader';
 import { useNetwork } from '@/stores/useNetwork';
+import { storeToRefs } from 'pinia';
+import { useSession } from '@/stores/useSession';
 const router = useRouter();
 const { isLoading } = useLoader()
 const { createNetwork } = useNetwork()
+const { session } = storeToRefs(useSession());
 const onContinue = async () => {
     try {
         isLoading.value = !isLoading.value;
         navigator.geolocation.getCurrentPosition(async (position) => {
-            await createNetwork(position.coords.latitude, position.coords.longitude);
+            await createNetwork(session.value!.userUuid,position.coords.latitude, position.coords.longitude);
         })
         return router.push("/dashboard")
     } finally {

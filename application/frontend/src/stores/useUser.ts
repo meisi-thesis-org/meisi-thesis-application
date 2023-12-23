@@ -39,7 +39,7 @@ export const useUser = defineStore('user', () => {
   }
 
   return {
-    user: state.value,
+    user: state,
     findUserByUuid,
     findUserByAccessCode,
     createUser,

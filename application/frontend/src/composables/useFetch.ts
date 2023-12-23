@@ -1,17 +1,17 @@
 import { useSession } from '@/stores/useSession';
 import type { Primitive } from '@/types/Primitive';
 import axios from 'axios';
-import { useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia';
 
 export const useFetch = () => {
-  const router = useRouter();
-
   const axiosClient = axios.create({ baseURL: 'http://localhost:8000/' });
 
   axiosClient.interceptors.request.use(
     (config) => {
-      const { session } = useSession()
-      const token = !config.url?.includes('refresh-tokens') ? session.accessToken : session.refreshToken;
+      const { session } = storeToRefs(useSession())
+      if(!session.value) return config;
+      
+      const token = !config.url?.includes('refresh-tokens') ? session.value.accessToken : session.value.refreshToken;
       if (token !== undefined) config.headers.Authorization = `Bearer ${token}`;
       return config;
     },
@@ -23,20 +23,15 @@ export const useFetch = () => {
     async (error) => {
       const originalRequest = error.config;
 
-      if (error.response.status === 401 && !originalRequest._retry) {
+      if (error.response.status === 401 && originalRequest._retry === undefined) {
         originalRequest._retry = true;
-
-        try {
-          const { session, refreshTokens } = useSession();
-          await refreshTokens()
-          originalRequest.headers.Authorization = `Bearer ${session?.accessToken}`
-          return await axios(originalRequest);
-        } catch (error) {
-          return await router.push('/access-account')
-        }
+        const { refreshTokens } = useSession();
+        const isRefreshRequest = (originalRequest.url as string).includes("refresh-tokens");
+        if(isRefreshRequest === false) await refreshTokens();
+        return await axios(originalRequest);
       }
 
-      return await Promise.reject(error);
+      throw error;
     }
   )
 

@@ -13,12 +13,13 @@ export class NetworkProvider {
     httpParams: Record<string, string> | undefined = undefined,
     httpBody: Record<string, string | boolean | number> | undefined = undefined
   ): Promise<unknown> {
-    return await axios(`http:localhost:${httpPort}/${httpPath}`, {
+    return await axios(`http://localhost:${httpPort}/${httpPath}`, {
       method: httpMethod,
       data: httpBody,
       headers: httpHeaders,
       params: httpParams
     }).catch((error) => {
+      console.log(error)
       if (error.response.status === 500) throw new InternalServerException();
       if (error.response.status === 400) throw new BadRequestException();
       if (error.response.status === 404) throw new NonFoundException();

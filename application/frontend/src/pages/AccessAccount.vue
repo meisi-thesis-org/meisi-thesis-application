@@ -15,7 +15,6 @@ import { computed } from "vue";
 import { required } from "@vuelidate/validators"
 import { useSession } from "@/stores/useSession";
 import { useLoader } from "@/composables/useLoader";
-import { useDevice } from "@/stores/useDevice";
 import { useRouter } from "vue-router";
 
 const { isLoading } = useLoader()

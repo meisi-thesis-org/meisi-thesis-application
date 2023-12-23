@@ -21,13 +21,16 @@ import Link from '@/components/Link.vue';
 import { useRouter } from 'vue-router';
 import { useLoader } from '@/composables/useLoader';
 import { useDevice } from '@/stores/useDevice';
+import { useSession } from '@/stores/useSession';
+import { storeToRefs } from 'pinia';
 const router = useRouter();
 const { isLoading } = useLoader()
 const { createDevice } = useDevice();
+const { session } = storeToRefs(useSession());
 const onContinue = async () => {
     try {
         isLoading.value = !isLoading.value;
-        await createDevice(navigator.userAgent);
+        await createDevice(session.value!.userUuid, navigator.userAgent);
         return router.push("/dashboard")
     } finally {
         isLoading.value = !isLoading.value;

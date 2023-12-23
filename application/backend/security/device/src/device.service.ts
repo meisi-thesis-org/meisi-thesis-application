@@ -49,16 +49,16 @@ export class DeviceService {
         createDeviceRequest.userUuid,
         createDeviceRequest.userAgent
       ).catch(() => { throw new InternalServerException(); })
-
+    
     if (foundDevice !== undefined) throw new ConflictException();
 
     await this.networkProvider.doHttpRequest(
       '8000',
-      'security/users',
+      `security/users/${createDeviceRequest.userUuid}`,
       'GET',
       undefined,
-      { uuid: createDeviceRequest.userUuid }
-    )
+      undefined
+    ).catch(() => { throw new InternalServerException(); })
 
     const createDevice: DeviceEntity = {
       uuid: this.randomProvider.randomUUID(),

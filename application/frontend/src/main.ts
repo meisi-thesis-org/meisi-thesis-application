@@ -23,7 +23,7 @@ const router = createRouter({
       component: AccessAccount,
       meta: {
         requiresSession: false
-      }
+      },
     },
     {
       name: 'create-account',
@@ -31,7 +31,7 @@ const router = createRouter({
       component: CreateAccount,
       meta: {
         requiresSession: false
-      }
+      },
     },
     {
       name: 'recover-account',
@@ -39,7 +39,7 @@ const router = createRouter({
       component: RecoverAccount,
       meta: {
         requiresSession: false
-      }
+      },
     },
     {
       name: 'check-device',
@@ -48,7 +48,7 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
-      beforeEnter: [isSessionExpired, isDeviceRegistered, isNetworkRegistered]
+      beforeEnter: [isSessionExpired]
     },
     {
       name: 'check-network',
@@ -57,7 +57,7 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
-      beforeEnter: [isSessionExpired, isDeviceRegistered, isNetworkRegistered]
+      beforeEnter: [isSessionExpired]
     },
 
     {
@@ -67,7 +67,7 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
-      beforeEnter: [isSessionExpired, isDeviceRegistered, isNetworkRegistered]
+      beforeEnter: [isSessionExpired]
     },
     {
       name: 'register-network',
@@ -76,7 +76,7 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
-      beforeEnter: [isSessionExpired, isDeviceRegistered, isNetworkRegistered]
+      beforeEnter: [isSessionExpired]
     },
     {
       name: 'dashboard',

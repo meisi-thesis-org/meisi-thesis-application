@@ -1,35 +1,58 @@
 import { useNetwork } from '@/stores/useNetwork';
+import { useSession } from '@/stores/useSession';
+import { storeToRefs } from 'pinia';
 import { type NavigationGuardNext, type RouteLocation } from 'vue-router';
 
-export const isNetworkRegistered = async (
+export const isNetworkRegistered = (
   _to: RouteLocation,
   _from: RouteLocation,
   next: NavigationGuardNext
 ) => {
-  const { networks, findNetworksByUserUuid } = useNetwork();
-  await findNetworksByUserUuid();
+  const useNetworkStore = useNetwork();
+  const { networks } = storeToRefs(useNetworkStore);
+  const { session } = storeToRefs(useSession());
 
-  if (networks === undefined || networks.length === 0) next({ name: 'register-network' })
-  if (networks !== undefined && networks.length > 0) {
-    navigator.geolocation.getCurrentPosition((position) => {
-      const coordinates = {
-        minLatitude: position.coords.latitude - 10,
-        maxLatitude: position.coords.latitude + 10,
-        minLongitude: position.coords.longitude - 10,
-        maxLongitude: position.coords.longitude + 10
-      }
+  navigator.geolocation.getCurrentPosition(async (position) => {
+    if (session.value === undefined) return next({ name: "access-account" });
 
-      const hasNetwork = networks?.find((network) =>
-        network.latitude >= coordinates.minLatitude &&
-        network.latitude <= coordinates.maxLatitude &&
-        network.longitude >= coordinates.minLongitude &&
-        network.longitude <= coordinates.maxLongitude
+    const sessionUserUuid = session.value?.userUuid;
+
+    const coordinates = {
+      minLatitude: position.coords.latitude - 10,
+      maxLatitude: position.coords.latitude + 10,
+      minLongitude: position.coords.longitude - 10,
+      maxLongitude: position.coords.longitude + 10
+    }
+
+    const isNetworkOnState = networks.value.find(({ userUuid, latitude, longitude }) =>
+      userUuid === sessionUserUuid &&
+      (
+        latitude >= coordinates.minLatitude &&
+        latitude <= coordinates.maxLatitude &&
+        longitude >= coordinates.minLongitude &&
+        longitude <= coordinates.maxLongitude
+      ));
+
+    if (isNetworkOnState) return next();
+
+    await useNetworkStore.findNetworksByUserUuid(sessionUserUuid);
+
+    console.log(networks)
+
+    if (networks.value.length === 0) return next({ name: 'register-network' })
+    if (networks.value.length > 0) {
+      const hasNetwork = networks.value.find(({ latitude, longitude }) =>
+        latitude >= coordinates.minLatitude &&
+        latitude <= coordinates.maxLatitude &&
+        longitude >= coordinates.minLongitude &&
+        longitude <= coordinates.maxLongitude
       );
 
       if (hasNetwork === undefined) return next({ name: 'register-network' });
       if (hasNetwork !== undefined) return next();
-    })
+    }
 
     return next({ name: 'check-network' })
-  }
+  })
+
 }

@@ -1,28 +1,29 @@
 import { useFetch } from '@/composables/useFetch';
-import { defineStore } from 'pinia';
-import { ref } from 'vue';
-import { useSession } from './useSession';
+import { defineStore, storeToRefs } from 'pinia';
+import { computed, ref } from 'vue';
 import type { DeviceEntity } from '@/types/Entities';
+
+const state = ref<DeviceEntity[]>([]);
 
 const useDevice = defineStore('devices', () => {
   const { createRequest } = useFetch();
-  const state = ref<DeviceEntity[]>();
 
-  const findDevicesByUserUuid = async () => {
-    const { session } = useSession();
-    const response = await createRequest<DeviceEntity[]>('security/devices', 'GET', undefined, { userUuid: session.userUuid });
+  const findDevicesByUserUuid = async (
+    userUuid: string
+  ) => {
+    const response = await createRequest<DeviceEntity[]>('security/devices', 'GET', undefined, { userUuid });
     state.value = response.data;
   }
 
   const createDevice = async (
+    userUuid: string,
     userAgent: string
   ) => {
-    const { session } = useSession();
-    await createRequest<DeviceEntity[]>('security/devices', 'POST', { userUuid: session.userUuid, userAgent }, undefined);
+    await createRequest<DeviceEntity[]>('security/devices', 'POST', { userUuid, userAgent }, undefined);
   }
 
   return {
-    devices: state.value,
+    devices: state,
     findDevicesByUserUuid,
     createDevice
   };

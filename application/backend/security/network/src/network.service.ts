@@ -55,10 +55,9 @@ export class NetworkService {
 
     await this.networkProvider.doHttpRequest(
       '8000',
-      'security/users',
+      `security/users/${createNetworkRequest.userUuid}`,
       'GET',
-      undefined,
-      { uuid: createNetworkRequest.userUuid }
+      undefined
     )
 
     const createdNetwork: NetworkEntity = {

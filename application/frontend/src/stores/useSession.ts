@@ -1,6 +1,6 @@
 import { useFetch } from '@/composables/useFetch';
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useUser } from './useUser';
 import { useLocalStorage } from '@/composables/useLocalStorage';
 import type { SessionEntity } from '@/types/Entities';
@@ -10,7 +10,7 @@ const useSession = defineStore('session', () => {
   const { createRequest } = useFetch();
   const { findUserByAccessCode } = useUser();
 
-  const state = ref<SessionEntity>(fetch('session') ?? {});
+  const state = ref<SessionEntity | undefined>(fetch('session') ?? undefined);
 
   const signIn = async (accessCode: string) => {
     const { uuid } = await findUserByAccessCode(accessCode);
@@ -20,9 +20,13 @@ const useSession = defineStore('session', () => {
   };
 
   const refreshTokens = async () => {
-    const response = await createRequest<SessionEntity>('session/refresh-tokens', 'PUT');
-    state.value = response.data;
-    save('session', state.value);
+    try {
+      const response = await createRequest<SessionEntity>('session/refresh-tokens', 'PUT');
+      state.value = response.data;
+      save('session', state.value);
+    } catch (error) {
+      remove("session");
+    }
   };
 
   const signOut = async () => {
@@ -32,7 +36,7 @@ const useSession = defineStore('session', () => {
   };
 
   return {
-    session: state.value,
+    session: state,
     signIn,
     refreshTokens,
     signOut
