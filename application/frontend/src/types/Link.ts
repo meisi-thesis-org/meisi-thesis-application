@@ -1,6 +1,6 @@
 type LinkProps = {
     readonly placeholder: string
-    readonly href: string
+    readonly href: Function
 }
 
 export type { LinkProps }

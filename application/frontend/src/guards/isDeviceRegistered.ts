@@ -1,3 +1,4 @@
+import { useLocalStorage } from '@/composables/useLocalStorage';
 import { useDevice } from '@/stores/useDevice';
 import { useSession } from '@/stores/useSession';
 import { storeToRefs } from 'pinia';
@@ -10,8 +11,11 @@ export const isDeviceRegistered = async (
 ) => {
   const useDeviceStore = useDevice();
   const useSessionStore = useSession();
+  const { fetch } = useLocalStorage();
   const { devices } = storeToRefs(useDeviceStore);
   const { session } = storeToRefs(useSessionStore);
+
+  if (fetch('is_device_unknown') !== null) return next();
 
   if (!session.value) return next({ name: "access-account" });
 

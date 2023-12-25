@@ -8,7 +8,8 @@
                 <Typography :content="'Should it be registered?'" :segment="'paragraph'" />
             </div>
             <Button :placeholder="'Register'" :on-click="onContinue" />
-            <Link :placeholder="'I will do this later...'" :href="onSkip()" />
+            <Link :placeholder="'I will do this later...'" :href="onSkip" />
+            <Typography :content="'(By doing this your actions will be diminished...)'" :segment="'designation'" />
         </div>
     </div>
 </template>
@@ -23,20 +24,26 @@ import { useLoader } from '@/composables/useLoader';
 import { useDevice } from '@/stores/useDevice';
 import { useSession } from '@/stores/useSession';
 import { storeToRefs } from 'pinia';
+import { useLocalStorage } from '@/composables/useLocalStorage';
 const router = useRouter();
 const { isLoading } = useLoader()
 const { createDevice } = useDevice();
 const { session } = storeToRefs(useSession());
+const { save } = useLocalStorage();
 const onContinue = async () => {
     try {
         isLoading.value = !isLoading.value;
         await createDevice(session.value!.userUuid, navigator.userAgent);
+        save('is_device_unknown', false);
         return router.push("/dashboard")
     } finally {
         isLoading.value = !isLoading.value;
     }
 };
-const onSkip = () => "/dashboard"
+const onSkip = () => {
+    save('is_device_unknown', true);
+    return router.push("/dashboard");
+}
 </script>
 
 <style scoped lang="scss">

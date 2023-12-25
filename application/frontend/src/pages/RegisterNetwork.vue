@@ -8,7 +8,8 @@
                 <Typography :content="'Should it be registered?'" :segment="'paragraph'" />
             </div>
             <Button :placeholder="'Register'" :on-click="onContinue" />
-            <Link :placeholder="'I will do this later...'" :href="onSkip()" />
+            <Link :placeholder="'I will do this later...'" :href="onSkip" />
+            <Typography :content="'(By doing this your actions will be diminished...)'" :segment="'designation'" />
         </div>
     </div>
 </template>
@@ -23,22 +24,28 @@ import { useLoader } from '@/composables/useLoader';
 import { useNetwork } from '@/stores/useNetwork';
 import { storeToRefs } from 'pinia';
 import { useSession } from '@/stores/useSession';
+import { useLocalStorage } from '@/composables/useLocalStorage';
 const router = useRouter();
 const { isLoading } = useLoader()
 const { createNetwork } = useNetwork()
 const { session } = storeToRefs(useSession());
+const { save } = useLocalStorage();
 const onContinue = async () => {
     try {
         isLoading.value = !isLoading.value;
         navigator.geolocation.getCurrentPosition(async (position) => {
-            await createNetwork(session.value!.userUuid,position.coords.latitude, position.coords.longitude);
+            await createNetwork(session.value!.userUuid, position.coords.latitude, position.coords.longitude);
+            save('is_network_unknown', false);
+            return router.push("/dashboard")
         })
-        return router.push("/dashboard")
     } finally {
         isLoading.value = !isLoading.value;
     }
 };
-const onSkip = () => "/dashboard"
+const onSkip = () => {
+    save('is_network_unknown', true);
+    return router.push("/dashboard");
+}
 </script>
 
 <style scoped lang="scss">

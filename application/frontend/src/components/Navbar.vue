@@ -3,13 +3,14 @@
         <div id="navbar__inner">
             <Typography :content="'E-Bookler'" :segment="'brand'" />
             <div id="navbar__inner--icons">
-                
+                <Icon :name="'settings'" :height="'1.5rem'" :width="'1.5rem'" />
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import Icon from './Icon.vue';
 import Typography from './Typography.vue';
 
 

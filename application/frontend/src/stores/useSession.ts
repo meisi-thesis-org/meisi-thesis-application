@@ -6,7 +6,7 @@ import { useLocalStorage } from '@/composables/useLocalStorage';
 import type { SessionEntity } from '@/types/Entities';
 
 const useSession = defineStore('session', () => {
-  const { fetch, save, remove } = useLocalStorage()
+  const { fetch, save, remove, clear } = useLocalStorage()
   const { createRequest } = useFetch();
   const { findUserByAccessCode } = useUser();
 
@@ -32,7 +32,7 @@ const useSession = defineStore('session', () => {
   const signOut = async () => {
     await createRequest('session/sign-out', 'PUT');
     state.value = { accessToken: '', refreshToken: '', userUuid: '' }
-    remove('session');
+    clear();
   };
 
   return {

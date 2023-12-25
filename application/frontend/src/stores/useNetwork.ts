@@ -11,7 +11,6 @@ const useNetwork = defineStore('networks', () => {
     userUuid: string
   ) => {
     const response = await createRequest<NetworkEntity[]>('security/networks', 'GET', undefined, { userUuid });
-    console.log(response)
     state.value = response.data;
   }
 

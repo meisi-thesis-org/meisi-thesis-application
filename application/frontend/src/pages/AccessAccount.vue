@@ -44,8 +44,8 @@ const formAction = computed<FormActionProps>(() => ({
         { placeholder: "Continue" }
     ],
     links: [
-        { placeholder: "No account? Create one here!", href: "/create-account" },
-        { placeholder: "Forgot your access code? Recover it here", href: "/recover-account" },
+        { placeholder: "No account? Create one here!", href: () => router.push("/create-account") },
+        { placeholder: "Forgot your access code? Recover it here",  href: () => router.push("/recover-account") },
     ]
 }))
 </script>

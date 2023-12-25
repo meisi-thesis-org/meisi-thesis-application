@@ -1,3 +1,4 @@
+import { useLocalStorage } from '@/composables/useLocalStorage';
 import { useNetwork } from '@/stores/useNetwork';
 import { useSession } from '@/stores/useSession';
 import { storeToRefs } from 'pinia';
@@ -11,6 +12,9 @@ export const isNetworkRegistered = (
   const useNetworkStore = useNetwork();
   const { networks } = storeToRefs(useNetworkStore);
   const { session } = storeToRefs(useSession());
+  const { fetch } = useLocalStorage();
+
+  if (fetch('is_network_unknown') !== null) return next();
 
   navigator.geolocation.getCurrentPosition(async (position) => {
     if (session.value === undefined) return next({ name: "access-account" });
@@ -32,12 +36,9 @@ export const isNetworkRegistered = (
         longitude >= coordinates.minLongitude &&
         longitude <= coordinates.maxLongitude
       ));
-
     if (isNetworkOnState) return next();
 
     await useNetworkStore.findNetworksByUserUuid(sessionUserUuid);
-
-    console.log(networks)
 
     if (networks.value.length === 0) return next({ name: 'register-network' })
     if (networks.value.length > 0) {
@@ -47,12 +48,10 @@ export const isNetworkRegistered = (
         longitude >= coordinates.minLongitude &&
         longitude <= coordinates.maxLongitude
       );
-
       if (hasNetwork === undefined) return next({ name: 'register-network' });
       if (hasNetwork !== undefined) return next();
     }
 
     return next({ name: 'check-network' })
   })
-
 }

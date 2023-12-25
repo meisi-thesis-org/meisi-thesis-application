@@ -1,5 +1,5 @@
 type IconProps = {
-  readonly name: 'device' | 'network'
+  readonly name: 'device' | 'network' | 'settings'
   readonly height: string
   readonly width: string
 }

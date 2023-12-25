@@ -1,11 +1,12 @@
 <template>
     <ComputerDesktopIcon class="icon" v-if="definedProps.name === 'device'" :style="definedStyle" />
     <WifiIcon class="icon" v-if="definedProps.name === 'network'" :style="definedStyle" />
+    <Cog8ToothIcon class="icon" v-if="definedProps.name === 'settings'" :style="definedStyle" />
 </template>
 
 <script setup lang="ts">
 import type { IconProps } from "@/types/Icon";
-import { ComputerDesktopIcon, WifiIcon } from "@heroicons/vue/24/solid";
+import { Cog8ToothIcon , ComputerDesktopIcon, WifiIcon  } from "@heroicons/vue/24/solid";
 import { computed } from "vue";
 const definedProps = defineProps<IconProps>();
 const definedStyle = computed(() => ({
