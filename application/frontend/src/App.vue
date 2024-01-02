@@ -1,12 +1,16 @@
 <template>
+  <div id="wrapper" :class="theme">
     <Loader v-show="isLoading" />
     <router-view v-show="!isLoading"></router-view>
+  </div>
 </template>
 
 <script setup lang="ts">
 import Loader from '@/components/Loader.vue';
 import { useLoader } from "@/composables/useLoader";
+import { useTheme } from './composables/useTheme';
 const { isLoading } = useLoader();
+const { theme } = useTheme();
 </script>
 
 <style lang="scss">
@@ -21,15 +25,26 @@ const { isLoading } = useLoader();
   --light--theme--color: #FFFFFF;
   --blue--theme--color: #5382A1;
 
-  background-color: var(--light--theme--color);
-  color: var(--dark--theme--color);
-
   font-family: 'Quicksand', sans-serif;
 }
 
-html, body, #app {
+html,
+body,
+#app,
+#wrapper {
   width: 100vw;
   min-height: 100vh;
 }
 
+#wrapper {
+  &.dark {
+    background-color: var(--dark--theme--color);
+    color: var(--light--theme--color);
+  }
+
+  &.light {
+    background-color: var(--light--theme--color);
+    color: var(--dark--theme--color);
+  }
+}
 </style>

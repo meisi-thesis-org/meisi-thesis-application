@@ -4,7 +4,7 @@
             <Button v-for="button of definedProps.buttons" :placeholder="button.placeholder" />
         </div>
         <div id="form-action__links">
-            <Link v-for="link of definedProps.links" :placeholder="link.placeholder" :href="link.href" />
+            <Link v-for="link of definedProps.links" :placeholder="link.placeholder" :href="link.href" :segment="'designation'" />
         </div>
     </div>
 </template>

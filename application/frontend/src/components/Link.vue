@@ -1,6 +1,6 @@
 <template>
     <div @click="definedProps.href()" id="link">
-        <Typography :content="definedProps.placeholder" :segment="'designation'" />
+        <Typography :content="definedProps.placeholder" :segment="definedProps.segment" />
     </div>
 </template>
 

@@ -8,7 +8,7 @@
                 <Typography :content="'Should it be registered?'" :segment="'paragraph'" />
             </div>
             <Button :placeholder="'Register'" :on-click="onContinue" />
-            <Link :placeholder="'I will do this later...'" :href="onSkip" />
+            <Link :placeholder="'I will do this later...'" :href="onSkip" :segment="'designation'" />
             <Typography :content="'(By doing this your actions will be diminished...)'" :segment="'designation'" />
         </div>
     </div>

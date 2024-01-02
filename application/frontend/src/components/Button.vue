@@ -25,5 +25,6 @@ const onClick = () => {
 
     border: none;
     box-shadow: 0 0 0.25rem 0 currentColor;
+    background: none;
 }
 </style>
