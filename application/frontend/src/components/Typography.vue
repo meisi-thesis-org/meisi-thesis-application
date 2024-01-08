@@ -1,11 +1,15 @@
 <template>
-    <p id="typography" :class="definedProps.segment"> {{ definedProps.content }} </p>
+    <p id="typography" :class="definedProps.segment" :style="definedStyle"> {{ definedProps.content }} </p>
 </template>
 
 <script setup lang="ts">
 import type { TypographyProps } from '@/types/Typography';
+import { computed } from 'vue';
 
 const definedProps = defineProps<TypographyProps>();
+const definedStyle = computed(() => ({
+    color: definedProps.color === 'colorized' ? 'var(--blue--theme--color)' : 'currentColor'
+}))
 </script>
 
 <style scoped lang="scss">

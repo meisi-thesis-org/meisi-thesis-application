@@ -13,6 +13,7 @@ import { createPinia } from 'pinia'
 import { isDeviceRegistered } from './guards/isDeviceRegistered'
 import { isNetworkRegistered } from './guards/isNetworkRegistered'
 import { isSessionExpired } from './guards/isSessionExpired'
+import { isDossierCreated } from './guards/isDossierCreated'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -59,7 +60,6 @@ const router = createRouter({
       },
       beforeEnter: [isSessionExpired]
     },
-
     {
       name: 'register-device',
       path: '/register-device',

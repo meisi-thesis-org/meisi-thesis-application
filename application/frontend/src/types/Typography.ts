@@ -3,6 +3,7 @@ type Segment = 'brand' | 'header' | 'subHeader' | 'paragraph' | 'designation' | 
 type TypographyProps = {
   readonly content: string
   readonly segment: Segment
+  readonly color?: "colorized" | "mono"
 }
 
 export type { TypographyProps }

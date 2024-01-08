@@ -53,10 +53,8 @@ export class DossierService {
 
     await this.networkProvider.doHttpRequest(
       '8000',
-      'security/users',
-      'GET',
-      undefined,
-      { uuid: createDossierRequest.userUuid }
+      `security/users/${createDossierRequest.userUuid}`,
+      'GET'
     )
 
     const createdDossier: DossierEntity = {
