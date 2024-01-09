@@ -24,6 +24,8 @@ const { theme } = useTheme();
   --dark--theme--color: #394053;
   --light--theme--color: #FFFFFF;
   --blue--theme--color: #5382A1;
+  --yellow--theme--color: #EF9B0F;
+  --violet--theme--color: #856088;
 
   font-family: 'Quicksand', sans-serif;
 }

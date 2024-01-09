@@ -40,7 +40,7 @@ export const isNetworkRegistered = (
 
     await useNetworkStore.findNetworksByUserUuid(sessionUserUuid);
 
-    if (networks.value.length === 0) return next({ name: 'register-network' })
+    if (networks.value.length === 0) return next({ name: 'register-network', params: { userUuid: session.value.userUuid} })
     if (networks.value.length > 0) {
       const hasNetwork = networks.value.find(({ latitude, longitude }) =>
         latitude >= coordinates.minLatitude &&
@@ -48,10 +48,10 @@ export const isNetworkRegistered = (
         longitude >= coordinates.minLongitude &&
         longitude <= coordinates.maxLongitude
       );
-      if (hasNetwork === undefined) return next({ name: 'register-network' });
+      if (hasNetwork === undefined) return next({ name: 'register-network', params: { userUuid: session.value.userUuid} });
       if (hasNetwork !== undefined) return next();
     }
 
-    return next({ name: 'check-network' })
+    return next({ name: 'check-network', params: { userUuid: session.value.userUuid} })
   })
 }

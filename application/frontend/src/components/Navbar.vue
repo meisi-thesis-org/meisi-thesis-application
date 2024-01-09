@@ -3,6 +3,7 @@
         <div id="navbar__inner">
             <Typography :content="'E-Bookler'" :segment="'brand'" />
             <div id="navbar__inner--icons">
+                <Icon :name="'dashboard'" :height="'1.25rem'" :width="'1.25rem'" />
                 <Icon :name="'settings'" :height="'1.25rem'" :width="'1.25rem'" />
                 <Divider :width="'0.025rem'" :height="'2rem'" />
                 <Icon :name="'locale'" :height="'1.25rem'" :width="'1.25rem'" />

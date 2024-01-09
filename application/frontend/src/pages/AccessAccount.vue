@@ -16,15 +16,17 @@ import { required } from "@vuelidate/validators"
 import { useSession } from "@/stores/useSession";
 import { useLoader } from "@/composables/useLoader";
 import { useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
 
 const { isLoading } = useLoader()
 const { signIn } = useSession()
+const { session } = storeToRefs(useSession())
 const router = useRouter()
 const onSubmit = async (event: Event) => {
     try {
         isLoading.value = !isLoading.value;
         await signIn((event.target as any)[0].value);
-        return router.push('/dashboard')
+        return router.push(`/${session.value!.userUuid}/dashboard`)
     } finally {
         isLoading.value = !isLoading.value;
     }

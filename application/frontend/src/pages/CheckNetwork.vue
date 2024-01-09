@@ -16,9 +16,12 @@
 import Button from '@/components/Button.vue';
 import Icon from '@/components/Icon.vue';
 import Typography from '@/components/Typography.vue';
+import { useSession } from '@/stores/useSession';
+import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 const router = useRouter();
-const onContinue = () => router.push("/dashboard");
+const { session } = storeToRefs(useSession())
+const onContinue = () => router.push(`/${session.value!.userUuid}/dashboard`);
 </script>
 
 <style scoped lang="scss">

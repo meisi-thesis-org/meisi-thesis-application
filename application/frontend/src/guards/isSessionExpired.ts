@@ -20,7 +20,7 @@ export const isSessionExpired = async (
   if (isTokenExpiredPreRefresh) await useSessionStore.refreshTokens();
 
   if (!session.value && to.meta.requiresSession === true) return next({ name: 'access-account' })
-  if (!session.value && to.meta.requiresSession === false) return next({ name: 'dashboard' });
+  if (session.value && to.meta.requiresSession === false) return next({ name: 'dashboard', params: { userUuid: session.value.userUuid} });
 
   return next();
 }

@@ -1,3 +1,5 @@
+import type { Color } from "@/types/Color"
+
 type IconProps = {
   readonly name: 
   'device' | 
@@ -12,10 +14,11 @@ type IconProps = {
   'plus' | 
   'lock' | 
   'unlock' |
-  'dossier'
+  'dossier' |
+  'dashboard'
   readonly height: string
   readonly width: string
-  readonly color?: 'colorized' | 'mono'
+  readonly color?: Color
 }
 
 export type { IconProps };

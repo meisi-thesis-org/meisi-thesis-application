@@ -35,14 +35,14 @@ const onContinue = async () => {
         isLoading.value = !isLoading.value;
         await createDevice(session.value!.userUuid, navigator.userAgent);
         save('is_device_unknown', false);
-        return router.push("/dashboard")
+        return router.push(`/${session.value!.userUuid}/dashboard`);
     } finally {
         isLoading.value = !isLoading.value;
     }
 };
 const onSkip = () => {
     save('is_device_unknown', true);
-    return router.push("/dashboard");
+    return router.push(`/${session.value!.userUuid}/dashboard`);
 }
 </script>
 

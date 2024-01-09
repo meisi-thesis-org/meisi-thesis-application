@@ -16,10 +16,13 @@
 import Button from '@/components/Button.vue';
 import Icon from '@/components/Icon.vue';
 import Typography from '@/components/Typography.vue';
+import { useSession } from '@/stores/useSession';
+import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 const router = useRouter();
+const { session } = storeToRefs(useSession())
 const onContinue = () => {
-    return router.push("/check-network");
+    return router.push(`/${session.value?.userUuid}/check-network`);
 }
 </script>
 

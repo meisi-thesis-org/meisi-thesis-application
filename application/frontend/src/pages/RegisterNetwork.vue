@@ -36,7 +36,7 @@ const onContinue = async () => {
         navigator.geolocation.getCurrentPosition(async (position) => {
             await createNetwork(session.value!.userUuid, position.coords.latitude, position.coords.longitude);
             save('is_network_unknown', false);
-            return router.push("/dashboard")
+            return router.push(`/${session.value!.userUuid}/dashboard`)
         })
     } finally {
         isLoading.value = !isLoading.value;
@@ -44,7 +44,7 @@ const onContinue = async () => {
 };
 const onSkip = () => {
     save('is_network_unknown', true);
-    return router.push("/dashboard");
+    return router.push(`/${session.value!.userUuid}/dashboard`);
 }
 </script>
 

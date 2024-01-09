@@ -33,11 +33,11 @@ export const isDeviceRegistered = async (
    */
   await useDeviceStore.findDevicesByUserUuid(sessionUserUuid);
 
-  if (devices.value.length === 0) return next({ name: 'register-device' })
+  if (devices.value.length === 0) return next({ name: 'register-device', params: { userUuid: session.value.userUuid} })
   if (devices.value.length > 0) {
     const hasDevice = devices.value.find(({ userAgent }) => userAgent === navigatorUserAgent);
-    if (hasDevice === undefined) return next({ name: 'register-device' });
+    if (hasDevice === undefined) return next({ name: 'register-device', params: { userUuid: session.value.userUuid} });
     if (hasDevice !== undefined) return next();
-    return next({ name: 'check-device' })
+    return next({ name: 'check-device', params: { userUuid: session.value.userUuid} })
   }
 }

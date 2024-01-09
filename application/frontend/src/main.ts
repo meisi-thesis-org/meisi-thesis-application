@@ -13,7 +13,7 @@ import { createPinia } from 'pinia'
 import { isDeviceRegistered } from './guards/isDeviceRegistered'
 import { isNetworkRegistered } from './guards/isNetworkRegistered'
 import { isSessionExpired } from './guards/isSessionExpired'
-import { isDossierCreated } from './guards/isDossierCreated'
+import { isUuidRegistered } from './guards/isUuidRegistered'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -44,7 +44,7 @@ const router = createRouter({
     },
     {
       name: 'check-device',
-      path: '/check-device',
+      path: '/:userUuid/check-device',
       component: CheckDevice,
       meta: {
         requiresSession: true
@@ -53,7 +53,7 @@ const router = createRouter({
     },
     {
       name: 'check-network',
-      path: '/check-network',
+      path: '/:userUuid/check-network',
       component: CheckNetwork,
       meta: {
         requiresSession: true
@@ -62,7 +62,7 @@ const router = createRouter({
     },
     {
       name: 'register-device',
-      path: '/register-device',
+      path: '/:userUuid/register-device',
       component: RegisterDevice,
       meta: {
         requiresSession: true
@@ -71,7 +71,7 @@ const router = createRouter({
     },
     {
       name: 'register-network',
-      path: '/register-network',
+      path: '/:userUuid/register-network',
       component: RegisterNetwork,
       meta: {
         requiresSession: true
@@ -80,14 +80,16 @@ const router = createRouter({
     },
     {
       name: 'dashboard',
-      path: '/dashboard',
+      path: '/:userUuid/dashboard',
       component: Dashboard,
       meta: {
         requiresSession: true
       },
-      beforeEnter: [isSessionExpired, isDeviceRegistered, isNetworkRegistered]
+      beforeEnter: [isSessionExpired, isDeviceRegistered, isNetworkRegistered],
     }
   ]
 })
+
+router.beforeEach(isUuidRegistered)
 
 createApp(App).use(router).use(createPinia()).mount('#app')
