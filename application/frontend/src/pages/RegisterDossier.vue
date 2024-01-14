@@ -3,13 +3,13 @@
         <div id="wrapper__inner">
             <Icon :name="'network'" :height="'5rem'" :width="'5rem'" />
             <div id="wrapper__inner--text-block">
-                <Typography :content="'Register Device'" :segment="'header'" />
-                <Typography :content="'Present device can be registered!'" :segment="'paragraph'" />
-                <Typography :content="'Should it be registered?'" :segment="'paragraph'" />
+                <Typography :content="'Register Dossier'" :segment="'header'" />
+                <Typography :content="'It seems that you have not created a portfolio yet.'" :segment="'paragraph'" />
+                <Typography :content="'Create one to share your work!'" :segment="'paragraph'" />
             </div>
             <Button :placeholder="'Register'" :on-click="onContinue" />
             <Link :placeholder="'I will do this later...'" :href="onSkip" :segment="'designation'" />
-            <Typography :content="'(By doing this your actions will be diminished...)'" :segment="'designation'" />
+            <Typography :content="'(By doing this you cannot share your content...)'" :segment="'designation'" />
         </div>
     </div>
 </template>
@@ -19,27 +19,28 @@ import Button from '@/components/Button.vue';
 import Icon from '@/components/Icon.vue';
 import Typography from '@/components/Typography.vue';
 import Link from '@/components/Link.vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useLoader } from '@/composables/useLoader';
-import { useDevice } from '@/stores/useDevice';
-import { useSession } from '@/stores/useSession';
 import { storeToRefs } from 'pinia';
+import { useSession } from '@/stores/useSession';
 import { useLocalStorage } from '@/composables/useLocalStorage';
+import { useDossier } from '@/stores/useDossier';
 const router = useRouter();
+const route = useRoute();
 const { isLoading } = useLoader()
-const { createDevice } = useDevice();
-const { session } = storeToRefs(useSession());
+const { save } = useLocalStorage();
+const { createDossier } = useDossier();
 const onContinue = async () => {
     try {
         isLoading.value = !isLoading.value;
-        await createDevice(session.value!.userUuid, navigator.userAgent);
-        return router.push(`/${session.value!.userUuid}/dashboard`);
+        await createDossier(route.params.userUuid as string, '');
+        return router.push({ name: "dossier" })
     } finally {
         isLoading.value = !isLoading.value;
     }
 };
 const onSkip = () => {
-    return router.push(`/${session.value!.userUuid}/dashboard`);
+    return router.push(`/${route.params.userUuid as string}/dashboard`);
 }
 </script>
 
@@ -55,14 +56,14 @@ const onSkip = () => {
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 1.25rem;
+        gap: 1rem;
 
         text-align: center;
 
         &--text-block {
             display: flex;
             flex-direction: column;
-            gap: 0.25rem;
+            gap: 0.50rem;
         }
     }
 }

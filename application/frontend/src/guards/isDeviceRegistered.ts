@@ -11,11 +11,8 @@ export const isDeviceRegistered = async (
 ) => {
   const useDeviceStore = useDevice();
   const useSessionStore = useSession();
-  const { fetch } = useLocalStorage();
   const { devices } = storeToRefs(useDeviceStore);
   const { session } = storeToRefs(useSessionStore);
-
-  if (fetch('is_device_unknown') !== null) return next();
 
   if (!session.value) return next({ name: "access-account" });
 
@@ -32,7 +29,6 @@ export const isDeviceRegistered = async (
    * In case the device is non present on state we need to fetch it from the server
    */
   await useDeviceStore.findDevicesByUserUuid(sessionUserUuid);
-
   if (devices.value.length === 0) return next({ name: 'register-device', params: { userUuid: session.value.userUuid} })
   if (devices.value.length > 0) {
     const hasDevice = devices.value.find(({ userAgent }) => userAgent === navigatorUserAgent);

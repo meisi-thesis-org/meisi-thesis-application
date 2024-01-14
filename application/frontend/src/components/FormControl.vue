@@ -3,7 +3,7 @@
         <input class="form-control__input" :class="classes" :type="definedProps.type" :name="definedProps.name"
             :placeholder="definedProps.placeholder" v-model="state[definedProps.name]"
             @input="$emit('isInvalid', onInputEmitter())">
-        <div v-if="isInvalid" class="form-control__errors">
+        <div v-if="isInvalid && definedProps.hideAlerts === false" class="form-control__errors">
             <Typography v-if="isInvalid" v-for="error of $v.$errors" :content="'* ' + error.$message.toString()"
                 :segment="'error'" />
         </div>
@@ -39,7 +39,7 @@ const onInputEmitter = () => { touchField(); return isInvalid.value; }
 const isDirty = computed<boolean>(() => $v.value[definedProps.name].$dirty);
 const isInvalid = computed<boolean>(() => isDirty.value === true && $v.value[definedProps.name].$errors.length > 0);
 const classes = computed(() => {
-    if (isDirty.value === false) return
+    if (isDirty.value === false || definedProps.hideAlerts === true) return
     return isInvalid.value && isDirty.value ? 'invalid' : 'valid'
 })
 </script>

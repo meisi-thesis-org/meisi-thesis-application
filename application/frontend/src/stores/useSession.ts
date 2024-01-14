@@ -13,8 +13,8 @@ const useSession = defineStore('session', () => {
   const state = ref<SessionEntity | undefined>(fetch('session') ?? undefined);
 
   const signIn = async (accessCode: string) => {
-    const { uuid } = await findUserByAccessCode(accessCode);
-    const response = await createRequest<SessionEntity>(`session/sign-in/${uuid}`, 'PUT');
+    const user = await findUserByAccessCode(accessCode);
+    const response = await createRequest<SessionEntity>(`session/sign-in/${user.uuid}`, 'PUT');
     state.value = response.data;
     save('session', state.value);
   };

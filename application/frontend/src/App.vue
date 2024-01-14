@@ -30,6 +30,12 @@ const { theme } = useTheme();
   font-family: 'Quicksand', sans-serif;
 }
 
+.blue-colorized { color: var(--blue--theme--color) !important; }
+.yellow-colorized { color: var(--yellow--theme--color) !important; }
+.light-colorized { color: var(--light--theme--color) !important; }
+.dark-colorized { color: var(--dark--theme--color) !important; }
+.violet-colorized { color: var(--violet--theme--color) !important; }
+
 html,
 body,
 #app,

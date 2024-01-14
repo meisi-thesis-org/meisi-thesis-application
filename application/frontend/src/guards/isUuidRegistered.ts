@@ -1,4 +1,3 @@
-import { useLocalStorage } from '@/composables/useLocalStorage';
 import { useSession } from '@/stores/useSession';
 import { storeToRefs } from 'pinia';
 import type { NavigationGuardNext, RouteLocation } from 'vue-router';

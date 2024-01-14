@@ -1,12 +1,12 @@
 import { useFetch } from '@/composables/useFetch';
-import { defineStore, storeToRefs } from 'pinia';
-import { computed, ref } from 'vue';
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
 import type { DeviceEntity } from '@/types/Entities';
 
-const state = ref<DeviceEntity[]>([]);
 
 const useDevice = defineStore('devices', () => {
   const { createRequest } = useFetch();
+  const state = ref<DeviceEntity[]>([]);
 
   const findDevicesByUserUuid = async (
     userUuid: string
@@ -19,7 +19,8 @@ const useDevice = defineStore('devices', () => {
     userUuid: string,
     userAgent: string
   ) => {
-    await createRequest<DeviceEntity[]>('security/devices', 'POST', { userUuid, userAgent }, undefined);
+    const response = await createRequest<DeviceEntity>('security/devices', 'POST', { userUuid, userAgent }, undefined);
+    state.value = [response.data];
   }
 
   return {

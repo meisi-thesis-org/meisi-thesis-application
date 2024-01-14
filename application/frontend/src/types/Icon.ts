@@ -19,6 +19,7 @@ type IconProps = {
   readonly height: string
   readonly width: string
   readonly color?: Color
+  readonly onClick?: Function
 }
 
 export type { IconProps };

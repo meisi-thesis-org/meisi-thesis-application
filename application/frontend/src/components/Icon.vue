@@ -14,7 +14,7 @@
     <PlusIcon class="icon" :class="definedColor" v-if="definedProps.name === 'plus'" :style="definedStyle" />
     <LockClosedIcon class="icon" :class="definedColor" v-if="definedProps.name === 'lock'" :style="definedStyle" />
     <LockOpenIcon class="icon" :class="definedColor" v-if="definedProps.name === 'unlock'" :style="definedStyle" />
-    <BookOpenIcon class="icon" :class="definedColor" v-if="definedProps.name === 'dossier'" :style="definedStyle" />
+    <PencilIcon class="icon" :class="definedColor" v-if="definedProps.name === 'dossier'" :style="definedStyle" @click="definedProps.onClick" />
     <ChartPieIcon class="icon" :class="definedColor" v-if="definedProps.name === 'dashboard'" :style="definedStyle" />
 </template> 
 
@@ -22,7 +22,6 @@
 import { useTheme } from "@/composables/useTheme";
 import type { IconProps } from "@/types/Icon";
 import {
-    BookOpenIcon,
     Cog8ToothIcon,
     ComputerDesktopIcon,
     EyeIcon,
@@ -56,23 +55,4 @@ const definedLocaleColor = computed(() => isLightTheme.value ? 'blue-colorized' 
     cursor: pointer;
 }
 
-.blue-colorized {
-    color: var(--blue--theme--color);
-}
-
-.yellow-colorized {
-    color: var(--yellow--theme--color);
-}
-
-.light-colorized {
-    color: var(--light--theme--color);
-}
-
-.dark-colorized {
-    color: var(--dark--theme--color);
-}
-
-.violet-colorized {
-    color: var(--violet--theme--color);
-}
 </style>

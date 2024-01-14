@@ -36,9 +36,20 @@ type DeviceEntity = {
   updatedAt: string
 }
 
+type DossierEntity = {
+  readonly uuid: string
+  readonly userUuid: string
+  designation: string
+  visible: boolean
+  active: boolean
+  readonly createdAt: string
+  updatedAt: string
+}
+
 export type {
   UserEntity,
   SessionEntity,
   NetworkEntity,
-  DeviceEntity
+  DeviceEntity,
+  DossierEntity
 }

@@ -29,21 +29,23 @@ const router = useRouter();
 const { isLoading } = useLoader()
 const { createNetwork } = useNetwork()
 const { session } = storeToRefs(useSession());
-const { save } = useLocalStorage();
 const onContinue = async () => {
     try {
         isLoading.value = !isLoading.value;
-        navigator.geolocation.getCurrentPosition(async (position) => {
-            await createNetwork(session.value!.userUuid, position.coords.latitude, position.coords.longitude);
-            save('is_network_unknown', false);
-            return router.push(`/${session.value!.userUuid}/dashboard`)
+        const position = await new Promise<{ coords: { latitude: number, longitude: number } }>((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(
+                position => resolve(position),
+                error => reject(error)
+            )
         })
+
+        await createNetwork(session.value!.userUuid, position.coords.latitude, position.coords.longitude);
+        return router.push(`/${session.value!.userUuid}/dashboard`)
     } finally {
         isLoading.value = !isLoading.value;
     }
 };
 const onSkip = () => {
-    save('is_network_unknown', true);
     return router.push(`/${session.value!.userUuid}/dashboard`);
 }
 </script>

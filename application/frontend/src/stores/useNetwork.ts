@@ -19,7 +19,8 @@ const useNetwork = defineStore('networks', () => {
     latitude: number,
     longitude: number
   ) => {
-    await createRequest<NetworkEntity[]>('security/networks', 'POST', { userUuid, latitude, longitude }, undefined);
+    const response = await createRequest<NetworkEntity>('security/networks', 'POST', { userUuid, latitude, longitude }, undefined);
+    state.value = [response.data];
   }
 
   return {

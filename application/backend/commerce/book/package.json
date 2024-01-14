@@ -5,8 +5,8 @@
     "author": "Diogo <diogorafaellourencooliveira97@gmail.com>",
     "license": "MIT",
     "scripts": {
-        "start": "node dist/page.application.js",
-        "start:watch": "tsx --watch src/page.application.ts",
+        "start": "node dist/book.application.js",
+        "start:watch": "tsx --watch src/book.application.ts",
         "build": "rimraf dist && tsup src"
     },
     "dependencies": {

@@ -8,6 +8,8 @@ export const useUser = defineStore('user', () => {
   const { createRequest } = useFetch()
   const state = ref<UserEntity>();
 
+  const setUser = (newUser: UserEntity) => state.value = newUser
+
   const findUserByUuid = async (uuid: string) => {
     const response = await createRequest<UserEntity>(`security/users/${uuid}`, 'GET');
     return response.data;
@@ -19,8 +21,7 @@ export const useUser = defineStore('user', () => {
   }
 
   const createUser = async (params: Record<string, Primitive>) => {
-    const response = await createRequest<UserEntity>('security/users', 'POST', params);
-    state.value = response.data;
+    await createRequest<UserEntity>('security/users', 'POST', params);
   }
 
   const updateUserByUuid = async (
@@ -34,12 +35,12 @@ export const useUser = defineStore('user', () => {
   const updateUserAccessCode = async (
     params: Record<string, Primitive>
   ) => {
-    const response = await createRequest<UserEntity>('security/users/access-code', 'PUT', params);
-    state.value = response.data;
+    await createRequest<UserEntity>('security/users/access-code', 'PUT', params);
   }
 
   return {
     user: state,
+    setUser,
     findUserByUuid,
     findUserByAccessCode,
     createUser,

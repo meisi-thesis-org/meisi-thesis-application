@@ -5,6 +5,7 @@ type FormControlProps = {
     readonly placeholder: string
     readonly name: string
     readonly rules: Record<string, any>
+    readonly hideAlerts?: boolean
 }
 
 export type { FormControlProps }
