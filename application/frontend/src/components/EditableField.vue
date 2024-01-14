@@ -1,5 +1,11 @@
 <template>
-    <textarea @blur="$emit('onBlur', $event)" :class="definedProps.color" :disabled="!definedProps.isEditable" id="editable-field" type="text" v-model="content">
+    <textarea 
+        placeholder="Type something here..." 
+        @blur="$emit('onBlur', $event)" 
+        :class="definedProps.color" 
+        :disabled="!definedProps.isEditable" 
+        id="editable-field" 
+        v-model="content">
 </textarea>
 </template>
 
@@ -17,5 +23,9 @@ const content = ref(definedProps.content)
     border: none;
     background-color: inherit;
     outline: none;
+}
+
+textarea::placeholder {
+  color: currentColor;
 }
 </style>

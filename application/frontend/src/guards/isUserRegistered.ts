@@ -12,6 +12,7 @@ export const isUserRegistered = async (
 
     const useSessionStore = useSession();
     const { session } = storeToRefs(useSessionStore);
+    console.log(session)
 
     const foundUser = await findUserByUuid(session.value!.userUuid);
     if (foundUser === undefined) return next({ name: "access-account" });

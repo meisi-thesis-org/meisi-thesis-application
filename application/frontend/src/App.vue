@@ -22,10 +22,10 @@ const { theme } = useTheme();
   box-sizing: border-box;
 
   --dark--theme--color: #394053;
-  --light--theme--color: #FFFFFF;
+  --light--theme--color: #FFFAFA;
   --blue--theme--color: #5382A1;
   --yellow--theme--color: #EF9B0F;
-  --violet--theme--color: #856088;
+  --violet--theme--color: #645394;
 
   font-family: 'Quicksand', sans-serif;
 }

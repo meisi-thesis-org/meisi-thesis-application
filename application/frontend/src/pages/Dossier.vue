@@ -39,7 +39,6 @@ const updateDossier = async (data: FocusEvent) => {
     } catch (error) {
         isLoading.value = !isLoading.value;
     }
-
 }
 </script>
 
