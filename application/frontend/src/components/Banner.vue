@@ -3,16 +3,17 @@
         <div id="banner__inner">
             <div id="banner__inner--box">
                 <div id="banner__inner--box__icons">
-                    <Icon :name="'lock'" :width="'1.25rem'" :height="'1.25rem'" />
-                    <Icon :name="'unlock'" :width="'1.25rem'" :height="'1.25rem'" />
-                    <Icon :name="'pencil'" :width="'1.25rem'" :height="'1.25rem'" />
-                    <Icon :name="'trashcan'" :width="'1.25rem'" :height="'1.25rem'" />
+                    <Icon v-if="!isOwner" :name="'lock'" :width="'1.25rem'" :height="'1.25rem'" :color="'light-colorized'" />
+                    <Icon v-if="!isOwner" :name="'unlock'" :width="'1.25rem'" :height="'1.25rem'" :color="'light-colorized'" />
+                    <Icon v-if="isOwner" :name="'watcher'" :width="'1.25rem'" :height="'1.25rem'" :color="'light-colorized'" />
+                    <Icon v-if="isOwner" :name="'trashcan'" :width="'1.25rem'" :height="'1.25rem'" :color="'light-colorized'" />
                 </div>
                 <Divider :height="'1.5rem'" :width="'0.15rem'" />
                 <Typography :content="definedProps.headerContent" :segment="'paragraph'" :color="'light-colorized'" />
             </div>
             <div id="banner__inner--box">
-                <EditableField :content="definedProps.subHeaderContent" :color="'light-colorized'" :is-disabled="false" />
+                <EditableField @on-blur="$emit('onBlur', $event)" :content="definedProps.subHeaderContent"
+                    :color="'light-colorized'" :is-editable="isOwner" />
             </div>
         </div>
     </div>
@@ -24,8 +25,10 @@ import Typography from './Typography.vue';
 import Icon from './Icon.vue';
 import Divider from './Divider.vue';
 import EditableField from './EditableField.vue';
-const definedProps = defineProps<BannerProps>()
-
+import { usePermission } from '@/composables/usePermission';
+const definedProps = defineProps<BannerProps>();
+const definedEmits = defineEmits(['onBlur']);
+const { isOwner } = usePermission();
 </script>
 
 <style scoped lang="scss">

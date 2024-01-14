@@ -11,10 +11,6 @@ export const usePermission = () => {
     const { networks } = storeToRefs(useNetwork());
     const { user } = storeToRefs(useUser());
 
-    console.log(devices.value)
-    console.log(networks.value)
-    console.log(user.value)
-
     const isOwner = computed(() => params.userUuid === user.value?.uuid && devices.value.length > 0 && networks.value.length > 0)
     const isUnknown = computed(() => params.userUuid !== user.value?.uuid || devices.value.length === 0 || networks.value.length === 0)
 

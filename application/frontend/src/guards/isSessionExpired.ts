@@ -7,6 +7,7 @@ export const isSessionExpired = async (
   _from: RouteLocation,
   next: NavigationGuardNext
 ) => {
+
   const useSessionStore = useSession();
   const { session } = storeToRefs(useSessionStore);
 

@@ -1,15 +1,13 @@
 <template>
-    <textarea :class="definedProps.color" :disabled="isUnknown" id="editable-field" type="text" v-model="content">
+    <textarea @blur="$emit('onBlur', $event)" :class="definedProps.color" :disabled="!definedProps.isEditable" id="editable-field" type="text" v-model="content">
 </textarea>
 </template>
 
 <script setup lang="ts">
-import { usePermission } from '@/composables/usePermission';
 import type { EditableFieldProps } from '@/types/EditableField';
 import { ref } from 'vue';
-const { isUnknown } = usePermission()
-
 const definedProps = defineProps<EditableFieldProps>()
+const definedEmitters = defineEmits(['onBlur'])
 const content = ref(definedProps.content)
 </script>
 
@@ -18,5 +16,6 @@ const content = ref(definedProps.content)
     width: 100%;
     border: none;
     background-color: inherit;
+    outline: none;
 }
 </style>
