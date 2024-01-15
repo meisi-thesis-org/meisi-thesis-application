@@ -9,15 +9,16 @@ export const isUserRegistered = async (
     next: NavigationGuardNext
 ) => {
     const { setUser, findUserByUuid } = useUser();
-
-    const useSessionStore = useSession();
+    const useSessionStore = useSession()
     const { session } = storeToRefs(useSessionStore);
-    console.log(session)
 
     const foundUser = await findUserByUuid(session.value!.userUuid);
-    if (foundUser === undefined) return next({ name: "access-account" });
     
-    setUser(foundUser);
+    if (foundUser === undefined) {
+        useSessionStore.signOut();
+        return next({ name: "access-account" })
+    };
 
+    setUser(foundUser);
     return next();
 }

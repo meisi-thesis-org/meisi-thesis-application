@@ -26,7 +26,7 @@ export class NetworkService {
       mappedNetworks.push(networkMapper(foundNetwork));
     }
 
-    return mappedNetworks
+    return mappedNetworks;
   }
 
   public async findNetworkByUuid (

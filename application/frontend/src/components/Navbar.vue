@@ -6,7 +6,7 @@
                 <FormControl :name="'search'" :placeholder="'Search...'" :type="'text'" :rules="[]" :hide-alerts="true" />
             </div>
             <div id="navbar__inner--icons">
-                <Icon :name="'dashboard'" :height="'1.25rem'" :width="'1.25rem'" />
+                <Icon :name="'dashboard'" :height="'1.25rem'" :width="'1.25rem'" :onClick="navigateToDashboard" />
                 <Icon :name="'dossier'" :height="'1.25rem'" :width="'1.25rem'" :onClick="navigateToDossier" />
                 <Icon :name="'settings'" :height="'1.25rem'" :width="'1.25rem'" />
                 <Divider :width="'0.025rem'" :height="'2rem'" />
@@ -25,9 +25,12 @@ import Icon from './Icon.vue';
 import Typography from './Typography.vue';
 import { storeToRefs } from 'pinia';
 import { useSession } from '@/stores/useSession';
+import { computed } from 'vue';
 const { push } = useRouter();
 const { session } = storeToRefs(useSession());
-const navigateToDossier = async () => await push({ name: "dossier", params: { userUuid: session.value?.userUuid} })
+const userUuid = computed(() => session.value!.userUuid)
+const navigateToDashboard = async () => await push({ name: "dashboard", params: { userUuid: userUuid.value } })
+const navigateToDossier = async () => await push({ name: "dossier", params: { userUuid: userUuid.value } })
 </script>
 
 <style scoped lang="scss">

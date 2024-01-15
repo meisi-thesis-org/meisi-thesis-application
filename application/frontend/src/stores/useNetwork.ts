@@ -7,11 +7,12 @@ const useNetwork = defineStore('networks', () => {
   const { createRequest } = useFetch();
   const state = ref<NetworkEntity[]>([]);
 
+  const updateStateNetwork = (newNetwork: NetworkEntity[]) => state.value = newNetwork
+  
   const findNetworksByUserUuid = async (
     userUuid: string
   ) => {
-    const response = await createRequest<NetworkEntity[]>('security/networks', 'GET', undefined, { userUuid });
-    state.value = response.data;
+    return (await createRequest<NetworkEntity[]>('security/networks', 'GET', undefined, { userUuid })).data;
   }
 
   const createNetwork = async (
@@ -25,6 +26,7 @@ const useNetwork = defineStore('networks', () => {
 
   return {
     networks: state,
+    updateStateNetwork,
     findNetworksByUserUuid,
     createNetwork
   };

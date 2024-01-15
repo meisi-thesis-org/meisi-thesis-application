@@ -11,11 +11,11 @@ import Dossier from '@/pages/Dossier.vue'
 import RegisterDevice from '@/pages/RegisterDevice.vue'
 import RegisterNetwork from '@/pages/RegisterNetwork.vue'
 import RegisterDossier from '@/pages/RegisterDossier.vue'
+import RecoverDossier from '@/pages/RecoverDossier.vue'
 import { createPinia } from 'pinia'
 import { isDeviceRegistered } from './guards/isDeviceRegistered'
 import { isNetworkRegistered } from './guards/isNetworkRegistered'
 import { isSessionExpired } from './guards/isSessionExpired'
-import { isUuidRegistered } from './guards/isUuidRegistered'
 import { isDossierRegistered } from './guards/isDossierRegistered'
 import { isUserRegistered } from './guards/isUserRegistered'
 
@@ -53,7 +53,7 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
-      beforeEnter: [isUuidRegistered, isSessionExpired]
+      beforeEnter: [isSessionExpired]
     },
     {
       name: 'check-network',
@@ -62,7 +62,7 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
-      beforeEnter: [isUuidRegistered, isSessionExpired]
+      beforeEnter: [isSessionExpired]
     },
     {
       name: 'register-device',
@@ -71,7 +71,7 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
-      beforeEnter: [isUuidRegistered, isSessionExpired]
+      beforeEnter: [isSessionExpired]
     },
     {
       name: 'register-network',
@@ -80,7 +80,7 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
-      beforeEnter: [isUuidRegistered, isSessionExpired]
+      beforeEnter: [isSessionExpired]
     },
     {
       name: 'register-dossier',
@@ -89,7 +89,7 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
-      beforeEnter: [isUuidRegistered, isSessionExpired]
+      beforeEnter: [isSessionExpired]
     },
     {
       name: 'dashboard',
@@ -98,7 +98,16 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
-      beforeEnter: [isUuidRegistered, isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered],
+      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered],
+    },
+    {
+      name: 'recover-dossier',
+      path: '/:userUuid/recover-dossier',
+      component: RecoverDossier,
+      meta: {
+        requiresSession: true
+      },
+      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isDossierRegistered],
     },
     {
       name: 'dossier',
@@ -107,7 +116,7 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
-      beforeEnter: [isUuidRegistered, isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isDossierRegistered],
+      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isDossierRegistered],
     }
   ]
 })

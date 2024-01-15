@@ -3,11 +3,11 @@
         <div id="wrapper__inner">
             <Icon :name="'pencil'" :height="'5rem'" :width="'5rem'" />
             <div id="wrapper__inner--text-block">
-                <Typography :content="'Register Dossier'" :segment="'header'" />
-                <Typography :content="'It seems that you have not created a portfolio yet.'" :segment="'paragraph'" />
-                <Typography :content="'Create one to share your work!'" :segment="'paragraph'" />
+                <Typography :content="'Recover Dossier'" :segment="'header'" />
+                <Typography :content="'It seems that you have deactived your portfolio.'" :segment="'paragraph'" />
+                <Typography :content="'Do you wish to recover it?'" :segment="'paragraph'" />
             </div>
-            <Button :placeholder="'Register'" :on-click="onContinue" />
+            <Button :placeholder="'Recover'" :on-click="onContinue" />
             <Link :placeholder="'I will do this later...'" :href="onSkip" :segment="'designation'" />
             <Typography :content="'(By doing this you cannot share your content...)'" :segment="'designation'" />
         </div>
@@ -19,26 +19,25 @@ import Button from '@/components/Button.vue';
 import Icon from '@/components/Icon.vue';
 import Typography from '@/components/Typography.vue';
 import Link from '@/components/Link.vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { useLoader } from '@/composables/useLoader';
-import { useLocalStorage } from '@/composables/useLocalStorage';
 import { useDossier } from '@/stores/useDossier';
+import { storeToRefs } from 'pinia';
 const router = useRouter();
-const route = useRoute();
 const { isLoading } = useLoader()
-const { save } = useLocalStorage();
-const { createDossier } = useDossier();
+const { updateDossierByUuid } = useDossier();
+const { dossier } = storeToRefs(useDossier());
 const onContinue = async () => {
     try {
         isLoading.value = !isLoading.value;
-        await createDossier(route.params.userUuid as string, '');
-        return router.push({ name: "dossier" })
+        await updateDossierByUuid(dossier.value!.uuid, { active:  !dossier.value!.active});
+        return router.push({ name: "dossier", params: { userUuid: dossier.value!.userUuid } })
     } finally {
         isLoading.value = !isLoading.value;
     }
 };
 const onSkip = () => {
-    return router.push(`/${route.params.userUuid as string}/dashboard`);
+    return router.push(`/${dossier.value!.uuid}/dossier`);
 }
 </script>
 

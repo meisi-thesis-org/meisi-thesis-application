@@ -2,6 +2,7 @@ import { useLocalStorage } from '@/composables/useLocalStorage';
 import { useNetwork } from '@/stores/useNetwork';
 import { useSession } from '@/stores/useSession';
 import { storeToRefs } from 'pinia';
+import { computed } from 'vue';
 import { type NavigationGuardNext, type RouteLocation } from 'vue-router';
 
 export const isNetworkRegistered = async (
@@ -13,47 +14,47 @@ export const isNetworkRegistered = async (
   const { networks } = storeToRefs(useNetworkStore);
   const { session } = storeToRefs(useSession());
 
-  const position = await new Promise<{ coords: { latitude: number, longitude: number }}>((resolve, reject) => {
+  const position = await new Promise<{ coords: { latitude: number, longitude: number } }>((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(
       position => resolve(position),
       error => reject(error)
     )
   })
 
-  if (session.value === undefined) return next({ name: "access-account" });
+  const sessionUserUuid = session.value!.userUuid;
 
-  const sessionUserUuid = session.value?.userUuid;
-
-  const coordinates = {
-    minLatitude: position.coords.latitude - 10,
-    maxLatitude: position.coords.latitude + 10,
-    minLongitude: position.coords.longitude - 10,
-    maxLongitude: position.coords.longitude + 10
-  }
-
-  const isNetworkOnState = networks.value.find(({ userUuid, latitude, longitude }) =>
+  const isCurrentNetwork = computed(() => networks.value.find(({ userUuid, latitude, longitude }) =>
     userUuid === sessionUserUuid &&
     (
-      latitude >= coordinates.minLatitude &&
-      latitude <= coordinates.maxLatitude &&
-      longitude >= coordinates.minLongitude &&
-      longitude <= coordinates.maxLongitude
-    ));
-  if (isNetworkOnState) return next();
+      latitude >= position.coords.latitude - 10 &&
+      latitude <= position.coords.latitude + 10 &&
+      longitude >= position.coords.longitude - 10 &&
+      longitude <= position.coords.longitude + 10
+    )))
 
-  await useNetworkStore.findNetworksByUserUuid(sessionUserUuid);
+  /**
+   * In case the network is registered on state
+   */
+  if (isCurrentNetwork.value !== undefined) return next();
 
-  if (networks.value.length === 0) return next({ name: 'register-network', params: { userUuid: session.value.userUuid } })
-  if (networks.value.length > 0) {
-    const hasNetwork = networks.value.find(({ latitude, longitude }) =>
-      latitude >= coordinates.minLatitude &&
-      latitude <= coordinates.maxLatitude &&
-      longitude >= coordinates.minLongitude &&
-      longitude <= coordinates.maxLongitude
-    );
-    if (hasNetwork === undefined) return next({ name: 'register-network', params: { userUuid: session.value.userUuid } });
-    if (hasNetwork !== undefined) return next();
-  }
+  /**
+   * In case the are no networks registered on state
+   * Fetch it from server
+   * Update state
+   */
+  const response = await useNetworkStore.findNetworksByUserUuid(sessionUserUuid);
+  if (response.length === 0) return next({ name: 'register-network', params: { userUuid: sessionUserUuid } })
+  useNetworkStore.updateStateNetwork(response)
 
-  return next({ name: 'check-network', params: { userUuid: session.value.userUuid } })
+  /**
+   * In case there are networks is registered on state
+   * Check to see if current network is already registered
+   * Then resume navigation
+    */
+  if (isCurrentNetwork.value !== undefined) return next();
+
+  /**
+   * Resume Navigation with restricted access
+   */
+  return next({ name: 'check-network', params: { userUuid: sessionUserUuid } })
 }

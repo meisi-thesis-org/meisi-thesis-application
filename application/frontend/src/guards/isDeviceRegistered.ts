@@ -2,6 +2,7 @@ import { useLocalStorage } from '@/composables/useLocalStorage';
 import { useDevice } from '@/stores/useDevice';
 import { useSession } from '@/stores/useSession';
 import { storeToRefs } from 'pinia';
+import { computed } from 'vue';
 import { type NavigationGuardNext, type RouteLocation } from 'vue-router';
 
 export const isDeviceRegistered = async (
@@ -14,26 +15,27 @@ export const isDeviceRegistered = async (
   const { devices } = storeToRefs(useDeviceStore);
   const { session } = storeToRefs(useSessionStore);
 
-  if (!session.value) return next({ name: "access-account" });
-
-  const sessionUserUuid = session.value.userUuid;
-  const navigatorUserAgent = navigator.userAgent;
-
+  const sessionUserUuid = session.value!.userUuid;
+  const isCurrentDevice = computed(() => devices.value.find(({ userUuid, userAgent }) => userUuid === sessionUserUuid && userAgent === navigator.userAgent))
   /**
    * Find Device on State
    */
-  const isDeviceOnState = devices.value.find(({ userUuid, userAgent }) => userUuid === sessionUserUuid && userAgent === navigatorUserAgent);
-  if (isDeviceOnState) return next();
+  if (isCurrentDevice.value) return next();
 
   /**
    * In case the device is non present on state we need to fetch it from the server
    */
-  await useDeviceStore.findDevicesByUserUuid(sessionUserUuid);
-  if (devices.value.length === 0) return next({ name: 'register-device', params: { userUuid: session.value.userUuid} })
-  if (devices.value.length > 0) {
-    const hasDevice = devices.value.find(({ userAgent }) => userAgent === navigatorUserAgent);
-    if (hasDevice === undefined) return next({ name: 'register-device', params: { userUuid: session.value.userUuid} });
-    if (hasDevice !== undefined) return next();
-    return next({ name: 'check-device', params: { userUuid: session.value.userUuid} })
-  }
+  const response = await useDeviceStore.findDevicesByUserUuid(sessionUserUuid);
+  if (response.length === 0) return next({ name: 'register-device', params: { userUuid: sessionUserUuid } })
+  useDeviceStore.updateStateDevices(response);
+
+  /**
+   * In case the device is present on the state after fetching we resume the navigation
+   */
+  if (isCurrentDevice.value !== undefined) return next();
+
+  /**
+   * In case the device is non present on the state after fetching we allow navigation with restricted permissions
+   */
+  return next({ name: 'check-device', params: { userUuid: sessionUserUuid } })
 }
