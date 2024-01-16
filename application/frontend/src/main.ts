@@ -89,7 +89,7 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
-      beforeEnter: [isSessionExpired]
+      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered,]
     },
     {
       name: 'dashboard',
@@ -107,7 +107,7 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
-      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isDossierRegistered],
+      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered],
     },
     {
       name: 'dossier',

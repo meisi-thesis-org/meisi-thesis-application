@@ -30,14 +30,14 @@ const { dossier } = storeToRefs(useDossier());
 const onContinue = async () => {
     try {
         isLoading.value = !isLoading.value;
-        await updateDossierByUuid(dossier.value!.uuid, { active:  !dossier.value!.active});
+        await updateDossierByUuid(dossier.value!.uuid, { active: !dossier.value!.active });
         return router.push({ name: "dossier", params: { userUuid: dossier.value!.userUuid } })
     } finally {
         isLoading.value = !isLoading.value;
     }
 };
 const onSkip = () => {
-    return router.push(`/${dossier.value!.uuid}/dossier`);
+    return router.push({ name: "dashboard", params: { userUuid: dossier.value!.userUuid } })
 }
 </script>
 

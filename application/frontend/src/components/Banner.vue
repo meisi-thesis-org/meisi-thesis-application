@@ -4,15 +4,15 @@
             <div id="banner__inner--box">
                 <Typography :content="definedProps.headerContent" :segment="'paragraph'" :color="'light-colorized'" />
                 <div id="banner__inner--box__icons">
-                    <Icon v-if="!isOwner && isEnabled" :name="'lock'" :width="'1.25rem'" :height="'1.25rem'" :color="'light-colorized'" />
-                    <Icon v-if="!isOwner && isEnabled" :name="'unlock'" :width="'1.25rem'" :height="'1.25rem'" :color="'light-colorized'" />
-                    <Icon :on-click="toggleVisibility" v-if="isOwner && !isEnabled" :name="'watcher'" :width="'1.25rem'" :height="'1.25rem'" :color="'light-colorized'" />
-                    <Icon :on-click="toggleVisibility" v-if="isOwner && isEnabled" :name="'watcher-off'" :width="'1.25rem'" :height="'1.25rem'" :color="'light-colorized'" />
-                    <Icon :on-click="toggleActivity" v-if="isOwner" :name="'trashcan'" :width="'1.25rem'" :height="'1.25rem'" :color="'light-colorized'" />
+                    <Icon v-if="!isOwner && definedProps.isContentVisible" :name="'lock'" :width="'1.25rem'" :height="'1.25rem'" :color="'light-colorized'" />
+                    <Icon v-if="!isOwner && definedProps.isContentVisible" :name="'unlock'" :width="'1.25rem'" :height="'1.25rem'" :color="'light-colorized'" />
+                    <Icon :on-click="() => $emit('toggleVisibility', !definedProps.isContentVisible)" v-if="isOwner && !definedProps.isContentVisible" :name="'watcher'" :width="'1.25rem'" :height="'1.25rem'" :color="'light-colorized'" />
+                    <Icon :on-click="() => $emit('toggleVisibility', !definedProps.isContentVisible)" v-if="isOwner && definedProps.isContentVisible" :name="'watcher-off'" :width="'1.25rem'" :height="'1.25rem'" :color="'light-colorized'" />
+                    <Icon :on-click="() => $emit('toggleActivity', !definedProps.isContentEnabled)" v-if="isOwner" :name="'trashcan'" :width="'1.25rem'" :height="'1.25rem'" :color="'light-colorized'" />
                 </div>
             </div>
             <div id="banner__inner--box">
-                <EditableField @on-blur="$emit('onBlur', $event)" :content="definedProps.subHeaderContent"
+                <EditableField @on-blur="(data: string) => $emit('editableFieldUpdate', data)" :content="definedProps.subHeaderContent"
                     :color="'light-colorized'" :is-editable="isOwner" />
             </div>
         </div>
@@ -26,38 +26,10 @@ import Icon from './Icon.vue';
 import EditableField from './EditableField.vue';
 import { usePermission } from '@/composables/usePermission';
 import { computed } from 'vue';
-import { storeToRefs } from 'pinia';
-import { useDossier } from '@/stores/useDossier';
-import { useLoader } from '@/composables/useLoader';
-import { useRouter } from 'vue-router';
 const definedProps = defineProps<BannerProps>();
-const definedEmits = defineEmits(['onBlur']);
+const definedEmits = defineEmits(['editableFieldUpdate', 'toggleVisibility', 'toggleActivity']);
 const { isOwner } = usePermission();
-const { dossier } = storeToRefs(useDossier());
-const isEnabled = computed(() => dossier.value && dossier.value.visible)
-const { isLoading } = useLoader();
-const { updateDossierByUuid } = useDossier();
-const { push } = useRouter();
-const toggleVisibility = async () => {
-    try {
-        isLoading.value = !isLoading.value;
-        await updateDossierByUuid(dossier.value!.uuid, { visible:  !dossier.value!.visible});
-        isLoading.value = !isLoading.value;
-    } catch (error) {
-        isLoading.value = !isLoading.value;
-    }
-}
-
-const toggleActivity = async () => {
-    try {
-        isLoading.value = !isLoading.value;
-        await updateDossierByUuid(dossier.value!.uuid, { active:  !dossier.value!.active});
-        isLoading.value = !isLoading.value;
-        return await push({ name: "recover-dossier", params: { userUuid: dossier.value?.userUuid } });
-    } catch (error) {
-        isLoading.value = !isLoading.value;
-    }
-}
+const doStuff = computed(() => definedProps.isContentVisible)
 </script>
 
 <style scoped lang="scss">

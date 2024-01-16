@@ -1,7 +1,7 @@
 <template>
     <textarea 
         placeholder="Type something here..." 
-        @blur="$emit('onBlur', $event)" 
+        @blur="$emit('onBlur', content)" 
         :class="definedProps.color" 
         :disabled="!definedProps.isEditable" 
         id="editable-field" 

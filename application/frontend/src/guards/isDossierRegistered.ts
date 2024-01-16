@@ -12,6 +12,8 @@ export const isDossierRegistered = async (
     const { dossier } = storeToRefs(useDossier())
 
     if (dossier.value !== undefined) {
+        if (to.name === "register-dossier") return next({ name: "dossier", params: { userUuid: to.params.userUuid } });
+        if (to.name === "recover-dossier" && dossier.value.active) return next({ name: "dossier", params: { userUuid: to.params.userUuid } });
         if (dossier.value.active === false) return next({ name: "recover-dossier", params: { userUuid: to.params.userUuid } });
         return next();
     }

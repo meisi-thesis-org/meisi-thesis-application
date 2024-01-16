@@ -3,8 +3,12 @@
         <div id="wrapper__inner">
             <Navbar />
             <div id="wrapper__inner--content">
-                <Banner @on-blur="updateDossier" :header-content="user?.username + ' dossier'"
-                    :sub-header-content="dossier?.designation ?? ''" />
+                <Banner @editable-field-update="(data: string) => updateDossier({ designation: data })"
+                    @toggle-visibility="(data: boolean) => updateDossier({ visible: data })"
+                    @toggle-activity="(data: boolean) => updateDossier({ active: data })" 
+                    :is-content-enabled="isEnabled"
+                    :is-content-visible="isVisible"
+                    :header-content="user?.username + ' dossier'" :sub-header-content="dossier?.designation ?? ''" />
                 <div id="wrapper__inner--content__box">
                     <div id="wrapper__inner--content__box--row">
                         <Typography :content="'Books'" :segment="'designation'" />
@@ -25,16 +29,20 @@ import { useLoader } from "@/composables/useLoader";
 import { useDossier } from "@/stores/useDossier";
 import { useUser } from "@/stores/useUser";
 import { storeToRefs } from "pinia";
+import { computed } from "vue";
+import { useRouter } from "vue-router";
 const { updateDossierByUuid } = useDossier();
 const { dossier } = storeToRefs(useDossier());
 const { user } = storeToRefs(useUser());
 const { isLoading } = useLoader();
-const updateDossier = async (data: FocusEvent) => {
+const { push } = useRouter();
+const isVisible = computed(() => (dossier.value && dossier.value.visible) ?? false)
+const isEnabled = computed(() => (dossier.value && dossier.value.active) ?? false)
+const updateDossier = async (data: Record<string, string | boolean>) => {
     try {
-        const target = data.target as unknown as { value: string };
-        if (target.value === dossier.value?.designation) return;
         isLoading.value = !isLoading.value;
-        await updateDossierByUuid(dossier.value!.uuid, { designation: target.value });
+        await updateDossierByUuid(dossier.value!.uuid, data);
+        if (dossier.value?.active === false) push({ name: "dashboard", params: { userUuid: user.value?.uuid } })
         isLoading.value = !isLoading.value;
     } catch (error) {
         isLoading.value = !isLoading.value;
