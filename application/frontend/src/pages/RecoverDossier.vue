@@ -24,17 +24,15 @@ import { useLoader } from '@/composables/useLoader';
 import { useDossier } from '@/stores/useDossier';
 import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
-import { useUser } from '@/stores/useUser';
 
 const { push } = useRouter();
 const { params } = useRoute();
 const { isLoading } = useLoader()
 const useDossierStore = useDossier();
 const { dossiers } = storeToRefs(useDossierStore);
-const { user } = storeToRefs(useUser());
 
 const dossier = computed(() => dossiers.value.find((dossier) => dossier.uuid === params.dossierUuid))
-const paramizedUserUuid = computed(() => ({ userUuid: user.value?.uuid }))
+const paramizedUserUuid = computed(() => ({ userUuid: params.userUuid }))
 
 const onContinue = async () => {
     try {
@@ -46,9 +44,7 @@ const onContinue = async () => {
         isLoading.value = !isLoading.value;
     }
 };
-const onSkip = () => {
-    return push({ name: "dashboard", params: paramizedUserUuid.value })
-}
+const onSkip = () => push({ name: "dashboard", params: paramizedUserUuid.value });
 </script>
 
 <style scoped lang="scss">

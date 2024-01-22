@@ -44,9 +44,7 @@ const onContinue = async () => {
         isLoading.value = !isLoading.value;
     }
 };
-const onSkip = () => {
-    return push(`/${params.userUuid as string}/dashboard`);
-}
+const onSkip = () => push(`/${params.userUuid as string}/dashboard`);
 </script>
 
 <style scoped lang="scss">
