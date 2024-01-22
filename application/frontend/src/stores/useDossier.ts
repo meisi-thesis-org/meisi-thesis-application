@@ -2,17 +2,16 @@ import { useFetch } from "@/composables/useFetch";
 import type { DossierEntity } from "@/types/Entities";
 import type { Primitive } from "@/types/Primitive";
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 export const useDossier = defineStore("dossiers", () => {
     const { createRequest } = useFetch();
-    const state = ref<DossierEntity>()
-
-    const setDossier = (dossier: DossierEntity) => state.value = dossier;
+    const state = ref<Array<DossierEntity>>([])
 
     const findDossierByUserUuid = async (userUuid: string) => {
         try {
-            return (await createRequest<DossierEntity>('commerce/dossiers', 'GET', undefined, { userUuid })).data;
+            const response = await createRequest<DossierEntity>('commerce/dossiers', 'GET', undefined, { userUuid });
+            return response.data;
         } catch (error) {
             return undefined;
         }
@@ -20,30 +19,43 @@ export const useDossier = defineStore("dossiers", () => {
 
     const findDossierByUuid = async (uuid: string) => {
         try {
-            return (await createRequest<DossierEntity>(`commerce/dossiers/${uuid}`, 'GET')).data;
+            const response = await createRequest<DossierEntity>(`commerce/dossiers/${uuid}`, 'GET')
+            return response.data;
         } catch (error) {
             return undefined;
         }
     }
 
     const createDossier = async (userUuid: string, designation: string) => {
-        return (await createRequest<DossierEntity[]>('commerce/dossiers', 'POST', { userUuid, designation })).data;
+        try {
+            const response = await createRequest<DossierEntity>('commerce/dossiers', 'POST', { userUuid, designation });
+            state.value?.push(response.data)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const updateDossierByUuid = async (
         uuid: string,
         params: Record<string, Primitive>
     ) => {
-        const response = await createRequest<DossierEntity>(`commerce/dossiers/${uuid}`, 'PUT', params);
-        state.value = response.data;
+        try {
+            const response = await createRequest<DossierEntity>(`commerce/dossiers/${uuid}`, 'PUT', params);
+            state.value?.forEach((element) => {
+                if (element.uuid === response.data.uuid) 
+                    element = response.data
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return {
-        dossier: state,
-        setDossier,
+        dossiers: state,
         findDossierByUserUuid,
         findDossierByUuid,
         createDossier,
-        updateDossierByUuid
+        updateDossierByUuid,
+        updateState: (dossier: DossierEntity) => state.value.push(dossier)
     }
 })

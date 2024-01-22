@@ -61,10 +61,8 @@ export class BookService {
 
     await this.networkProvider.doHttpRequest(
       '8000',
-      'commerce/dossiers',
+      `commerce/dossiers/${createBookRequest.dossierUuid}`,
       'GET',
-      undefined,
-      { uuid: createBookRequest.dossierUuid }
     )
 
     const toCreateBook: BookEntity = {

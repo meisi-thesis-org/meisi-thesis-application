@@ -21,24 +21,31 @@ import Typography from '@/components/Typography.vue';
 import Link from '@/components/Link.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useLoader } from '@/composables/useLoader';
-import { useLocalStorage } from '@/composables/useLocalStorage';
 import { useDossier } from '@/stores/useDossier';
-const router = useRouter();
-const route = useRoute();
+import { storeToRefs } from 'pinia';
+import { computed } from 'vue';
+
+const { push } = useRouter();
+const { params } = useRoute();
 const { isLoading } = useLoader()
-const { save } = useLocalStorage();
-const { createDossier } = useDossier();
+const useDossierStore = useDossier();
+const { dossiers } = storeToRefs(useDossierStore);
+
+const paramizedUserUuid = computed(() => ({ userUuid: params.userUuid }));
+const dossier = computed(() => dossiers.value.find((dossier) => dossier.uuid === params.dossierUuid));
+
 const onContinue = async () => {
     try {
         isLoading.value = !isLoading.value;
-        await createDossier(route.params.userUuid as string, '');
-        return router.push({ name: "dossier" })
+        await useDossierStore.createDossier(params.userUuid as string, '');
+        if (dossier.value === undefined) return push({ name: "dashboard", params: paramizedUserUuid.value  })
+        return push({ name: "dossier", params: { dossierUuid: dossier.value.uuid } })
     } finally {
         isLoading.value = !isLoading.value;
     }
 };
 const onSkip = () => {
-    return router.push(`/${route.params.userUuid as string}/dashboard`);
+    return push(`/${params.userUuid as string}/dashboard`);
 }
 </script>
 

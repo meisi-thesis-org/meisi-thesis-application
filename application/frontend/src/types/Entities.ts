@@ -46,10 +46,22 @@ type DossierEntity = {
   updatedAt: string
 }
 
+type BookEntity = {
+  readonly uuid: string
+  readonly dossierUuid: string
+  designation: string
+  description: string
+  visible: boolean
+  active: boolean
+  readonly createdAt: string
+  updatedAt: string
+}
+
 export type {
   UserEntity,
   SessionEntity,
   NetworkEntity,
   DeviceEntity,
-  DossierEntity
+  DossierEntity,
+  BookEntity
 }
