@@ -89,7 +89,7 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
-      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered,]
+      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered]
     },
     {
       name: 'dashboard',
@@ -102,7 +102,7 @@ const router = createRouter({
     },
     {
       name: 'recover-dossier',
-      path: '/:userUuid/recover-dossier',
+      path: '/:userUuid/recover-dossier/:dossierUuid',
       component: RecoverDossier,
       meta: {
         requiresSession: true
@@ -111,7 +111,7 @@ const router = createRouter({
     },
     {
       name: 'dossier',
-      path: '/:userUuid/dossier',
+      path: '/:userUuid/dossier/:dossierUuid?',
       component: Dossier,
       meta: {
         requiresSession: true

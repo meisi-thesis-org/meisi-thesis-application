@@ -41,9 +41,13 @@ export const useDossier = defineStore("dossiers", () => {
     ) => {
         try {
             const response = await createRequest<DossierEntity>(`commerce/dossiers/${uuid}`, 'PUT', params);
-            state.value?.forEach((element) => {
-                if (element.uuid === response.data.uuid) 
-                    element = response.data
+            state.value = state.value.map((dossier) => {
+                if (dossier.uuid === response.data.uuid) {
+                    dossier.designation = response.data.designation
+                    dossier.active = response.data.active
+                    dossier.visible = response.data.visible
+                }
+                return dossier
             })
         } catch (error) {
             console.log(error)
@@ -56,6 +60,6 @@ export const useDossier = defineStore("dossiers", () => {
         findDossierByUuid,
         createDossier,
         updateDossierByUuid,
-        updateState: (dossier: DossierEntity) => state.value.push(dossier)
+        updateState: (dossier: DossierEntity) => state.value = [...state.value, dossier]
     }
 })

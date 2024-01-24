@@ -26,11 +26,18 @@ import Typography from './Typography.vue';
 import { storeToRefs } from 'pinia';
 import { useSession } from '@/stores/useSession';
 import { computed } from 'vue';
-const { push } = useRouter();
+import { useDossier } from '@/stores/useDossier';
+
+const router = useRouter();
 const { session } = storeToRefs(useSession());
-const userUuid = computed(() => session.value!.userUuid)
-const navigateToDashboard = async () => await push({ name: "dashboard", params: { userUuid: userUuid.value } })
-const navigateToDossier = async () => await push({ name: "dossier", params: { userUuid: userUuid.value } })
+const { dossiers } = storeToRefs(useDossier());
+
+const dossier = computed(() => dossiers.value.find((dossier) => dossier.uuid === session.value?.userUuid))
+
+const navigateToDashboard = async () => await router.push({ name: "dashboard", params: { userUuid: session.value!.userUuid } })
+const navigateToDossier = async () => {
+    await router.push({ name: "dossier", params: { userUuid: session.value!.userUuid, dossierUuid: dossier.value?.uuid } })
+}
 </script>
 
 <style scoped lang="scss">

@@ -7,7 +7,7 @@
                     @toggle-visibility="(data: boolean) => updateDossier({ visible: data })"
                     @toggle-activity="(data: boolean) => updateDossier({ active: data })" :is-content-enabled="isActive"
                     :is-content-visible="isVisible" :header-content="user?.username + ' dossier'"
-                    :sub-header-content="dossiers.find((dossier) => dossier.uuid === params.dossierUuid)?.designation ?? ''" />
+                    :sub-header-content="subHeaderContent" />
                 <div id="wrapper__inner--content__box">
                     <div id="wrapper__inner--content__box--row">
                         <Typography :content="'Books'" :segment="'designation'" />
@@ -31,22 +31,20 @@ import Typography from "@/components/Typography.vue";
 import { useLoader } from "@/composables/useLoader";
 import { useBook } from "@/stores/useBook";
 import { useDossier } from "@/stores/useDossier";
-import { useSession } from "@/stores/useSession";
 import { useUser } from "@/stores/useUser";
 import { storeToRefs } from "pinia";
-import { computed } from "vue";
+import { computed, nextTick } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 const { isLoading } = useLoader();
-const { push } = useRouter();
-const { params } = useRoute();
+const router = useRouter();
+const route = useRoute();
 const useBookStore = useBook();
 const useDossierStore = useDossier();
+const useUserStore = useUser();
 const { dossiers } = storeToRefs(useDossierStore);
 const { books } = storeToRefs(useBookStore);
-const { user } = storeToRefs(useUser());
-
-const dossier = computed(() => dossiers.value.find((dossier) => dossier.uuid === params.dossierUuid))
+const { user } = storeToRefs(useUserStore);
 
 const isVisible = computed(() => {
     if (dossier.value === undefined) return false;
@@ -58,28 +56,29 @@ const isActive = computed(() => {
     return dossier.value && dossier.value.active;
 })
 
-const paramizedUserUuid = computed(() => ({ userUuid: user.value?.uuid }))
+const dossier = computed(() => {
+    return dossiers.value.find((dossier) => dossier.uuid === route.params.dossierUuid)
+})
 
 const updateDossier = async (data: Record<string, string | boolean>) => {
     try {
         isLoading.value = !isLoading.value;
-        if (dossier.value === undefined) return push({ name: "dashboard", params: paramizedUserUuid.value  })
-        await useDossierStore.updateDossierByUuid(dossier.value.uuid, data);
-        if (dossier.value.active === false) push({ name: "dashboard", params: paramizedUserUuid.value })
+        await useDossierStore.updateDossierByUuid(dossier.value!.uuid, data);
+        if (!isActive.value) router.push({ name: "dashboard", params: { userUuid: route.params.userUuid } })
         isLoading.value = !isLoading.value;
     } catch (error) {
         isLoading.value = !isLoading.value;
     }
 }
 const createBook = async () => {
-    if (!dossier.value) return
-
     await useBookStore.createBook({
-        dossierUuid: dossier.value.uuid,
+        dossierUuid: dossier.value!.uuid,
         designation: `Book #${books.value?.length}`,
         description: '',
     })
 }
+
+const subHeaderContent = computed(() => dossier.value?.designation ?? '')
 </script>
 
 <style scoped lang="scss">

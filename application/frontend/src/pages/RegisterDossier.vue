@@ -31,20 +31,18 @@ const { isLoading } = useLoader()
 const useDossierStore = useDossier();
 const { dossiers } = storeToRefs(useDossierStore);
 
-const paramizedUserUuid = computed(() => ({ userUuid: params.userUuid }));
-const dossier = computed(() => dossiers.value.find((dossier) => dossier.uuid === params.dossierUuid));
+const dossier = computed(() => dossiers.value.find((dossier) => dossier.userUuid === params.userUuid));
 
 const onContinue = async () => {
     try {
         isLoading.value = !isLoading.value;
         await useDossierStore.createDossier(params.userUuid as string, '');
-        if (dossier.value === undefined) return push({ name: "dashboard", params: paramizedUserUuid.value  })
-        return push({ name: "dossier", params: { dossierUuid: dossier.value.uuid } })
+        return push({ name: "dossier", params: { userUuid: params.userUuid, dossierUuid: dossier.value?.uuid } })
     } finally {
         isLoading.value = !isLoading.value;
     }
 };
-const onSkip = () => push(`/${params.userUuid as string}/dashboard`);
+const onSkip = () => push({ name: "dashboard", params: { userUuid: params.userUuid }});
 </script>
 
 <style scoped lang="scss">

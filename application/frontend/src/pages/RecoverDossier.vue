@@ -24,27 +24,29 @@ import { useLoader } from '@/composables/useLoader';
 import { useDossier } from '@/stores/useDossier';
 import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
+import { useUser } from '@/stores/useUser';
 
-const { push } = useRouter();
-const { params } = useRoute();
+const router = useRouter();
+const route = useRoute();
 const { isLoading } = useLoader()
 const useDossierStore = useDossier();
+const useUserStore = useUser();
 const { dossiers } = storeToRefs(useDossierStore);
+const { user } = storeToRefs(useUserStore);
 
-const dossier = computed(() => dossiers.value.find((dossier) => dossier.uuid === params.dossierUuid))
-const paramizedUserUuid = computed(() => ({ userUuid: params.userUuid }))
+const dossier = computed(() => dossiers.value.find((dossier) => dossier.uuid === route.params.dossierUuid))
 
 const onContinue = async () => {
     try {
         isLoading.value = !isLoading.value;
-        if (dossier.value === undefined) return push({ name: "dashboard", params: paramizedUserUuid.value  })
+        if (dossier.value === undefined) return router.push({ name: "dashboard", params: { userUuid: user.value?.uuid }  })
         await useDossierStore.updateDossierByUuid(dossier.value.uuid, { active: !dossier.value.active });
-        return push({ name: "dossier", params: { dossierUuid: dossier.value.uuid } })
+        return router.push({ name: "dossier", params: { dossierUuid: dossier.value.uuid } })
     } finally {
         isLoading.value = !isLoading.value;
     }
 };
-const onSkip = () => push({ name: "dashboard", params: paramizedUserUuid.value });
+const onSkip = () => router.push({ name: "dashboard", params: { userUuid: user.value?.uuid } });
 </script>
 
 <style scoped lang="scss">
