@@ -24,7 +24,6 @@ import { useLoader } from '@/composables/useLoader';
 import { useNetwork } from '@/stores/useNetwork';
 import { storeToRefs } from 'pinia';
 import { useSession } from '@/stores/useSession';
-import { useLocalStorage } from '@/composables/useLocalStorage';
 const router = useRouter();
 const { isLoading } = useLoader()
 const { createNetwork } = useNetwork()
