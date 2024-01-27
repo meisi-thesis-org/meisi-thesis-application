@@ -14,7 +14,7 @@
                         <Icon :name="'plus'" :color="'blue-colorized'" :height="'1.25rem'" :width="'1.25rem'"
                             :on-click="createBook" />
                     </div>
-                    <Card v-for="book of books" :designation="book.designation" :description="book.description"
+                    <Card v-for="book of books" @click="navigateToBook(book.uuid)" :designation="book.designation" :description="book.description"
                         :is-visible="book.visible" :is-active="book.active" />
                 </div>
             </div>
@@ -33,7 +33,7 @@ import { useBook } from "@/stores/useBook";
 import { useDossier } from "@/stores/useDossier";
 import { useUser } from "@/stores/useUser";
 import { storeToRefs } from "pinia";
-import { computed, nextTick } from "vue";
+import { computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 const { isLoading } = useLoader();
@@ -56,9 +56,7 @@ const isActive = computed(() => {
     return dossier.value && dossier.value.active;
 })
 
-const dossier = computed(() => {
-    return dossiers.value.find((dossier) => dossier.uuid === route.params.dossierUuid)
-})
+const dossier = computed(() => dossiers.value.find((dossier) => dossier.uuid === route.params.dossierUuid))
 
 const updateDossier = async (data: Record<string, string | boolean>) => {
     try {
@@ -78,6 +76,7 @@ const createBook = async () => {
     })
 }
 
+const navigateToBook = (bookUuid: string) => router.push({ name: 'book', params: { userUuid: route.params.userUuid, dossierUuid: route.params.dossierUuid, bookUuid: bookUuid } })
 const subHeaderContent = computed(() => dossier.value?.designation ?? '')
 </script>
 

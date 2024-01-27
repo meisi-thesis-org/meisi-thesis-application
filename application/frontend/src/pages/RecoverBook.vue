@@ -3,13 +3,13 @@
         <div id="wrapper__inner">
             <Icon :name="'pencil'" :height="'5rem'" :width="'5rem'" />
             <div id="wrapper__inner--text-block">
-                <Typography :content="'Recover Dossier'" :segment="'header'" />
-                <Typography :content="'It seems that you have deactived your dossier.'" :segment="'paragraph'" />
+                <Typography :content="'Recover Book'" :segment="'header'" />
+                <Typography :content="'It seems that you have deactived this book.'" :segment="'paragraph'" />
                 <Typography :content="'Do you wish to recover it?'" :segment="'paragraph'" />
             </div>
             <Button :placeholder="'Recover'" :on-click="onContinue" />
             <Link :placeholder="'I will do this later...'" :href="onSkip" :segment="'designation'" />
-            <Typography :content="'(By doing this you cannot share your content...)'" :segment="'designation'" />
+            <Typography :content="'(By doing this you cannot share your content for this book...)'" :segment="'designation'" />
         </div>
     </div>
 </template>
@@ -21,32 +21,29 @@ import Typography from '@/components/Typography.vue';
 import Link from '@/components/Link.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useLoader } from '@/composables/useLoader';
-import { useDossier } from '@/stores/useDossier';
+import { useBook } from '@/stores/useBook';
 import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
-import { useUser } from '@/stores/useUser';
 
 const router = useRouter();
 const route = useRoute();
 const { isLoading } = useLoader()
-const useDossierStore = useDossier();
-const useUserStore = useUser();
-const { dossiers } = storeToRefs(useDossierStore);
-const { user } = storeToRefs(useUserStore);
+const useBookStore = useBook();
+const { books } = storeToRefs(useBookStore);
 
-const dossier = computed(() => dossiers.value.find((dossier) => dossier.uuid === route.params.dossierUuid))
+const book = computed(() => books.value.find((book) => book.uuid === route.params.bookUuid))
 
 const onContinue = async () => {
     try {
         isLoading.value = !isLoading.value;
-        if (dossier.value === undefined) return router.push({ name: "dashboard", params: { userUuid: user.value?.uuid }  })
-        await useDossierStore.updateDossierByUuid(dossier.value.uuid, { active: !dossier.value.active });
-        return router.push({ name: "dossier", params: { userUuid: user.value?.uuid, dossierUuid: dossier.value.uuid } })
+        if (book.value === undefined) return router.push({ name: "dossier", params: { userUuid: route.params.userUuid, dossierUuid: route.params.dossierUuid }  })
+        await useBookStore.updateBookByUuid(book.value.uuid, { active: !book.value.active });
+        return router.push({ name: "book", params: { userUuid: route.params.userUuid, dossierUuid: route.params.dossierUuid, bookUuid: book.value.uuid } })
     } finally {
         isLoading.value = !isLoading.value;
     }
 };
-const onSkip = () => router.push({ name: "dashboard", params: { userUuid: user.value?.uuid } });
+const onSkip = () => router.push({ name: "dossier", params: { userUuid: route.params.userUuid, dossierUuid: route.params.dossierUuid } });
 </script>
 
 <style scoped lang="scss">

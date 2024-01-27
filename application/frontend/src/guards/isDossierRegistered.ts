@@ -1,4 +1,5 @@
 import { usePermission } from "@/composables/usePermission";
+import { useBook } from "@/stores/useBook";
 import { useDossier } from "@/stores/useDossier";
 import type { DossierEntity } from "@/types/Entities";
 import { storeToRefs } from "pinia";
@@ -13,6 +14,7 @@ export const isDossierRegistered = async (
     const paramizedUserUuid = to.params.userUuid as string;
 
     const useDossierStore = useDossier();
+    const useBookStore = useBook();
     const { dossiers } = storeToRefs(useDossierStore);
     const { isOwner } = usePermission();
 
@@ -20,15 +22,17 @@ export const isDossierRegistered = async (
 
     if (cachedDossier) {
         if (!isOwner(paramizedUserUuid) && (!cachedDossier.active || !cachedDossier.visible)) return next({ name: "dashboard", params: { userUuid: paramizedUserUuid } });
-        if (isOwner(paramizedUserUuid) && !cachedDossier.active) return next({ name: "recover-dossier", params: { userUuid: paramizedUserUuid } })
+        if (isOwner(paramizedUserUuid) && !cachedDossier.active) return next({ name: "recover-dossier", params: { userUuid: paramizedUserUuid, dossierUuid: cachedDossier.uuid } })
         if (!paramizedDossierUuid) return next({ name: "dossier", params: { userUuid: paramizedUserUuid, dossierUuid: cachedDossier?.uuid }, replace: true });
         return next();
     }
 
-    const updateCachedDossier = (dossierToCache: DossierEntity | undefined) => {
+    const updateCachedDossier = async (dossierToCache: DossierEntity | undefined) => {
         if (!isOwner(paramizedUserUuid) && dossierToCache === undefined) return next({ name: "dashboard", params: { userUuid: paramizedUserUuid } });
         if (isOwner(paramizedUserUuid) && dossierToCache === undefined) return next({ name: "register-dossier", params: { userUuid: paramizedUserUuid } });
         useDossierStore.updateState(dossierToCache!);
+        const foundBooks = await useBookStore.findBooksByDossierUuid(paramizedDossierUuid);
+        useBookStore.updateState(foundBooks);
         return next({ name: "dossier", params: { userUuid: paramizedUserUuid, dossierUuid: dossierToCache?.uuid } });
     }
 

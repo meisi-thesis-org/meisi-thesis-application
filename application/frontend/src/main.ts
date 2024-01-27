@@ -8,16 +8,19 @@ import CheckDevice from '@/pages/CheckDevice.vue'
 import CheckNetwork from '@/pages/CheckNetwork.vue'
 import Dashboard from '@/pages/Dashboard.vue'
 import Dossier from '@/pages/Dossier.vue'
+import Book from '@/pages/Book.vue'
 import RegisterDevice from '@/pages/RegisterDevice.vue'
 import RegisterNetwork from '@/pages/RegisterNetwork.vue'
 import RegisterDossier from '@/pages/RegisterDossier.vue'
 import RecoverDossier from '@/pages/RecoverDossier.vue'
+import RecoverBook from '@/pages/RecoverBook.vue'
 import { createPinia } from 'pinia'
 import { isDeviceRegistered } from './guards/isDeviceRegistered'
 import { isNetworkRegistered } from './guards/isNetworkRegistered'
 import { isSessionExpired } from './guards/isSessionExpired'
 import { isDossierRegistered } from './guards/isDossierRegistered'
 import { isUserRegistered } from './guards/isUserRegistered'
+import { isBookRegistered } from './guards/isBookRegistered'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -110,6 +113,15 @@ const router = createRouter({
       beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered],
     },
     {
+      name: 'recover-book',
+      path: '/:userUuid/dossier/:dossierUuid?/recover-book/:bookUuid',
+      component: RecoverBook,
+      meta: {
+        requiresSession: true
+      },
+      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered],
+    },
+    {
       name: 'dossier',
       path: '/:userUuid/dossier/:dossierUuid?',
       component: Dossier,
@@ -117,6 +129,15 @@ const router = createRouter({
         requiresSession: true
       },
       beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isDossierRegistered],
+    },
+    {
+      name: 'book',
+      path: '/:userUuid/dossier/:dossierUuid?/book/:bookUuid',
+      component: Book,
+      meta: {
+        requiresSession: true
+      },
+      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isDossierRegistered, isBookRegistered],
     }
   ]
 })

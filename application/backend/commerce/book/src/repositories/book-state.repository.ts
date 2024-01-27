@@ -36,7 +36,12 @@ export class BookStateRepository implements BookRepository {
     data: Omit<BookEntity, 'uuid' | 'dossierUuid' | 'createdAt'>
   ): Promise<BookEntity | undefined> {
     return this.bookCollection.find((book) => {
-      if (book.uuid === uuid) book = { ...book, ...data }
+      if (book.uuid === uuid) {
+        book.designation = data.designation
+        book.description = data.description
+        book.active = data.active
+        book.visible = data.visible
+      }
 
       return book;
     })
