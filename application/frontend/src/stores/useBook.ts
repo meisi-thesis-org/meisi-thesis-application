@@ -26,7 +26,7 @@ export const useBook = defineStore("books", () => {
             const response = await createRequest<BookEntity[]>('commerce/books', 'GET', undefined, { dossierUuid });
             return response.data;
         } catch (error) {
-            return [];
+            return undefined;
         }
     }
 
@@ -65,6 +65,6 @@ export const useBook = defineStore("books", () => {
         findBooksByDossierUuid,
         createBook,
         updateBookByUuid,
-        updateState: (books: BookEntity[]) => state.value = [...state.value, ...books]
+        updateState: (books: BookEntity[]) => state.value = books
     }
 })

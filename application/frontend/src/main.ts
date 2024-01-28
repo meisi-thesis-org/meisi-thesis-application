@@ -110,7 +110,7 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
-      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered],
+      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isDossierRegistered],
     },
     {
       name: 'recover-book',
@@ -119,7 +119,7 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
-      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered],
+      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isDossierRegistered, isBookRegistered],
     },
     {
       name: 'dossier',
@@ -132,7 +132,7 @@ const router = createRouter({
     },
     {
       name: 'book',
-      path: '/:userUuid/dossier/:dossierUuid?/book/:bookUuid',
+      path: '/:userUuid/dossier/:dossierUuid/book/:bookUuid',
       component: Book,
       meta: {
         requiresSession: true

@@ -32,12 +32,10 @@ const router = useRouter();
 const { session } = storeToRefs(useSession());
 const { dossiers } = storeToRefs(useDossier());
 
-const dossier = computed(() => dossiers.value.find((dossier) => dossier.uuid === session.value?.userUuid))
+const dossier = computed(() => dossiers.value.find((dossier) => dossier.userUuid === session.value?.userUuid))
 
 const navigateToDashboard = async () => await router.push({ name: "dashboard", params: { userUuid: session.value!.userUuid } })
-const navigateToDossier = async () => {
-    await router.push({ name: "dossier", params: { userUuid: session.value!.userUuid, dossierUuid: dossier.value?.uuid } })
-}
+const navigateToDossier = async () => await router.push({ name: "dossier", params: { userUuid: session.value!.userUuid, dossierUuid: dossier.value?.uuid } })
 </script>
 
 <style scoped lang="scss">

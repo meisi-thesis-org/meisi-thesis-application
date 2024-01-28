@@ -1,18 +1,16 @@
 <template>
-    <div id="card">
+    <div id="card" :style="definedProps.isVisible ? { 'opacity': 100 } : { 'opacity': 0.60 }">
         <div id="card__inner">
-            <Typography :content="definedProps.designation" :segment="'header'" />
-            <Typography :content="definedProps.description" :segment="'paragraph'" />
+            <Typography :content="definedProps.designation" :segment="'header'" :color="'blue-colorized'" />
+            <Typography :content="definedProps.description" :segment="'paragraph'" :color="'blue-colorized'" />
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { usePermission } from '@/composables/usePermission';
 import type { CardProps } from '@/types/Card';
 import Typography from './Typography.vue';
 const definedProps = defineProps<CardProps>()
-const { isOwner } = usePermission();
 </script>
 
 <style scoped lang="scss">
@@ -24,10 +22,7 @@ const { isOwner } = usePermission();
 
     &__inner {
         padding: 3.5rem;
-
         height: inherit;
-        background-color: var(--blue--theme--color);
-
         display: flex;
         flex-direction: column;
         justify-content: center;
