@@ -3,11 +3,11 @@
         <div id="wrapper__inner">
             <Navbar />
             <div id="wrapper__inner--content">
-                <Banner @editable-field-update="(data: string) => updateBook({ designation: data })"
+                <Banner @editable-field-update="(data: Record<string, string>) => updateBook(data)"
                     @toggle-visibility="(data: boolean) => updateBook({ visible: data })"
                     @toggle-activity="(data: boolean) => updateBook({ active: data })" :is-content-enabled="isActive"
                     :is-content-visible="isVisible" :header-content="book?.designation!"
-                    :sub-header-content="subHeaderContent" />
+                    :sub-header-content="subHeaderContent" :is-header-editable="true" :header-name="'designation'" :sub-header-name="'description'" />
                 <div id="wrapper__inner--content__box">
                     <div id="wrapper__inner--content__box--row">
                         <Typography :content="'Chapters'" :segment="'designation'" />
@@ -59,8 +59,8 @@ const isActive = computed(() => {
 
 const updateBook = async (data: Record<string, string | boolean>) => {
     try {
-        isLoading.value = !isLoading.value;
         console.log(data)
+        isLoading.value = !isLoading.value;
         await useBookStore.updateBookByUuid(book.value!.uuid, data);
         if (!isActive.value) router.push({ name: "dossier", params: { userUuid: route.params.userUuid, dossierUuid: route.params.dossierUuid } })
         isLoading.value = !isLoading.value;
@@ -71,12 +71,12 @@ const updateBook = async (data: Record<string, string | boolean>) => {
 const createChapter = async () => {
     await useChapterStore.createChapter({
         bookUuid: book.value!.uuid,
-        designation: `Chapter #${books.value?.length}`,
+        designation: `Chapter #${chapters.value?.length}`,
         description: '',
     })
 }
 
-const navigateToChapter = (chapterUuid: string) => router.push({ name: 'chapter', params: { userUuid: route.params.userUuid, dossierUuid: route.params.dossierUuid, bookUuid: route.params.bookUuid, chapter: chapterUuid } })
+const navigateToChapter = (chapterUuid: string) => router.push({ name: 'chapter', params: { userUuid: route.params.userUuid, dossierUuid: route.params.dossierUuid, bookUuid: route.params.bookUuid, chapterUuid: chapterUuid } })
 </script>
 
 <style scoped lang="scss">

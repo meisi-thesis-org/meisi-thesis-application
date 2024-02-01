@@ -13,6 +13,11 @@ export const isNetworkRegistered = async (
   const useNetworkStore = useNetwork();
   const { networks } = storeToRefs(useNetworkStore);
   const { session } = storeToRefs(useSession());
+  const { fetch } = useLocalStorage();
+
+  if (fetch("is_network_unknown") === true) {
+    return next();
+  }
 
   const position = await new Promise<{ coords: { latitude: number, longitude: number } }>((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(

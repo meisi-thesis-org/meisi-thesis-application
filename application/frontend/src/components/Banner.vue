@@ -2,7 +2,9 @@
     <div id="banner">
         <div id="banner__inner">
             <div id="banner__inner--box">
-                <Typography :content="definedProps.headerContent" :segment="'paragraph'" :color="'light-colorized'" />
+                <Typography v-if="!definedProps.isHeaderEditable" :content="definedProps.headerContent" :segment="'paragraph'" :color="'light-colorized'" />
+                <EditableField v-if="definedProps.isHeaderEditable" :name="definedProps.headerName ?? ''" @on-blur="(data: Record<string, string>) => $emit('editableFieldUpdate', data)" :content="definedProps.headerContent"
+                    :color="'light-colorized'" :is-editable="isParamizedUserOwner" />
                 <div id="banner__inner--box__icons">
                     <Icon v-if="!isParamizedUserOwner && definedProps.isContentVisible" :name="'lock'" :width="'1.25rem'" :height="'1.25rem'" :color="'light-colorized'" />
                     <Icon v-if="!isParamizedUserOwner && definedProps.isContentVisible" :name="'unlock'" :width="'1.25rem'" :height="'1.25rem'" :color="'light-colorized'" />
@@ -12,7 +14,7 @@
                 </div>
             </div>
             <div id="banner__inner--box">
-                <EditableField @on-blur="(data: string) => $emit('editableFieldUpdate', data)" :content="definedProps.subHeaderContent"
+                <EditableField :name="definedProps.subHeaderName ?? ''" @on-blur="(data: Record<string, string>) => $emit('editableFieldUpdate', data)" :content="definedProps.subHeaderContent"
                     :color="'light-colorized'" :is-editable="isParamizedUserOwner" />
             </div>
         </div>

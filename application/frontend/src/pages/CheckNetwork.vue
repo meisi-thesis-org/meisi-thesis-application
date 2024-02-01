@@ -16,12 +16,17 @@
 import Button from '@/components/Button.vue';
 import Icon from '@/components/Icon.vue';
 import Typography from '@/components/Typography.vue';
+import { useLocalStorage } from '@/composables/useLocalStorage';
 import { useSession } from '@/stores/useSession';
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 const router = useRouter();
+const { save } = useLocalStorage()
 const { session } = storeToRefs(useSession())
-const onContinue = () => router.push(`/${session.value!.userUuid}/dashboard`);
+const onContinue = () => {
+    save('is_network_unknown', true);
+    return router.push(`/${session.value!.userUuid}/dashboard`);
+}
 </script>
 
 <style scoped lang="scss">

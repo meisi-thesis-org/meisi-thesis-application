@@ -14,6 +14,11 @@ export const isDeviceRegistered = async (
   const useSessionStore = useSession();
   const { devices } = storeToRefs(useDeviceStore);
   const { session } = storeToRefs(useSessionStore);
+  const { fetch } = useLocalStorage();
+
+  if (fetch("is_device_unknown") === true) {
+    return next();
+  }
 
   const sessionUserUuid = session.value!.userUuid;
   const isCurrentDevice = computed(() => devices.value.find(({ userUuid, userAgent }) => userUuid === sessionUserUuid && userAgent === navigator.userAgent))

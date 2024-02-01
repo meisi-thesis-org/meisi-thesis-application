@@ -9,6 +9,7 @@ import CheckNetwork from '@/pages/CheckNetwork.vue'
 import Dashboard from '@/pages/Dashboard.vue'
 import Dossier from '@/pages/Dossier.vue'
 import Book from '@/pages/Book.vue'
+import Chapter from '@/pages/Chapter.vue'
 import RegisterDevice from '@/pages/RegisterDevice.vue'
 import RegisterNetwork from '@/pages/RegisterNetwork.vue'
 import RegisterDossier from '@/pages/RegisterDossier.vue'
@@ -134,6 +135,15 @@ const router = createRouter({
       name: 'book',
       path: '/:userUuid/dossier/:dossierUuid/book/:bookUuid',
       component: Book,
+      meta: {
+        requiresSession: true
+      },
+      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isDossierRegistered, isBookRegistered],
+    },
+    {
+      name: 'chapter',
+      path: '/:userUuid/dossier/:dossierUuid/book/:bookUuid/chapter/:chapterUuid',
+      component: Chapter,
       meta: {
         requiresSession: true
       },

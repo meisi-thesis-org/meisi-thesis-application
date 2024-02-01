@@ -19,9 +19,12 @@ import Typography from '@/components/Typography.vue';
 import { useSession } from '@/stores/useSession';
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
+import { useLocalStorage } from '@/composables/useLocalStorage';
 const router = useRouter();
+const { save } = useLocalStorage()
 const { session } = storeToRefs(useSession())
 const onContinue = () => {
+    save('is_device_unknown', true);
     return router.push(`/${session.value?.userUuid}/check-network`);
 }
 </script>

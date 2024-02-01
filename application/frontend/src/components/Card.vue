@@ -1,5 +1,5 @@
 <template>
-    <div id="card" :style="definedProps.isVisible ? { 'opacity': 100 } : { 'opacity': 0.60 }">
+    <div id="card" :style="!definedProps.isVisible || !definedProps.isActive ? { 'opacity': 0.60 } : { 'opacity': 100 }">
         <div id="card__inner">
             <Typography :content="definedProps.designation" :segment="'header'" :color="'blue-colorized'" />
             <Typography :content="definedProps.description" :segment="'paragraph'" :color="'blue-colorized'" />

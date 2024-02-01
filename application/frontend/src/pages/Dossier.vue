@@ -3,11 +3,11 @@
         <div id="wrapper__inner">
             <Navbar />
             <div id="wrapper__inner--content">
-                <Banner @editable-field-update="(data: string) => updateDossier({ designation: data })"
+                <Banner @editable-field-update="(data: Record<string, string>) => updateDossier(data)"
                     @toggle-visibility="(data: boolean) => updateDossier({ visible: data })"
                     @toggle-activity="(data: boolean) => updateDossier({ active: data })" :is-content-enabled="isActive"
                     :is-content-visible="isVisible" :header-content="user?.username + ' dossier'"
-                    :sub-header-content="subHeaderContent" />
+                    :sub-header-content="subHeaderContent" :is-header-editable="false" :sub-header-name="'designation'" />
                 <div id="wrapper__inner--content__box">
                     <div id="wrapper__inner--content__box--row">
                         <Typography :content="'Books'" :segment="'designation'" />
@@ -60,6 +60,7 @@ const dossier = computed(() => dossiers.value.find((dossier) => dossier.uuid ===
 
 const updateDossier = async (data: Record<string, string | boolean>) => {
     try {
+        console.log(data)
         isLoading.value = !isLoading.value;
         await useDossierStore.updateDossierByUuid(dossier.value!.uuid, data);
         if (!isActive.value) router.push({ name: "dashboard", params: { userUuid: route.params.userUuid } })
