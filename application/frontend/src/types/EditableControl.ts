@@ -1,6 +1,6 @@
 import type { Color } from "./Color"
 
-export type EditableFieldProps = {
+export type EditableControlProps = {
     readonly content: string
     readonly color?: Color
     readonly isEditable: boolean

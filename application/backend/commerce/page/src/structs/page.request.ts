@@ -5,6 +5,6 @@ type FindPageByChapterUuidRequest = NonNullable<Pick<PageEntity, 'chapterUuid'>>
 type CreatePageRequest = NonNullable<Readonly<Pick<PageEntity, 'chapterUuid' | 'description'>>>
 type UpdatePageByUuidRequest =
     NonNullable<Pick<PageEntity, 'uuid'>> &
-    Partial<Readonly<Pick<PageEntity, 'description' | 'active' | 'enabled'>>>
+    Partial<Readonly<Pick<PageEntity, 'description' | 'visible' | 'active'>>>
 
 export type { FindPageByUuidRequest, FindPageByChapterUuidRequest, CreatePageRequest, UpdatePageByUuidRequest }

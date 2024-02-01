@@ -3,19 +3,33 @@
         <div id="wrapper__inner">
             <Navbar />
             <div id="wrapper__inner--content">
-                <Banner @editable-field-update="(data: Record<string, string>) => updateBook(data)"
+                <Banner
+                    :is-content-enabled="isActive"
+                    :is-content-visible="isVisible" 
+                    :header-content="book?.designation!"
+                    :sub-header-content="subHeaderContent" 
+                    :is-header-editable="true"
+                    @editable-control-update="(data: string) => updateBook({ designation: data })"
+                    @editable-field-update="(data: string) => updateBook({ description: data })"
                     @toggle-visibility="(data: boolean) => updateBook({ visible: data })"
-                    @toggle-activity="(data: boolean) => updateBook({ active: data })" :is-content-enabled="isActive"
-                    :is-content-visible="isVisible" :header-content="book?.designation!"
-                    :sub-header-content="subHeaderContent" :is-header-editable="true" :header-name="'designation'" :sub-header-name="'description'" />
+                    @toggle-activity="(data: boolean) => updateBook({ active: data })" />
                 <div id="wrapper__inner--content__box">
                     <div id="wrapper__inner--content__box--row">
                         <Typography :content="'Chapters'" :segment="'designation'" />
-                        <Icon :name="'plus'" :color="'blue-colorized'" :height="'1.25rem'" :width="'1.25rem'"
+                        <Icon 
+                            :name="'plus'" 
+                            :color="'blue-colorized'" 
+                            :height="'1.25rem'"
+                            :width="'1.25rem'"
                             :on-click="createChapter" />
                     </div>
-                    <Card v-for="chapter of chapters" @click="navigateToChapter(chapter.uuid)" :designation="chapter.designation" :description="chapter.description"
-                        :is-visible="chapter.visible" :is-active="chapter.active" />
+                    <Card 
+                        v-for="chapter of chapters" 
+                        @click="navigateToChapter(chapter.uuid)" 
+                        :designation="chapter.designation" 
+                        :description="chapter.description"
+                        :is-visible="chapter.visible" 
+                        :is-active="chapter.active" />
                 </div>
             </div>
         </div>
@@ -59,7 +73,6 @@ const isActive = computed(() => {
 
 const updateBook = async (data: Record<string, string | boolean>) => {
     try {
-        console.log(data)
         isLoading.value = !isLoading.value;
         await useBookStore.updateBookByUuid(book.value!.uuid, data);
         if (!isActive.value) router.push({ name: "dossier", params: { userUuid: route.params.userUuid, dossierUuid: route.params.dossierUuid } })

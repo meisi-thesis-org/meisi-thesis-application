@@ -27,7 +27,7 @@ describe('PageService', () => {
     chapterUuid: randomUuid,
     description: randomString,
     active: randomBoolean,
-    enabled: randomBoolean,
+    visible: randomBoolean,
     createdAt: randomDateBirth,
     updatedAt: randomDateBirth
   }
@@ -87,13 +87,13 @@ describe('PageService', () => {
     }
 
     it('should be defined', async () => {
-      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ active: true, enabled: true });
+      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ active: true, visible: true });
       vi.spyOn(PageStateRepository.prototype, 'createPage').mockResolvedValue()
       await expect(callCreatePage()).resolves.toBeDefined()
     })
 
     it('should throw a InternalServerException because Repository.createPage threw InternalServerException', async () => {
-      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ active: true, enabled: true });
+      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ active: true, visible: true });
       vi.spyOn(PageStateRepository.prototype, 'createPage').mockRejectedValue(new InternalServerException())
       await expect(callCreatePage()).rejects.toThrow(InternalServerException)
     })
@@ -104,12 +104,12 @@ describe('PageService', () => {
     })
 
     it('should throw a BadRequestException because NetworkProvider.doHttpRequest return an inactive entity', async () => {
-      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ active: false, enabled: true });
+      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ active: false, visible: true });
       await expect(callCreatePage()).rejects.toThrow(BadRequestException)
     })
 
     it('should throw a BadRequestException because NetworkProvider.doHttpRequest return an disabled entity', async () => {
-      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ active: true, enabled: false });
+      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ active: true, visible: false });
       await expect(callCreatePage()).rejects.toThrow(BadRequestException)
     })
   })
@@ -120,7 +120,7 @@ describe('PageService', () => {
         uuid: randomUuid,
         description: randomString,
         active: randomBoolean,
-        enabled: randomBoolean
+        visible: randomBoolean
       })
     }
 

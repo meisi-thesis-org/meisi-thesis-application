@@ -68,6 +68,16 @@ type ChapterEntity = {
   updatedAt: string
 }
 
+type PageEntity = {
+  readonly uuid: string
+  readonly chapterUuid: string
+  description: string
+  visible: boolean
+  active: boolean
+  readonly createdAt: string
+  updatedAt: string
+}
+
 export type {
   UserEntity,
   SessionEntity,
@@ -75,5 +85,6 @@ export type {
   DeviceEntity,
   DossierEntity,
   BookEntity,
-  ChapterEntity
+  ChapterEntity,
+  PageEntity
 }

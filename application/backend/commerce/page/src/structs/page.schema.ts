@@ -25,8 +25,8 @@ const UpdatePageByUuidSchema = z.object({
   }),
   body: z.object({
     description: z.string().optional(),
-    active: z.boolean().optional(),
-    enabled: z.boolean().optional()
+    visible: z.boolean().optional(),
+    active: z.boolean().optional()
   })
 })
 

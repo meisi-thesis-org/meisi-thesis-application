@@ -32,7 +32,7 @@ describe('PageController', () => {
     chapterUuid: randomUuid,
     description: randomString,
     active: randomBoolean,
-    enabled: randomBoolean,
+    visible: randomBoolean,
     createdAt: randomDateBirth,
     updatedAt: randomDateBirth
   }
@@ -119,7 +119,7 @@ describe('PageController', () => {
   describe('updatePageByUuid', () => {
     beforeEach(() => {
       requestMock.params = { ...requestMock.params, uuid: randomUuid }
-      requestMock.body = { ...requestMock.body, description: randomString, active: randomBoolean, enabled: randomBoolean }
+      requestMock.body = { ...requestMock.body, description: randomString, active: randomBoolean, visible: randomBoolean }
     })
 
     async function callUpdatePageByUuid (): Promise<Response> {

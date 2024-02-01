@@ -27,7 +27,6 @@ export class DossierStateRepository implements DossierRepository {
     data: Omit<DossierEntity, 'uuid' | 'userUuid' | 'createdAt'>
   ): Promise<DossierEntity | undefined> {
     for (const dossier of this.dossierCollection) {
-
       if (dossier.uuid === uuid) {
         dossier.designation = data.designation;
         dossier.visible = data.visible;

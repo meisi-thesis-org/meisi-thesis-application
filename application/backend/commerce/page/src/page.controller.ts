@@ -72,8 +72,8 @@ export class PageController {
       const requestArgs: UpdatePageByUuidRequest = {
         uuid: request.params.uuid,
         description: request.body.description,
-        active: request.body.active,
-        enabled: request.body.enabled
+        visible: request.body.visible,
+        active: request.body.active
       }
       const responseArgs = await this.service.updatePageByUuid(requestArgs);
       return response.status(201).json(responseArgs)

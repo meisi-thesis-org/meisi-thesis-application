@@ -1,5 +1,6 @@
 import { useFetch } from "@/composables/useFetch";
 import type { ChapterEntity } from "@/types/Entities";
+import type { Primitive } from "@/types/Primitive";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
@@ -40,7 +41,7 @@ export const useChapter = defineStore("chapters", () => {
 
     const updateChapterByUuid = async (
         uuid: string,
-        data: Record<string, string>
+        data: Record<string, Primitive>
     ) => {
         try {
             const response = await createRequest<ChapterEntity>(`commerce/chapters/${uuid}`, 'PUT', data);

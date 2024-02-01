@@ -36,9 +36,9 @@ export class PageService {
   public async createPage (requestArgs: CreatePageRequest): Promise<PageDTO> {
     const user = await this.networkProvider
       .doHttpRequest('8000', 'commerce/chapters', 'GET', undefined, { uuid: requestArgs.chapterUuid })
-      .catch((error) => { throw error }) as { active: boolean, enabled: boolean }
+      .catch((error: any) => { throw error }) as { visible: boolean, active: boolean }
 
-    if (!user.enabled || !user.active) {
+    if (!user.visible || !user.active) {
       throw new BadRequestException();
     }
 
@@ -46,8 +46,8 @@ export class PageService {
       uuid: this.randomProvider.randomUUID(),
       chapterUuid: requestArgs.chapterUuid,
       description: requestArgs.description,
+      visible: true,
       active: true,
-      enabled: true,
       createdAt: this.randomProvider.randomDateToIsoString(),
       updatedAt: this.randomProvider.randomDateToIsoString()
     };
@@ -70,8 +70,8 @@ export class PageService {
       uuid: foundEntity.uuid,
       chapterUuid: foundEntity.chapterUuid,
       description: requestArgs.description ?? foundEntity.description,
+      visible: requestArgs.visible ?? foundEntity.visible,
       active: requestArgs.active ?? foundEntity.active,
-      enabled: requestArgs.enabled ?? foundEntity.enabled,
       createdAt: foundEntity.createdAt,
       updatedAt: this.randomProvider.randomDateToIsoString()
     };
