@@ -1,10 +1,10 @@
 import { usePermission } from "@/composables/usePermission";
-import { useBook } from "@/stores/useBook";
 import { useChapter } from "@/stores/useChapter";
+import { usePage } from "@/stores/usePage";
 import { storeToRefs } from "pinia";
 import type { NavigationGuardNext, RouteLocation } from "vue-router";
 
-export const isBookRegistered = async (
+export const isChapterRegistered = async (
     to: RouteLocation,
     _from: RouteLocation,
     next: NavigationGuardNext
@@ -15,7 +15,7 @@ export const isBookRegistered = async (
     const parameterizedChapterUuid = to.params.chapterUuid as string;
 
     const useChapterStore = useChapter();
-    // const usePageStore = usePage();
+    const usePageStore = usePage();
     const { chapters } = storeToRefs(useChapterStore);
     const { isOwner } = usePermission();
 
@@ -23,12 +23,12 @@ export const isBookRegistered = async (
 
     const cachedChapter = chapters.value.find((chapter) => chapter.uuid === parameterizedChapterUuid);
 
-    if(cachedChapter) {
+    if (cachedChapter) {
         if (!isOwner(parameterizedUserUuid) && (!cachedChapter.active || !cachedChapter.visible)) return next({ name: "book", params: { userUuid: parameterizedUserUuid, dossierUuid: parameterizedDossierUuid, bookUuid: parameterizedBookUuid } });
         if (isOwner(parameterizedUserUuid) && !cachedChapter.active) return next({ name: "recover-chapter", params: { userUuid: parameterizedUserUuid, dossierUuid: parameterizedDossierUuid, bookUuid: parameterizedBookUuid, chapterUuid: cachedChapter.uuid } })
 
-        // const foundChapters = await usePagesStore.findChaptersByBookUuid(cachedChapter.uuid)
-        // if(foundChapters !== undefined) useChapterStore.updateState(foundChapters)
+        const foundPages = await usePageStore.findPagesByChapterUuid(cachedChapter.uuid)
+        if (foundPages !== undefined) usePageStore.updateState(foundPages)
         return next();
     }
 

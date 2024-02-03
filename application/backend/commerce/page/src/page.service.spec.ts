@@ -25,6 +25,7 @@ describe('PageService', () => {
   const pageEntity: PageEntity = {
     uuid: randomUuid,
     chapterUuid: randomUuid,
+    designation: randomString,
     description: randomString,
     active: randomBoolean,
     visible: randomBoolean,
@@ -82,6 +83,7 @@ describe('PageService', () => {
     async function callCreatePage (): Promise<PageEntity> {
       return await instance.createPage({
         chapterUuid: randomUuid,
+        designation: randomString,
         description: randomString
       })
     }
@@ -118,6 +120,7 @@ describe('PageService', () => {
     async function callUpdatePageByUuid (): Promise<PageEntity> {
       return await instance.updatePageByUuid({
         uuid: randomUuid,
+        designation: randomString,
         description: randomString,
         active: randomBoolean,
         visible: randomBoolean

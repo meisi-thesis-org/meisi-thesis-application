@@ -17,7 +17,7 @@ export class PageApplication {
   }
 
   public defineRoutes (): PageApplication {
-    this.application.use('/accounting/pages', new PageGateway().subscribe())
+    this.application.use('/commerce/pages', new PageGateway().subscribe())
 
     return this;
   }

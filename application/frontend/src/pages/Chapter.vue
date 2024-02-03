@@ -12,13 +12,16 @@
                     @toggle-activity="(data: boolean) => updateChapter({ active: data })" />
                 <div id="wrapper__inner--content__box">
                     <div id="wrapper__inner--content__box--row">
-                        <Typography :content="'Chapters'" :segment="'designation'" />
+                        <Typography :content="'Pages'" :segment="'designation'" />
                         <Icon :name="'plus'" :color="'blue-colorized'" :height="'1.25rem'" :width="'1.25rem'"
                             :on-click="createPage" />
                     </div>
-                    <Card v-for="chapter of chapters" @click="navigateToPage(chapter.uuid)"
-                        :designation="chapter.designation" :description="chapter.description" :is-visible="chapter.visible"
-                        :is-active="chapter.active" />
+                    <Card v-for="page of pages" 
+                        :designation="page.designation" 
+                        :description="page.description" 
+                        :is-visible="page.visible"
+                        :is-active="page.active" 
+                        @click="navigateToPage(page.uuid)" />
                 </div>
             </div>
         </div>
@@ -44,6 +47,7 @@ const useChapterStore = useChapter();
 const usePageStore = usePage();
 const { isLoading } = useLoader();
 const { chapters } = storeToRefs(useChapterStore);
+const { pages } = storeToRefs(usePageStore);
 
 const chapter = computed(() => chapters.value.find((chapter) => chapter.uuid === route.params.chapterUuid))
 
@@ -61,7 +65,7 @@ const updateChapter = async (data: Record<string, string | boolean>) => {
     try {
         isLoading.value = !isLoading.value;
         await useChapterStore.updateChapterByUuid(chapter.value!.uuid, data);
-        if (!isActive.value) router.push({ name: "dossier", params: { userUuid: route.params.userUuid, dossierUuid: route.params.dossierUuid } })
+        if (!isActive.value) router.push({ name: "book", params: { userUuid: route.params.userUuid, dossierUuid: route.params.dossierUuid, bookUuid: route.params.bookUuid } })
         isLoading.value = !isLoading.value;
     } catch (error) {
         isLoading.value = !isLoading.value;
@@ -70,7 +74,7 @@ const updateChapter = async (data: Record<string, string | boolean>) => {
 const createPage = async () => {
     await usePageStore.createPage({
         chapterUuid: chapter.value!.uuid,
-        designation: `Page #${chapters.value?.length}`,
+        designation: `Page #${pages.value?.length}`,
         description: '',
     })
 }

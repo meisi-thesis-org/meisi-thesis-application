@@ -57,6 +57,7 @@ export class PageController {
     try {
       const requestArgs: CreatePageRequest = {
         chapterUuid: request.body.chapterUuid,
+        designation: request.body.designation,
         description: request.body.description
       }
       const responseArgs = await this.service.createPage(requestArgs);
@@ -71,6 +72,7 @@ export class PageController {
     try {
       const requestArgs: UpdatePageByUuidRequest = {
         uuid: request.params.uuid,
+        designation: request.body.designation,
         description: request.body.description,
         visible: request.body.visible,
         active: request.body.active

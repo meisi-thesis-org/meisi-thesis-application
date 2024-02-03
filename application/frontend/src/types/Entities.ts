@@ -71,6 +71,7 @@ type ChapterEntity = {
 type PageEntity = {
   readonly uuid: string
   readonly chapterUuid: string
+  designation: string
   description: string
   visible: boolean
   active: boolean

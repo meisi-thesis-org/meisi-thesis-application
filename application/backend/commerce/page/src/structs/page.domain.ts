@@ -1,6 +1,7 @@
 type PageEntity = {
   readonly uuid: string
   readonly chapterUuid: string
+  designation: string
   description: string
   active: boolean
   visible: boolean
@@ -11,6 +12,7 @@ type PageDTO = Readonly<PageEntity>
 const pageMapper = (entity: PageEntity): PageDTO => ({
   uuid: entity.uuid,
   chapterUuid: entity.chapterUuid,
+  designation: entity.designation,
   description: entity.description,
   active: entity.active,
   visible: entity.visible,

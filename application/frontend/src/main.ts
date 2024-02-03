@@ -10,6 +10,7 @@ import Dashboard from '@/pages/Dashboard.vue'
 import Dossier from '@/pages/Dossier.vue'
 import Book from '@/pages/Book.vue'
 import Chapter from '@/pages/Chapter.vue'
+import Page from '@/pages/Page.vue'
 import RegisterDevice from '@/pages/RegisterDevice.vue'
 import RegisterNetwork from '@/pages/RegisterNetwork.vue'
 import RegisterDossier from '@/pages/RegisterDossier.vue'
@@ -22,6 +23,8 @@ import { isSessionExpired } from './guards/isSessionExpired'
 import { isDossierRegistered } from './guards/isDossierRegistered'
 import { isUserRegistered } from './guards/isUserRegistered'
 import { isBookRegistered } from './guards/isBookRegistered'
+import { isChapterRegistered } from './guards/isChapterRegistered'
+import { isPageRegistered } from './guards/isPageRegistered'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -147,7 +150,16 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
-      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isDossierRegistered, isBookRegistered],
+      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isDossierRegistered, isBookRegistered, isChapterRegistered],
+    },
+    {
+      name: 'page',
+      path: '/:userUuid/dossier/:dossierUuid/book/:bookUuid/chapter/:chapterUuid/page/:pageUuid',
+      component: Page,
+      meta: {
+        requiresSession: true
+      },
+      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isDossierRegistered, isBookRegistered, isPageRegistered],
     }
   ]
 })
