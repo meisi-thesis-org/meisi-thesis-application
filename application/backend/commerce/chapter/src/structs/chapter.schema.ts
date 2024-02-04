@@ -22,10 +22,10 @@ const UpdateChapterByUuidSchema = z.object({
     uuid: z.string()
   }),
   body: z.object({
-    designation: z.string(),
-    description: z.string(),
-    visible: z.boolean(),
-    active: z.boolean()
+    designation: z.string().optional(),
+    description: z.string().optional(),
+    visible: z.boolean().optional(),
+    active: z.boolean().optional()
   })
 })
 

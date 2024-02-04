@@ -3,4 +3,5 @@ export type CardProps = {
     readonly description: string
     readonly isVisible: boolean
     readonly isActive: boolean
+    readonly showDescription?: boolean 
 }

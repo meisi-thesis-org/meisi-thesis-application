@@ -45,9 +45,11 @@ export const useChapter = defineStore("chapters", () => {
     ) => {
         try {
             const response = await createRequest<ChapterEntity>(`commerce/chapters/${uuid}`, 'PUT', data);
-            state.value?.forEach((element) => {
-                if (element.uuid === response.data.uuid)
-                    element = response.data
+            state.value = state.value?.map((chapter) => {
+                if (chapter.uuid === response.data.uuid)
+                    chapter = response.data
+
+                return chapter
             })
         } catch (error) {
             console.log(error)
@@ -60,6 +62,6 @@ export const useChapter = defineStore("chapters", () => {
         findChaptersByBookUuid,
         createChapter,
         updateChapterByUuid,
-        updateState: (chapters: ChapterEntity[]) => state.value = [...chapters]
+        updateState: (chapters: ChapterEntity[]) => state.value = chapters
     }
 })

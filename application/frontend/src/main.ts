@@ -16,6 +16,8 @@ import RegisterNetwork from '@/pages/RegisterNetwork.vue'
 import RegisterDossier from '@/pages/RegisterDossier.vue'
 import RecoverDossier from '@/pages/RecoverDossier.vue'
 import RecoverBook from '@/pages/RecoverBook.vue'
+import RecoverChapter from '@/pages/RecoverChapter.vue'
+import RecoverPage from '@/pages/RecoverPage.vue'
 import { createPinia } from 'pinia'
 import { isDeviceRegistered } from './guards/isDeviceRegistered'
 import { isNetworkRegistered } from './guards/isNetworkRegistered'
@@ -126,6 +128,24 @@ const router = createRouter({
       beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isDossierRegistered, isBookRegistered],
     },
     {
+      name: 'recover-chapter',
+      path: '/:userUuid/dossier/:dossierUuid?/recover-book/:bookUuid/recover-chapter/:chapterUuid',
+      component: RecoverChapter,
+      meta: {
+        requiresSession: true
+      },
+      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isDossierRegistered, isBookRegistered, isChapterRegistered],
+    },
+    {
+      name: 'recover-page',
+      path: '/:userUuid/dossier/:dossierUuid?/recover-book/:bookUuid/recover-chapter/:chapterUuid/recover-page/:pageUuid',
+      component: RecoverPage,
+      meta: {
+        requiresSession: true
+      },
+      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isDossierRegistered, isBookRegistered, isChapterRegistered, isPageRegistered],
+    },
+    {
       name: 'dossier',
       path: '/:userUuid/dossier/:dossierUuid?',
       component: Dossier,
@@ -159,7 +179,7 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
-      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isDossierRegistered, isBookRegistered, isPageRegistered],
+      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isDossierRegistered, isBookRegistered, isChapterRegistered, isPageRegistered],
     }
   ]
 })

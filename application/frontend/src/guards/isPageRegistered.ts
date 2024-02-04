@@ -2,6 +2,7 @@ import { usePermission } from "@/composables/usePermission";
 import { useChapter } from "@/stores/useChapter";
 import { usePage } from "@/stores/usePage";
 import { storeToRefs } from "pinia";
+import { computed } from "vue";
 import type { NavigationGuardNext, RouteLocation } from "vue-router";
 
 export const isPageRegistered = async (
@@ -19,13 +20,15 @@ export const isPageRegistered = async (
     const { pages } = storeToRefs(usePageStore);
     const { isOwner } = usePermission();
 
-    if (!parameterizedChapterUuid) return next({ name: "book", params: { userUuid: parameterizedUserUuid, dossierUuid: parameterizedDossierUuid, bookUuid: parameterizedBookUuid } });
+    if (!parameterizedPageUuid) return next({ name: "chapter", params: { userUuid: parameterizedUserUuid, dossierUuid: parameterizedDossierUuid, bookUuid: parameterizedBookUuid, chapterUuid: parameterizedChapterUuid } });
 
     const createdPage = pages.value.find((page) => page.uuid === parameterizedPageUuid);
+    const isRecoverPageRoute = computed(() => to.path.includes("recover-page"))
 
     if (createdPage) {
+        if (isOwner(parameterizedUserUuid) && isRecoverPageRoute.value) return next()
         if (!isOwner(parameterizedUserUuid) && (!createdPage.active || !createdPage.visible)) return next({ name: "chapter", params: { userUuid: parameterizedUserUuid, dossierUuid: parameterizedDossierUuid, bookUuid: parameterizedBookUuid, chapterUuid: parameterizedChapterUuid } });
-        if (isOwner(parameterizedUserUuid) && !createdPage.active) return next({ name: "recover-page", params: { userUuid: parameterizedUserUuid, dossierUuid: parameterizedDossierUuid, bookUuid: parameterizedBookUuid, chapterUuid: createdPage.uuid } })
+        if (isOwner(parameterizedUserUuid) && !createdPage.active) return next({ name: "recover-page", params: { userUuid: parameterizedUserUuid, dossierUuid: parameterizedDossierUuid, bookUuid: parameterizedBookUuid, chapterUuid: parameterizedChapterUuid, pageUuid: createdPage.uuid } })
     }
 
     return next();

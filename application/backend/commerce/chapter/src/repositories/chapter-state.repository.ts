@@ -36,7 +36,12 @@ export class ChapterStateRepository implements ChapterRepository {
     data: Omit<ChapterEntity, 'uuid' | 'bookUuid' | 'createdAt'>
   ): Promise<ChapterEntity | undefined> {
     return this.chapterCollection.find((chapter) => {
-      if (chapter.uuid === uuid) chapter = { ...chapter, ...data }
+      if (chapter.uuid === uuid) {
+        chapter.designation = data.designation;
+        chapter.description = data.description;
+        chapter.visible = data.visible;
+        chapter.active = data.active;
+      }
 
       return chapter;
     })

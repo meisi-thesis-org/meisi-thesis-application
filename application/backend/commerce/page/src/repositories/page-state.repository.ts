@@ -17,9 +17,12 @@ export class PageStateRepository implements PageRepository {
   }
 
   public async updatePageByUuid (entity: PageEntity): Promise<void> {
-    this.pages.filter((page) => {
+    this.pages.find((page) => {
       if (page.uuid === entity.uuid) {
-        page = { ...page, ...entity };
+        page.designation = entity.designation;
+        page.description = entity.description;
+        page.visible = entity.visible;
+        page.active = entity.active;
       }
 
       return page;

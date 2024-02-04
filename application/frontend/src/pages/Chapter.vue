@@ -21,6 +21,7 @@
                         :description="page.description" 
                         :is-visible="page.visible"
                         :is-active="page.active" 
+                        :show-description="false"
                         @click="navigateToPage(page.uuid)" />
                 </div>
             </div>
