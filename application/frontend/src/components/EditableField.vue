@@ -1,5 +1,6 @@
 <template>
   <textarea
+    :maxlength="maxLength"
     placeholder="Type something here..." 
     @blur="$emit('onBlur', content)"
     :class="definedProps.color" 

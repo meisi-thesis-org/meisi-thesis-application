@@ -3,13 +3,13 @@
         <div id="wrapper__inner">
             <Navbar />
             <div id="wrapper__inner--content">
-                <Banner :is-content-enabled="isActive" :is-content-visible="isVisible"
-                    :header-content="page?.designation!" :sub-header-content="subHeaderContent"
-                    :is-header-editable="true"
+                <Banner :is-content-enabled="isActive" :is-content-visible="isVisible" :header-content="page?.designation!"
+                    :is-header-editable="true" :show-editable-field="false"
                     @editable-control-update="(data: string) => updatePage({ designation: data })"
-                    @editable-field-update="(data: string) => updatePage({ description: data })"
                     @toggle-visibility="(data: boolean) => updatePage({ visible: data })"
                     @toggle-activity="(data: boolean) => updatePage({ active: data })" />
+                <EditableField :content="subHeaderContent" :max-length="'1500'" :is-editable="isParamizedUserOwner"
+                    @on-blur="(data: string) => updatePage({ description: data })" />
             </div>
         </div>
     </div>
@@ -17,8 +17,10 @@
     
 <script setup lang="ts">
 import Banner from "@/components/Banner.vue";
+import EditableField from "@/components/EditableField.vue";
 import Navbar from "@/components/Navbar.vue"
 import { useLoader } from "@/composables/useLoader";
+import { usePermission } from "@/composables/usePermission";
 import { usePage } from "@/stores/usePage";
 import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
@@ -28,8 +30,10 @@ const route = useRoute();
 const router = useRouter();
 const usePageStore = usePage();
 const { isLoading } = useLoader();
+const { isOwner } = usePermission();
 const { pages } = storeToRefs(usePageStore);
 
+const isParamizedUserOwner = computed(() => isOwner(route.params.userUuid as string))
 const page = computed(() => pages.value.find((page) => page.uuid === route.params.pageUuid))
 
 const isVisible = computed(() => {
@@ -60,18 +64,9 @@ const subHeaderContent = computed(() => page.value?.description ?? '')
 #wrapper {
     &__inner {
         &--content {
-            &__box {
-                padding: 2.5rem;
-                display: flex;
-                flex-direction: column;
-                gap: 1rem;
-
-                &--row {
-                    display: inherit;
-                    flex-direction: row;
-                    justify-content: space-between;
-                    align-items: center;
-                }
+            textarea {
+                padding: 1.5rem;
+                height: 30rem;
             }
         }
     }
