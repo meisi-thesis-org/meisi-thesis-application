@@ -22,13 +22,15 @@ export const isPageRegistered = async (
 
     if (!parameterizedPageUuid) return next({ name: "chapter", params: { userUuid: parameterizedUserUuid, dossierUuid: parameterizedDossierUuid, bookUuid: parameterizedBookUuid, chapterUuid: parameterizedChapterUuid } });
 
-    const createdPage = pages.value.find((page) => page.uuid === parameterizedPageUuid);
+    const cachedPage = pages.value.find((page) => page.uuid === parameterizedPageUuid);
     const isRecoverPageRoute = computed(() => to.path.includes("recover-page"))
 
-    if (createdPage) {
+    console.log(cachedPage)
+
+    if (cachedPage) {
         if (isOwner(parameterizedUserUuid) && isRecoverPageRoute.value) return next()
-        if (!isOwner(parameterizedUserUuid) && (!createdPage.active || !createdPage.visible)) return next({ name: "chapter", params: { userUuid: parameterizedUserUuid, dossierUuid: parameterizedDossierUuid, bookUuid: parameterizedBookUuid, chapterUuid: parameterizedChapterUuid } });
-        if (isOwner(parameterizedUserUuid) && !createdPage.active) return next({ name: "recover-page", params: { userUuid: parameterizedUserUuid, dossierUuid: parameterizedDossierUuid, bookUuid: parameterizedBookUuid, chapterUuid: parameterizedChapterUuid, pageUuid: createdPage.uuid } })
+        if (!isOwner(parameterizedUserUuid) && (!cachedPage.active || !cachedPage.visible)) return next({ name: "chapter", params: { userUuid: parameterizedUserUuid, dossierUuid: parameterizedDossierUuid, bookUuid: parameterizedBookUuid, chapterUuid: parameterizedChapterUuid } });
+        if (isOwner(parameterizedUserUuid) && !cachedPage.active) return next({ name: "recover-page", params: { userUuid: parameterizedUserUuid, dossierUuid: parameterizedDossierUuid, bookUuid: parameterizedBookUuid, chapterUuid: parameterizedChapterUuid, pageUuid: cachedPage.uuid } })
     }
 
     return next();

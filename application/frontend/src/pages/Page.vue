@@ -8,7 +8,7 @@
                     @editable-control-update="(data: string) => updatePage({ designation: data })"
                     @toggle-visibility="(data: boolean) => updatePage({ visible: data })"
                     @toggle-activity="(data: boolean) => updatePage({ active: data })" />
-                <EditableField :content="subHeaderContent" :max-length="'1500'" :is-editable="isParamizedUserOwner"
+                <EditableField :content="subHeaderContent" :max-length="'1500'" :is-editable="isOwner(route.params.userUuid as string)"
                     @on-blur="(data: string) => updatePage({ description: data })" />
             </div>
         </div>
@@ -33,21 +33,14 @@ const { isLoading } = useLoader();
 const { isOwner } = usePermission();
 const { pages } = storeToRefs(usePageStore);
 
-const isParamizedUserOwner = computed(() => isOwner(route.params.userUuid as string))
 const page = computed(() => pages.value.find((page) => page.uuid === route.params.pageUuid))
-
-const isVisible = computed(() => {
-    if (page.value === undefined) return false;
-    return page.value && page.value.visible;
-})
-
-const isActive = computed(() => {
-    if (page.value === undefined) return false;
-    return page.value && page.value.active;
-})
+const isVisible = computed(() => (page.value && page.value.visible) ?? false)
+const isActive = computed(() => (page.value && page.value.active) ?? false)
+const subHeaderContent = computed(() => page.value?.description ?? '')
 
 const updatePage = async (data: Record<string, string | boolean>) => {
     try {
+        console.log(data)
         isLoading.value = !isLoading.value;
         await usePageStore.updatePageByUuid(page.value!.uuid, data);
         if (!isActive.value) router.push({ name: "chapter", params: { userUuid: route.params.userUuid, dossierUuid: route.params.dossierUuid, bookUuid: route.params.bookUuid, chapterUuid: route.params.chapterUuid } })
@@ -57,7 +50,6 @@ const updatePage = async (data: Record<string, string | boolean>) => {
     }
 }
 
-const subHeaderContent = computed(() => page.value?.description ?? '')
 </script>
     
 <style scoped lang="scss">

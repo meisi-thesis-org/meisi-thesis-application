@@ -17,7 +17,7 @@ export class PageStateRepository implements PageRepository {
   }
 
   public async updatePageByUuid (entity: PageEntity): Promise<void> {
-    this.pages.find((page) => {
+    this.pages.map((page) => {
       if (page.uuid === entity.uuid) {
         page.designation = entity.designation;
         page.description = entity.description;
