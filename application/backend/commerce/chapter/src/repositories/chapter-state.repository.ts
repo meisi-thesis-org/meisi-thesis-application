@@ -33,9 +33,9 @@ export class ChapterStateRepository implements ChapterRepository {
 
   public async updateChapterByUuid (
     uuid: string,
-    data: Omit<ChapterEntity, 'uuid' | 'bookUuid' | 'createdAt'>
-  ): Promise<ChapterEntity | undefined> {
-    return this.chapterCollection.find((chapter) => {
+    data: ChapterEntity
+  ): Promise<void> {
+    this.chapterCollection.map((chapter) => {
       if (chapter.uuid === uuid) {
         chapter.designation = data.designation;
         chapter.description = data.description;

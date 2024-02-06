@@ -16,7 +16,7 @@ export class ChapterService {
   public async findChaptersByBookUuid (
     findChaptersByBookUuidRequest: FindChaptersByBookUuidRequest
   ): Promise<ChapterDTO[]> {
-    const foundChapters = await this.repository
+    const foundEntitys = await this.repository
       .findChaptersByBookUuid(findChaptersByBookUuidRequest.bookUuid)
       .catch(() => {
         throw new InternalServerException();
@@ -24,8 +24,8 @@ export class ChapterService {
 
     const mappedChapters = new Array<ChapterDTO>();
 
-    for (const foundChapter of foundChapters) {
-      mappedChapters.push(chapterMapper(foundChapter));
+    for (const foundEntity of foundEntitys) {
+      mappedChapters.push(chapterMapper(foundEntity));
     }
 
     return mappedChapters;
@@ -34,21 +34,21 @@ export class ChapterService {
   public async findChapterByUuid (
     findChapterByUuidRequest: FindChapterByUuidRequest
   ): Promise<ChapterDTO> {
-    const foundChapter = await this.repository
+    const foundEntity = await this.repository
       .findChapterByUuid(findChapterByUuidRequest.uuid)
       .catch(() => {
         throw new InternalServerException();
       })
 
-    if (foundChapter === undefined) throw new NonFoundException()
+    if (foundEntity === undefined) throw new NonFoundException()
 
-    return chapterMapper(foundChapter);
+    return chapterMapper(foundEntity);
   }
 
   public async createChapter (
     createChapterRequest: CreateChapterRequest
   ): Promise<ChapterDTO> {
-    const foundChapter = await this.repository
+    const foundEntity = await this.repository
       .findChapterByProps(
         createChapterRequest.bookUuid,
         createChapterRequest.designation
@@ -57,7 +57,7 @@ export class ChapterService {
         throw new InternalServerException();
       })
 
-    if (foundChapter !== undefined) throw new ConflictException()
+    if (foundEntity !== undefined) throw new ConflictException()
 
     await this.networkProvider.doHttpRequest(
       '8000',
@@ -86,32 +86,35 @@ export class ChapterService {
   }
 
   public async updateChapterByUuid (
-    updateChapterByUuidRequest: UpdateChapterByUuidRequest
+    requestArgs: UpdateChapterByUuidRequest
   ): Promise<ChapterDTO> {
-    const foundChapter = await this.repository
-      .findChapterByUuid(updateChapterByUuidRequest.uuid)
+    const foundEntity = await this.repository
+      .findChapterByUuid(requestArgs.uuid)
       .catch(() => {
         throw new InternalServerException();
       })
 
-    if (foundChapter === undefined) throw new NonFoundException()
+    if (foundEntity === undefined) throw new NonFoundException()
 
-    const toUpdateChapter: Omit<ChapterEntity, 'uuid' | 'bookUuid' | 'createdAt'> = {
-      designation: updateChapterByUuidRequest.designation ?? foundChapter.designation,
-      description: updateChapterByUuidRequest.description ?? foundChapter.description,
-      visible: updateChapterByUuidRequest.visible ?? foundChapter.visible,
-      active: updateChapterByUuidRequest.active ?? foundChapter.active,
-      updatedAt: new Date().toISOString()
-    }
+    const toUpdateChapter: ChapterEntity = {
+      uuid: foundEntity.uuid,
+      bookUuid: foundEntity.bookUuid,
+      designation: requestArgs.designation ?? foundEntity.designation,
+      description: requestArgs.description ?? foundEntity.description,
+      visible: requestArgs.visible ?? foundEntity.visible,
+      active: requestArgs.active ?? foundEntity.active,
+      createdAt: foundEntity.createdAt,
+      updatedAt: this.randomProvider.randomDateToIsoString()
+    };
 
     const updatedChapter = await this.repository
-      .updateChapterByUuid(updateChapterByUuidRequest.uuid, toUpdateChapter)
+      .updateChapterByUuid(requestArgs.uuid, toUpdateChapter)
       .catch(() => {
         throw new InternalServerException();
       })
 
     if (updatedChapter === undefined) throw new NonFoundException()
 
-    return chapterMapper(updatedChapter);
+    return chapterMapper(toUpdateChapter);
   }
 }

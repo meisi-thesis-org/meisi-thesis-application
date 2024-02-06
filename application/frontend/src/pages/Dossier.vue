@@ -3,30 +3,20 @@
         <div id="wrapper__inner">
             <Navbar />
             <div id="wrapper__inner--content">
-                <Banner 
-                    :is-content-enabled="isActive"
-                    :is-content-visible="isVisible" :header-content="user?.username + ' dossier'"
-                    :sub-header-content="subHeaderContent" :is-header-editable="false"
+                <Banner :is-content-enabled="isActive" :is-content-visible="isVisible"
+                    :header-content="user?.username + ' dossier'" :sub-header-content="subHeaderContent"
+                    :is-header-editable="false"
                     @editable-field-update="(data: string) => updateDossier({ designation: data })"
                     @toggle-visibility="(data: boolean) => updateDossier({ visible: data })"
                     @toggle-activity="(data: boolean) => updateDossier({ active: data })" />
                 <div id="wrapper__inner--content__box">
                     <div id="wrapper__inner--content__box--row">
                         <Typography :content="'Books'" :segment="'designation'" />
-                        <Icon 
-                            :name="'plus'" 
-                            :color="'blue-colorized'" 
-                            :height="'1.25rem'" 
-                            :width="'1.25rem'"
+                        <Icon :name="'plus'" :color="'blue-colorized'" :height="'1.25rem'" :width="'1.25rem'"
                             :on-click="createBook" />
                     </div>
-                    <Card 
-                        v-for="book of books" 
-                        :designation="book.designation" 
-                        :description="book.description"
-                        :is-visible="book.visible" 
-                        :is-active="book.active" 
-                        @click="navigateToBook(book.uuid)" />
+                    <Card v-for="book of books" :designation="book.designation" :description="book.description"
+                        :is-visible="book.visible" :is-active="book.active" @click="navigateToBook(book.uuid)" />
                 </div>
             </div>
         </div>
@@ -43,8 +33,9 @@ import { useLoader } from "@/composables/useLoader";
 import { useBook } from "@/stores/useBook";
 import { useDossier } from "@/stores/useDossier";
 import { useUser } from "@/stores/useUser";
+import type { UserEntity } from "@/types/Entities";
 import { storeToRefs } from "pinia";
-import { computed } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 const { isLoading } = useLoader();
@@ -55,19 +46,17 @@ const useDossierStore = useDossier();
 const useUserStore = useUser();
 const { dossiers } = storeToRefs(useDossierStore);
 const { books } = storeToRefs(useBookStore);
-const { user } = storeToRefs(useUserStore);
 
-const isVisible = computed(() => {
-    if (dossier.value === undefined) return false;
-    return dossier.value && dossier.value.visible;
-})
+const user = ref<UserEntity>();
 
-const isActive = computed(() => {
-    if (dossier.value === undefined) return false;
-    return dossier.value && dossier.value.active;
+onMounted(async () => {
+    if (dossier.value) user.value = await useUserStore.findUserByUuid(dossier.value.userUuid);
 })
 
 const dossier = computed(() => dossiers.value.find((dossier) => dossier.uuid === route.params.dossierUuid))
+const isVisible = computed(() => (dossier.value && dossier.value.visible) ?? false)
+const isActive = computed(() => (dossier.value && dossier.value.active) ?? false)
+const subHeaderContent = computed(() => dossier.value?.designation ?? '')
 
 const updateDossier = async (data: Record<string, string | boolean>) => {
     try {
@@ -88,7 +77,6 @@ const createBook = async () => {
 }
 
 const navigateToBook = (bookUuid: string) => router.push({ name: 'book', params: { userUuid: route.params.userUuid, dossierUuid: route.params.dossierUuid, bookUuid: bookUuid } })
-const subHeaderContent = computed(() => dossier.value?.designation ?? '')
 </script>
 
 <style scoped lang="scss">

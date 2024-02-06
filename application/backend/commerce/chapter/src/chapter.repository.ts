@@ -7,6 +7,6 @@ export interface ChapterRepository {
   createChapter(data: ChapterEntity): Promise<void>
   updateChapterByUuid(
     uuid: string,
-    data: Omit<ChapterEntity, 'uuid' | 'bookUuid' | 'createdAt'>
-  ): Promise<ChapterEntity | undefined>
+    data: ChapterEntity
+  ): Promise<void>
 }

@@ -10,8 +10,12 @@ export const usePermission = () => {
     const { networks } = storeToRefs(useNetwork());
     const { user } = storeToRefs(useUser());
 
-    const isOwner = (userUuid: string) => (userUuid === user.value?.uuid && devices.value.length > 0 && networks.value.length > 0)
-    const isUnknown = (userUuid: string) => (userUuid !== user.value?.uuid || devices.value.length === 0 || networks.value.length === 0)
+    const { params: routeParams } = useRoute();
 
-    return { isOwner, isUnknown }
+    const isOwner = computed(() => user.value?.uuid === routeParams.userUuid && devices.value.length > 0 && networks.value.length > 0);
+    const isGuest = computed(() => user.value?.uuid === routeParams.userUuid || devices.value.length === 0 || networks.value.length === 0);
+    const isProducer = computed(() => user.value?.uuid === routeParams.userUuid);
+    const isSubscriber = computed(() => user.value?.uuid !== routeParams.userUuid);
+
+    return { isOwner, isGuest, isProducer, isSubscriber }
 }

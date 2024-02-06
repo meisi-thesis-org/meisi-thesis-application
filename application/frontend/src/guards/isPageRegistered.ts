@@ -18,19 +18,17 @@ export const isPageRegistered = async (
 
     const usePageStore = usePage();
     const { pages } = storeToRefs(usePageStore);
-    const { isOwner } = usePermission();
+    const { isProducer, isSubscriber } = usePermission();
 
     if (!parameterizedPageUuid) return next({ name: "chapter", params: { userUuid: parameterizedUserUuid, dossierUuid: parameterizedDossierUuid, bookUuid: parameterizedBookUuid, chapterUuid: parameterizedChapterUuid } });
 
     const cachedPage = pages.value.find((page) => page.uuid === parameterizedPageUuid);
     const isRecoverPageRoute = computed(() => to.path.includes("recover-page"))
 
-    console.log(cachedPage)
-
     if (cachedPage) {
-        if (isOwner(parameterizedUserUuid) && isRecoverPageRoute.value) return next()
-        if (!isOwner(parameterizedUserUuid) && (!cachedPage.active || !cachedPage.visible)) return next({ name: "chapter", params: { userUuid: parameterizedUserUuid, dossierUuid: parameterizedDossierUuid, bookUuid: parameterizedBookUuid, chapterUuid: parameterizedChapterUuid } });
-        if (isOwner(parameterizedUserUuid) && !cachedPage.active) return next({ name: "recover-page", params: { userUuid: parameterizedUserUuid, dossierUuid: parameterizedDossierUuid, bookUuid: parameterizedBookUuid, chapterUuid: parameterizedChapterUuid, pageUuid: cachedPage.uuid } })
+        if (isProducer.value && isRecoverPageRoute.value) return next()
+        if (isSubscriber.value && (!cachedPage.active || !cachedPage.visible)) return next({ name: "chapter", params: { userUuid: parameterizedUserUuid, dossierUuid: parameterizedDossierUuid, bookUuid: parameterizedBookUuid, chapterUuid: parameterizedChapterUuid } });
+        if (isProducer.value && !cachedPage.active) return next({ name: "recover-page", params: { userUuid: parameterizedUserUuid, dossierUuid: parameterizedDossierUuid, bookUuid: parameterizedBookUuid, chapterUuid: parameterizedChapterUuid, pageUuid: cachedPage.uuid } })
     }
 
     return next();

@@ -8,7 +8,7 @@
                     @editable-control-update="(data: string) => updatePage({ designation: data })"
                     @toggle-visibility="(data: boolean) => updatePage({ visible: data })"
                     @toggle-activity="(data: boolean) => updatePage({ active: data })" />
-                <EditableField :content="subHeaderContent" :max-length="'1500'" :is-editable="isOwner(route.params.userUuid as string)"
+                <EditableField :content="subHeaderContent" :max-length="'1500'" :is-editable="isProducer"
                     @on-blur="(data: string) => updatePage({ description: data })" />
             </div>
         </div>
@@ -30,7 +30,7 @@ const route = useRoute();
 const router = useRouter();
 const usePageStore = usePage();
 const { isLoading } = useLoader();
-const { isOwner } = usePermission();
+const { isProducer } = usePermission();
 const { pages } = storeToRefs(usePageStore);
 
 const page = computed(() => pages.value.find((page) => page.uuid === route.params.pageUuid))
@@ -40,7 +40,6 @@ const subHeaderContent = computed(() => page.value?.description ?? '')
 
 const updatePage = async (data: Record<string, string | boolean>) => {
     try {
-        console.log(data)
         isLoading.value = !isLoading.value;
         await usePageStore.updatePageByUuid(page.value!.uuid, data);
         if (!isActive.value) router.push({ name: "chapter", params: { userUuid: route.params.userUuid, dossierUuid: route.params.dossierUuid, bookUuid: route.params.bookUuid, chapterUuid: route.params.chapterUuid } })

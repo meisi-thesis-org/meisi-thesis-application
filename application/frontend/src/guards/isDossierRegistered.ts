@@ -8,10 +8,10 @@ import type { RouteLocation, NavigationGuardNext } from "vue-router";
 
 export const isDossierRegistered = async (
     to: RouteLocation,
-    from: RouteLocation,
+    _from: RouteLocation,
     next: NavigationGuardNext
 ) => {
-    const { isOwner } = usePermission();
+    const { isProducer, isSubscriber } = usePermission();
 
     /**
      * Checks if there is a parameterized userUuid
@@ -30,7 +30,7 @@ export const isDossierRegistered = async (
      * No: Redirects to dashboard
      */
     const parameterizedDossierUuid = to.params.dossierUuid as string;
-    if (!parameterizedDossierUuid && !isOwner(parameterizedUserUuid)) return next({ name: "dashboard", params: { userUuid: session.value?.userUuid } });
+    if (!parameterizedDossierUuid && isSubscriber.value) return next({ name: "dashboard", params: { userUuid: session.value?.userUuid } });
 
     /**
      * Loads Cached dossier
@@ -61,8 +61,8 @@ export const isDossierRegistered = async (
      * No: Continue
      */
     if (cachedDossier) {
-        if (!isOwner(parameterizedUserUuid) && (!cachedDossier.active || !cachedDossier.visible)) return next({ name: "dashboard", params: { userUuid: parameterizedUserUuid } })
-        if (isOwner(parameterizedUserUuid) && !cachedDossier.active && !to.path.includes("recover-dossier")) return next({ name: "recover-dossier", params: { userUuid: parameterizedUserUuid, dossierUuid: cachedDossier.uuid } })
+        if (isSubscriber.value && (!cachedDossier.active || !cachedDossier.visible)) return next({ name: "dashboard", params: { userUuid: parameterizedUserUuid } })
+        if (isProducer.value && !cachedDossier.active && !to.path.includes("recover-dossier")) return next({ name: "recover-dossier", params: { userUuid: parameterizedUserUuid, dossierUuid: cachedDossier.uuid } })
         if(parameterizedUserUuid && parameterizedDossierUuid && parameterizedDossierUuid === cachedDossier.uuid) return next()
         return next({ name: "dossier", params: { userUuid: cachedDossier?.userUuid, dossierUuid: cachedDossier?.uuid } });
     }
@@ -71,8 +71,8 @@ export const isDossierRegistered = async (
      * Loads dossiers
      */
     const updateDossierState = (async (foundDossier: DossierEntity | undefined) => {
-        if (!foundDossier && isOwner(parameterizedUserUuid)) return next({ name: "register-dossier", params: { userUuid: parameterizedUserUuid } })
-        if (!foundDossier && !isOwner(parameterizedUserUuid)) return next({ name: "dashboard", params: { userUuid: parameterizedUserUuid } })
+        if (!foundDossier && isProducer.value) return next({ name: "register-dossier", params: { userUuid: parameterizedUserUuid } })
+        if (!foundDossier && isSubscriber.value) return next({ name: "dashboard", params: { userUuid: parameterizedUserUuid } })
         useDossierStore.updateState(foundDossier!)
         await updateDossierBooksState(foundDossier!.uuid)
         if(parameterizedUserUuid && parameterizedDossierUuid && parameterizedDossierUuid === foundDossier?.uuid) return next()
