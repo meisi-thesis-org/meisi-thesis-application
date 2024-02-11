@@ -8,9 +8,9 @@
                     :color="'light-colorized'" :is-editable="isProducer"
                     @on-blur="(data: string) => $emit('editableControlUpdate', data)" />
                 <div id="banner__inner--box__icons">
-                    <Icon v-if="isSubscriber && definedProps.isContentVisible" :name="'lock'" :width="'1.25rem'"
+                    <Icon v-if="isConsumer && definedProps.isContentVisible" :name="'lock'" :width="'1.25rem'"
                         :height="'1.25rem'" :color="'light-colorized'" />
-                    <Icon v-if="isSubscriber && definedProps.isContentVisible" :name="'unlock'" :width="'1.25rem'"
+                    <Icon v-if="isConsumer && definedProps.isContentVisible" :name="'unlock'" :width="'1.25rem'"
                         :height="'1.25rem'" :color="'light-colorized'" />
                     <Icon :on-click="() => $emit('toggleVisibility', !definedProps.isContentVisible)"
                         v-if="isProducer && !definedProps.isContentVisible" :name="'watcher'" :width="'1.25rem'"
@@ -39,7 +39,7 @@ import EditableField from './EditableField.vue';
 import { usePermission } from '@/composables/usePermission';
 import EditableControl from './EditableControl.vue';
 
-const { isProducer, isSubscriber } = usePermission();
+const { isProducer, isConsumer } = usePermission();
 
 const definedProps = withDefaults(defineProps<BannerProps>(), {
     showEditableField: true,

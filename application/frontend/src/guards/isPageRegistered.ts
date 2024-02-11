@@ -1,5 +1,4 @@
 import { usePermission } from "@/composables/usePermission";
-import { useChapter } from "@/stores/useChapter";
 import { usePage } from "@/stores/usePage";
 import { storeToRefs } from "pinia";
 import { computed } from "vue";
@@ -18,7 +17,7 @@ export const isPageRegistered = async (
 
     const usePageStore = usePage();
     const { pages } = storeToRefs(usePageStore);
-    const { isProducer, isSubscriber } = usePermission();
+    const { isProducer, isConsumer } = usePermission(to);
 
     if (!parameterizedPageUuid) return next({ name: "chapter", params: { userUuid: parameterizedUserUuid, dossierUuid: parameterizedDossierUuid, bookUuid: parameterizedBookUuid, chapterUuid: parameterizedChapterUuid } });
 
@@ -27,7 +26,7 @@ export const isPageRegistered = async (
 
     if (cachedPage) {
         if (isProducer.value && isRecoverPageRoute.value) return next()
-        if (isSubscriber.value && (!cachedPage.active || !cachedPage.visible)) return next({ name: "chapter", params: { userUuid: parameterizedUserUuid, dossierUuid: parameterizedDossierUuid, bookUuid: parameterizedBookUuid, chapterUuid: parameterizedChapterUuid } });
+        if (isConsumer.value && (!cachedPage.active || !cachedPage.visible)) return next({ name: "chapter", params: { userUuid: parameterizedUserUuid, dossierUuid: parameterizedDossierUuid, bookUuid: parameterizedBookUuid, chapterUuid: parameterizedChapterUuid } });
         if (isProducer.value && !cachedPage.active) return next({ name: "recover-page", params: { userUuid: parameterizedUserUuid, dossierUuid: parameterizedDossierUuid, bookUuid: parameterizedBookUuid, chapterUuid: parameterizedChapterUuid, pageUuid: cachedPage.uuid } })
     }
 

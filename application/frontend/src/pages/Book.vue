@@ -17,6 +17,7 @@
                     <div id="wrapper__inner--content__box--row">
                         <Typography :content="'Chapters'" :segment="'designation'" />
                         <Icon 
+                            v-if="isProducer"
                             :name="'plus'" 
                             :color="'blue-colorized'" 
                             :height="'1.25rem'"
@@ -48,6 +49,7 @@ import { useChapter } from "@/stores/useChapter";
 import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { usePermission } from "@/composables/usePermission";
 
 const route = useRoute();
 const router = useRouter();
@@ -56,6 +58,7 @@ const useChapterStore = useChapter();
 const { isLoading } = useLoader();
 const { books } = storeToRefs(useBookStore);
 const { chapters } = storeToRefs(useChapterStore);
+const { isProducer } = usePermission();
 
 const book = computed(() => books.value.find((book) => book.uuid === route.params.bookUuid))
 

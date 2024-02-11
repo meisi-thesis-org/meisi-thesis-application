@@ -6,9 +6,10 @@
                 <FormControl :name="'search'" :placeholder="'Search...'" :type="'text'" :rules="[]" :hide-alerts="true" />
             </div>
             <div id="navbar__inner--icons">
-                <Icon :name="'dashboard'" :height="'1.25rem'" :width="'1.25rem'" :onClick="navigateToDashboard" />
-                <Icon :name="'dossier'" :height="'1.25rem'" :width="'1.25rem'" :onClick="navigateToDossier" />
+                <Icon :name="'dashboard'" :height="'1.25rem'" :width="'1.25rem'" :on-click="navigateToDashboard" />
+                <Icon :name="'dossier'" :height="'1.25rem'" :width="'1.25rem'" :on-click="navigateToDossier" />
                 <Icon :name="'settings'" :height="'1.25rem'" :width="'1.25rem'" />
+                <Icon :name="'door'" :height="'1.25rem'" :width="'1.25rem'" :on-click="navigateAccessAcount" />
                 <Divider :width="'0.025rem'" :height="'2rem'" />
                 <Icon :name="'locale'" :height="'1.25rem'" :width="'1.25rem'" />
                 <Icon :name="'theme'" :height="'1.25rem'" :width="'1.25rem'" />
@@ -29,13 +30,18 @@ import { computed } from 'vue';
 import { useDossier } from '@/stores/useDossier';
 
 const router = useRouter();
-const { session } = storeToRefs(useSession());
+const useSessionStore = useSession();
+const { session } = storeToRefs(useSessionStore);
 const { dossiers } = storeToRefs(useDossier());
 
 const dossier = computed(() => dossiers.value.find((dossier) => dossier.userUuid === session.value?.userUuid))
 
 const navigateToDashboard = async () => await router.push({ name: "dashboard", params: { userUuid: session.value!.userUuid } })
 const navigateToDossier = async () => await router.push({ name: "dossier", params: { userUuid: session.value!.userUuid, dossierUuid: dossier.value?.uuid } })
+const navigateAccessAcount = async () => {
+    await useSessionStore.signOut()
+    await router.push({ name: "access-account" })
+}
 </script>
 
 <style scoped lang="scss">

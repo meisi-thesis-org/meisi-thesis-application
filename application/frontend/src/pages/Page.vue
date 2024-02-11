@@ -3,7 +3,7 @@
         <div id="wrapper__inner">
             <Navbar />
             <div id="wrapper__inner--content">
-                <Banner :is-content-enabled="isActive" :is-content-visible="isVisible" :header-content="page?.designation!"
+                <Banner v-if="isProducer" :is-content-enabled="isActive" :is-content-visible="isVisible" :header-content="page?.designation!"
                     :is-header-editable="true" :show-editable-field="false"
                     @editable-control-update="(data: string) => updatePage({ designation: data })"
                     @toggle-visibility="(data: boolean) => updatePage({ visible: data })"

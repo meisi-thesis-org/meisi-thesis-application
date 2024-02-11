@@ -13,7 +13,7 @@
                 <div id="wrapper__inner--content__box">
                     <div id="wrapper__inner--content__box--row">
                         <Typography :content="'Pages'" :segment="'designation'" />
-                        <Icon :name="'plus'" :color="'blue-colorized'" :height="'1.25rem'" :width="'1.25rem'"
+                        <Icon v-if="isProducer" :name="'plus'" :color="'blue-colorized'" :height="'1.25rem'" :width="'1.25rem'"
                             :on-click="createPage" />
                     </div>
                     <Card v-for="page of pages" 
@@ -41,6 +41,7 @@ import { usePage } from "@/stores/usePage";
 import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { usePermission } from "@/composables/usePermission";
 
 const route = useRoute();
 const router = useRouter();
@@ -49,6 +50,7 @@ const usePageStore = usePage();
 const { isLoading } = useLoader();
 const { chapters } = storeToRefs(useChapterStore);
 const { pages } = storeToRefs(usePageStore);
+const { isProducer } = usePermission();
 
 const chapter = computed(() => chapters.value.find((chapter) => chapter.uuid === route.params.chapterUuid))
 

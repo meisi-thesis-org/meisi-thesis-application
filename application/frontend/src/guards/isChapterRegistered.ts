@@ -18,7 +18,7 @@ export const isChapterRegistered = async (
     const useChapterStore = useChapter();
     const usePageStore = usePage();
     const { chapters } = storeToRefs(useChapterStore);
-    const { isProducer, isSubscriber } = usePermission();
+    const { isProducer, isConsumer } = usePermission(to);
 
     if (!parameterizedChapterUuid) return next({ name: "book", params: { userUuid: parameterizedUserUuid, dossierUuid: parameterizedDossierUuid, bookUuid: parameterizedBookUuid } });
 
@@ -27,7 +27,7 @@ export const isChapterRegistered = async (
 
     if (cachedChapter) {
         if (isProducer.value && isRecoverChapterRoute.value) return next()
-        if (isSubscriber.value && (!cachedChapter.active || !cachedChapter.visible)) return next({ name: "book", params: { userUuid: parameterizedUserUuid, dossierUuid: parameterizedDossierUuid, bookUuid: parameterizedBookUuid } });
+        if (isConsumer.value && (!cachedChapter.active || !cachedChapter.visible)) return next({ name: "book", params: { userUuid: parameterizedUserUuid, dossierUuid: parameterizedDossierUuid, bookUuid: parameterizedBookUuid } });
         if (isProducer.value && !cachedChapter.active) return next({ name: "recover-chapter", params: { userUuid: parameterizedUserUuid, dossierUuid: parameterizedDossierUuid, bookUuid: parameterizedBookUuid, chapterUuid: cachedChapter.uuid } })
 
         const foundPages = await usePageStore.findPagesByChapterUuid(cachedChapter.uuid)

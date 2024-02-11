@@ -14,7 +14,7 @@ export const isBookRegistered = async (
     const parameterizedDossierUuid = to.params.dossierUuid as string;
     const parameterizedBookUuid = to.params.bookUuid as string;
     const useBookStore = useBook();
-    const { isProducer, isSubscriber } = usePermission();
+    const { isProducer, isConsumer } = usePermission(to);
     const useChapterStore = useChapter();
     const { books } = storeToRefs(useBookStore);
 
@@ -30,7 +30,7 @@ export const isBookRegistered = async (
 
     if (cachedBook) {
         if (isProducer.value && isRecoverBookPath.value) return next()
-        if (isSubscriber.value && (!cachedBook.active || !cachedBook.visible)) return next({ name: "dossier", params: { userUuid: parameterizedUserUuid, dossierUuid: parameterizedDossierUuid } });
+        if (isConsumer.value && (!cachedBook.active || !cachedBook.visible)) return next({ name: "dossier", params: { userUuid: parameterizedUserUuid, dossierUuid: parameterizedDossierUuid } });
         if (isProducer.value && !cachedBook.active) return next({ name: "recover-book", params: { userUuid: parameterizedUserUuid, dossierUuid: parameterizedDossierUuid, bookUuid: cachedBook.uuid } })
         await findChapters(cachedBook.uuid)
         return next();

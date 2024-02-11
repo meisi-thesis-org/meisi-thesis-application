@@ -12,7 +12,7 @@
                 <div id="wrapper__inner--content__box">
                     <div id="wrapper__inner--content__box--row">
                         <Typography :content="'Books'" :segment="'designation'" />
-                        <Icon :name="'plus'" :color="'blue-colorized'" :height="'1.25rem'" :width="'1.25rem'"
+                        <Icon v-if="isProducer" :name="'plus'" :color="'blue-colorized'" :height="'1.25rem'" :width="'1.25rem'"
                             :on-click="createBook" />
                     </div>
                     <Card v-for="book of books" :designation="book.designation" :description="book.description"
@@ -30,6 +30,7 @@ import Icon from "@/components/Icon.vue";
 import Navbar from "@/components/Navbar.vue"
 import Typography from "@/components/Typography.vue";
 import { useLoader } from "@/composables/useLoader";
+import { usePermission } from "@/composables/usePermission";
 import { useBook } from "@/stores/useBook";
 import { useDossier } from "@/stores/useDossier";
 import { useUser } from "@/stores/useUser";
@@ -38,14 +39,15 @@ import { storeToRefs } from "pinia";
 import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
-const { isLoading } = useLoader();
 const router = useRouter();
 const route = useRoute();
 const useBookStore = useBook();
 const useDossierStore = useDossier();
 const useUserStore = useUser();
+const { isLoading } = useLoader();
 const { dossiers } = storeToRefs(useDossierStore);
 const { books } = storeToRefs(useBookStore);
+const { isProducer } = usePermission()
 
 const user = ref<UserEntity>();
 
