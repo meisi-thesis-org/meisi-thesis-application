@@ -6,7 +6,7 @@ type SubscriptionEntity = {
   readonly chapterUuid?: string
   readonly pageUuid?: string
   active: boolean
-  enabled: boolean
+  visible: boolean
   readonly createdAt: string
   readonly updatedAt: string
 }
@@ -20,7 +20,7 @@ const subscriptionMapper = (entity: SubscriptionEntity): SubscriptionDTO => ({
   chapterUuid: entity.chapterUuid,
   pageUuid: entity.pageUuid,
   active: entity.active,
-  enabled: entity.enabled,
+  visible: entity.visible,
   createdAt: entity.createdAt,
   updatedAt: entity.updatedAt
 })

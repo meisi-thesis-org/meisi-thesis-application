@@ -32,7 +32,7 @@ describe('WalletController', () => {
     userUuid: randomUuid,
     funds: randomNumber,
     active: randomBoolean,
-    enabled: randomBoolean,
+    visible: randomBoolean,
     createdAt: randomDateBirth,
     updatedAt: randomDateBirth
   }
@@ -118,7 +118,7 @@ describe('WalletController', () => {
   describe('updateWalletByUuid', () => {
     beforeEach(() => {
       requestMock.params = { ...requestMock.params, uuid: randomUuid }
-      requestMock.body = { ...requestMock.body, funds: randomNumber, active: randomBoolean, enabled: randomBoolean }
+      requestMock.body = { ...requestMock.body, funds: randomNumber, active: randomBoolean, visible: randomBoolean }
     })
 
     async function callUpdateWalletByUuid (): Promise<Response> {

@@ -9,7 +9,7 @@ type CreateSubscriptionRequest =
     Partial<Pick<SubscriptionEntity, 'dossierUuid' | 'bookUuid' | 'chapterUuid' | 'pageUuid'>>;
 type UpdateSubscriptionByUuidRequest =
     NonNullable<Pick<SubscriptionEntity, 'uuid'>> &
-    Partial<Pick<SubscriptionEntity, 'active' | 'enabled'>>;
+    Partial<Pick<SubscriptionEntity, 'active' | 'visible'>>;
 
 export type {
   FindSubscriptionByUuidRequest,

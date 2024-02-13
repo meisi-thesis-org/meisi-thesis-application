@@ -3,7 +3,7 @@ type WalletEntity = {
   readonly userUuid: string
   funds: number
   active: boolean
-  enabled: boolean
+  visible: boolean
   readonly createdAt: string
   updatedAt: string
 }
@@ -15,7 +15,7 @@ const walletMapper = (entity: WalletEntity): WalletDTO => {
     userUuid: entity.userUuid,
     funds: entity.funds,
     active: entity.active,
-    enabled: entity.enabled,
+    visible: entity.visible,
     createdAt: entity.createdAt,
     updatedAt: entity.updatedAt
   }

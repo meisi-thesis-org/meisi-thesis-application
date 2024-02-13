@@ -41,20 +41,16 @@ export class WalletService {
 
     if (foundEntity !== undefined) throw new ConflictException();
 
-    const user = await this.networkProvider
-      .doHttpRequest('8000', 'security/users', 'GET', undefined, { uuid: requestArgs.userUuid })
-      .catch((error) => { throw error }) as { active: boolean, enabled: boolean }
-
-    if (!user.enabled || !user.active) {
-      throw new BadRequestException();
-    }
+    await this.networkProvider
+      .doHttpRequest('8000', `security/users/${requestArgs.userUuid}`, 'GET')
+      .catch((error) => { throw error })
 
     const createdEntity: WalletEntity = {
       uuid: this.randomProvider.randomUUID(),
       userUuid: requestArgs.userUuid,
       funds: 0,
       active: true,
-      enabled: true,
+      visible: true,
       createdAt: this.randomProvider.randomDateToIsoString(),
       updatedAt: this.randomProvider.randomDateToIsoString()
     };
@@ -78,7 +74,7 @@ export class WalletService {
       userUuid: foundEntity.userUuid,
       funds: requestArgs.funds ?? foundEntity.funds,
       active: requestArgs.active ?? foundEntity.active,
-      enabled: requestArgs.enabled ?? foundEntity.enabled,
+      visible: requestArgs.visible ?? foundEntity.visible,
       createdAt: foundEntity.createdAt,
       updatedAt: this.randomProvider.randomDateToIsoString()
     };

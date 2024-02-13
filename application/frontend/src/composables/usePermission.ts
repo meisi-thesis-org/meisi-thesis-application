@@ -4,6 +4,7 @@ import { useDevice } from "@/stores/useDevice"
 import { useDossier } from "@/stores/useDossier";
 import { useNetwork } from "@/stores/useNetwork";
 import { usePage } from "@/stores/usePage";
+import { useSubscription } from "@/stores/useSubscription";
 import { useUser } from "@/stores/useUser";
 import { storeToRefs } from "pinia"
 import { computed } from "vue"
@@ -17,6 +18,7 @@ export const usePermission = (route: RouteLocation = useRoute()) => {
     const { books } = storeToRefs(useBook());
     const { chapters } = storeToRefs(useChapter());
     const { pages } = storeToRefs(usePage());
+    const { subscriptions } = storeToRefs(useSubscription());
     
     const isProducerDossier = computed(() => dossiers.value.find((dossier) => dossier.uuid === route.params.dossierUuid && dossier.userUuid === user.value?.uuid))
     const isProducerBook = computed(() => books.value.find((book) => book.uuid === route.params.bookUuid && isProducerDossier.value))
@@ -27,6 +29,8 @@ export const usePermission = (route: RouteLocation = useRoute()) => {
     const isGuest = computed(() => false);
     const isProducer = computed(() => !!(isProducerDossier.value || isProducerBook.value || isProducerChapter.value || isProducerPage.value));
     const isConsumer = computed(() => !isProducerDossier.value && !isProducerBook.value && !isProducerChapter.value && !isProducerPage.value);
+    
+    const isSubscribed = computed(() => subscriptions.value.find((subscription) => subscription.dossierUuid === route.params.dossierUuid))
 
-    return { isOwner, isGuest, isProducer, isConsumer }
+    return { isOwner, isGuest, isProducer, isConsumer, isSubscribed }
 }

@@ -26,6 +26,7 @@ export const useDossier = defineStore("dossiers", () => {
         }
     }
 
+
     const createDossier = async (userUuid: string, designation: string) => {
         try {
             const response = await createRequest<DossierEntity>('commerce/dossiers', 'POST', { userUuid, designation });

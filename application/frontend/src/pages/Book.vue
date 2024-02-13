@@ -1,35 +1,26 @@
 <template>
-<div id="wrapper">
+    <div id="wrapper">
         <div id="wrapper__inner">
             <Navbar />
             <div id="wrapper__inner--content">
-                <Banner
-                    :is-content-enabled="isActive"
+                <Banner 
+                    :is-content-enabled="isActive" 
                     :is-content-visible="isVisible" 
                     :header-content="book?.designation!"
-                    :sub-header-content="subHeaderContent" 
-                    :is-header-editable="true"
+                    :sub-header-content="subHeaderContent" :is-header-editable="true"
                     @editable-control-update="(data: string) => updateBook({ designation: data })"
                     @editable-field-update="(data: string) => updateBook({ description: data })"
                     @toggle-visibility="(data: boolean) => updateBook({ visible: data })"
-                    @toggle-activity="(data: boolean) => updateBook({ active: data })" />
+                    @toggle-activity="(data: boolean) => updateBook({ active: data })" 
+                    @toggle-lock="() => toggleSubscription()"/>
                 <div id="wrapper__inner--content__box">
                     <div id="wrapper__inner--content__box--row">
                         <Typography :content="'Chapters'" :segment="'designation'" />
-                        <Icon 
-                            v-if="isProducer"
-                            :name="'plus'" 
-                            :color="'blue-colorized'" 
-                            :height="'1.25rem'"
-                            :width="'1.25rem'"
-                            :on-click="createChapter" />
+                        <Icon v-if="isProducer" :name="'plus'" :color="'blue-colorized'" :height="'1.25rem'"
+                            :width="'1.25rem'" :on-click="createChapter" />
                     </div>
-                    <Card 
-                        v-for="chapter of chapters" 
-                        @click="navigateToChapter(chapter.uuid)" 
-                        :designation="chapter.designation" 
-                        :description="chapter.description"
-                        :is-visible="chapter.visible" 
+                    <Card v-for="chapter of chapters" @click="navigateToChapter(chapter.uuid)"
+                        :designation="chapter.designation" :description="chapter.description" :is-visible="chapter.visible"
                         :is-active="chapter.active" />
                 </div>
             </div>
@@ -50,14 +41,20 @@ import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { usePermission } from "@/composables/usePermission";
+import { useSubscription } from "@/stores/useSubscription";
+import { useWallet } from "@/stores/useWallet";
 
 const route = useRoute();
 const router = useRouter();
 const useBookStore = useBook();
 const useChapterStore = useChapter();
+const useSubscriptionStore = useSubscription();
+const useWalletStore = useWallet();
 const { isLoading } = useLoader();
 const { books } = storeToRefs(useBookStore);
 const { chapters } = storeToRefs(useChapterStore);
+const { subscriptions } = storeToRefs(useSubscriptionStore);
+const { wallet } = storeToRefs(useWalletStore);
 const { isProducer } = usePermission();
 
 const book = computed(() => books.value.find((book) => book.uuid === route.params.bookUuid))
@@ -85,11 +82,29 @@ const updateBook = async (data: Record<string, string | boolean>) => {
     }
 }
 const createChapter = async () => {
-    await useChapterStore.createChapter({
-        bookUuid: book.value!.uuid,
-        designation: `Chapter #${chapters.value?.length}`,
-        description: '',
-    })
+    try {
+        isLoading.value = !isLoading.value;
+        await useChapterStore.createChapter({
+            bookUuid: book.value!.uuid,
+            designation: `Chapter #${chapters.value?.length}`,
+            description: '',
+        })
+        isLoading.value = !isLoading.value;
+    } catch (error) {
+        isLoading.value = !isLoading.value;
+    }
+}
+
+const toggleSubscription = async () => {
+    try {
+        isLoading.value = !isLoading.value;
+        const foundSubscription = subscriptions.value.find((subscription) => subscription.bookUuid === book.value?.uuid)
+        if (!foundSubscription) await useSubscriptionStore.createSubscription({ walletUuid: wallet.value?.uuid, bookUuid: book.value?.uuid });
+        if (foundSubscription) await useSubscriptionStore.updateSubscriptionByUuid(foundSubscription.uuid, { active: !foundSubscription.active, visible: !foundSubscription.visible });
+        isLoading.value = !isLoading.value;
+    } catch (error) {
+        isLoading.value = !isLoading.value;
+    }
 }
 
 const navigateToChapter = (chapterUuid: string) => router.push({ name: 'chapter', params: { userUuid: route.params.userUuid, dossierUuid: route.params.dossierUuid, bookUuid: route.params.bookUuid, chapterUuid: chapterUuid } })

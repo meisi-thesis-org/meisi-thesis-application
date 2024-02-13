@@ -1,6 +1,7 @@
 <template>
     <input 
-        placeholder="Type something here..." 
+        v-if="definedProps.isEditable || content"
+        :placeholder="'Type something here...'" 
         @blur="$emit('onBlur', content)" 
         :class="definedProps.color"
         :disabled="!definedProps.isEditable" 

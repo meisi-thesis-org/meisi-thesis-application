@@ -79,7 +79,7 @@ export class SubscriptionController {
       const requestArgs: UpdateSubscriptionByUuidRequest = {
         uuid: request.params.uuid,
         active: request.body.active,
-        enabled: request.body.enabled
+        visible: request.body.visible
       }
       const responseArgs = await this.service.updateSubscriptionByUuid(requestArgs);
       return response.status(201).json(responseArgs)

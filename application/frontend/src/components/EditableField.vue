@@ -1,7 +1,8 @@
 <template>
   <textarea
+    v-if="definedProps.isEditable || content"
     :maxlength="maxLength"
-    placeholder="Type something here..." 
+    :placeholder="'Type something here...'" 
     @blur="$emit('onBlur', content)"
     :class="definedProps.color" 
     :disabled="!definedProps.isEditable" 

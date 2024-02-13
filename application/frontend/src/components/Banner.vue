@@ -8,15 +8,15 @@
                     :color="'light-colorized'" :is-editable="isProducer"
                     @on-blur="(data: string) => $emit('editableControlUpdate', data)" />
                 <div id="banner__inner--box__icons">
-                    <Icon v-if="isConsumer && definedProps.isContentVisible" :name="'lock'" :width="'1.25rem'"
+                    <Icon v-if="isConsumer && !isSubscribed && definedProps.isContentEnabled" :on-click="() => $emit('toggleLock')" :name="'lock'" :width="'1.25rem'"
                         :height="'1.25rem'" :color="'light-colorized'" />
-                    <Icon v-if="isConsumer && definedProps.isContentVisible" :name="'unlock'" :width="'1.25rem'"
+                    <Icon v-if="isConsumer && isSubscribed && definedProps.isContentEnabled" :on-click="() => $emit('toggleLock')" :name="'unlock'" :width="'1.25rem'"
                         :height="'1.25rem'" :color="'light-colorized'" />
-                    <Icon :on-click="() => $emit('toggleVisibility', !definedProps.isContentVisible)"
-                        v-if="isProducer && !definedProps.isContentVisible" :name="'watcher'" :width="'1.25rem'"
+                    <Icon :on-click="() => $emit('toggleVisibility', !definedProps.isContentEnabled)"
+                        v-if="isProducer && !definedProps.isContentEnabled" :name="'watcher'" :width="'1.25rem'"
                         :height="'1.25rem'" :color="'light-colorized'" />
-                    <Icon :on-click="() => $emit('toggleVisibility', !definedProps.isContentVisible)"
-                        v-if="isProducer && definedProps.isContentVisible" :name="'watcher-off'" :width="'1.25rem'"
+                    <Icon :on-click="() => $emit('toggleVisibility', !definedProps.isContentEnabled)"
+                        v-if="isProducer && definedProps.isContentEnabled" :name="'watcher-off'" :width="'1.25rem'"
                         :height="'1.25rem'" :color="'light-colorized'" />
                     <Icon :on-click="() => $emit('toggleActivity', !definedProps.isContentEnabled)" v-if="isProducer"
                         :name="'trashcan'" :width="'1.25rem'" :height="'1.25rem'" :color="'light-colorized'" />
@@ -39,13 +39,13 @@ import EditableField from './EditableField.vue';
 import { usePermission } from '@/composables/usePermission';
 import EditableControl from './EditableControl.vue';
 
-const { isProducer, isConsumer } = usePermission();
+const { isProducer, isConsumer, isSubscribed } = usePermission();
 
 const definedProps = withDefaults(defineProps<BannerProps>(), {
     showEditableField: true,
     subHeaderContent: ""
 });
-const definedEmits = defineEmits(['editableFieldUpdate', 'editableControlUpdate', 'toggleVisibility', 'toggleActivity']);
+const definedEmits = defineEmits(['editableFieldUpdate', 'editableControlUpdate', 'toggleVisibility', 'toggleActivity', 'toggleLock']);
 </script>
 
 <style scoped lang="scss">

@@ -30,7 +30,7 @@ describe('SubscriptionService', () => {
     chapterUuid: randomUuid,
     pageUuid: randomUuid,
     active: randomBoolean,
-    enabled: randomBoolean,
+    visible: randomBoolean,
     createdAt: randomDateBirth,
     updatedAt: randomDateBirth
   }
@@ -94,26 +94,26 @@ describe('SubscriptionService', () => {
     }
 
     it('should be defined', async () => {
-      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ uuid: randomUuid, price: 10, active: true, enabled: true });
+      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ uuid: randomUuid, price: 10, active: true, visible: true });
       vi.spyOn(SubscriptionStateRepository.prototype, 'findSubscriptionsByForeignsUuid').mockResolvedValue([])
       vi.spyOn(SubscriptionStateRepository.prototype, 'createSubscription').mockResolvedValue()
       await expect(callCreateSubscription()).resolves.toBeDefined()
     })
 
     it('should throw a ConflictException because Repository.findSubscriptionsByForeignsUuid returned array with a length greater than zero', async () => {
-      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ uuid: randomUuid, price: 10, active: true, enabled: true });
+      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ uuid: randomUuid, price: 10, active: true, visible: true });
       vi.spyOn(SubscriptionStateRepository.prototype, 'findSubscriptionsByForeignsUuid').mockResolvedValue([subscriptionEntity])
       await expect(callCreateSubscription()).rejects.toThrow(ConflictException)
     })
 
     it('should throw a InternalServerException because Repository.findSubscriptionsByForeignsUuid threw InternalServerException', async () => {
-      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ uuid: randomUuid, price: 10, active: true, enabled: true });
+      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ uuid: randomUuid, price: 10, active: true, visible: true });
       vi.spyOn(SubscriptionStateRepository.prototype, 'findSubscriptionsByForeignsUuid').mockRejectedValue(new InternalServerException())
       await expect(callCreateSubscription()).rejects.toThrow(InternalServerException)
     })
 
     it('should throw a InternalServerException because Repository.createSubscription threw InternalServerException', async () => {
-      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ uuid: randomUuid, price: 10, active: true, enabled: true });
+      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ uuid: randomUuid, price: 10, active: true, visible: true });
       vi.spyOn(SubscriptionStateRepository.prototype, 'findSubscriptionsByForeignsUuid').mockResolvedValue([])
       vi.spyOn(SubscriptionStateRepository.prototype, 'createSubscription').mockRejectedValue(new InternalServerException())
       await expect(callCreateSubscription()).rejects.toThrow(InternalServerException)
@@ -126,13 +126,13 @@ describe('SubscriptionService', () => {
     })
 
     it('should throw a BadRequestException because NetworkProvider.doHttpRequest return an inactive entity', async () => {
-      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ uuid: randomUuid, price: 10, active: false, enabled: true });
+      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ uuid: randomUuid, price: 10, active: false, visible: true });
       vi.spyOn(SubscriptionStateRepository.prototype, 'findSubscriptionsByForeignsUuid').mockResolvedValue([])
       await expect(callCreateSubscription()).rejects.toThrow(BadRequestException)
     })
 
     it('should throw a BadRequestException because NetworkProvider.doHttpRequest return an disabled entity', async () => {
-      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ uuid: randomUuid, price: 10, active: true, enabled: false });
+      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ uuid: randomUuid, price: 10, active: true, visible: false });
       vi.spyOn(SubscriptionStateRepository.prototype, 'findSubscriptionsByForeignsUuid').mockResolvedValue([])
       await expect(callCreateSubscription()).rejects.toThrow(BadRequestException)
     })
@@ -143,7 +143,7 @@ describe('SubscriptionService', () => {
       return await instance.updateSubscriptionByUuid({
         uuid: randomUuid,
         active: randomBoolean,
-        enabled: randomBoolean
+        visible: randomBoolean
       })
     }
 

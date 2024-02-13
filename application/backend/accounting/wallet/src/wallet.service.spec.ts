@@ -28,7 +28,7 @@ describe('WalletService', () => {
     userUuid: randomUuid,
     funds: randomNumber,
     active: randomBoolean,
-    enabled: randomBoolean,
+    visible: randomBoolean,
     createdAt: randomDateBirth,
     updatedAt: randomDateBirth
   }
@@ -87,26 +87,26 @@ describe('WalletService', () => {
     }
 
     it('should be defined', async () => {
-      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ active: true, enabled: true });
+      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ active: true, visible: true });
       vi.spyOn(WalletStateRepository.prototype, 'findWalletByUserUuid').mockResolvedValue(undefined)
       vi.spyOn(WalletStateRepository.prototype, 'createWallet').mockResolvedValue()
       await expect(callCreateWallet()).resolves.toBeDefined()
     })
 
     it('should throw a ConflictException because Repository.findWalletByUserUuid returned undefined', async () => {
-      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ active: true, enabled: true });
+      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ active: true, visible: true });
       vi.spyOn(WalletStateRepository.prototype, 'findWalletByUserUuid').mockResolvedValue(walletEntity)
       await expect(callCreateWallet()).rejects.toThrow(ConflictException)
     })
 
     it('should throw a InternalServerException because Repository.findWalletByUserUuid threw InternalServerException', async () => {
-      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ active: true, enabled: true });
+      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ active: true, visible: true });
       vi.spyOn(WalletStateRepository.prototype, 'findWalletByUserUuid').mockRejectedValue(new InternalServerException())
       await expect(callCreateWallet()).rejects.toThrow(InternalServerException)
     })
 
     it('should throw a InternalServerException because Repository.createWallet threw InternalServerException', async () => {
-      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ active: true, enabled: true });
+      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ active: true, visible: true });
       vi.spyOn(WalletStateRepository.prototype, 'findWalletByUserUuid').mockResolvedValue(undefined)
       vi.spyOn(WalletStateRepository.prototype, 'createWallet').mockRejectedValue(new InternalServerException())
       await expect(callCreateWallet()).rejects.toThrow(InternalServerException)
@@ -119,13 +119,13 @@ describe('WalletService', () => {
     })
 
     it('should throw a BadRequestException because NetworkProvider.doHttpRequest return an inactive entity', async () => {
-      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ active: false, enabled: true });
+      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ active: false, visible: true });
       vi.spyOn(WalletStateRepository.prototype, 'findWalletByUserUuid').mockResolvedValue(undefined)
       await expect(callCreateWallet()).rejects.toThrow(BadRequestException)
     })
 
     it('should throw a BadRequestException because NetworkProvider.doHttpRequest return an disabled entity', async () => {
-      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ active: true, enabled: false });
+      vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({ active: true, visible: false });
       vi.spyOn(WalletStateRepository.prototype, 'findWalletByUserUuid').mockResolvedValue(undefined)
       await expect(callCreateWallet()).rejects.toThrow(BadRequestException)
     })
@@ -137,7 +137,7 @@ describe('WalletService', () => {
         uuid: randomUuid,
         funds: randomNumber,
         active: randomBoolean,
-        enabled: randomBoolean
+        visible: randomBoolean
       })
     }
 

@@ -66,9 +66,9 @@ export class SubscriptionService {
             existenceCall.method as 'POST' | 'GET' | 'POST',
             undefined,
             existenceCall.args as unknown as Record<string, string>
-          ).catch((error) => { throw error }) as { price: number, active: boolean, enabled: boolean }
+          ).catch((error) => { throw error }) as { price: number, active: boolean, visible: boolean }
 
-        if (!responseArgs.active || !responseArgs.enabled) throw new BadRequestException();
+        if (!responseArgs.active || !responseArgs.visible) throw new BadRequestException();
 
         removeAmount += responseArgs.price;
       }
@@ -91,7 +91,7 @@ export class SubscriptionService {
       chapterUuid: requestArgs.chapterUuid,
       pageUuid: requestArgs.pageUuid,
       active: true,
-      enabled: true,
+      visible: true,
       createdAt: this.randomProvider.randomDateToIsoString(),
       updatedAt: this.randomProvider.randomDateToIsoString()
     };
@@ -118,7 +118,7 @@ export class SubscriptionService {
       chapterUuid: foundEntity.chapterUuid,
       pageUuid: foundEntity.pageUuid,
       active: requestArgs.active ?? foundEntity.active,
-      enabled: requestArgs.enabled ?? foundEntity.enabled,
+      visible: requestArgs.visible ?? foundEntity.visible,
       createdAt: foundEntity.createdAt,
       updatedAt: this.randomProvider.randomDateToIsoString()
     };

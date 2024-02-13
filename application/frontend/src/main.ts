@@ -27,6 +27,8 @@ import { isUserRegistered } from './guards/isUserRegistered'
 import { isBookRegistered } from './guards/isBookRegistered'
 import { isChapterRegistered } from './guards/isChapterRegistered'
 import { isPageRegistered } from './guards/isPageRegistered'
+import { isWalletRegistered } from './guards/isWalletRegistered'
+import { isSubscriptionsRegistered } from './guards/isSubscriptionsRegistered'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -98,7 +100,7 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
-      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered]
+      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isWalletRegistered, isSubscriptionsRegistered]
     },
     {
       name: 'dashboard',
@@ -107,7 +109,7 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
-      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered],
+      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isWalletRegistered, isSubscriptionsRegistered],
     },
     {
       name: 'recover-dossier',
@@ -116,7 +118,7 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
-      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isDossierRegistered],
+      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isWalletRegistered, isSubscriptionsRegistered, isDossierRegistered],
     },
     {
       name: 'recover-book',
@@ -125,7 +127,7 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
-      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isDossierRegistered, isBookRegistered],
+      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isWalletRegistered, isSubscriptionsRegistered, isDossierRegistered, isBookRegistered],
     },
     {
       name: 'recover-chapter',
@@ -134,7 +136,7 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
-      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isDossierRegistered, isBookRegistered, isChapterRegistered],
+      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isWalletRegistered, isSubscriptionsRegistered, isDossierRegistered, isBookRegistered, isChapterRegistered],
     },
     {
       name: 'recover-page',
@@ -143,7 +145,7 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
-      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isDossierRegistered, isBookRegistered, isChapterRegistered, isPageRegistered],
+      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isWalletRegistered, isSubscriptionsRegistered, isDossierRegistered, isBookRegistered, isChapterRegistered, isPageRegistered],
     },
     {
       name: 'dossier',
@@ -152,7 +154,7 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
-      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isDossierRegistered],
+      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isWalletRegistered, isSubscriptionsRegistered, isDossierRegistered],
     },
     {
       name: 'book',
@@ -161,7 +163,7 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
-      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isDossierRegistered, isBookRegistered],
+      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isWalletRegistered, isSubscriptionsRegistered, isDossierRegistered, isBookRegistered],
     },
     {
       name: 'chapter',
@@ -170,7 +172,7 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
-      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isDossierRegistered, isBookRegistered, isChapterRegistered],
+      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isWalletRegistered, isSubscriptionsRegistered, isDossierRegistered, isBookRegistered, isChapterRegistered],
     },
     {
       name: 'page',
@@ -179,7 +181,7 @@ const router = createRouter({
       meta: {
         requiresSession: true
       },
-      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isDossierRegistered, isBookRegistered, isChapterRegistered, isPageRegistered],
+      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isWalletRegistered, isSubscriptionsRegistered, isDossierRegistered, isBookRegistered, isChapterRegistered, isPageRegistered],
     }
   ]
 })

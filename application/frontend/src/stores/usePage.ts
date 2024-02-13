@@ -12,7 +12,7 @@ const usePage = defineStore("pages", () => {
         uuid: string
     ) => {
         try {
-            const response = await createRequest<PageEntity>('commerce/pages', 'GET', undefined, { uuid });
+            const response = await createRequest<PageEntity>(`commerce/pages/${uuid}`, 'GET');
             return response.data;
         } catch (error) {
             return undefined;

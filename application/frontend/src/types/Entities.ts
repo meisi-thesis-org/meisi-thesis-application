@@ -79,6 +79,29 @@ type PageEntity = {
   updatedAt: string
 }
 
+type SubscriptionEntity = {
+  readonly uuid: string
+  readonly walletUuid: string
+  readonly dossierUuid?: string
+  readonly bookUuid?: string
+  readonly chapterUuid?: string
+  readonly pageUuid?: string
+  active: boolean
+  visible: boolean
+  readonly createdAt: string
+  readonly updatedAt: string
+}
+
+type WalletEntity = {
+  readonly uuid: string
+  readonly userUuid: string
+  funds: number
+  active: boolean
+  visible: boolean
+  readonly createdAt: string
+  updatedAt: string
+}
+
 export type {
   UserEntity,
   SessionEntity,
@@ -87,5 +110,7 @@ export type {
   DossierEntity,
   BookEntity,
   ChapterEntity,
-  PageEntity
+  PageEntity,
+  SubscriptionEntity,
+  WalletEntity
 }

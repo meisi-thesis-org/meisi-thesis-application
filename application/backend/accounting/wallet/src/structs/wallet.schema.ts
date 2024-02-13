@@ -7,7 +7,7 @@ const FindWalletByUuidSchema = z.object({
 })
 
 const FindWalletByUserUuidSchema = z.object({
-  qery: z.object({
+  query: z.object({
     userUuid: z.string()
   })
 })
@@ -25,7 +25,7 @@ const UpdateWalletByUuidSchema = z.object({
   body: z.object({
     funds: z.number().optional(),
     active: z.boolean().optional(),
-    enabled: z.boolean().optional()
+    visible: z.boolean().optional()
   })
 })
 

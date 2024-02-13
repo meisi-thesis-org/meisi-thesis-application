@@ -32,7 +32,7 @@ const UpdateSubscriptionByUuidSchema = z.object({
   }),
   body: z.object({
     active: z.boolean().optional(),
-    enabled: z.boolean().optional()
+    visible: z.boolean().optional()
   })
 })
 

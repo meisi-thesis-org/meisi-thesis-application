@@ -12,7 +12,7 @@ export const useBook = defineStore("books", () => {
         uuid: string
     ) => {
         try {
-            const response = await createRequest<BookEntity>('commerce/books', 'GET', undefined, { uuid });
+            const response = await createRequest<BookEntity>(`commerce/books/${uuid}`, 'GET');
             return response.data;
         } catch (error) {
             return undefined;

@@ -5,6 +5,6 @@ type FindWalletByUserUuidRequest = NonNullable<Readonly<Pick<WalletEntity, 'user
 type CreateWalletRequest = NonNullable<Readonly<Pick<WalletEntity, 'userUuid'>>>;
 type UpdateWalletByUuidRequest =
     NonNullable<Readonly<Pick<WalletEntity, 'uuid'>>> &
-    Partial<Readonly<Pick<WalletEntity, 'funds' | 'active' | 'enabled'>>>;
+    Partial<Readonly<Pick<WalletEntity, 'funds' | 'active' | 'visible'>>>;
 
 export type { FindWalletByUuidRequest, FindWalletByUserUuidRequest, CreateWalletRequest, UpdateWalletByUuidRequest }

@@ -3,17 +3,21 @@
         <div id="wrapper__inner">
             <Navbar />
             <div id="wrapper__inner--content">
-                <Banner :is-content-enabled="isActive" :is-content-visible="isVisible"
-                    :header-content="user?.username + ' dossier'" :sub-header-content="subHeaderContent"
+                <Banner 
+                    :is-content-enabled="isActive" 
+                    :is-content-visible="isVisible"
+                    :header-content="user?.username + ' dossier'" 
+                    :sub-header-content="subHeaderContent"
                     :is-header-editable="false"
                     @editable-field-update="(data: string) => updateDossier({ designation: data })"
                     @toggle-visibility="(data: boolean) => updateDossier({ visible: data })"
-                    @toggle-activity="(data: boolean) => updateDossier({ active: data })" />
+                    @toggle-activity="(data: boolean) => updateDossier({ active: data })"
+                    @toggle-lock="() => toggleSubscription()" />
                 <div id="wrapper__inner--content__box">
                     <div id="wrapper__inner--content__box--row">
                         <Typography :content="'Books'" :segment="'designation'" />
-                        <Icon v-if="isProducer" :name="'plus'" :color="'blue-colorized'" :height="'1.25rem'" :width="'1.25rem'"
-                            :on-click="createBook" />
+                        <Icon v-if="isProducer" :name="'plus'" :color="'blue-colorized'" :height="'1.25rem'"
+                            :width="'1.25rem'" :on-click="createBook" />
                     </div>
                     <Card v-for="book of books" :designation="book.designation" :description="book.description"
                         :is-visible="book.visible" :is-active="book.active" @click="navigateToBook(book.uuid)" />
@@ -33,7 +37,9 @@ import { useLoader } from "@/composables/useLoader";
 import { usePermission } from "@/composables/usePermission";
 import { useBook } from "@/stores/useBook";
 import { useDossier } from "@/stores/useDossier";
+import { useSubscription } from "@/stores/useSubscription";
 import { useUser } from "@/stores/useUser";
+import { useWallet } from "@/stores/useWallet";
 import type { UserEntity } from "@/types/Entities";
 import { storeToRefs } from "pinia";
 import { computed, onMounted, ref } from "vue";
@@ -44,9 +50,13 @@ const route = useRoute();
 const useBookStore = useBook();
 const useDossierStore = useDossier();
 const useUserStore = useUser();
+const useSubscriptionStore = useSubscription();
+const useWalletStore = useWallet();
 const { isLoading } = useLoader();
 const { dossiers } = storeToRefs(useDossierStore);
 const { books } = storeToRefs(useBookStore);
+const { wallet } = storeToRefs(useWalletStore);
+const { subscriptions } = storeToRefs(useSubscriptionStore);
 const { isProducer } = usePermission()
 
 const user = ref<UserEntity>();
@@ -71,11 +81,29 @@ const updateDossier = async (data: Record<string, string | boolean>) => {
     }
 }
 const createBook = async () => {
-    await useBookStore.createBook({
-        dossierUuid: dossier.value!.uuid,
-        designation: `Book #${books.value?.length}`,
-        description: '',
-    })
+    try {
+        isLoading.value = !isLoading.value;
+        await useBookStore.createBook({
+            dossierUuid: dossier.value!.uuid,
+            designation: `Book #${books.value?.length}`,
+            description: '',
+        })
+        isLoading.value = !isLoading.value;
+    } catch (error) {
+        isLoading.value = !isLoading.value;
+    }
+}
+
+const toggleSubscription = async () => {
+    try {
+        isLoading.value = !isLoading.value;
+        const foundSubscription = subscriptions.value.find((subscription) => subscription.dossierUuid === dossier.value?.uuid)
+        if (!foundSubscription) await useSubscriptionStore.createSubscription({ walletUuid: wallet.value?.uuid, dossierUuid: dossier.value?.uuid });
+        if (foundSubscription) await useSubscriptionStore.updateSubscriptionByUuid(foundSubscription.uuid, { active: !foundSubscription.active, visible: !foundSubscription.visible });
+        isLoading.value = !isLoading.value;
+    } catch (error) {
+        isLoading.value = !isLoading.value;
+    }
 }
 
 const navigateToBook = (bookUuid: string) => router.push({ name: 'book', params: { userUuid: route.params.userUuid, dossierUuid: route.params.dossierUuid, bookUuid: bookUuid } })

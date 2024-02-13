@@ -3,25 +3,26 @@
         <div id="wrapper__inner">
             <Navbar />
             <div id="wrapper__inner--content">
-                <Banner :is-content-enabled="isActive" :is-content-visible="isVisible"
-                    :header-content="chapter?.designation!" :sub-header-content="subHeaderContent"
+                <Banner 
+                    :is-content-enabled="isActive" 
+                    :is-content-visible="isVisible"
+                    :header-content="chapter?.designation!" 
+                    :sub-header-content="subHeaderContent"
                     :is-header-editable="true"
                     @editable-control-update="(data: string) => updateChapter({ designation: data })"
                     @editable-field-update="(data: string) => updateChapter({ description: data })"
                     @toggle-visibility="(data: boolean) => updateChapter({ visible: data })"
-                    @toggle-activity="(data: boolean) => updateChapter({ active: data })" />
+                    @toggle-activity="(data: boolean) => updateChapter({ active: data })" 
+                    @toggle-lock="() => toggleSubscription()" 
+                />
                 <div id="wrapper__inner--content__box">
                     <div id="wrapper__inner--content__box--row">
                         <Typography :content="'Pages'" :segment="'designation'" />
-                        <Icon v-if="isProducer" :name="'plus'" :color="'blue-colorized'" :height="'1.25rem'" :width="'1.25rem'"
-                            :on-click="createPage" />
+                        <Icon v-if="isProducer" :name="'plus'" :color="'blue-colorized'" :height="'1.25rem'"
+                            :width="'1.25rem'" :on-click="createPage" />
                     </div>
-                    <Card v-for="page of pages" 
-                        :designation="page.designation" 
-                        :description="page.description" 
-                        :is-visible="page.visible"
-                        :is-active="page.active" 
-                        :show-description="false"
+                    <Card v-for="page of pages" :designation="page.designation" :description="page.description"
+                        :is-visible="page.visible" :is-active="page.active" :show-description="false"
                         @click="navigateToPage(page.uuid)" />
                 </div>
             </div>
@@ -42,14 +43,20 @@ import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { usePermission } from "@/composables/usePermission";
+import { useSubscription } from "@/stores/useSubscription";
+import { useWallet } from "@/stores/useWallet";
 
 const route = useRoute();
 const router = useRouter();
 const useChapterStore = useChapter();
 const usePageStore = usePage();
+const useSubscriptionStore = useSubscription();
+const useWalletStore = useWallet();
 const { isLoading } = useLoader();
 const { chapters } = storeToRefs(useChapterStore);
 const { pages } = storeToRefs(usePageStore);
+const { subscriptions } = storeToRefs(useSubscriptionStore);
+const { wallet } = storeToRefs(useWalletStore);
 const { isProducer } = usePermission();
 
 const chapter = computed(() => chapters.value.find((chapter) => chapter.uuid === route.params.chapterUuid))
@@ -75,11 +82,29 @@ const updateChapter = async (data: Record<string, string | boolean>) => {
     }
 }
 const createPage = async () => {
-    await usePageStore.createPage({
-        chapterUuid: chapter.value!.uuid,
-        designation: `Page #${pages.value?.length}`,
-        description: '',
-    })
+    try {
+        isLoading.value = !isLoading.value;
+        await usePageStore.createPage({
+            chapterUuid: chapter.value!.uuid,
+            designation: `Page #${pages.value?.length}`,
+            description: '',
+        })
+        isLoading.value = !isLoading.value;
+    } catch (error) {
+        isLoading.value = !isLoading.value;
+    }
+}
+
+const toggleSubscription = async () => {
+    try {
+        isLoading.value = !isLoading.value;
+        const foundSubscription = subscriptions.value.find((subscription) => subscription.chapterUuid === chapter.value?.uuid)
+        if (!foundSubscription) await useSubscriptionStore.createSubscription({ walletUuid: wallet.value?.uuid, chapterUuid: chapter.value?.uuid });
+        if (foundSubscription) await useSubscriptionStore.updateSubscriptionByUuid(foundSubscription.uuid, { active: !foundSubscription.active, visible: !foundSubscription.visible });
+        isLoading.value = !isLoading.value;
+    } catch (error) {
+        isLoading.value = !isLoading.value;
+    }
 }
 
 const navigateToPage = (pageUuid: string) => router.push({
