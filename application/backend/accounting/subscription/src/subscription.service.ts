@@ -34,7 +34,10 @@ export class SubscriptionService {
     return foundEntities.filter((foundEntity) => subscriptionMapper(foundEntity))
   }
 
-  public async createSubscription (requestArgs: CreateSubscriptionRequest): Promise<SubscriptionDTO> {
+  public async createSubscription (
+    requestArgs: CreateSubscriptionRequest,
+    requestOptions?: Record<string, string>
+  ): Promise<SubscriptionDTO> {
     const foundEntities = await this.repository
       .findSubscriptionsByForeignsUuid(requestArgs)
       .catch(() => { throw new InternalServerException(); })
@@ -43,14 +46,6 @@ export class SubscriptionService {
 
     let removeAmount = 0;
 
-    const wallet = await this.networkProvider.doHttpRequest(
-      '8000',
-      'accounting/wallets',
-      'GET',
-      undefined,
-      { uuid: requestArgs.walletUuid }
-    ).catch((error) => { throw error }) as { uuid: string, price: number }
-
     const existenceCalls = [];
     existenceCalls.push({ condition: requestArgs.dossierUuid, path: 'commerce/dossiers', method: 'GET', args: { uuid: requestArgs.dossierUuid } })
     existenceCalls.push({ condition: requestArgs.bookUuid, path: 'commerce/books', method: 'GET', args: { uuid: requestArgs.bookUuid } })
@@ -58,13 +53,14 @@ export class SubscriptionService {
     existenceCalls.push({ condition: requestArgs.pageUuid, path: 'commerce/pages', method: 'GET', args: { uuid: requestArgs.pageUuid } })
 
     for (const existenceCall of existenceCalls) {
+      console.log(existenceCall.condition)
       if (existenceCall.condition !== undefined) {
         const responseArgs = await this.networkProvider
           .doHttpRequest(
             '8000',
             existenceCall.path,
             existenceCall.method as 'POST' | 'GET' | 'POST',
-            undefined,
+            { authorization: requestOptions?.authorization ?? '' },
             existenceCall.args as unknown as Record<string, string>
           ).catch((error) => { throw error }) as { price: number, active: boolean, visible: boolean }
 
@@ -76,11 +72,11 @@ export class SubscriptionService {
 
     await this.networkProvider.doHttpRequest(
       '8000',
-      'accounting/wallets',
+      `accounting/wallets/${requestArgs.walletUuid}`,
       'PUT',
+      { authorization: requestOptions?.authorization ?? '' },
       undefined,
-      { uuid: wallet.uuid },
-      { funds: wallet.price - removeAmount }
+      { funds: removeAmount }
     ).catch((error) => { throw error }) as Record<string, string | boolean | number>
 
     const createdEntity: SubscriptionEntity = {

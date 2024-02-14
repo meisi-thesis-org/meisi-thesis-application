@@ -48,7 +48,7 @@ export class ChapterController {
         designation: request.body.designation,
         description: request.body.description
       }
-      const book = await this.service.createChapter(createChapterRequest);
+      const book = await this.service.createChapter(createChapterRequest, { authorization: request.headers.authorization ?? '' });
       return response.status(201).json(book);
     } catch (error: any) {
       return response.status(error.getHttpCode()).json()

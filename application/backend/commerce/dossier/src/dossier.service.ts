@@ -43,7 +43,8 @@ export class DossierService {
   }
 
   public async createDossier (
-    createDossierRequest: CreateDossierRequest
+    createDossierRequest: CreateDossierRequest,
+    createDosserOptions?: Record<string, string>
   ): Promise<DossierDTO> {
     const foundDossier = await this.repository
       .findDossierByUserUuid(createDossierRequest.userUuid)
@@ -54,7 +55,8 @@ export class DossierService {
     await this.networkProvider.doHttpRequest(
       '8000',
       `security/users/${createDossierRequest.userUuid}`,
-      'GET'
+      'GET',
+      { authorization: createDosserOptions?.authorization ?? '' }
     )
 
     const createdDossier: DossierEntity = {

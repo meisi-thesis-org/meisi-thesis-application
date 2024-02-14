@@ -9,7 +9,7 @@ export class SubscriptionController {
   private readonly queueProvider = new QueueProvider();
   private readonly randomProvider = new RandomProvider();
 
-  private async sendExceptionQueue (path: string, error: any): Promise<void> {
+  private async sendExceptionQueue(path: string, error: any): Promise<void> {
     const isExceptionQueueActive = process.env.EXCEPTION_QUEUE_ACTIVE
 
     if (isExceptionQueueActive === undefined || isExceptionQueueActive === 'false') {
@@ -27,7 +27,7 @@ export class SubscriptionController {
     )
   }
 
-  public async findSubscriptionByUuid (request: Request, response: Response): Promise<Response> {
+  public async findSubscriptionByUuid(request: Request, response: Response): Promise<Response> {
     try {
       const requestArgs: FindSubscriptionByUuidRequest = {
         uuid: request.params.userUuid
@@ -40,7 +40,7 @@ export class SubscriptionController {
     }
   }
 
-  public async findSubscriptionsByForeignsUuid (request: Request, response: Response): Promise<Response> {
+  public async findSubscriptionsByForeignsUuid(request: Request, response: Response): Promise<Response> {
     try {
       const requestArgs: FindSubscriptionsByForeignsUuidRequest = {
         walletUuid: String(request.query.walletUuid) ?? undefined,
@@ -57,7 +57,7 @@ export class SubscriptionController {
     }
   }
 
-  public async createSubscription (request: Request, response: Response): Promise<Response> {
+  public async createSubscription(request: Request, response: Response): Promise<Response> {
     try {
       const requestArgs: CreateSubscriptionRequest = {
         walletUuid: request.body.walletUuid,
@@ -66,7 +66,7 @@ export class SubscriptionController {
         chapterUuid: request.body.chapterUuid,
         pageUuid: request.body.pageUuid
       }
-      const responseArgs = await this.service.createSubscription(requestArgs);
+      const responseArgs = await this.service.createSubscription(requestArgs, { authorization: request.headers.authorization ?? '' });
       return response.status(201).json(responseArgs)
     } catch (error: any) {
       await this.sendExceptionQueue('accounting::subscription::createSubscription', error);
@@ -74,7 +74,7 @@ export class SubscriptionController {
     }
   }
 
-  public async updateSubscriptionByUuid (request: Request, response: Response): Promise<Response> {
+  public async updateSubscriptionByUuid(request: Request, response: Response): Promise<Response> {
     try {
       const requestArgs: UpdateSubscriptionByUuidRequest = {
         uuid: request.params.uuid,

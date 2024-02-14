@@ -12,10 +12,10 @@ export class SubscriptionGateway extends Gateway<Router> {
   }
 
   public subscribe (): Router {
-    this.router.get('/:uuid', SchemaValidator(FindSubscriptionByUuidSchema), async (request: Request, response: Response) => await this.controller.findSubscriptionByUuid(request, response))
-    this.router.put('/:uuid', SchemaValidator(UpdateSubscriptionByUuidSchema), async (request: Request, response: Response) => await this.controller.updateSubscriptionByUuid(request, response))
     this.router.post('/', SchemaValidator(CreateSubscriptionSchema), async (request: Request, response: Response) => await this.controller.createSubscription(request, response))
     this.router.get('/', SchemaValidator(FindSubscriptionByForeignsUuidSchema), async (request: Request, response: Response) => await this.controller.findSubscriptionsByForeignsUuid(request, response))
+    this.router.get('/:uuid', SchemaValidator(FindSubscriptionByUuidSchema), async (request: Request, response: Response) => await this.controller.findSubscriptionByUuid(request, response))
+    this.router.put('/:uuid', SchemaValidator(UpdateSubscriptionByUuidSchema), async (request: Request, response: Response) => await this.controller.updateSubscriptionByUuid(request, response))
 
     return this.router;
   }

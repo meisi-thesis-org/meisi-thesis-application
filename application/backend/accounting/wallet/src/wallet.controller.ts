@@ -58,7 +58,7 @@ export class WalletController {
       const requestArgs: CreateWalletRequest = {
         userUuid: request.body.userUuid
       }
-      const responseArgs = await this.service.createWallet(requestArgs);
+      const responseArgs = await this.service.createWallet(requestArgs, { authorization: request.headers.authorization ?? '' });
       return response.status(201).json(responseArgs)
     } catch (error: any) {
       await this.sendExceptionQueue('accounting::wallet::createWallet', error);

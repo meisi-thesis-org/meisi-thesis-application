@@ -46,7 +46,8 @@ export class ChapterService {
   }
 
   public async createChapter (
-    createChapterRequest: CreateChapterRequest
+    createChapterRequest: CreateChapterRequest,
+    requestOptions?: Record<string, string>
   ): Promise<ChapterDTO> {
     const foundEntity = await this.repository
       .findChapterByProps(
@@ -61,10 +62,9 @@ export class ChapterService {
 
     await this.networkProvider.doHttpRequest(
       '8000',
-      'commerce/books',
+      `commerce/books/${createChapterRequest.bookUuid}`,
       'GET',
-      undefined,
-      { uuid: createChapterRequest.bookUuid }
+      { authorization: requestOptions?.authorization ?? '' }
     )
 
     const toCreateChapter: ChapterEntity = {

@@ -34,7 +34,7 @@ export class WalletService {
     return walletMapper(foundEntity);
   }
 
-  public async createWallet (requestArgs: CreateWalletRequest): Promise<WalletDTO> {
+  public async createWallet (requestArgs: CreateWalletRequest, requestOptions?: Record<string, string>): Promise<WalletDTO> {
     const foundEntity = await this.repository
       .findWalletByUserUuid(requestArgs)
       .catch(() => { throw new InternalServerException(); })
@@ -42,7 +42,7 @@ export class WalletService {
     if (foundEntity !== undefined) throw new ConflictException();
 
     await this.networkProvider
-      .doHttpRequest('8000', `security/users/${requestArgs.userUuid}`, 'GET')
+      .doHttpRequest('8000', `security/users/${requestArgs.userUuid}`, 'GET', { authorization: requestOptions?.authorization ?? '' })
       .catch((error) => { throw error })
 
     const createdEntity: WalletEntity = {
@@ -69,10 +69,13 @@ export class WalletService {
 
     if (foundEntity === undefined) throw new NonFoundException();
 
+    if(requestArgs.funds && requestArgs.funds > foundEntity.funds) throw new BadRequestException();
+    const newFunds = foundEntity.funds - (requestArgs.funds ?? 0);
+
     const updatedEntity: WalletEntity = {
       uuid: foundEntity.uuid,
       userUuid: foundEntity.userUuid,
-      funds: requestArgs.funds ?? foundEntity.funds,
+      funds: newFunds,
       active: requestArgs.active ?? foundEntity.active,
       visible: requestArgs.visible ?? foundEntity.visible,
       createdAt: foundEntity.createdAt,

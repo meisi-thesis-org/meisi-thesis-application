@@ -23,7 +23,9 @@ export class PageService {
     return pageMapper(foundEntity)
   }
 
-  public async findPagesByChapterUuid(requestArgs: FindPageByChapterUuidRequest): Promise<PageDTO[]> {
+  public async findPagesByChapterUuid(
+    requestArgs: FindPageByChapterUuidRequest
+  ): Promise<PageDTO[]> {
     const foundEntities = await this.repository
       .findPagesByChapterUuid(requestArgs)
       .catch(() => { throw new InternalServerException(); })
@@ -33,11 +35,15 @@ export class PageService {
     return foundEntities.filter((foundEntity) => pageMapper(foundEntity))
   }
 
-  public async createPage(requestArgs: CreatePageRequest): Promise<PageDTO> {
+  public async createPage(
+    requestArgs: CreatePageRequest,
+    requestOptions?: Record<string, string>
+    ): Promise<PageDTO> {
     await this.networkProvider.doHttpRequest(
       '8000', 
       `commerce/chapters/${requestArgs.chapterUuid}`, 
-      'GET'
+      'GET',
+      { authorization: requestOptions?.authorization ?? '' }
     )
 
     const createdEntity: PageEntity = {

@@ -13,7 +13,7 @@ export class BookService {
   private readonly networkProvider: NetworkProvider = new NetworkProvider();
   private readonly randomProvider: RandomProvider = new RandomProvider();
 
-  public async findBooksByDossierUuid (
+  public async findBooksByDossierUuid(
     findBooksByDossierUuidRequest: FindBooksByDossierUuidRequest
   ): Promise<BookDTO[]> {
     const foundBooks = await this.repository
@@ -31,7 +31,7 @@ export class BookService {
     return mappedBooks;
   }
 
-  public async findBookByUuid (
+  public async findBookByUuid(
     findBookByUuidRequest: FindBookByUuidRequest
   ): Promise<BookDTO> {
     const foundBook = await this.repository
@@ -45,8 +45,9 @@ export class BookService {
     return bookMapper(foundBook);
   }
 
-  public async createBook (
-    createBookRequest: CreateBookRequest
+  public async createBook(
+    createBookRequest: CreateBookRequest,
+    options?: Record<string, string>
   ): Promise<BookDTO> {
     const foundBook = await this.repository
       .findBookByProps(
@@ -63,6 +64,7 @@ export class BookService {
       '8000',
       `commerce/dossiers/${createBookRequest.dossierUuid}`,
       'GET',
+      { authorization: options?.authorization ?? '' }
     )
 
     const toCreateBook: BookEntity = {
@@ -83,7 +85,7 @@ export class BookService {
     return bookMapper(toCreateBook);
   }
 
-  public async updateBookByUuid (
+  public async updateBookByUuid(
     updateBookByUuidRequest: UpdateBookByUuidRequest
   ): Promise<BookDTO> {
     const foundBook = await this.repository

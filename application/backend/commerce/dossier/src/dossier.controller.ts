@@ -43,7 +43,7 @@ export class DossierController {
         userUuid: request.body.userUuid,
         designation: request.body.designation
       }
-      const dossier = await this.service.createDossier(createDossierRequest);
+      const dossier = await this.service.createDossier(createDossierRequest, { authorization: request.headers.authorization! });
       return response.status(201).json(dossier);
     } catch (error: any) {
       return response.status(error.getHttpCode()).json()

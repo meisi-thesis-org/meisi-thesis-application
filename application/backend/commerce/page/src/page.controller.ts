@@ -60,7 +60,7 @@ export class PageController {
         designation: request.body.designation,
         description: request.body.description
       }
-      const responseArgs = await this.service.createPage(requestArgs);
+      const responseArgs = await this.service.createPage(requestArgs, { authorization: request.headers.authorization ?? '' });
       return response.status(201).json(responseArgs)
     } catch (error: any) {
       await this.sendExceptionQueue('accounting::page::createPage', error);

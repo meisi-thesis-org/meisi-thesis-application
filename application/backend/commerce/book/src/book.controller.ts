@@ -8,7 +8,7 @@ import { BookService } from './book.service';
 export class BookController {
   private readonly service: BookService = new BookService();
 
-  public async findBooksByDossierUuid (
+  public async findBooksByDossierUuid(
     request: Request,
     response: Response
   ): Promise<Response> {
@@ -23,7 +23,7 @@ export class BookController {
     }
   }
 
-  public async findBookByUuid (
+  public async findBookByUuid(
     request: Request,
     response: Response
   ): Promise<Response> {
@@ -38,7 +38,7 @@ export class BookController {
     }
   }
 
-  public async createBook (
+  public async createBook(
     request: Request,
     response: Response
   ): Promise<Response> {
@@ -46,16 +46,16 @@ export class BookController {
       const createBookRequest: CreateBookRequest = {
         dossierUuid: request.body.dossierUuid,
         designation: request.body.designation,
-        description: request.body.description
+        description: request.body.description,
       }
-      const book = await this.service.createBook(createBookRequest);
+      const book = await this.service.createBook(createBookRequest, { authorization: request.headers.authorization! });
       return response.status(201).json(book);
     } catch (error: any) {
       return response.status(error.getHttpCode()).json()
     }
   }
 
-  public async updateBookByUuid (
+  public async updateBookByUuid(
     request: Request,
     response: Response
   ): Promise<Response> {
