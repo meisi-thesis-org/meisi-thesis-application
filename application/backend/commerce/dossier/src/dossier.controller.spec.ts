@@ -23,6 +23,7 @@ describe('DossierController', () => {
   const randomProvider = new RandomProvider();
 
   const randomString = randomProvider.randomString(16);
+  const randomNumber = randomProvider.randomNumber();
   const randomUuid = randomProvider.randomUUID();
   const randomDateBirth = new Date().toISOString();
 
@@ -30,6 +31,7 @@ describe('DossierController', () => {
     uuid: randomUuid,
     userUuid: randomUuid,
     designation: randomString,
+    price: randomNumber,
     visible: true,
     active: true,
     createdAt: randomDateBirth,
@@ -89,7 +91,8 @@ describe('DossierController', () => {
       requestMock.body = {
         ...requestMock.body,
         userUuid: 'dummyUserUuid',
-        designation: 'dummyDesignation'
+        designation: 'dummyDesignation',
+        price: randomNumber,
       }
     })
 

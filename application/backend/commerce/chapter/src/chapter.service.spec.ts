@@ -17,6 +17,7 @@ describe('ChapterService', () => {
   const randomProvider = new RandomProvider();
 
   const randomString = randomProvider.randomString(16);
+  const randomNumber = randomProvider.randomNumber();
   const randomUuid = randomProvider.randomUUID();
   const randomDateBirth = new Date().toISOString();
 
@@ -25,6 +26,7 @@ describe('ChapterService', () => {
     bookUuid: randomUuid,
     designation: randomString,
     description: randomString,
+    price: randomNumber,
     visible: true,
     active: true,
     createdAt: randomDateBirth,
@@ -77,7 +79,8 @@ describe('ChapterService', () => {
       return await instance.createChapter({
         bookUuid: randomUuid,
         designation: randomString,
-        description: randomString
+        description: randomString,
+        price: randomNumber
       })
     }
 
@@ -117,6 +120,7 @@ describe('ChapterService', () => {
         uuid: randomUuid,
         designation: randomString,
         description: randomString,
+        price: randomNumber,
         visible: true,
         active: true
       })

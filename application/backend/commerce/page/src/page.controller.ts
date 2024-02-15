@@ -58,7 +58,8 @@ export class PageController {
       const requestArgs: CreatePageRequest = {
         chapterUuid: request.body.chapterUuid,
         designation: request.body.designation,
-        description: request.body.description
+        description: request.body.description,
+        price: request.body.price
       }
       const responseArgs = await this.service.createPage(requestArgs, { authorization: request.headers.authorization ?? '' });
       return response.status(201).json(responseArgs)
@@ -74,6 +75,7 @@ export class PageController {
         uuid: request.params.uuid,
         designation: request.body.designation,
         description: request.body.description,
+        price: request.body.price,
         visible: request.body.visible,
         active: request.body.active
       }

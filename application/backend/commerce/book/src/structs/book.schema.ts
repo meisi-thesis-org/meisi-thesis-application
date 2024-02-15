@@ -14,7 +14,8 @@ const CreateBookSchema = z.object({
   body: z.object({
     dossierUuid: z.string(),
     designation: z.string(),
-    description: z.string()
+    description: z.string(),
+    price: z.number()
   })
 })
 const UpdateBookByUuidSchema = z.object({
@@ -24,6 +25,7 @@ const UpdateBookByUuidSchema = z.object({
   body: z.object({
     designation: z.string().optional(),
     description: z.string().optional(),
+    price: z.number().optional(),
     visible: z.boolean().optional(),
     active: z.boolean().optional()
   })

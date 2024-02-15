@@ -21,6 +21,7 @@ export class PageStateRepository implements PageRepository {
       if (page.uuid === entity.uuid) {
         page.designation = entity.designation;
         page.description = entity.description;
+        page.price = entity.price;
         page.visible = entity.visible;
         page.active = entity.active;
       }

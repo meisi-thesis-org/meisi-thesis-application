@@ -41,7 +41,8 @@ export class DossierController {
     try {
       const createDossierRequest: CreateDossierRequest = {
         userUuid: request.body.userUuid,
-        designation: request.body.designation
+        designation: request.body.designation,
+        price: request.body.price
       }
       const dossier = await this.service.createDossier(createDossierRequest, { authorization: request.headers.authorization! });
       return response.status(201).json(dossier);

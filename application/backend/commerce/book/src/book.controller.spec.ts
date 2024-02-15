@@ -23,6 +23,7 @@ describe('BookController', () => {
   const randomProvider = new RandomProvider();
 
   const randomString = randomProvider.randomString(16);
+  const randomNumber = randomProvider.randomNumber();
   const randomUuid = randomProvider.randomUUID();
   const randomDateBirth = new Date().toISOString();
 
@@ -31,6 +32,7 @@ describe('BookController', () => {
     dossierUuid: randomUuid,
     designation: randomString,
     description: randomString,
+    price: randomNumber,
     visible: true,
     active: true,
     createdAt: randomDateBirth,
@@ -91,7 +93,8 @@ describe('BookController', () => {
         ...requestMock.body,
         dossierUuid: 'dummyUserUuid',
         designation: 'dummyDesignation',
-        description: 'dummyDescription'
+        description: 'dummyDescription',
+        price: randomNumber
       }
     })
 
@@ -121,6 +124,7 @@ describe('BookController', () => {
         ...requestMock.body,
         designation: 'dummyDesignation',
         description: 'dummyDescription',
+        price: randomNumber,
         visible: true,
         active: true
       }

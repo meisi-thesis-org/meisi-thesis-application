@@ -25,6 +25,7 @@ describe('PageController', () => {
   const randomBoolean = randomProvider.randomBoolean();
   const randomUuid = randomProvider.randomUUID();
   const randomString = randomProvider.randomString(16);
+  const randomNumber = randomProvider.randomNumber();
   const randomDateBirth = new Date().toISOString();
 
   const pageDTO: PageDTO = {
@@ -32,6 +33,7 @@ describe('PageController', () => {
     chapterUuid: randomUuid,
     designation: randomString,
     description: randomString,
+    price: randomNumber,
     active: randomBoolean,
     visible: randomBoolean,
     createdAt: randomDateBirth,
@@ -95,7 +97,8 @@ describe('PageController', () => {
         ...requestMock.body,
         chapterUuid: randomUuid,
         designation: randomString,
-        description: randomString
+        description: randomString,
+        price: randomNumber,
       }
     })
 
@@ -121,7 +124,7 @@ describe('PageController', () => {
   describe('updatePageByUuid', () => {
     beforeEach(() => {
       requestMock.params = { ...requestMock.params, uuid: randomUuid }
-      requestMock.body = { ...requestMock.body, designation: randomString, description: randomString, active: randomBoolean, visible: randomBoolean }
+      requestMock.body = { ...requestMock.body, designation: randomString, description: randomString, price: randomNumber, active: randomBoolean, visible: randomBoolean }
     })
 
     async function callUpdatePageByUuid (): Promise<Response> {

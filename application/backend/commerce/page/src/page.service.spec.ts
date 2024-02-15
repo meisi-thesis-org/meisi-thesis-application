@@ -18,6 +18,7 @@ describe('PageService', () => {
   const randomProvider = new RandomProvider();
 
   const randomBoolean = randomProvider.randomBoolean();
+  const randomNumber = randomProvider.randomNumber();
   const randomUuid = randomProvider.randomUUID();
   const randomString = randomProvider.randomString(16);
   const randomDateBirth = new Date().toISOString();
@@ -27,6 +28,7 @@ describe('PageService', () => {
     chapterUuid: randomUuid,
     designation: randomString,
     description: randomString,
+    price: randomNumber,
     active: randomBoolean,
     visible: randomBoolean,
     createdAt: randomDateBirth,
@@ -84,7 +86,8 @@ describe('PageService', () => {
       return await instance.createPage({
         chapterUuid: randomUuid,
         designation: randomString,
-        description: randomString
+        description: randomString,
+        price: randomNumber
       })
     }
 
@@ -122,6 +125,7 @@ describe('PageService', () => {
         uuid: randomUuid,
         designation: randomString,
         description: randomString,
+        price: randomNumber,
         active: randomBoolean,
         visible: randomBoolean
       })

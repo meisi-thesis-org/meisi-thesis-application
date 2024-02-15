@@ -3,6 +3,7 @@ type BookEntity = {
   readonly dossierUuid: string
   designation: string
   description: string
+  price: number
   visible: boolean
   active: boolean
   readonly createdAt: string
@@ -16,6 +17,7 @@ const bookMapper = (bookEntity: BookEntity): BookDTO => {
     dossierUuid: bookEntity.dossierUuid,
     designation: bookEntity.designation,
     description: bookEntity.description,
+    price: bookEntity.price,
     visible: bookEntity.visible,
     active: bookEntity.active,
     createdAt: bookEntity.createdAt,

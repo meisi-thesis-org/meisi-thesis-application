@@ -3,6 +3,7 @@ type ChapterEntity = {
   readonly bookUuid: string
   designation: string
   description: string
+  price: number
   visible: boolean
   active: boolean
   readonly createdAt: string
@@ -15,6 +16,7 @@ const chapterMapper = (chapterEntity: ChapterEntity): ChapterDTO => {
     bookUuid: chapterEntity.bookUuid,
     designation: chapterEntity.designation,
     description: chapterEntity.description,
+    price: chapterEntity.price,
     visible: chapterEntity.visible,
     active: chapterEntity.active,
     createdAt: chapterEntity.createdAt,

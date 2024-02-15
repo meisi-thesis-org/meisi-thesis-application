@@ -29,6 +29,7 @@ export class DossierStateRepository implements DossierRepository {
     for (const dossier of this.dossierCollection) {
       if (dossier.uuid === uuid) {
         dossier.designation = data.designation;
+        dossier.price = data.price;
         dossier.visible = data.visible;
         dossier.active = data.active;
         dossier.updatedAt = data.updatedAt;

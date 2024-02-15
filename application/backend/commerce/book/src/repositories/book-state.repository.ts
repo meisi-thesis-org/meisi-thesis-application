@@ -37,10 +37,11 @@ export class BookStateRepository implements BookRepository {
   ): Promise<BookEntity | undefined> {
     for (const book of this.bookCollection) {
       if (book.uuid === uuid) {
-        book.designation = data.designation
-        book.description = data.description
-        book.active = data.active
-        book.visible = data.visible
+        book.designation = data.designation;
+        book.description = data.description;
+        book.price = data.price;
+        book.active = data.active;
+        book.visible = data.visible;
 
         return book;
       }

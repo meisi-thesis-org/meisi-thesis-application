@@ -14,7 +14,8 @@ const CreateChapterSchema = z.object({
   body: z.object({
     bookUuid: z.string(),
     designation: z.string(),
-    description: z.string()
+    description: z.string(),
+    price: z.number()
   })
 })
 const UpdateChapterByUuidSchema = z.object({
@@ -24,6 +25,7 @@ const UpdateChapterByUuidSchema = z.object({
   body: z.object({
     designation: z.string().optional(),
     description: z.string().optional(),
+    price: z.number().optional(),
     visible: z.boolean().optional(),
     active: z.boolean().optional()
   })

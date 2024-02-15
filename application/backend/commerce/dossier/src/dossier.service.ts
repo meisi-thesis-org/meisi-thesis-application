@@ -63,6 +63,7 @@ export class DossierService {
       uuid: this.randomProvider.randomUUID(),
       userUuid: createDossierRequest.userUuid,
       designation: createDossierRequest.designation,
+      price: createDossierRequest.price,
       visible: true,
       active: true,
       createdAt: new Date().toISOString(),
@@ -87,6 +88,7 @@ export class DossierService {
 
     const toUpdateDossier: Omit<DossierEntity, 'uuid' | 'userUuid' | 'createdAt'> = {
       designation: updateDossierByUuidRequest.designation ?? foundDossier.designation,
+      price: updateDossierByUuidRequest.price ?? foundDossier.price,
       visible: updateDossierByUuidRequest.visible ?? foundDossier.visible,
       active: updateDossierByUuidRequest.active ?? foundDossier.active,
       updatedAt: new Date().toISOString()

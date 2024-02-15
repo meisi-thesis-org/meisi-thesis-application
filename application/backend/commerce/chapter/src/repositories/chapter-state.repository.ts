@@ -39,6 +39,7 @@ export class ChapterStateRepository implements ChapterRepository {
       if (chapter.uuid === uuid) {
         chapter.designation = data.designation;
         chapter.description = data.description;
+        chapter.price = data.price;
         chapter.visible = data.visible;
         chapter.active = data.active;
       }

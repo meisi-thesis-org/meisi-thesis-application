@@ -72,6 +72,7 @@ export class BookService {
       dossierUuid: createBookRequest.dossierUuid,
       designation: createBookRequest.designation,
       description: createBookRequest.description,
+      price: createBookRequest.price,
       visible: true,
       active: true,
       createdAt: new Date().toISOString(),
@@ -99,6 +100,7 @@ export class BookService {
     const toUpdateBook: Omit<BookEntity, 'uuid' | 'dossierUuid' | 'createdAt'> = {
       designation: updateBookByUuidRequest.designation ?? foundBook.designation,
       description: updateBookByUuidRequest.description ?? foundBook.description,
+      price: updateBookByUuidRequest.price ?? foundBook.price,
       visible: updateBookByUuidRequest.visible ?? foundBook.visible,
       active: updateBookByUuidRequest.active ?? foundBook.active,
       updatedAt: new Date().toISOString()

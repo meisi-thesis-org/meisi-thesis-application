@@ -46,7 +46,8 @@ export class ChapterController {
       const createChapterRequest: CreateChapterRequest = {
         bookUuid: request.body.bookUuid,
         designation: request.body.designation,
-        description: request.body.description
+        description: request.body.description,
+        price: request.body.price
       }
       const book = await this.service.createChapter(createChapterRequest, { authorization: request.headers.authorization ?? '' });
       return response.status(201).json(book);
@@ -64,6 +65,7 @@ export class ChapterController {
         uuid: request.params.uuid,
         designation: request.body.designation,
         description: request.body.description,
+        price: request.body.price,
         visible: request.body.visible,
         active: request.body.active
       }

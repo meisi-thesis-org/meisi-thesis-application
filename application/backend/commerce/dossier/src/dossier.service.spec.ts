@@ -17,6 +17,7 @@ describe('DossierService', () => {
   const randomProvider = new RandomProvider();
 
   const randomString = randomProvider.randomString(16);
+  const randomNumber = randomProvider.randomNumber();
   const randomUuid = randomProvider.randomUUID();
   const randomDateBirth = new Date().toISOString();
 
@@ -24,6 +25,7 @@ describe('DossierService', () => {
     uuid: randomUuid,
     userUuid: randomUuid,
     designation: randomString,
+    price: randomNumber,
     visible: true,
     active: true,
     createdAt: randomDateBirth,
@@ -80,7 +82,8 @@ describe('DossierService', () => {
     async function callCreateDossier (): Promise<DossierEntity> {
       return await instance.createDossier({
         userUuid: randomUuid,
-        designation: randomString
+        designation: randomString,
+        price: randomNumber,
       })
     }
 

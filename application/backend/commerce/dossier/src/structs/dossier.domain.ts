@@ -1,6 +1,7 @@
 type DossierEntity = {
   readonly uuid: string
   readonly userUuid: string
+  price: number
   designation: string
   visible: boolean
   active: boolean
@@ -13,6 +14,7 @@ const dossierMapper = (dossierEntity: DossierEntity): DossierDTO => {
   return {
     uuid: dossierEntity.uuid,
     userUuid: dossierEntity.userUuid,
+    price: dossierEntity.price,
     designation: dossierEntity.designation,
     visible: dossierEntity.visible,
     active: dossierEntity.active,

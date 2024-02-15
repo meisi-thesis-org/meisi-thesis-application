@@ -23,6 +23,7 @@ describe('ChapterController', () => {
   const randomProvider = new RandomProvider();
 
   const randomString = randomProvider.randomString(16);
+  const randomNumber = randomProvider.randomNumber();
   const randomUuid = randomProvider.randomUUID();
   const randomDateBirth = new Date().toISOString();
 
@@ -31,6 +32,7 @@ describe('ChapterController', () => {
     bookUuid: randomUuid,
     designation: randomString,
     description: randomString,
+    price: randomNumber,
     visible: true,
     active: true,
     createdAt: randomDateBirth,
@@ -91,7 +93,8 @@ describe('ChapterController', () => {
         ...requestMock.body,
         bookUuid: 'dummyBookUuid',
         designation: 'dummyDesignation',
-        description: 'dummyDescription'
+        description: 'dummyDescription',
+        price: randomNumber
       }
     })
 
@@ -121,6 +124,7 @@ describe('ChapterController', () => {
         ...requestMock.body,
         designation: 'dummyDesignation',
         description: 'dummyDescription',
+        price: randomNumber,
         visible: true,
         active: true
       }
