@@ -14,7 +14,7 @@ export class SubscriptionService {
   private readonly randomProvider: RandomProvider = new RandomProvider();
   private readonly networkProvider: NetworkProvider = new NetworkProvider();
 
-  public async findSubscriptionByUuid (requestArgs: FindSubscriptionByUuidRequest): Promise<SubscriptionDTO> {
+  public async findSubscriptionByUuid(requestArgs: FindSubscriptionByUuidRequest): Promise<SubscriptionDTO> {
     const foundEntity = await this.repository
       .findSubscriptionByUuid(requestArgs)
       .catch(() => { throw new InternalServerException(); })
@@ -24,7 +24,7 @@ export class SubscriptionService {
     return subscriptionMapper(foundEntity)
   }
 
-  public async findSubscriptionsByForeignsUuid (requestArgs: FindSubscriptionsByForeignsUuidRequest): Promise<SubscriptionDTO[]> {
+  public async findSubscriptionsByForeignsUuid(requestArgs: FindSubscriptionsByForeignsUuidRequest): Promise<SubscriptionDTO[]> {
     const foundEntities = await this.repository
       .findSubscriptionsByForeignsUuid(requestArgs)
       .catch(() => { throw new InternalServerException(); })
@@ -34,7 +34,7 @@ export class SubscriptionService {
     return foundEntities.filter((foundEntity) => subscriptionMapper(foundEntity))
   }
 
-  public async createSubscription (
+  public async createSubscription(
     requestArgs: CreateSubscriptionRequest,
     requestOptions?: Record<string, string>
   ): Promise<SubscriptionDTO> {
@@ -47,26 +47,24 @@ export class SubscriptionService {
     let removeAmount = 0;
 
     const existenceCalls = [];
-    existenceCalls.push({ condition: requestArgs.dossierUuid, path: 'commerce/dossiers', method: 'GET', args: { uuid: requestArgs.dossierUuid } })
-    existenceCalls.push({ condition: requestArgs.bookUuid, path: 'commerce/books', method: 'GET', args: { uuid: requestArgs.bookUuid } })
-    existenceCalls.push({ condition: requestArgs.chapterUuid, path: 'commerce/chapters', method: 'GET', args: { uuid: requestArgs.chapterUuid } })
-    existenceCalls.push({ condition: requestArgs.pageUuid, path: 'commerce/pages', method: 'GET', args: { uuid: requestArgs.pageUuid } })
+    existenceCalls.push({ condition: requestArgs.dossierUuid, path: `commerce/dossiers/${requestArgs.dossierUuid}`, method: 'GET' })
+    existenceCalls.push({ condition: requestArgs.bookUuid, path: `commerce/books/${requestArgs.bookUuid}`, method: 'GET' })
+    existenceCalls.push({ condition: requestArgs.chapterUuid, path: `commerce/chapters/${requestArgs.chapterUuid}`, method: 'GET' })
+    existenceCalls.push({ condition: requestArgs.pageUuid, path: `commerce/pages/${requestArgs.pageUuid}`, method: 'GET' })
 
     for (const existenceCall of existenceCalls) {
-      console.log(existenceCall.condition)
       if (existenceCall.condition !== undefined) {
         const responseArgs = await this.networkProvider
           .doHttpRequest(
             '8000',
             existenceCall.path,
             existenceCall.method as 'POST' | 'GET' | 'POST',
-            { authorization: requestOptions?.authorization ?? '' },
-            existenceCall.args as unknown as Record<string, string>
-          ).catch((error) => { throw error }) as { price: number, active: boolean, visible: boolean }
+            { authorization: requestOptions?.authorization ?? '' }
+          ).catch((error) => { throw error }) as any
 
-        if (!responseArgs.active || !responseArgs.visible) throw new BadRequestException();
+        if (!responseArgs.data.active || !responseArgs.data.visible) throw new BadRequestException();
 
-        removeAmount += responseArgs.price;
+        removeAmount += responseArgs.data.price;
       }
     }
 
@@ -77,7 +75,7 @@ export class SubscriptionService {
       { authorization: requestOptions?.authorization ?? '' },
       undefined,
       { funds: removeAmount }
-    ).catch((error) => { throw error }) as Record<string, string | boolean | number>
+    ).catch((error) => { throw error }) as any
 
     const createdEntity: SubscriptionEntity = {
       uuid: this.randomProvider.randomUUID(),
@@ -99,7 +97,7 @@ export class SubscriptionService {
     return subscriptionMapper(createdEntity);
   }
 
-  public async updateSubscriptionByUuid (requestArgs: UpdateSubscriptionByUuidRequest): Promise<SubscriptionDTO> {
+  public async updateSubscriptionByUuid(requestArgs: UpdateSubscriptionByUuidRequest): Promise<SubscriptionDTO> {
     const foundEntity = await this.repository
       .findSubscriptionByUuid({ uuid: requestArgs.uuid })
       .catch(() => { throw new InternalServerException(); })

@@ -48,7 +48,7 @@ export class WalletService {
     const createdEntity: WalletEntity = {
       uuid: this.randomProvider.randomUUID(),
       userUuid: requestArgs.userUuid,
-      funds: 0,
+      funds: 999999,
       active: true,
       visible: true,
       createdAt: this.randomProvider.randomDateToIsoString(),
@@ -63,12 +63,14 @@ export class WalletService {
   }
 
   public async updateWalletByUuid (requestArgs: UpdateWalletByUuidRequest): Promise<WalletDTO> {
+    console.log("hello")
     const foundEntity = await this.repository
       .findWalletByUuid({ uuid: requestArgs.uuid })
       .catch(() => { throw new InternalServerException(); })
 
     if (foundEntity === undefined) throw new NonFoundException();
 
+    console.log(requestArgs)
     if(requestArgs.funds && requestArgs.funds > foundEntity.funds) throw new BadRequestException();
     const newFunds = foundEntity.funds - (requestArgs.funds ?? 0);
 
