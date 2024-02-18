@@ -3,16 +3,8 @@
         <div id="wrapper__inner">
             <Navbar />
             <div id="wrapper__inner--content">
-                <Banner 
-                    :is-content-enabled="isActive" 
-                    :is-content-visible="isVisible" 
-                    :header-content="book?.designation!"
-                    :sub-header-content="subHeaderContent" :is-header-editable="true"
-                    @editable-control-update="(data: string) => updateBook({ designation: data })"
-                    @editable-field-update="(data: string) => updateBook({ description: data })"
-                    @toggle-visibility="(data: boolean) => updateBook({ visible: data })"
-                    @toggle-activity="(data: boolean) => updateBook({ active: data })" 
-                    @toggle-lock="() => toggleSubscription()"/>
+                <Banner :header-content="book?.designation ?? ''"  :icons="bannerIcons" :groups="bannerGroups"
+                    :color="'light-colorized'" :is-editable="isProducer" :on-blur="(data: string) => updateBook({ designation: data })"  />
                 <div id="wrapper__inner--content__box">
                     <div id="wrapper__inner--content__box--row">
                         <Typography :content="'Chapters'" :segment="'designation'" />
@@ -43,6 +35,8 @@ import { useRoute, useRouter } from 'vue-router';
 import { usePermission } from "@/composables/usePermission";
 import { useSubscription } from "@/stores/useSubscription";
 import { useWallet } from "@/stores/useWallet";
+import type { BannerGroupProps } from "@/types/Banner";
+import type { IconProps } from "@/types/Icon";
 
 const route = useRoute();
 const router = useRouter();
@@ -55,11 +49,21 @@ const { books } = storeToRefs(useBookStore);
 const { chapters } = storeToRefs(useChapterStore);
 const { subscriptions } = storeToRefs(useSubscriptionStore);
 const { wallet } = storeToRefs(useWalletStore);
-const { isProducer } = usePermission();
+const { isProducer, isConsumer, isSubscribed } = usePermission();
 
 const book = computed(() => books.value.find((book) => book.uuid === route.params.bookUuid))
 
-const subHeaderContent = computed(() => book.value?.description ?? '')
+const bannerIcons = computed<Array<IconProps & { isVisible: boolean }>>(() => ([
+    { name: 'lock', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isConsumer.value && !isSubscribed.value && isActive.value && isVisible.value), onClick: () => toggleSubscription() },
+    { name: 'unlock', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isConsumer.value && isSubscribed.value && isActive.value && isVisible.value), onClick: () => toggleSubscription() },
+    { name: 'watcher', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && !isVisible.value), onClick: () => updateBook({ visible: true }) },
+    { name: 'watcher-off', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && isVisible.value), onClick: () => updateBook({ visible: false }) },
+    { name: 'trashcan', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value), onClick: () => updateBook({ active: false }) },
+]))
+const bannerGroups = computed<Array<BannerGroupProps>>(() => [
+    { type: 'editableControl', content: book.value?.description ?? '', contentType: 'text', maxLength: '60', color: "light-colorized", isEditable: isProducer.value, onBlur: (description: string) => updateBook({ description }) },
+    { type: 'editableControl', content: book.value?.price ?? 0, contentType: 'number', designation: 'Fee: ', color: "light-colorized", isEditable: isProducer.value, onBlur: (price: number) => updateBook({ price }) },
+])
 
 const isVisible = computed(() => {
     if (book.value === undefined) return false;
@@ -71,7 +75,7 @@ const isActive = computed(() => {
     return book.value && book.value.active;
 })
 
-const updateBook = async (data: Record<string, string | boolean>) => {
+const updateBook = async (data: Record<string, string | boolean | number>) => {
     try {
         isLoading.value = !isLoading.value;
         await useBookStore.updateBookByUuid(book.value!.uuid, data);
@@ -88,6 +92,7 @@ const createChapter = async () => {
             bookUuid: book.value!.uuid,
             designation: `Chapter #${chapters.value?.length}`,
             description: '',
+            price: 0
         })
         isLoading.value = !isLoading.value;
     } catch (error) {

@@ -30,7 +30,7 @@ export const useBook = defineStore("books", () => {
         }
     }
 
-    const createBook = async (data: Record<string, string>) => {
+    const createBook = async (data: Record<string, string | number>) => {
         try {
             const response = await createRequest<BookEntity>('commerce/books', 'POST', data);
             state.value = [...state.value, response.data]

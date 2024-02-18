@@ -3,18 +3,8 @@
         <div id="wrapper__inner">
             <Navbar />
             <div id="wrapper__inner--content">
-                <Banner 
-                    :is-content-enabled="isActive" 
-                    :is-content-visible="isVisible"
-                    :header-content="chapter?.designation!" 
-                    :sub-header-content="subHeaderContent"
-                    :is-header-editable="true"
-                    @editable-control-update="(data: string) => updateChapter({ designation: data })"
-                    @editable-field-update="(data: string) => updateChapter({ description: data })"
-                    @toggle-visibility="(data: boolean) => updateChapter({ visible: data })"
-                    @toggle-activity="(data: boolean) => updateChapter({ active: data })" 
-                    @toggle-lock="() => toggleSubscription()" 
-                />
+                <Banner :header-content="chapter?.designation ?? ''"  :icons="bannerIcons" :groups="bannerGroups"
+                    :color="'light-colorized'" :is-editable="false" />
                 <div id="wrapper__inner--content__box">
                     <div id="wrapper__inner--content__box--row">
                         <Typography :content="'Pages'" :segment="'designation'" />
@@ -45,6 +35,8 @@ import { useRoute, useRouter } from 'vue-router';
 import { usePermission } from "@/composables/usePermission";
 import { useSubscription } from "@/stores/useSubscription";
 import { useWallet } from "@/stores/useWallet";
+import type { IconProps } from "@/types/Icon";
+import type { BannerGroupProps } from "@/types/Banner";
 
 const route = useRoute();
 const router = useRouter();
@@ -57,9 +49,21 @@ const { chapters } = storeToRefs(useChapterStore);
 const { pages } = storeToRefs(usePageStore);
 const { subscriptions } = storeToRefs(useSubscriptionStore);
 const { wallet } = storeToRefs(useWalletStore);
-const { isProducer } = usePermission();
+const { isProducer, isConsumer, isSubscribed } = usePermission();
 
 const chapter = computed(() => chapters.value.find((chapter) => chapter.uuid === route.params.chapterUuid))
+
+const bannerIcons = computed<Array<IconProps & { isVisible: boolean }>>(() => ([
+    { name: 'lock', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isConsumer.value && !isSubscribed.value && isActive.value && isVisible.value), onClick: () => toggleSubscription() },
+    { name: 'unlock', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isConsumer.value && isSubscribed.value && isActive.value && isVisible.value), onClick: () => toggleSubscription() },
+    { name: 'watcher', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && !isActive.value), onClick: () => updateChapter({ visible: false }) },
+    { name: 'watcher-off', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && isActive.value), onClick: () => updateChapter({ visible: true }) },
+    { name: 'trashcan', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value), onClick: () => updateChapter({ active: false }) },
+]))
+const bannerGroups = computed<Array<BannerGroupProps>>(() => [
+    { type: 'editableField', content: chapter.value?.designation ?? '', contentType: 'text', maxLength: '50', color: "light-colorized", isEditable: isProducer.value, onBlur: (designation: string) => updateChapter({ designation }) },
+    { type: 'editableControl', content: chapter.value?.price ?? 0, contentType: 'number', color: "light-colorized", isEditable: isProducer.value, onBlur: (price: number) => updateChapter({ price }) },
+])
 
 const isVisible = computed(() => {
     if (chapter.value === undefined) return false;
@@ -71,7 +75,7 @@ const isActive = computed(() => {
     return chapter.value && chapter.value.active;
 })
 
-const updateChapter = async (data: Record<string, string | boolean>) => {
+const updateChapter = async (data: Record<string, string | boolean | number>) => {
     try {
         isLoading.value = !isLoading.value;
         await useChapterStore.updateChapterByUuid(chapter.value!.uuid, data);
@@ -88,6 +92,7 @@ const createPage = async () => {
             chapterUuid: chapter.value!.uuid,
             designation: `Page #${pages.value?.length}`,
             description: '',
+            price: 0
         })
         isLoading.value = !isLoading.value;
     } catch (error) {
@@ -117,7 +122,6 @@ const navigateToPage = (pageUuid: string) => router.push({
         pageUuid: pageUuid
     }
 })
-const subHeaderContent = computed(() => chapter.value?.description ?? '')
 </script>
     
 <style scoped lang="scss">

@@ -30,7 +30,7 @@ const usePage = defineStore("pages", () => {
         }
     }
 
-    const createPage = async (data: Record<string, string>) => {
+    const createPage = async (data: Record<string, string | number>) => {
         try {
             const response = await createRequest<PageEntity>('commerce/pages', 'POST', data);
             state.value = [...state.value, response.data]

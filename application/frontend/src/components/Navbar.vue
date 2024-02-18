@@ -46,7 +46,7 @@ const navigateAccessAcount = async () => {
 
 <style scoped lang="scss">
 #navbar {
-    height: 5rem;
+    height: 7.5rem;
 
     box-shadow: 0 0 0.05rem 0rem currentColor;
 

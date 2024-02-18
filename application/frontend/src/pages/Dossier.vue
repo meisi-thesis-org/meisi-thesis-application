@@ -3,24 +3,18 @@
         <div id="wrapper__inner">
             <Navbar />
             <div id="wrapper__inner--content">
-                <Banner 
-                    :is-content-enabled="isActive" 
-                    :is-content-visible="isVisible"
-                    :header-content="user?.username + ' dossier'" 
-                    :sub-header-content="subHeaderContent"
-                    :is-header-editable="false"
-                    @editable-field-update="(data: string) => updateDossier({ designation: data })"
-                    @toggle-visibility="(data: boolean) => updateDossier({ visible: data })"
-                    @toggle-activity="(data: boolean) => updateDossier({ active: data })"
-                    @toggle-lock="() => toggleSubscription()" />
+                <Banner :header-content="route.meta.username + ' dossier'"  :icons="bannerIcons" :groups="bannerGroups"
+                    :color="'light-colorized'" :is-editable="false" />
                 <div id="wrapper__inner--content__box">
                     <div id="wrapper__inner--content__box--row">
                         <Typography :content="'Books'" :segment="'designation'" />
                         <Icon v-if="isProducer" :name="'plus'" :color="'blue-colorized'" :height="'1.25rem'"
                             :width="'1.25rem'" :on-click="createBook" />
                     </div>
-                    <Card v-for="book of books" :designation="book.designation" :description="book.description"
+                    <div id="wrapper__inner--content__box--books">
+                        <Card v-for="book of books" :designation="book.designation" :description="book.description"
                         :is-visible="book.visible" :is-active="book.active" @click="navigateToBook(book.uuid)" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -38,18 +32,17 @@ import { usePermission } from "@/composables/usePermission";
 import { useBook } from "@/stores/useBook";
 import { useDossier } from "@/stores/useDossier";
 import { useSubscription } from "@/stores/useSubscription";
-import { useUser } from "@/stores/useUser";
 import { useWallet } from "@/stores/useWallet";
-import type { UserEntity } from "@/types/Entities";
+import type { BannerGroupProps } from "@/types/Banner";
+import type { IconProps } from "@/types/Icon";
 import { storeToRefs } from "pinia";
-import { computed, onMounted, ref } from "vue";
+import { computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 const router = useRouter();
 const route = useRoute();
 const useBookStore = useBook();
 const useDossierStore = useDossier();
-const useUserStore = useUser();
 const useSubscriptionStore = useSubscription();
 const useWalletStore = useWallet();
 const { isLoading } = useLoader();
@@ -57,20 +50,34 @@ const { dossiers } = storeToRefs(useDossierStore);
 const { books } = storeToRefs(useBookStore);
 const { wallet } = storeToRefs(useWalletStore);
 const { subscriptions } = storeToRefs(useSubscriptionStore);
-const { isProducer } = usePermission()
-
-const user = ref<UserEntity>();
-
-onMounted(async () => {
-    if (dossier.value) user.value = await useUserStore.findUserByUuid(dossier.value.userUuid);
-})
+const { isProducer, isConsumer, isSubscribed } = usePermission();
 
 const dossier = computed(() => dossiers.value.find((dossier) => dossier.uuid === route.params.dossierUuid))
-const isVisible = computed(() => (dossier.value && dossier.value.visible) ?? false)
-const isActive = computed(() => (dossier.value && dossier.value.active) ?? false)
-const subHeaderContent = computed(() => dossier.value?.designation ?? '')
 
-const updateDossier = async (data: Record<string, string | boolean>) => {
+const isVisible = computed(() => {
+    if (dossier.value === undefined) return false;
+    return dossier.value && dossier.value.visible;
+})
+
+const isActive = computed(() => {
+    if (dossier.value === undefined) return false;
+    return dossier.value && dossier.value.active;
+})
+
+const bannerIcons = computed<Array<IconProps & { isVisible: boolean }>>(() => ([
+    { name: 'lock', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isConsumer.value && !isSubscribed.value && isActive.value && isVisible.value), onClick: () => toggleSubscription() },
+    { name: 'unlock', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isConsumer.value && isSubscribed.value && isActive.value && isVisible.value), onClick: () => toggleSubscription() },
+    { name: 'watcher', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && !isVisible.value), onClick: () => updateDossier({ visible: true }) },
+    { name: 'watcher-off', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && isVisible.value), onClick: () => updateDossier({ visible: false }) },
+    { name: 'trashcan', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value), onClick: () => updateDossier({ active: false }) },
+]))
+
+const bannerGroups = computed<Array<BannerGroupProps>>(() => [
+    { type: 'editableControl', content: dossier.value?.designation ?? '', contentType: 'text', maxLength: '60', color: "light-colorized", isEditable: isProducer.value, onBlur: (designation: string) => updateDossier({ designation }) },
+    { type: 'editableControl', content: dossier.value?.price ?? 0, contentType: 'number', designation: 'Fee: ', color: "light-colorized", isEditable: isProducer.value, onBlur: (price: number) => updateDossier({ price }) },
+])
+
+const updateDossier = async (data: Record<string, string | boolean | number>) => {
     try {
         isLoading.value = !isLoading.value;
         await useDossierStore.updateDossierByUuid(dossier.value!.uuid, data);
@@ -80,6 +87,7 @@ const updateDossier = async (data: Record<string, string | boolean>) => {
         isLoading.value = !isLoading.value;
     }
 }
+
 const createBook = async () => {
     try {
         isLoading.value = !isLoading.value;
@@ -87,6 +95,7 @@ const createBook = async () => {
             dossierUuid: dossier.value!.uuid,
             designation: `Book #${books.value?.length}`,
             description: '',
+            price: 0
         })
         isLoading.value = !isLoading.value;
     } catch (error) {
@@ -117,13 +126,21 @@ const navigateToBook = (bookUuid: string) => router.push({ name: 'book', params:
                 padding: 2.5rem;
                 display: flex;
                 flex-direction: column;
-                gap: 1rem;
+                gap: 1.5rem;
 
                 &--row {
                     display: inherit;
                     flex-direction: row;
                     justify-content: space-between;
                     align-items: center;
+                }
+
+                &--books {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    gap: 1rem;
+                    flex-wrap: wrap;
                 }
             }
         }

@@ -25,7 +25,9 @@ const { theme } = useTheme();
   --light--theme--color: #fafafa;
   --blue--theme--color: #5382A1;
   --yellow--theme--color: #EF9B0F;
-  --violet--theme--color: #645394;
+  --violet--theme--color: #e81cff;
+  
+  --banner--gradient--color: linear-gradient(90deg, hsla(160, 50%, 51%, 1) 0%, hsla(247, 60%, 21%, 1) 100%);
 
   font-family: 'Quicksand', sans-serif;
 }

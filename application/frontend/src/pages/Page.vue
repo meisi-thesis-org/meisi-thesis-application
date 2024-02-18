@@ -3,16 +3,8 @@
         <div id="wrapper__inner">
             <Navbar />
             <div id="wrapper__inner--content">
-                <Banner 
-                    :is-content-enabled="isActive" 
-                    :is-content-visible="isVisible" 
-                    :header-content="page?.designation!"
-                    :is-header-editable="isProducer" 
-                    :show-editable-field="false"
-                    @editable-control-update="(data: string) => updatePage({ designation: data })"
-                    @toggle-visibility="(data: boolean) => updatePage({ visible: data })"
-                    @toggle-activity="(data: boolean) => updatePage({ active: data })"
-                    @toggle-lock="() => toggleSubscription()"/>
+                <Banner :header-content="page?.designation ?? ''"  :icons="bannerIcons" :groups="bannerGroups"
+                    :color="'light-colorized'" :is-editable="false" />
                 <EditableField :content="subHeaderContent" :max-length="'1500'" :is-editable="isProducer"
                     @on-blur="(data: string) => updatePage({ description: data })" />
             </div>
@@ -29,6 +21,8 @@ import { usePermission } from "@/composables/usePermission";
 import { usePage } from "@/stores/usePage";
 import { useSubscription } from "@/stores/useSubscription";
 import { useWallet } from "@/stores/useWallet";
+import type { BannerGroupProps } from "@/types/Banner";
+import type { IconProps } from "@/types/Icon";
 import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -39,17 +33,28 @@ const usePageStore = usePage();
 const useSubscriptionStore = useSubscription();
 const useWalletStore = useWallet();
 const { isLoading } = useLoader();
-const { isProducer } = usePermission();
 const { pages } = storeToRefs(usePageStore);
 const { subscriptions } = storeToRefs(useSubscriptionStore);
 const { wallet } = storeToRefs(useWalletStore);
+const { isProducer, isConsumer, isSubscribed } = usePermission();
 
 const page = computed(() => pages.value.find((page) => page.uuid === route.params.pageUuid))
 const isVisible = computed(() => (page.value && page.value.visible) ?? false)
 const isActive = computed(() => (page.value && page.value.active) ?? false)
 const subHeaderContent = computed(() => page.value?.description ?? '')
 
-const updatePage = async (data: Record<string, string | boolean>) => {
+const bannerIcons = computed<Array<IconProps & { isVisible: boolean }>>(() => ([
+    { name: 'lock', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isConsumer.value && !isSubscribed.value && isActive.value && isVisible.value), onClick: () => toggleSubscription() },
+    { name: 'unlock', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isConsumer.value && isSubscribed.value && isActive.value && isVisible.value), onClick: () => toggleSubscription() },
+    { name: 'watcher', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && !isActive.value), onClick: () => updatePage({ visible: false }) },
+    { name: 'watcher-off', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && isActive.value), onClick: () => updatePage({ visible: true }) },
+    { name: 'trashcan', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value), onClick: () => updatePage({ active: false }) },
+]))
+const bannerGroups = computed<Array<BannerGroupProps>>(() => [
+    { type: 'editableControl', content: page.value?.price ?? 0, contentType: 'number', color: "light-colorized", isEditable: isProducer.value, onBlur: (price: number) => updatePage({ price }) },
+])
+
+const updatePage = async (data: Record<string, string | boolean | number>) => {
     try {
         isLoading.value = !isLoading.value;
         await usePageStore.updatePageByUuid(page.value!.uuid, data);

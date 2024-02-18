@@ -30,7 +30,7 @@ export const useChapter = defineStore("chapters", () => {
         }
     }
 
-    const createChapter = async (data: Record<string, string>) => {
+    const createChapter = async (data: Record<string, string | number>) => {
         try {
             const response = await createRequest<ChapterEntity>('commerce/chapters', 'POST', data);
             state.value = [...state.value, response.data]

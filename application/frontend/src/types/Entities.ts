@@ -40,6 +40,7 @@ type DossierEntity = {
   readonly uuid: string
   readonly userUuid: string
   designation: string
+  price: number
   visible: boolean
   active: boolean
   readonly createdAt: string
@@ -51,6 +52,7 @@ type BookEntity = {
   readonly dossierUuid: string
   designation: string
   description: string
+  price: number
   visible: boolean
   active: boolean
   readonly createdAt: string
@@ -62,6 +64,7 @@ type ChapterEntity = {
   readonly bookUuid: string
   designation: string
   description: string
+  price: number
   visible: boolean
   active: boolean
   readonly createdAt: string
@@ -73,6 +76,7 @@ type PageEntity = {
   readonly chapterUuid: string
   designation: string
   description: string
+  price: number
   visible: boolean
   active: boolean
   readonly createdAt: string

@@ -1,9 +1,9 @@
 <template>
     <div id="card" :style="!definedProps.isVisible || !definedProps.isActive ? { 'opacity': 0.60 } : { 'opacity': 100 }">
         <div id="card__inner">
-            <Typography :content="definedProps.designation" :segment="'header'" :color="'blue-colorized'" />
+            <Typography :content="definedProps.designation" :segment="'header'" :color="'light-colorized'" />
             <Typography v-if="showDescription" :content="definedProps.description" :segment="'paragraph'"
-                :color="'blue-colorized'" />
+                :color="'light-colorized'" />
         </div>
     </div>
 </template>
@@ -12,28 +12,35 @@
 import type { CardProps } from '@/types/Card';
 import Typography from './Typography.vue';
 import { computed } from 'vue';
-const definedProps = withDefaults(defineProps<CardProps>(), {
-    showDescription: true
-})
+const definedProps = withDefaults(defineProps<CardProps>(), { showDescription: true })
 const showDescription = computed(() => definedProps.showDescription)
 </script>
 
 <style scoped lang="scss">
 #card {
+    background: var(--banner--gradient--color);
+
+    width: 100%;
+    height: 10rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 0 0.25rem 0 currentColor;
     cursor: pointer;
 
-    border: none;
-    box-shadow: 0 0 0.50rem 0 currentColor;
+    text-align: center;
 
     &__inner {
-        padding: 3.5rem;
         height: inherit;
+
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
-        text-align: center;
-        gap: 0.25rem;
+        justify-content: center;
+    }
+}
+
+@media(min-width: 863px) {
+    #card {
+        width: 25rem;
     }
 }
 </style>

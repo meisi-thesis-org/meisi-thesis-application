@@ -1,8 +1,8 @@
 <template>
     <div id="segmented-card">
         <div id="segmented-card__inner">
-            <Typography :content="definedProps.designation" :segment="'placeholder'" :color="'light-colorized'" />
-            <Typography :content="definedProps.description" :segment="'subHeader'" :color="'light-colorized'" />
+            <Typography :content="definedProps.designation" :segment="'designation'" :color="'light-colorized'" />
+            <Typography :content="definedProps.description" :segment="'placeholder'" :color="'light-colorized'" />
         </div>
     </div>
 </template>
@@ -16,19 +16,25 @@ const definedProps = defineProps<SegmentedCardProps>()
 
 <style scoped lang="scss">
 #segmented-card {
-    max-width: 35rem;
+    background: var(--banner--gradient--color);
+
+    max-width: 100%;
     width: 100%;
 
     border: none;
-    border-radius: 0.25rem;
-    box-shadow: 0 0 0.50rem 0 currentColor;
-
-    background-color: var(--blue--theme--color);
+    border-radius: 0.50rem;
+    box-shadow: 0 0 0.75rem 0 currentColor;
 
     &__inner {
         width: 100%;
         padding: 2.5rem;
         text-align: center;
+    }
+}
+
+@media(min-width: 812px) {
+    #segmented-card {
+        width: 25rem;
     }
 }
 </style>

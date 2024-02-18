@@ -36,7 +36,7 @@ const dossier = computed(() => dossiers.value.find((dossier) => dossier.userUuid
 const onContinue = async () => {
     try {
         isLoading.value = !isLoading.value;
-        await useDossierStore.createDossier(params.userUuid as string, '');
+        await useDossierStore.createDossier(params.userUuid as string, '', 0);
         return push({ name: "dossier", params: { userUuid: params.userUuid, dossierUuid: dossier.value?.uuid } })
     } finally {
         isLoading.value = !isLoading.value;

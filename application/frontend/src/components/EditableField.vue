@@ -1,7 +1,7 @@
 <template>
   <textarea
     v-if="definedProps.isEditable || content"
-    :maxlength="maxLength"
+    :maxlength="maxLength ?? ''"
     :placeholder="'Type something here...'" 
     @blur="$emit('onBlur', content)"
     :class="definedProps.color" 
@@ -21,6 +21,8 @@ const content = ref(definedProps.content)
 
 <style scoped lang="scss">
 #editable-field {
+  overflow:hidden;
+  resize: none;
   width: 100%;
   border: none;
   background-color: inherit;

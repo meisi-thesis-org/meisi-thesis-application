@@ -2,6 +2,7 @@ import { usePermission } from "@/composables/usePermission";
 import { useBook } from "@/stores/useBook";
 import { useDossier } from "@/stores/useDossier";
 import { useSession } from "@/stores/useSession";
+import { useUser } from "@/stores/useUser";
 import type { DossierEntity } from "@/types/Entities";
 import { storeToRefs } from "pinia";
 import type { RouteLocation, NavigationGuardNext } from "vue-router";
@@ -12,6 +13,7 @@ export const isDossierRegistered = async (
     next: NavigationGuardNext
 ) => {
     const { isProducer, isConsumer, isGuest } = usePermission(to);
+    const useUserStore = useUser();
 
     /**
      * Checks if there is a parameterized userUuid
@@ -63,6 +65,8 @@ export const isDossierRegistered = async (
     if (cachedDossier) {
         if (isConsumer.value && (!cachedDossier.active || !cachedDossier.visible)) return next({ name: "dashboard", params: { userUuid: parameterizedUserUuid } })
         if (isProducer.value && !cachedDossier.active && !to.path.includes("recover-dossier")) return next({ name: "recover-dossier", params: { userUuid: parameterizedUserUuid, dossierUuid: cachedDossier.uuid } })
+        const userUsername = (await useUserStore.findUserByUuid(cachedDossier.userUuid)).username;
+        to.meta = { username: userUsername }
         if (parameterizedUserUuid && parameterizedDossierUuid && parameterizedDossierUuid === cachedDossier.uuid) return next()
         return next({ name: "dossier", params: { userUuid: cachedDossier?.userUuid, dossierUuid: cachedDossier?.uuid } });
     }
@@ -75,6 +79,8 @@ export const isDossierRegistered = async (
         if (!foundDossier && isConsumer.value) return next({ name: "dashboard", params: { userUuid: parameterizedUserUuid } })
         useDossierStore.updateState(foundDossier!)
         await updateDossierBooksState(foundDossier!.uuid)
+        const userUsername = (await useUserStore.findUserByUuid(foundDossier.userUuid)).username;
+        to.meta = { username: userUsername }
         if (parameterizedUserUuid && parameterizedDossierUuid && parameterizedDossierUuid === foundDossier?.uuid) return next()
         return next({ name: "dossier", params: { userUuid: foundDossier?.userUuid, dossierUuid: foundDossier?.uuid } });
     })
@@ -92,11 +98,11 @@ export const isDossierRegistered = async (
      */
     if (parameterizedDossierUuid) {
         const foundDossier = await useDossierStore.findDossierByUuid(parameterizedDossierUuid)
-        await updateDossierState(foundDossier)
+        return await updateDossierState(foundDossier)
     }
 
     if (parameterizedUserUuid) {
         const foundDossier = await useDossierStore.findDossierByUserUuid(parameterizedUserUuid)
-        await updateDossierState(foundDossier)
+        return await updateDossierState(foundDossier)
     }
 }

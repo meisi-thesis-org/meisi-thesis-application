@@ -1,64 +1,64 @@
 <template>
     <div id="banner">
         <div id="banner__inner">
-            <div id="banner__inner--box">
-                <Typography v-if="!definedProps.isHeaderEditable" :content="definedProps.headerContent"
-                    :segment="'paragraph'" :color="'light-colorized'" />
-                <EditableControl v-if="definedProps.isHeaderEditable" :content="definedProps.headerContent"
-                    :color="'light-colorized'" :is-editable="isProducer"
-                    @on-blur="(data: string) => $emit('editableControlUpdate', data)" />
-                <div id="banner__inner--box__icons">
-                    <Icon v-if="isConsumer && !isSubscribed && definedProps.isContentEnabled" :on-click="() => $emit('toggleLock')" :name="'lock'" :width="'1.25rem'"
-                        :height="'1.25rem'" :color="'light-colorized'" />
-                    <Icon v-if="isConsumer && isSubscribed && definedProps.isContentEnabled" :on-click="() => $emit('toggleLock')" :name="'unlock'" :width="'1.25rem'"
-                        :height="'1.25rem'" :color="'light-colorized'" />
-                    <Icon :on-click="() => $emit('toggleVisibility', !definedProps.isContentEnabled)"
-                        v-if="isProducer && !definedProps.isContentEnabled" :name="'watcher'" :width="'1.25rem'"
-                        :height="'1.25rem'" :color="'light-colorized'" />
-                    <Icon :on-click="() => $emit('toggleVisibility', !definedProps.isContentEnabled)"
-                        v-if="isProducer && definedProps.isContentEnabled" :name="'watcher-off'" :width="'1.25rem'"
-                        :height="'1.25rem'" :color="'light-colorized'" />
-                    <Icon :on-click="() => $emit('toggleActivity', !definedProps.isContentEnabled)" v-if="isProducer"
-                        :name="'trashcan'" :width="'1.25rem'" :height="'1.25rem'" :color="'light-colorized'" />
+            <div id="banner__inner--header">
+                <Typography v-if="!definedProps.isEditable" :content="definedProps.headerContent"
+                    :color="definedProps.color" :segment="'subHeader'" />
+                <EditableControl v-if="definedProps.isEditable"  :content="definedProps.headerContent" :color="definedProps.color"
+                    :is-editable="definedProps.isEditable" :type="'text'"
+                    @on-blur="definedProps.onBlur" />
+                <div id="banner__inner--header__icons">
+                    <template v-for="icon of definedProps.icons">
+                        <Icon v-if="icon.isVisible" :height="icon.height" :width="icon.width" :color="icon.color"
+                            :name="icon.name" :on-click="icon.onClick" />
+                    </template>
                 </div>
             </div>
-            <div id="banner__inner--box">
-                <EditableField v-if="showEditableField" :max-length="'50'" :content="definedProps.subHeaderContent"
-                    :color="'light-colorized'" :is-editable="isProducer"
-                    @on-blur="(data: string) => $emit('editableFieldUpdate', data)" />
+            <div id="banner__inner--group">
+                <template v-for="group of definedProps.groups">
+                    <div id="banner__inner--group__field" v-if="group.type === 'editableField'">
+                        <Typography v-if="group.designation" :content="group.designation ?? ''" :color="group.color"
+                            :segment="'placeholder'" />
+                        <EditableField :max-length="group.maxLength" :content="group.content" :color="definedProps.color"
+                            :is-editable="group.isEditable" :type="group.contentType" @on-blur="group.onBlur" />
+                    </div>
+                </template>
+                <template v-for="group of definedProps.groups">
+                    <div id="banner__inner--group__control" v-if="group.type === 'editableControl'">
+                        <Typography v-if="group.designation" :content="group.designation ?? ''" :color="group.color"
+                            :segment="'placeholder'" />
+                        <EditableControl :content="group.content" :color="definedProps.color"
+                            :is-editable="group.isEditable" :type="group.contentType" :length="group.maxLength" @on-blur="group.onBlur" />
+                    </div>
+                </template>
+
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import EditableControl from './EditableControl.vue';
+import EditableField from './EditableField.vue';
+import Icon from './Icon.vue';
 import type { BannerProps } from '@/types/Banner';
 import Typography from './Typography.vue';
-import Icon from './Icon.vue';
-import EditableField from './EditableField.vue';
-import { usePermission } from '@/composables/usePermission';
-import EditableControl from './EditableControl.vue';
 
-const { isProducer, isConsumer, isSubscribed } = usePermission();
-
-const definedProps = withDefaults(defineProps<BannerProps>(), {
-    showEditableField: true,
-    subHeaderContent: ""
-});
-const definedEmits = defineEmits(['editableFieldUpdate', 'editableControlUpdate', 'toggleVisibility', 'toggleActivity', 'toggleLock']);
+const definedProps = defineProps<BannerProps>();
 </script>
 
 <style scoped lang="scss">
 #banner {
-    background-color: var(--blue--theme--color);
-    padding: 2.5rem;
+    background: var(--banner--gradient--color);
 
     &__inner {
+        padding: 2.5rem;
+
         display: flex;
         flex-direction: column;
-        gap: 0.75rem;
+        gap: 1.5rem;
 
-        &--box {
+        &--header {
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -70,6 +70,19 @@ const definedEmits = defineEmits(['editableFieldUpdate', 'editableControlUpdate'
                 gap: 0.50rem;
             }
         }
+
+        &--group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+
+            &__control {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 0.5rem;
+            }
+        }
     }
-}
-</style>
+}</style>
