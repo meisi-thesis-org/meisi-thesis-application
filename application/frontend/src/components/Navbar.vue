@@ -8,7 +8,7 @@
             <div id="navbar__inner--icons">
                 <Icon :name="'dashboard'" :height="'1.25rem'" :width="'1.25rem'" :on-click="navigateToDashboard" />
                 <Icon :name="'dossier'" :height="'1.25rem'" :width="'1.25rem'" :on-click="navigateToDossier" />
-                <Icon :name="'settings'" :height="'1.25rem'" :width="'1.25rem'" />
+                <Icon :name="'settings'" :height="'1.25rem'" :width="'1.25rem'" :on-click="navigateToSetting" />
                 <Icon :name="'door'" :height="'1.25rem'" :width="'1.25rem'" :on-click="navigateAccessAcount" />
                 <Divider :width="'0.025rem'" :height="'2rem'" />
                 <Icon :name="'locale'" :height="'1.25rem'" :width="'1.25rem'" />
@@ -38,6 +38,7 @@ const dossier = computed(() => dossiers.value.find((dossier) => dossier.userUuid
 
 const navigateToDashboard = async () => await router.push({ name: "dashboard", params: { userUuid: session.value!.userUuid } })
 const navigateToDossier = async () => await router.push({ name: "dossier", params: { userUuid: session.value!.userUuid, dossierUuid: dossier.value?.uuid } })
+const navigateToSetting = async () => await router.push({ name: "setting", params: { userUuid: session.value!.userUuid } })
 const navigateAccessAcount = async () => {
     await useSessionStore.signOut()
     await router.push({ name: "access-account" })
@@ -47,7 +48,6 @@ const navigateAccessAcount = async () => {
 <style scoped lang="scss">
 #navbar {
     height: 7.5rem;
-
     box-shadow: 0 0 0.05rem 0rem currentColor;
 
     &__inner {

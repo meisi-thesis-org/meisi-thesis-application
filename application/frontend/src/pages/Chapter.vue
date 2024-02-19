@@ -4,7 +4,7 @@
             <Navbar />
             <div id="wrapper__inner--content">
                 <Banner :header-content="chapter?.designation ?? ''"  :icons="bannerIcons" :groups="bannerGroups"
-                    :color="'light-colorized'" :is-editable="false" />
+                    :color="'light-colorized'" :is-editable="isProducer" :on-blur="(data: string) => updateChapter({ designation: data })" />
                 <div id="wrapper__inner--content__box">
                     <div id="wrapper__inner--content__box--row">
                         <Typography :content="'Pages'" :segment="'designation'" />
@@ -56,13 +56,14 @@ const chapter = computed(() => chapters.value.find((chapter) => chapter.uuid ===
 const bannerIcons = computed<Array<IconProps & { isVisible: boolean }>>(() => ([
     { name: 'lock', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isConsumer.value && !isSubscribed.value && isActive.value && isVisible.value), onClick: () => toggleSubscription() },
     { name: 'unlock', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isConsumer.value && isSubscribed.value && isActive.value && isVisible.value), onClick: () => toggleSubscription() },
-    { name: 'watcher', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && !isActive.value), onClick: () => updateChapter({ visible: false }) },
-    { name: 'watcher-off', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && isActive.value), onClick: () => updateChapter({ visible: true }) },
+    { name: 'watcher', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && !isVisible.value), onClick: () => updateChapter({ visible: true }) },
+    { name: 'watcher-off', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && isVisible.value), onClick: () => updateChapter({ visible: false }) },
     { name: 'trashcan', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value), onClick: () => updateChapter({ active: false }) },
 ]))
+
 const bannerGroups = computed<Array<BannerGroupProps>>(() => [
-    { type: 'editableField', content: chapter.value?.designation ?? '', contentType: 'text', maxLength: '50', color: "light-colorized", isEditable: isProducer.value, onBlur: (designation: string) => updateChapter({ designation }) },
-    { type: 'editableControl', content: chapter.value?.price ?? 0, contentType: 'number', color: "light-colorized", isEditable: isProducer.value, onBlur: (price: number) => updateChapter({ price }) },
+    { type: 'editableControl', content: chapter.value?.description ?? '', contentType: 'text', maxLength: '60', color: "light-colorized", isEditable: isProducer.value, onBlur: (description: string) => updateChapter({ description }) },
+    { type: 'editableControl', content: chapter.value?.price ?? 0, contentType: 'number', designation: 'Fee: ', color: "light-colorized", isEditable: isProducer.value, onBlur: (price: number) => updateChapter({ price }) },
 ])
 
 const isVisible = computed(() => {

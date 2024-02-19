@@ -27,6 +27,7 @@ export class DossierController {
       const updateDossierByUuidRequest: UpdateDossierByUuidRequest = {
         uuid: request.params.uuid,
         designation: request.body.designation,
+        price: request.body.price,
         visible: request.body.visible,
         active: request.body.active
       }

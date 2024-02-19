@@ -49,6 +49,7 @@ export const useBook = defineStore("books", () => {
                 if (book.uuid === response.data.uuid) {
                     book.designation = response.data.designation,
                     book.description = response.data.description,
+                    book.price = response.data.price,
                     book.active = response.data.active
                     book.visible = response.data.visible
                 }

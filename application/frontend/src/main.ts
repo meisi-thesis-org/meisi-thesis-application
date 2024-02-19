@@ -18,6 +18,7 @@ import RecoverDossier from '@/pages/RecoverDossier.vue'
 import RecoverBook from '@/pages/RecoverBook.vue'
 import RecoverChapter from '@/pages/RecoverChapter.vue'
 import RecoverPage from '@/pages/RecoverPage.vue'
+import Setting from "@/pages/Setting.vue"
 import { createPinia } from 'pinia'
 import { isDeviceRegistered } from './guards/isDeviceRegistered'
 import { isNetworkRegistered } from './guards/isNetworkRegistered'
@@ -182,6 +183,15 @@ const router = createRouter({
         requiresSession: true
       },
       beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isWalletRegistered, isSubscriptionsRegistered, isDossierRegistered, isBookRegistered, isChapterRegistered, isPageRegistered],
+    },
+    {
+      name: 'setting',
+      path: '/:userUuid/setting',
+      component: Setting,
+      meta: {
+        requiresSession: true
+      },
+      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isWalletRegistered],
     }
   ]
 })

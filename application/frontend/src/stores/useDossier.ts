@@ -45,6 +45,7 @@ export const useDossier = defineStore("dossiers", () => {
             state.value = state.value.map((dossier) => {
                 if (dossier.uuid === response.data.uuid) {
                     dossier.designation = response.data.designation
+                    dossier.price = response.data.price
                     dossier.active = response.data.active
                     dossier.visible = response.data.visible
                 }

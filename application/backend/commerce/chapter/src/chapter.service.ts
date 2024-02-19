@@ -109,13 +109,12 @@ export class ChapterService {
       updatedAt: this.randomProvider.randomDateToIsoString()
     };
 
-    const updatedChapter = await this.repository
+    await this.repository
       .updateChapterByUuid(requestArgs.uuid, toUpdateChapter)
       .catch(() => {
         throw new InternalServerException();
       })
 
-    if (updatedChapter === undefined) throw new NonFoundException()
 
     return chapterMapper(toUpdateChapter);
   }

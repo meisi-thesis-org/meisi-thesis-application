@@ -11,8 +11,6 @@ import { computed } from "vue"
 import { useRoute, type RouteLocation } from "vue-router";
 
 export const usePermission = (route: RouteLocation = useRoute()) => {
-    const { devices } = storeToRefs(useDevice());
-    const { networks } = storeToRefs(useNetwork());
     const { user } = storeToRefs(useUser());
     const { dossiers } = storeToRefs(useDossier());
     const { books } = storeToRefs(useBook());

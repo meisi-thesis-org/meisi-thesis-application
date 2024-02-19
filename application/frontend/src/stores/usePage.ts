@@ -47,9 +47,10 @@ const usePage = defineStore("pages", () => {
             const response = await createRequest<PageEntity>(`commerce/pages/${uuid}`, 'PUT', data);
             state.value = state.value.map((page) => {
                 if (page.uuid === response.data.uuid) {
-                    page.description = response.data.description
-                    page.active = response.data.active
-                    page.visible = response.data.visible
+                    page.description = response.data.description;
+                    page.price = response.data.price;
+                    page.active = response.data.active;
+                    page.visible = response.data.visible;
                 }
                 return page
             })

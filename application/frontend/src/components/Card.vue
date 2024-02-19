@@ -1,9 +1,9 @@
 <template>
     <div id="card" :style="!definedProps.isVisible || !definedProps.isActive ? { 'opacity': 0.60 } : { 'opacity': 100 }">
         <div id="card__inner">
-            <Typography :content="definedProps.designation" :segment="'header'" :color="'light-colorized'" />
+            <Typography :content="definedProps.designation" :segment="'header'" :color="'blue-colorized'" />
             <Typography v-if="showDescription" :content="definedProps.description" :segment="'paragraph'"
-                :color="'light-colorized'" />
+                :color="'blue-colorized'" />
         </div>
     </div>
 </template>
@@ -18,8 +18,6 @@ const showDescription = computed(() => definedProps.showDescription)
 
 <style scoped lang="scss">
 #card {
-    background: var(--banner--gradient--color);
-
     width: 100%;
     height: 10rem;
     border-radius: 0.25rem;
