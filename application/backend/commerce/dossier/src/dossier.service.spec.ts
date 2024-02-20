@@ -55,25 +55,25 @@ describe('DossierService', () => {
     })
   })
 
-  describe('findDossierByUserUuid', () => {
+  describe('findDossierByQuery', () => {
     async function callFindDossierByUuid (): Promise<DossierEntity> {
-      return await instance.findDossierByUserUuid({
+      return await instance.findDossierByQuery({
         userUuid: randomUuid
       })
     }
 
     it('should have returned DossierDTO', async () => {
-      vi.spyOn(DossierStateRepository.prototype, 'findDossierByUserUuid').mockResolvedValue(dossierDTO)
+      vi.spyOn(DossierStateRepository.prototype, 'findDossierByQuery').mockResolvedValue(dossierDTO)
       await expect(callFindDossierByUuid()).resolves.toEqual(dossierDTO)
     })
 
-    it('should throw a NonFoundException because Repository.findDossierByUserUuid returned undefined ', async () => {
-      vi.spyOn(DossierStateRepository.prototype, 'findDossierByUserUuid').mockResolvedValue(undefined)
+    it('should throw a NonFoundException because Repository.findDossierByQuery returned undefined ', async () => {
+      vi.spyOn(DossierStateRepository.prototype, 'findDossierByQuery').mockResolvedValue(undefined)
       await expect(callFindDossierByUuid()).rejects.toThrow(NonFoundException)
     })
 
-    it('should throw a InternalServerException because Repository.findDossierByUserUuid threw InternalServerException ', async () => {
-      vi.spyOn(DossierStateRepository.prototype, 'findDossierByUserUuid').mockRejectedValue(new InternalServerException())
+    it('should throw a InternalServerException because Repository.findDossierByQuery threw InternalServerException ', async () => {
+      vi.spyOn(DossierStateRepository.prototype, 'findDossierByQuery').mockRejectedValue(new InternalServerException())
       await expect(callFindDossierByUuid()).rejects.toThrow(InternalServerException)
     })
   })
@@ -88,29 +88,29 @@ describe('DossierService', () => {
     }
 
     it('should resolve to be defined', async () => {
-      vi.spyOn(DossierStateRepository.prototype, 'findDossierByUserUuid').mockResolvedValue(undefined)
+      vi.spyOn(DossierStateRepository.prototype, 'findDossierByQuery').mockResolvedValue(undefined)
       vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({})
       vi.spyOn(DossierStateRepository.prototype, 'createDossier').mockResolvedValue()
 
       await expect(callCreateDossier()).resolves.toBeDefined()
     })
 
-    it('should throw a NonFoundException because Repository.findDossierByUserUuid returned other than undefined ', async () => {
-      vi.spyOn(DossierStateRepository.prototype, 'findDossierByUserUuid').mockResolvedValue(dossierDTO)
+    it('should throw a NonFoundException because Repository.findDossierByQuery returned other than undefined ', async () => {
+      vi.spyOn(DossierStateRepository.prototype, 'findDossierByQuery').mockResolvedValue(dossierDTO)
       vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({})
       vi.spyOn(DossierStateRepository.prototype, 'createDossier').mockResolvedValue()
       await expect(callCreateDossier()).rejects.toThrow(ConflictException)
     })
 
-    it('should throw a InternalServerException because Repository.findDossierByUserUuid threw InternalServerException ', async () => {
-      vi.spyOn(DossierStateRepository.prototype, 'findDossierByUserUuid').mockRejectedValue(new InternalServerException())
+    it('should throw a InternalServerException because Repository.findDossierByQuery threw InternalServerException ', async () => {
+      vi.spyOn(DossierStateRepository.prototype, 'findDossierByQuery').mockRejectedValue(new InternalServerException())
       vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({})
       vi.spyOn(DossierStateRepository.prototype, 'createDossier').mockResolvedValue()
       await expect(callCreateDossier()).rejects.toThrow(InternalServerException)
     })
 
     it('should throw a InternalServerException because Repository.createDossier threw InternalServerException ', async () => {
-      vi.spyOn(DossierStateRepository.prototype, 'findDossierByUserUuid').mockResolvedValue(undefined)
+      vi.spyOn(DossierStateRepository.prototype, 'findDossierByQuery').mockResolvedValue(undefined)
       vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({})
       vi.spyOn(DossierStateRepository.prototype, 'createDossier').mockRejectedValue(new InternalServerException())
       await expect(callCreateDossier()).rejects.toThrow(InternalServerException)
@@ -140,7 +140,7 @@ describe('DossierService', () => {
       await expect(callUpdateDossierByUuid()).rejects.toThrow(NonFoundException)
     })
 
-    it('should throw a InternalServerException because Repository.findDossierByUserUuid threw InternalServerException ', async () => {
+    it('should throw a InternalServerException because Repository.findDossierByQuery threw InternalServerException ', async () => {
       vi.spyOn(DossierStateRepository.prototype, 'findDossierByUuid').mockRejectedValue(new InternalServerException())
       vi.spyOn(DossierStateRepository.prototype, 'updateDossierByUuid').mockResolvedValue(dossierDTO)
       await expect(callUpdateDossierByUuid()).rejects.toThrow(InternalServerException)
@@ -152,7 +152,7 @@ describe('DossierService', () => {
       await expect(callUpdateDossierByUuid()).rejects.toThrow(NonFoundException)
     })
 
-    it('should throw a InternalServerException because Repository.findDossierByUserUuid threw InternalServerException ', async () => {
+    it('should throw a InternalServerException because Repository.findDossierByQuery threw InternalServerException ', async () => {
       vi.spyOn(DossierStateRepository.prototype, 'findDossierByUuid').mockResolvedValue(dossierDTO)
       vi.spyOn(DossierStateRepository.prototype, 'updateDossierByUuid').mockRejectedValue(new InternalServerException())
       await expect(callUpdateDossierByUuid()).rejects.toThrow(InternalServerException)

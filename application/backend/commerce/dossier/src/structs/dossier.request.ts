@@ -1,6 +1,6 @@
 import { type DossierEntity } from './dossier.domain';
 
-type FindDossierByUserUuidRequest = Readonly<Pick<DossierEntity, 'userUuid'>>
+type FindDossierByQueryRequest = Readonly<Pick<DossierEntity, 'userUuid'>>
 type FindDossierByUuidRequest = Readonly<Pick<DossierEntity, 'uuid'>>
 type CreateDossierRequest = Readonly<Pick<DossierEntity, 'userUuid' | 'designation' | 'price'>>
 type UpdateDossierByUuidRequest =
@@ -8,7 +8,7 @@ type UpdateDossierByUuidRequest =
     Partial<Readonly<Pick<DossierEntity, 'designation' | 'price' | 'visible' | 'active'>>>
 
 export type {
-  FindDossierByUserUuidRequest,
+  FindDossierByQueryRequest,
   FindDossierByUuidRequest,
   CreateDossierRequest,
   UpdateDossierByUuidRequest

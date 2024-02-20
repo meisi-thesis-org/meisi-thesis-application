@@ -91,7 +91,7 @@ export const isDossierRegistered = async (
      * Is there a dossierUuid
      * Yes: findDossierByUuid
      * Is there a userUuid
-     * Yes: findDossierByUserUuid
+     * Yes: findDossierByQuery
      * Checs if there is a dossier
      * Check is the parameterized user is the owner
      * Yes: Redirects to register-dossier
@@ -102,7 +102,7 @@ export const isDossierRegistered = async (
     }
 
     if (parameterizedUserUuid) {
-        const foundDossier = await useDossierStore.findDossierByUserUuid(parameterizedUserUuid)
-        return await updateDossierState(foundDossier)
+        const foundDossiers = await useDossierStore.findDossierByQuery(parameterizedUserUuid)
+        return await updateDossierState(foundDossiers[0])
     }
 }

@@ -8,12 +8,12 @@ export const useDossier = defineStore("dossiers", () => {
     const { createRequest } = useFetch();
     const state = ref<Array<DossierEntity>>([])
 
-    const findDossierByUserUuid = async (userUuid: string) => {
+    const findDossierByQuery = async (userUuid?: string) => {
         try {
-            const response = await createRequest<DossierEntity>('commerce/dossiers', 'GET', undefined, { userUuid });
+            const response = await createRequest<Array<DossierEntity>>('commerce/dossiers', 'GET', undefined, { userUuid });
             return response.data;
         } catch (error) {
-            return undefined;
+            return [];
         }
     }
 
@@ -58,7 +58,7 @@ export const useDossier = defineStore("dossiers", () => {
 
     return {
         dossiers: state,
-        findDossierByUserUuid,
+        findDossierByQuery,
         findDossierByUuid,
         createDossier,
         updateDossierByUuid,

@@ -10,10 +10,11 @@ export class DossierStateRepository implements DossierRepository {
     return this.dossierCollection.find((dossierEntity) => dossierEntity.uuid === uuid)
   }
 
-  async findDossierByUserUuid(
-    userUuid: string
-  ): Promise<DossierEntity | undefined> {
-    return this.dossierCollection.find((dossierEntity) => dossierEntity.userUuid === userUuid)
+  async findDossierByQuery(
+    userUuid?: string
+  ): Promise<Array<DossierEntity>> {
+    if (!userUuid) return this.dossierCollection;
+    return this.dossierCollection.filter((dossierEntity) => dossierEntity.userUuid === userUuid);
   }
 
   async createDossier(

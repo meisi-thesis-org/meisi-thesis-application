@@ -42,7 +42,6 @@ export class UserStateRepository implements UserRepository {
     this.userEntityCollection = this.userEntityCollection.map((storedUserEntity) => {
       if (storedUserEntity.uuid === userEntity.uuid) {
         storedUserEntity = { ...userEntity }
-        console.log(storedUserEntity)
       }
 
 

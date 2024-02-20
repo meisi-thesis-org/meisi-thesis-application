@@ -3,7 +3,7 @@ import { DossierService } from './dossier.service';
 import {
   type UpdateDossierByUuidRequest,
   type CreateDossierRequest,
-  type FindDossierByUserUuidRequest,
+  type FindDossierByQueryRequest,
   type FindDossierByUuidRequest
 } from './structs/dossier.request';
 
@@ -52,13 +52,13 @@ export class DossierController {
     }
   }
 
-  async findDossierByUserUuid (request: Request, response: Response): Promise<Response> {
+  async findDossierByQuery (request: Request, response: Response): Promise<Response> {
     try {
-      const findDossierByUserUuidRequest: FindDossierByUserUuidRequest = {
-        userUuid: String(request.query.userUuid)
+      const FindDossierByQueryRequest: FindDossierByQueryRequest = {
+        userUuid: String(request.query.userUuid) ?? ''
       }
-      const dossier = await this.service.findDossierByUserUuid(findDossierByUserUuidRequest);
-      return response.status(200).json(dossier);
+      const dossiers = await this.service.findDossierByQuery(FindDossierByQueryRequest);
+      return response.status(200).json(dossiers);
     } catch (error: any) {
       return response.status(error.getHttpCode()).json()
     }

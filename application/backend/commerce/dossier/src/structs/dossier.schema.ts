@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
-const FindDossierByUserUuidSchema = z.object({
+const FindDossierByQuerySchema = z.object({
   query: z.object({
-    userUuid: z.string()
+    userUuid: z.string().optional()
   })
 })
 
@@ -33,7 +33,7 @@ const UpdateDossierByUuidSchema = z.object({
 })
 
 export {
-  FindDossierByUserUuidSchema,
+  FindDossierByQuerySchema,
   FindDossierByUuidSchema,
   CreateDossierSchema,
   UpdateDossierByUuidSchema

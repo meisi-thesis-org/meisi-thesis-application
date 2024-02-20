@@ -4,7 +4,7 @@ import { type DossierEntity, type DossierDTO, dossierMapper } from './structs/do
 import {
   type UpdateDossierByUuidRequest,
   type CreateDossierRequest,
-  type FindDossierByUserUuidRequest,
+  type FindDossierByQueryRequest,
   type FindDossierByUuidRequest
 } from './structs/dossier.request';
 import { NonFoundException } from '@meisi-thesis/application-backend-utilities-shared/src/exceptions/non-found.exception';
@@ -30,16 +30,14 @@ export class DossierService {
     return dossierMapper(foundDossier);
   }
 
-  public async findDossierByUserUuid (
-    findDossierByUserUuidRequest: FindDossierByUserUuidRequest
-  ): Promise<DossierDTO> {
-    const foundDossier = await this.repository
-      .findDossierByUserUuid(findDossierByUserUuidRequest.userUuid)
+  public async findDossierByQuery (
+    FindDossierByQueryRequest: FindDossierByQueryRequest
+  ): Promise<Array<DossierDTO>> {
+    const foundDossiers = await this.repository
+      .findDossierByQuery(FindDossierByQueryRequest.userUuid)
       .catch(() => { throw new InternalServerException(); })
 
-    if (foundDossier === undefined) throw new NonFoundException();
-
-    return dossierMapper(foundDossier);
+    return foundDossiers.map((foundDossier) => dossierMapper(foundDossier));
   }
 
   public async createDossier (
@@ -47,7 +45,7 @@ export class DossierService {
     createDosserOptions?: Record<string, string>
   ): Promise<DossierDTO> {
     const foundDossier = await this.repository
-      .findDossierByUserUuid(createDossierRequest.userUuid)
+      .findDossierByQuery(createDossierRequest.userUuid)
       .catch(() => { throw new InternalServerException(); })
 
     if (foundDossier !== undefined) throw new ConflictException();
