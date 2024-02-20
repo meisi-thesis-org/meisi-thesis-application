@@ -20,6 +20,27 @@
                             :description="''" 
                             :is-visible="subscribedDossier.visible"
                             :is-active="subscribedDossier.active" />
+                        <Typography :content="'Subscribed Books'" :segment="'designation'" />
+                        <Card v-for="subscribedBook of subscribedBooks"
+                            @click="navigateToBook(subscribedBook.uuid)" 
+                            :designation="subscribedBook.designation"
+                            :description="subscribedBook.description" 
+                            :is-visible="subscribedBook.visible"
+                            :is-active="subscribedBook.active" />
+                        <Typography :content="'Subscribed Chapters'" :segment="'designation'" />
+                        <Card v-for="subscribedChapter of subscribedChapters"
+                            @click="navigateToChapter(subscribedChapter.uuid)" 
+                            :designation="subscribedChapter.designation"
+                            :description="subscribedChapter.description" 
+                            :is-visible="subscribedChapter.visible"
+                            :is-active="subscribedChapter.active" />
+                        <Typography :content="'Subscribed Pages'" :segment="'designation'" />
+                        <Card v-for="subscribedPage of subscribedPages"
+                            @click="navigateToChapter(subscribedPage.uuid)" 
+                            :designation="subscribedPage.designation"
+                            :description="subscribedPage.description" 
+                            :is-visible="subscribedPage.visible"
+                            :is-active="subscribedPage.active" />
                     </div>
                 </div>
             </div>
@@ -32,7 +53,10 @@ import Card from "@/components/Card.vue";
 import Navbar from "@/components/Navbar.vue"
 import SegmentedCard from "@/components/SegmentedCard.vue";
 import Typography from "@/components/Typography.vue";
+import { useBook } from "@/stores/useBook";
+import { useChapter } from "@/stores/useChapter";
 import { useDossier } from "@/stores/useDossier";
+import { usePage } from "@/stores/usePage";
 import { useSession } from "@/stores/useSession";
 import { useSubscription } from "@/stores/useSubscription";
 import { useWallet } from "@/stores/useWallet";
@@ -40,6 +64,9 @@ import type { BookEntity, ChapterEntity, DossierEntity, PageEntity } from "@/typ
 import { storeToRefs } from "pinia";
 import { computed, onMounted, ref } from "vue";
 const useDossierStore = useDossier();
+const useBookStore = useBook();
+const useChapterStore = useChapter();
+const usePageStore = usePage();
 const { subscriptions } = storeToRefs(useSubscription());
 const { wallet } = storeToRefs(useWallet());
 const { dossiers } = storeToRefs(useDossierStore);
@@ -53,9 +80,9 @@ const subscribedPages = ref<Array<PageEntity>>([]);
 
 onMounted(async () => {
     const dossiersByQuery = await useDossierStore.findDossierByQuery();
-    const booksByQuery = await useBookStore.findBookByQuery();
-    const chaptersByQuery = await useChapterStore.findChapterByQuery();
-    const pagesByQuery = await usePageStore.findPageByQuery();
+    const booksByQuery = await useBookStore.findBooksByQuery();
+    const chaptersByQuery = await useChapterStore.findChaptersByQuery();
+    const pagesByQuery = await usePageStore.findPagesByQuery();
 
     for (const subscription of subscriptions.value) {
         subscribedDossiers.value.push(...dossiersByQuery.filter((dossierByQuery) => dossierByQuery.uuid === subscription.dossierUuid));

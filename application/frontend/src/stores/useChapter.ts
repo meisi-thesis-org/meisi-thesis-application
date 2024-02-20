@@ -26,7 +26,7 @@ export const useChapter = defineStore('chapters', () => {
       const response = await createRequest<ChapterEntity[]>('commerce/chapters', 'GET', undefined, { bookUuid });
       return response.data;
     } catch (error) {
-      return undefined;
+      return [];
     }
   }
 

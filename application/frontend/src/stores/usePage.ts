@@ -26,7 +26,7 @@ const usePage = defineStore('pages', () => {
       const response = await createRequest<PageEntity[]>('commerce/pages', 'GET', undefined, { chapterUuid });
       return response.data;
     } catch (error) {
-      return undefined;
+      return [];
     }
   }
 

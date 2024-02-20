@@ -9,9 +9,8 @@ export const useFetch = () => {
   axiosClient.interceptors.request.use(
     (config) => {
       const { session } = storeToRefs(useSession())
-      if(!session.value) return config;
-      
-      const token = !config.url?.includes('refresh-tokens') ? session.value.accessToken : session.value.refreshToken;
+      if (session.value === undefined) return config;
+      const token = config.url !== undefined && !config.url.includes('refresh-tokens') ? session.value.accessToken : session.value.refreshToken;
       if (token !== undefined) config.headers.Authorization = `Bearer ${token}`;
       return config;
     },
@@ -26,8 +25,8 @@ export const useFetch = () => {
       if (error.response.status === 401 && originalRequest._retry === undefined) {
         originalRequest._retry = true;
         const { refreshTokens } = useSession();
-        const isRefreshRequest = (originalRequest.url as string).includes("refresh-tokens");
-        if(isRefreshRequest === false) await refreshTokens();
+        const isRefreshRequest = (originalRequest.url as string).includes('refresh-tokens');
+        if (!isRefreshRequest) await refreshTokens();
         return await axios(originalRequest);
       }
 

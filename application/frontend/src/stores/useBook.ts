@@ -26,7 +26,7 @@ export const useBook = defineStore('books', () => {
       const response = await createRequest<BookEntity[]>('commerce/books', 'GET', undefined, { dossierUuid });
       return response.data;
     } catch (error) {
-      return undefined;
+      return [];
     }
   }
 
