@@ -2,21 +2,21 @@ import {
   type Response,
   type Request
 } from 'express'
-import { type UpdateChapterByUuidRequest, type CreateChapterRequest, type FindChapterByUuidRequest, type FindChaptersByBookUuidRequest } from './structs/chapter.request';
+import { type UpdateChapterByUuidRequest, type CreateChapterRequest, type FindChapterByUuidRequest, type FindChaptersByQueryRequest } from './structs/chapter.request';
 import { ChapterService } from './chapter.service';
 
 export class ChapterController {
   private readonly service: ChapterService = new ChapterService();
 
-  public async findChaptersByBookUuid (
+  public async findChaptersByQuery (
     request: Request,
     response: Response
   ): Promise<Response> {
     try {
-      const findChaptersByDossierUuidRequest: FindChaptersByBookUuidRequest = {
-        bookUuid: String(request.query.bookUuid)
+      const findChaptersByDossierUuidRequest: FindChaptersByQueryRequest = {
+        bookUuid: String(request.query.bookUuid) ?? ''
       }
-      const bookCollection = await this.service.findChaptersByBookUuid(findChaptersByDossierUuidRequest);
+      const bookCollection = await this.service.findChaptersByQuery(findChaptersByDossierUuidRequest);
       return response.status(200).json(bookCollection);
     } catch (error: any) {
       return response.status(error.getHttpCode()).json()

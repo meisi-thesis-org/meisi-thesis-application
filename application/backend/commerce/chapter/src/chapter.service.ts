@@ -1,6 +1,6 @@
 import { InternalServerException } from '@meisi-thesis/application-backend-utilities-shared/src/exceptions/internal-server.exception';
 import { type ChapterRepository } from './chapter.repository';
-import { type UpdateChapterByUuidRequest, type CreateChapterRequest, type FindChapterByUuidRequest, type FindChaptersByBookUuidRequest } from './structs/chapter.request';
+import { type UpdateChapterByUuidRequest, type CreateChapterRequest, type FindChapterByUuidRequest, type FindChaptersByQueryRequest } from './structs/chapter.request';
 import { type ChapterDTO, chapterMapper, type ChapterEntity } from './structs/chapter.domain';
 import { NonFoundException } from '@meisi-thesis/application-backend-utilities-shared/src/exceptions/non-found.exception';
 import { ConflictException } from '@meisi-thesis/application-backend-utilities-shared/src/exceptions/conflict.exception';
@@ -13,11 +13,11 @@ export class ChapterService {
   private readonly networkProvider: NetworkProvider = new NetworkProvider();
   private readonly randomProvider: RandomProvider = new RandomProvider();
 
-  public async findChaptersByBookUuid (
-    findChaptersByBookUuidRequest: FindChaptersByBookUuidRequest
+  public async findChaptersByQuery (
+    findChaptersByQueryRequest: FindChaptersByQueryRequest
   ): Promise<ChapterDTO[]> {
     const foundEntitys = await this.repository
-      .findChaptersByBookUuid(findChaptersByBookUuidRequest.bookUuid)
+      .findChaptersByQuery(findChaptersByQueryRequest.bookUuid)
       .catch(() => {
         throw new InternalServerException();
       })
@@ -114,7 +114,6 @@ export class ChapterService {
       .catch(() => {
         throw new InternalServerException();
       })
-
 
     return chapterMapper(toUpdateChapter);
   }

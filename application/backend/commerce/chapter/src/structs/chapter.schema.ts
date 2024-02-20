@@ -1,8 +1,8 @@
 import { z } from 'zod'
 
-const FindChaptersByBookUuidSchema = z.object({
+const FindChaptersByQuerySchema = z.object({
   query: z.object({
-    bookUuid: z.string()
+    bookUuid: z.string().optional()
   })
 })
 const FindChapterByUuidSchema = z.object({
@@ -32,7 +32,7 @@ const UpdateChapterByUuidSchema = z.object({
 })
 
 export {
-  FindChaptersByBookUuidSchema,
+  FindChaptersByQuerySchema,
   FindChapterByUuidSchema,
   CreateChapterSchema,
   UpdateChapterByUuidSchema

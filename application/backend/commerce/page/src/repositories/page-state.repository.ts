@@ -8,8 +8,9 @@ export class PageStateRepository implements PageRepository {
     return this.pages.find((page) => page.uuid === entity.uuid);
   }
 
-  public async findPagesByChapterUuid (entity: Partial<Pick<PageEntity, 'chapterUuid'>>): Promise<PageEntity[]> {
-    return this.pages.filter((page) => page.chapterUuid === entity.chapterUuid);
+  public async findPagesByQuery (entity: Partial<Pick<PageEntity, 'chapterUuid'>>): Promise<PageEntity[]> {
+    const pages = this.pages.filter((page) => page.chapterUuid === entity.chapterUuid);
+    return pages.length > 0 ? pages : this.pages;
   }
 
   public async createPage (entity: PageEntity): Promise<void> {

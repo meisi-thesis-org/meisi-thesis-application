@@ -63,27 +63,27 @@ describe('BookController', () => {
     })
   })
 
-  describe('findBooksByDossierUuid', () => {
+  describe('findBooksByQuery', () => {
     beforeEach(() => {
       requestMock.query = { ...requestMock.query, dossierUuid: 'dummyUserUuid' }
     })
 
-    async function callFindBooksByDossierUuid (): Promise<Response> {
-      return await instance.findBooksByDossierUuid(requestMock, responseMock)
+    async function callFindBooksByQuery (): Promise<Response> {
+      return await instance.findBooksByQuery(requestMock, responseMock)
     }
 
     it('should throw an exception because an error ocurred while making a service request', async () => {
-      vi.spyOn(BookService.prototype, 'findBooksByDossierUuid').mockRejectedValue({ getHttpCode: vi.fn() });
+      vi.spyOn(BookService.prototype, 'findBooksByQuery').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
 
-      await expect(callFindBooksByDossierUuid()).resolves.toEqual(new Error());
+      await expect(callFindBooksByQuery()).resolves.toEqual(new Error());
     })
 
     it('should return a collection of BookDTO', async () => {
-      vi.spyOn(BookService.prototype, 'findBooksByDossierUuid').mockResolvedValue([bookDTO]);
+      vi.spyOn(BookService.prototype, 'findBooksByQuery').mockResolvedValue([bookDTO]);
       defineResponseMock([bookDTO]);
 
-      await expect(callFindBooksByDossierUuid()).resolves.toEqual([bookDTO]);
+      await expect(callFindBooksByQuery()).resolves.toEqual([bookDTO]);
     })
   })
 

@@ -4,7 +4,7 @@ export interface PageRepository {
   findPageByUuid(
     entity: NonNullable<Pick<PageEntity, 'uuid'>>
   ): Promise<PageEntity | undefined>
-  findPagesByChapterUuid(
+  findPagesByQuery(
     entity: Partial<Pick<PageEntity, 'chapterUuid'>>
   ): Promise<PageEntity[]>
   createPage(

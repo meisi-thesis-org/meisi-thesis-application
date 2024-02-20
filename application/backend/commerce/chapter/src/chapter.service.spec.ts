@@ -56,20 +56,20 @@ describe('ChapterService', () => {
     })
   })
 
-  describe('findChaptersByBookUuid', () => {
+  describe('findChaptersByQuery', () => {
     async function callFindDossierByUuid (): Promise<ChapterEntity[]> {
-      return await instance.findChaptersByBookUuid({
+      return await instance.findChaptersByQuery({
         bookUuid: randomUuid
       })
     }
 
     it('should have returned a collection of ChapterDTO', async () => {
-      vi.spyOn(ChapterStateRepository.prototype, 'findChaptersByBookUuid').mockResolvedValue([chapterDTO])
+      vi.spyOn(ChapterStateRepository.prototype, 'findChaptersByQuery').mockResolvedValue([chapterDTO])
       await expect(callFindDossierByUuid()).resolves.toEqual([chapterDTO])
     })
 
-    it('should throw a InternalServerException because Repository.findChaptersByBookUuid threw InternalServerException ', async () => {
-      vi.spyOn(ChapterStateRepository.prototype, 'findChaptersByBookUuid').mockRejectedValue(new InternalServerException())
+    it('should throw a InternalServerException because Repository.findChaptersByQuery threw InternalServerException ', async () => {
+      vi.spyOn(ChapterStateRepository.prototype, 'findChaptersByQuery').mockRejectedValue(new InternalServerException())
       await expect(callFindDossierByUuid()).rejects.toThrow(InternalServerException)
     })
   })
@@ -139,7 +139,7 @@ describe('ChapterService', () => {
       await expect(callUpdateDossierByUuid()).rejects.toThrow(NonFoundException)
     })
 
-    it('should throw a InternalServerException because Repository.findChaptersByBookUuid threw InternalServerException ', async () => {
+    it('should throw a InternalServerException because Repository.findChaptersByQuery threw InternalServerException ', async () => {
       vi.spyOn(ChapterStateRepository.prototype, 'findChapterByUuid').mockRejectedValue(new InternalServerException())
       vi.spyOn(ChapterStateRepository.prototype, 'updateChapterByUuid').mockResolvedValue(chapterDTO)
       await expect(callUpdateDossierByUuid()).rejects.toThrow(InternalServerException)
@@ -151,7 +151,7 @@ describe('ChapterService', () => {
       await expect(callUpdateDossierByUuid()).rejects.toThrow(NonFoundException)
     })
 
-    it('should throw a InternalServerException because Repository.findChaptersByBookUuid threw InternalServerException ', async () => {
+    it('should throw a InternalServerException because Repository.findChaptersByQuery threw InternalServerException ', async () => {
       vi.spyOn(ChapterStateRepository.prototype, 'findChapterByUuid').mockResolvedValue(chapterDTO)
       vi.spyOn(ChapterStateRepository.prototype, 'updateChapterByUuid').mockRejectedValue(new InternalServerException())
       await expect(callUpdateDossierByUuid()).rejects.toThrow(InternalServerException)

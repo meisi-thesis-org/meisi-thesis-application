@@ -6,9 +6,9 @@ const FindPageByUuidSchema = z.object({
   })
 })
 
-const FindPageByChapterUuidSchema = z.object({
+const FindPagesByQuerySchema = z.object({
   query: z.object({
-    chapterUuid: z.string()
+    chapterUuid: z.string().optional()
   })
 })
 
@@ -34,4 +34,4 @@ const UpdatePageByUuidSchema = z.object({
   })
 })
 
-export { FindPageByUuidSchema, FindPageByChapterUuidSchema, CreatePageSchema, UpdatePageByUuidSchema };
+export { FindPageByUuidSchema, FindPagesByQuerySchema, CreatePageSchema, UpdatePageByUuidSchema };

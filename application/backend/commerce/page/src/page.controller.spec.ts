@@ -64,7 +64,7 @@ describe('PageController', () => {
     })
   })
 
-  describe('findPagesByChapterUuid', () => {
+  describe('findPagesByQuery', () => {
     beforeEach(() => {
       requestMock.query = {
         ...requestMock.query,
@@ -73,18 +73,18 @@ describe('PageController', () => {
     })
 
     async function callFindPagesByForeignsUuid (): Promise<Response> {
-      return await instance.findPagesByChapterUuid(requestMock, responseMock)
+      return await instance.findPagesByQuery(requestMock, responseMock)
     }
 
     it('should throw an exception because an error ocurred while making a service request', async () => {
-      vi.spyOn(PageService.prototype, 'findPagesByChapterUuid').mockRejectedValue({ getHttpCode: vi.fn() });
+      vi.spyOn(PageService.prototype, 'findPagesByQuery').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
 
       await expect(callFindPagesByForeignsUuid()).resolves.toEqual(new Error());
     })
 
     it('should return a pageDTO collection', async () => {
-      vi.spyOn(PageService.prototype, 'findPagesByChapterUuid').mockResolvedValue([pageDTO]);
+      vi.spyOn(PageService.prototype, 'findPagesByQuery').mockResolvedValue([pageDTO]);
       defineResponseMock([pageDTO]);
 
       await expect(callFindPagesByForeignsUuid()).resolves.toEqual([pageDTO]);

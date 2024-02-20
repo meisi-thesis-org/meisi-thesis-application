@@ -1,5 +1,5 @@
 import { type Request, type Response } from 'express';
-import { type FindPageByUuidRequest, type CreatePageRequest, type UpdatePageByUuidRequest, type FindPageByChapterUuidRequest } from './structs/page.request';
+import { type FindPageByUuidRequest, type CreatePageRequest, type UpdatePageByUuidRequest, type FindPagesByQueryRequest } from './structs/page.request';
 import { PageService } from './page.service';
 import { QueueProvider } from '@meisi-thesis/application-backend-utilities-shared/src/providers/queue.provider';
 import { RandomProvider } from '@meisi-thesis/application-backend-utilities-shared/src/providers/random.provider';
@@ -40,15 +40,15 @@ export class PageController {
     }
   }
 
-  public async findPagesByChapterUuid (request: Request, response: Response): Promise<Response> {
+  public async findPagesByQuery (request: Request, response: Response): Promise<Response> {
     try {
-      const requestArgs: FindPageByChapterUuidRequest = {
+      const requestArgs: FindPagesByQueryRequest = {
         chapterUuid: String(request.query.chapterUuid) ?? undefined
       }
-      const responseArgs = await this.service.findPagesByChapterUuid(requestArgs);
+      const responseArgs = await this.service.findPagesByQuery(requestArgs);
       return response.status(200).json(responseArgs)
     } catch (error: any) {
-      await this.sendExceptionQueue('accounting::page::findPagesByChapterUuid', error);
+      await this.sendExceptionQueue('accounting::page::findPagesByQuery', error);
       return response.status(error.getHttpCode()).json()
     }
   }

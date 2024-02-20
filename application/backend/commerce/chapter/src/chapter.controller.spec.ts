@@ -63,24 +63,24 @@ describe('ChapterController', () => {
     })
   })
 
-  describe('findChaptersByBookUuid', () => {
+  describe('findChaptersByQuery', () => {
     beforeEach(() => {
       requestMock.query = { ...requestMock.query, bookUuid: 'dummyBookUuid' }
     })
 
     async function callFindChaptersByDossierUuid (): Promise<Response> {
-      return await instance.findChaptersByBookUuid(requestMock, responseMock)
+      return await instance.findChaptersByQuery(requestMock, responseMock)
     }
 
     it('should throw an exception because an error ocurred while making a service request', async () => {
-      vi.spyOn(ChapterService.prototype, 'findChaptersByBookUuid').mockRejectedValue({ getHttpCode: vi.fn() });
+      vi.spyOn(ChapterService.prototype, 'findChaptersByQuery').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
 
       await expect(callFindChaptersByDossierUuid()).resolves.toEqual(new Error());
     })
 
     it('should return a collection of ChapterDTO', async () => {
-      vi.spyOn(ChapterService.prototype, 'findChaptersByBookUuid').mockResolvedValue([chapterDTO]);
+      vi.spyOn(ChapterService.prototype, 'findChaptersByQuery').mockResolvedValue([chapterDTO]);
       defineResponseMock([chapterDTO]);
 
       await expect(callFindChaptersByDossierUuid()).resolves.toEqual([chapterDTO]);

@@ -4,7 +4,7 @@ import { type BookEntity } from '../structs/book.domain';
 export class BookStateRepository implements BookRepository {
   private readonly bookCollection = new Array<BookEntity>();
 
-  public async findBookByProps(
+  public async findBookByProps (
     dossierUuid: string,
     designation: string
   ): Promise<BookEntity | undefined> {
@@ -13,25 +13,26 @@ export class BookStateRepository implements BookRepository {
     );
   }
 
-  public async findBooksByDossierUuid(
-    dossierUuid: string
+  public async findBooksByQuery (
+    dossierUuid?: string
   ): Promise<BookEntity[]> {
-    return this.bookCollection.filter((book) => book.dossierUuid === dossierUuid);
+    const foundBooks = this.bookCollection.filter((book) => book.dossierUuid === dossierUuid);
+    return foundBooks.length > 0 ? foundBooks : this.bookCollection;
   }
 
-  public async findBookByUuid(
+  public async findBookByUuid (
     uuid: string
   ): Promise<BookEntity | undefined> {
     return this.bookCollection.find((book) => book.uuid === uuid);
   }
 
-  public async createBook(
+  public async createBook (
     data: BookEntity
   ): Promise<void> {
     this.bookCollection.push(data);
   }
 
-  public async updateBookByUuid(
+  public async updateBookByUuid (
     uuid: string,
     data: Omit<BookEntity, 'uuid' | 'dossierUuid' | 'createdAt'>
   ): Promise<BookEntity | undefined> {

@@ -1,6 +1,6 @@
 import { InternalServerException } from '@meisi-thesis/application-backend-utilities-shared/src/exceptions/internal-server.exception';
 import { type BookRepository } from './book.repository';
-import { type UpdateBookByUuidRequest, type CreateBookRequest, type FindBookByUuidRequest, type FindBooksByDossierUuidRequest } from './structs/book.request';
+import { type UpdateBookByUuidRequest, type CreateBookRequest, type FindBookByUuidRequest, type FindBooksByQueryRequest } from './structs/book.request';
 import { type BookDTO, bookMapper, type BookEntity } from './structs/book.domain';
 import { NonFoundException } from '@meisi-thesis/application-backend-utilities-shared/src/exceptions/non-found.exception';
 import { ConflictException } from '@meisi-thesis/application-backend-utilities-shared/src/exceptions/conflict.exception';
@@ -13,14 +13,12 @@ export class BookService {
   private readonly networkProvider: NetworkProvider = new NetworkProvider();
   private readonly randomProvider: RandomProvider = new RandomProvider();
 
-  public async findBooksByDossierUuid(
-    findBooksByDossierUuidRequest: FindBooksByDossierUuidRequest
+  public async findBooksByQuery (
+    findBooksByQueryRequest: FindBooksByQueryRequest
   ): Promise<BookDTO[]> {
     const foundBooks = await this.repository
-      .findBooksByDossierUuid(findBooksByDossierUuidRequest.dossierUuid)
-      .catch(() => {
-        throw new InternalServerException();
-      })
+      .findBooksByQuery(findBooksByQueryRequest.dossierUuid)
+      .catch(() => { throw new InternalServerException(); })
 
     const mappedBooks = new Array<BookDTO>();
 
@@ -31,7 +29,7 @@ export class BookService {
     return mappedBooks;
   }
 
-  public async findBookByUuid(
+  public async findBookByUuid (
     findBookByUuidRequest: FindBookByUuidRequest
   ): Promise<BookDTO> {
     const foundBook = await this.repository
@@ -45,7 +43,7 @@ export class BookService {
     return bookMapper(foundBook);
   }
 
-  public async createBook(
+  public async createBook (
     createBookRequest: CreateBookRequest,
     options?: Record<string, string>
   ): Promise<BookDTO> {
@@ -86,7 +84,7 @@ export class BookService {
     return bookMapper(toCreateBook);
   }
 
-  public async updateBookByUuid(
+  public async updateBookByUuid (
     updateBookByUuidRequest: UpdateBookByUuidRequest
   ): Promise<BookDTO> {
     const foundBook = await this.repository

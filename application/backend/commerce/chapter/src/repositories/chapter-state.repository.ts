@@ -13,10 +13,11 @@ export class ChapterStateRepository implements ChapterRepository {
     );
   }
 
-  public async findChaptersByBookUuid (
-    bookUuid: string
+  public async findChaptersByQuery (
+    bookUuid?: string
   ): Promise<ChapterEntity[]> {
-    return this.chapterCollection.filter((chapter) => chapter.bookUuid === bookUuid);
+    const foundChapters = this.chapterCollection.filter((chapter) => chapter.bookUuid === bookUuid);
+    return foundChapters.length > 0 ? foundChapters : this.chapterCollection;
   }
 
   public async findChapterByUuid (

@@ -2,28 +2,28 @@ import {
   type Response,
   type Request
 } from 'express'
-import { type UpdateBookByUuidRequest, type CreateBookRequest, type FindBookByUuidRequest, type FindBooksByDossierUuidRequest } from './structs/book.request';
+import { type UpdateBookByUuidRequest, type CreateBookRequest, type FindBookByUuidRequest, type FindBooksByQueryRequest } from './structs/book.request';
 import { BookService } from './book.service';
 
 export class BookController {
   private readonly service: BookService = new BookService();
 
-  public async findBooksByDossierUuid(
+  public async findBooksByQuery (
     request: Request,
     response: Response
   ): Promise<Response> {
     try {
-      const findBooksByDossierUuidRequest: FindBooksByDossierUuidRequest = {
-        dossierUuid: String(request.query.dossierUuid)
+      const findBooksByQueryRequest: FindBooksByQueryRequest = {
+        dossierUuid: String(request.query.dossierUuid) ?? ''
       }
-      const bookCollection = await this.service.findBooksByDossierUuid(findBooksByDossierUuidRequest);
+      const bookCollection = await this.service.findBooksByQuery(findBooksByQueryRequest);
       return response.status(200).json(bookCollection);
     } catch (error: any) {
       return response.status(error.getHttpCode()).json()
     }
   }
 
-  public async findBookByUuid(
+  public async findBookByUuid (
     request: Request,
     response: Response
   ): Promise<Response> {
@@ -38,7 +38,7 @@ export class BookController {
     }
   }
 
-  public async createBook(
+  public async createBook (
     request: Request,
     response: Response
   ): Promise<Response> {
@@ -56,7 +56,7 @@ export class BookController {
     }
   }
 
-  public async updateBookByUuid(
+  public async updateBookByUuid (
     request: Request,
     response: Response
   ): Promise<Response> {

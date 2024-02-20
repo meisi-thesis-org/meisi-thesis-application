@@ -58,25 +58,25 @@ describe('PageService', () => {
     })
   })
 
-  describe('findPagesByChapterUuid', () => {
+  describe('findPagesByQuery', () => {
     async function callFindPageByForeignsUuid (): Promise<PageEntity[]> {
-      return await instance.findPagesByChapterUuid({
+      return await instance.findPagesByQuery({
         chapterUuid: randomUuid
       })
     }
 
     it('should have returned a pageDTO collection', async () => {
-      vi.spyOn(PageStateRepository.prototype, 'findPagesByChapterUuid').mockResolvedValue([pageEntity])
+      vi.spyOn(PageStateRepository.prototype, 'findPagesByQuery').mockResolvedValue([pageEntity])
       await expect(callFindPageByForeignsUuid()).resolves.toEqual([pageEntity])
     })
 
-    it('should throw a NonFoundException because Repository.findPagesByChapterUuid returned an empty array', async () => {
-      vi.spyOn(PageStateRepository.prototype, 'findPagesByChapterUuid').mockResolvedValue([])
+    it('should throw a NonFoundException because Repository.findPagesByQuery returned an empty array', async () => {
+      vi.spyOn(PageStateRepository.prototype, 'findPagesByQuery').mockResolvedValue([])
       await expect(callFindPageByForeignsUuid()).rejects.toThrow(NonFoundException)
     })
 
-    it('should throw a InternalServerException because Repository.findPagesByChapterUuid threw InternalServerException', async () => {
-      vi.spyOn(PageStateRepository.prototype, 'findPagesByChapterUuid').mockRejectedValue(new InternalServerException())
+    it('should throw a InternalServerException because Repository.findPagesByQuery threw InternalServerException', async () => {
+      vi.spyOn(PageStateRepository.prototype, 'findPagesByQuery').mockRejectedValue(new InternalServerException())
       await expect(callFindPageByForeignsUuid()).rejects.toThrow(InternalServerException)
     })
   })

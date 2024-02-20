@@ -1,6 +1,6 @@
 import { InternalServerException } from '@meisi-thesis/application-backend-utilities-shared/src/exceptions/internal-server.exception';
 import { pageMapper, type PageDTO, type PageEntity } from './structs/page.domain';
-import { type UpdatePageByUuidRequest, type CreatePageRequest, type FindPageByUuidRequest, type FindPageByChapterUuidRequest } from './structs/page.request';
+import { type UpdatePageByUuidRequest, type CreatePageRequest, type FindPageByUuidRequest, type FindPagesByQueryRequest } from './structs/page.request';
 import { type PageRepository } from './page.repository';
 import { NonFoundException } from '@meisi-thesis/application-backend-utilities-shared/src/exceptions/non-found.exception';
 import { RandomProvider } from '@meisi-thesis/application-backend-utilities-shared/src/providers/random.provider';
@@ -13,7 +13,7 @@ export class PageService {
   private readonly randomProvider: RandomProvider = new RandomProvider();
   private readonly networkProvider: NetworkProvider = new NetworkProvider();
 
-  public async findPageByUuid(requestArgs: FindPageByUuidRequest): Promise<PageDTO> {
+  public async findPageByUuid (requestArgs: FindPageByUuidRequest): Promise<PageDTO> {
     const foundEntity = await this.repository
       .findPageByUuid(requestArgs)
       .catch(() => { throw new InternalServerException(); })
@@ -23,11 +23,11 @@ export class PageService {
     return pageMapper(foundEntity)
   }
 
-  public async findPagesByChapterUuid(
-    requestArgs: FindPageByChapterUuidRequest
+  public async findPagesByQuery (
+    requestArgs: FindPagesByQueryRequest
   ): Promise<PageDTO[]> {
     const foundEntities = await this.repository
-      .findPagesByChapterUuid(requestArgs)
+      .findPagesByQuery(requestArgs)
       .catch(() => { throw new InternalServerException(); })
 
     if (foundEntities.length === 0) throw new NonFoundException();
@@ -35,13 +35,13 @@ export class PageService {
     return foundEntities.filter((foundEntity) => pageMapper(foundEntity))
   }
 
-  public async createPage(
+  public async createPage (
     requestArgs: CreatePageRequest,
     requestOptions?: Record<string, string>
-    ): Promise<PageDTO> {
+  ): Promise<PageDTO> {
     await this.networkProvider.doHttpRequest(
-      '8000', 
-      `commerce/chapters/${requestArgs.chapterUuid}`, 
+      '8000',
+      `commerce/chapters/${requestArgs.chapterUuid}`,
       'GET',
       { authorization: requestOptions?.authorization ?? '' }
     )
@@ -65,7 +65,7 @@ export class PageService {
     return pageMapper(createdEntity);
   }
 
-  public async updatePageByUuid(requestArgs: UpdatePageByUuidRequest): Promise<PageDTO> {
+  public async updatePageByUuid (requestArgs: UpdatePageByUuidRequest): Promise<PageDTO> {
     const foundEntity = await this.repository
       .findPageByUuid({ uuid: requestArgs.uuid })
       .catch(() => { throw new InternalServerException(); })

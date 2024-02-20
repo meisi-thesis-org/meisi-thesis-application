@@ -1,10 +1,10 @@
 import { type PageEntity } from './page.domain'
 
-type FindPageByUuidRequest = NonNullable<Pick<PageEntity, 'uuid'>>
-type FindPageByChapterUuidRequest = NonNullable<Pick<PageEntity, 'chapterUuid'>>
-type CreatePageRequest = NonNullable<Readonly<Pick<PageEntity, 'chapterUuid' | 'designation' | 'description' | 'price'>>>
+type FindPageByUuidRequest = Readonly<NonNullable<Pick<PageEntity, 'uuid'>>>
+type FindPagesByQueryRequest = Readonly<Partial<Pick<PageEntity, 'chapterUuid'>>>
+type CreatePageRequest = Readonly<NonNullable<Pick<PageEntity, 'chapterUuid' | 'designation' | 'description' | 'price'>>>
 type UpdatePageByUuidRequest =
     NonNullable<Pick<PageEntity, 'uuid'>> &
-    Partial<Readonly<Pick<PageEntity, 'designation' | 'description' | 'price' | 'visible' | 'active'>>>
+    Readonly<Partial<Pick<PageEntity, 'designation' | 'description' | 'price' | 'visible' | 'active'>>>
 
-export type { FindPageByUuidRequest, FindPageByChapterUuidRequest, CreatePageRequest, UpdatePageByUuidRequest }
+export type { FindPageByUuidRequest, FindPagesByQueryRequest, CreatePageRequest, UpdatePageByUuidRequest }
