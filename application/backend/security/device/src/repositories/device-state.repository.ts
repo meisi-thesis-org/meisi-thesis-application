@@ -2,9 +2,9 @@ import { type DeviceRepository } from '../device.repository';
 import { type DeviceDTO, type DeviceEntity } from '../structs/device.domain';
 
 export class DeviceStateRepository implements DeviceRepository {
-  private readonly deviceCollection: DeviceEntity[] = new Array<DeviceEntity>();
+  private deviceCollection: DeviceEntity[] = new Array<DeviceEntity>();
 
-  public async findDeviceByUserUuid (
+  public async findDevicesByUserUuid (
     userUuid: string | undefined
   ): Promise<DeviceDTO[]> {
     return this.deviceCollection.filter((device) => device.userUuid === userUuid);
@@ -39,10 +39,10 @@ export class DeviceStateRepository implements DeviceRepository {
   public async updateDeviceByUuid (
     uuid: string,
     deviceEntity: Omit<DeviceEntity, 'uuid' | 'userUuid' | 'createdAt'>
-  ): Promise<DeviceEntity | undefined> {
-    return this.deviceCollection.find((device) => {
+  ): Promise<void> {
+    this.deviceCollection = this.deviceCollection.map((device) => {
       if (device.uuid === uuid) device = { ...device, ...deviceEntity }
-      return device
+      return device;
     })
   }
 }

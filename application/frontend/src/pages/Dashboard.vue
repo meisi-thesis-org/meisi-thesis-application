@@ -79,7 +79,7 @@ const subscribedChapters = ref<Array<ChapterEntity>>([]);
 const subscribedPages = ref<Array<PageEntity>>([]);
 
 onMounted(async () => {
-    const dossiersByQuery = await useDossierStore.findDossierByQuery();
+    const dossiersByQuery = await useDossierStore.findDossiersByQuery();
     const booksByQuery = await useBookStore.findBooksByQuery();
     const chaptersByQuery = await useChapterStore.findChaptersByQuery();
     const pagesByQuery = await usePageStore.findPagesByQuery();

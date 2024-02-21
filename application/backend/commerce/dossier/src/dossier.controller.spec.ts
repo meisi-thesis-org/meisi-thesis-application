@@ -62,24 +62,24 @@ describe('DossierController', () => {
     })
   })
 
-  describe('findDossierByQuery', () => {
+  describe('findDossiersByQuery', () => {
     beforeEach(() => {
       requestMock.query = { ...requestMock.query, userUuid: 'dummyUserUuid' }
     })
 
     async function callFindDossierByQuery (): Promise<Response> {
-      return await instance.findDossierByQuery(requestMock, responseMock)
+      return await instance.findDossiersByQuery(requestMock, responseMock)
     }
 
     it('should throw an exception because an error ocurred while making a service request', async () => {
-      vi.spyOn(DossierService.prototype, 'findDossierByQuery').mockRejectedValue({ getHttpCode: vi.fn() });
+      vi.spyOn(DossierService.prototype, 'findDossiersByQuery').mockRejectedValue({ getHttpCode: vi.fn() });
       defineResponseMock(new Error())
 
       await expect(callFindDossierByQuery()).resolves.toEqual(new Error());
     })
 
     it('should return an DossierDTO collection', async () => {
-      vi.spyOn(DossierService.prototype, 'findDossierByQuery').mockResolvedValue(dossierDTO);
+      vi.spyOn(DossierService.prototype, 'findDossiersByQuery').mockResolvedValue(dossierDTO);
       defineResponseMock(dossierDTO);
 
       await expect(callFindDossierByQuery()).resolves.toEqual(dossierDTO);
@@ -97,7 +97,7 @@ describe('DossierController', () => {
     })
 
     async function callCreateDossier (): Promise<Response> {
-      return await instance.findDossierByQuery(requestMock, responseMock)
+      return await instance.findDossiersByQuery(requestMock, responseMock)
     }
 
     it('should throw an exception because an error ocurred while making a service request', async () => {
@@ -127,7 +127,7 @@ describe('DossierController', () => {
     })
 
     async function callCreateDossier (): Promise<Response> {
-      return await instance.findDossierByQuery(requestMock, responseMock)
+      return await instance.findDossiersByQuery(requestMock, responseMock)
     }
 
     it('should throw an exception because an error ocurred while making a service request', async () => {

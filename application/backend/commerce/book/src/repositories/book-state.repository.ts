@@ -35,7 +35,7 @@ export class BookStateRepository implements BookRepository {
   public async updateBookByUuid (
     uuid: string,
     data: Omit<BookEntity, 'uuid' | 'dossierUuid' | 'createdAt'>
-  ): Promise<BookEntity | undefined> {
+  ): Promise<void> {
     for (const book of this.bookCollection) {
       if (book.uuid === uuid) {
         book.designation = data.designation;
@@ -43,8 +43,6 @@ export class BookStateRepository implements BookRepository {
         book.price = data.price;
         book.active = data.active;
         book.visible = data.visible;
-
-        return book;
       }
     }
   }

@@ -39,12 +39,12 @@ describe('DeviceService', () => {
     }
 
     it('should have response toEqual a DeviceDTO collection', async () => {
-      vi.spyOn(DeviceStateRepository.prototype, 'findDeviceByUserUuid').mockResolvedValue([deviceDTO]);
+      vi.spyOn(DeviceStateRepository.prototype, 'findDevicesByUserUuid').mockResolvedValue([deviceDTO]);
       await expect(callFindDevicesByUserUuid()).resolves.toEqual([deviceDTO])
     })
 
     it('should have an InternalServerException because DeviceStateRepository.findDevices threw InternalServerException', async () => {
-      vi.spyOn(DeviceStateRepository.prototype, 'findDeviceByUserUuid').mockRejectedValue(InternalServerException);
+      vi.spyOn(DeviceStateRepository.prototype, 'findDevicesByUserUuid').mockRejectedValue(InternalServerException);
       await expect(callFindDevicesByUserUuid()).rejects.toThrowError(InternalServerException)
     })
   })

@@ -9,5 +9,5 @@ export interface NetworkRepository {
     longitude: number
   ): Promise<NetworkDTO | undefined>
   createNetwork(networkEntity: NetworkEntity): Promise<void>
-  updateNetworkByUuid(uuid: string, networkEntity: Omit<NetworkEntity, 'uuid' | 'userUuid' | 'createdAt'>): Promise<NetworkEntity | undefined>
+  updateNetworkByUuid(uuid: string, entity: Omit<NetworkEntity, 'uuid' | 'userUuid' | 'createdAt'>): Promise<void>
 }

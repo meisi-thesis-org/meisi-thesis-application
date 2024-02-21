@@ -12,7 +12,7 @@ export class DossierGateway extends Gateway<Router> {
   }
 
   public override subscribe (): Router {
-    this.router.get('/', SchemaValidator(FindDossierByQuerySchema), async (request: Request, response: Response) => await this.controller.findDossierByQuery(request, response))
+    this.router.get('/', SchemaValidator(FindDossierByQuerySchema), async (request: Request, response: Response) => await this.controller.findDossiersByQuery(request, response))
     this.router.post('/', SchemaValidator(CreateDossierSchema), async (request: Request, response: Response) => await this.controller.createDossier(request, response))
     this.router.put('/:uuid', SchemaValidator(UpdateDossierByUuidSchema), async (request: Request, response: Response) => await this.controller.updateDossierByUuid(request, response))
     this.router.get('/:uuid', SchemaValidator(FindDossierByUuidSchema), async (request: Request, response: Response) => await this.controller.findDossierByUuid(request, response))

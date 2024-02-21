@@ -4,14 +4,14 @@ export interface DossierRepository {
   findDossierByUuid(
     uuid: string
   ): Promise<DossierEntity | undefined>
-  findDossierByQuery(
+  findDossiersByQuery(
     userUuid?: string
-  ): Promise<Array<DossierEntity>>
+  ): Promise<DossierEntity[]>
   createDossier(
     data: DossierEntity
   ): Promise<void>
   updateDossierByUuid(
     uuid: string,
     data: Omit<DossierEntity, 'uuid' | 'userUuid' | 'createdAt'>
-  ): Promise<DossierEntity | undefined>
+  ): Promise<void>
 }

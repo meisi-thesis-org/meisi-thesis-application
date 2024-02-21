@@ -84,7 +84,6 @@ export class NetworkService {
     const foundNetwork = await this.repository
       .findNetworkByUuid(updateNetworkByUuidRequest.uuid)
       .catch(() => { throw new InternalServerException(); })
-
     if (foundNetwork === undefined) throw new NonFoundException();
 
     const toUpdateNetwork: Omit<NetworkEntity, 'uuid' | 'userUuid' | 'createdAt'> = {
@@ -95,8 +94,12 @@ export class NetworkService {
       updatedAt: new Date().toISOString()
     }
 
-    const updatedNetwork = await this.repository
+    await this.repository
       .updateNetworkByUuid(foundNetwork.uuid, toUpdateNetwork)
+      .catch(() => { throw new InternalServerException(); })
+
+    const updatedNetwork = await this.repository
+      .findNetworkByUuid(updateNetworkByUuidRequest.uuid)
       .catch(() => { throw new InternalServerException(); })
 
     if (updatedNetwork === undefined) throw new NonFoundException();

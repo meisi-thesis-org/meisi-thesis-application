@@ -30,11 +30,11 @@ export class DossierService {
     return dossierMapper(foundDossier);
   }
 
-  public async findDossierByQuery (
+  public async findDossiersByQuery (
     FindDossierByQueryRequest: FindDossierByQueryRequest
-  ): Promise<Array<DossierDTO>> {
+  ): Promise<DossierDTO[]> {
     const foundDossiers = await this.repository
-      .findDossierByQuery(FindDossierByQueryRequest.userUuid)
+      .findDossiersByQuery(FindDossierByQueryRequest.userUuid)
       .catch(() => { throw new InternalServerException(); })
 
     return foundDossiers.map((foundDossier) => dossierMapper(foundDossier));
@@ -45,7 +45,7 @@ export class DossierService {
     createDosserOptions?: Record<string, string>
   ): Promise<DossierDTO> {
     const foundDossier = await this.repository
-      .findDossierByQuery(createDossierRequest.userUuid)
+      .findDossiersByQuery(createDossierRequest.userUuid)
       .catch(() => { throw new InternalServerException(); })
 
     if (foundDossier !== undefined) throw new ConflictException();
@@ -92,8 +92,12 @@ export class DossierService {
       updatedAt: new Date().toISOString()
     }
 
-    const updatedDossier = await this.repository
+    await this.repository
       .updateDossierByUuid(updateDossierByUuidRequest.uuid, toUpdateDossier)
+      .catch(() => { throw new InternalServerException(); })
+
+    const updatedDossier = await this.repository
+      .findDossierByUuid(updateDossierByUuidRequest.uuid)
       .catch(() => { throw new InternalServerException(); })
 
     if (updatedDossier === undefined) throw new NonFoundException();

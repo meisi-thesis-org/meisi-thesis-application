@@ -14,10 +14,10 @@ export class DeviceService {
   private readonly networkProvider: NetworkProvider = new NetworkProvider();
 
   public async findDevicesByUserUuid (
-    findDeviceByUserUuidRequest: FindDevicesByUserUuidRequest
+    findDevicesByUserUuidRequest: FindDevicesByUserUuidRequest
   ): Promise<DeviceDTO[]> {
     const foundDevices = await this.repository
-      .findDeviceByUserUuid(findDeviceByUserUuidRequest.userUuid)
+      .findDevicesByUserUuid(findDevicesByUserUuidRequest.userUuid)
       .catch(() => { throw new InternalServerException(); })
 
     const mappedDevices = new Array<DeviceDTO>();
@@ -49,7 +49,7 @@ export class DeviceService {
         createDeviceRequest.userUuid,
         createDeviceRequest.userAgent
       ).catch(() => { throw new InternalServerException(); })
-    
+
     if (foundDevice !== undefined) throw new ConflictException();
 
     await this.networkProvider.doHttpRequest(
@@ -93,8 +93,12 @@ export class DeviceService {
       updatedAt: new Date().toISOString()
     }
 
-    const updateDevice = await this.repository
+    await this.repository
       .updateDeviceByUuid(foundDevice.uuid, toUpdateDevice)
+      .catch(() => { throw new InternalServerException(); })
+
+    const updateDevice = await this.repository
+      .findDeviceByUuid(updateDeviceByUuidRequest.uuid)
       .catch(() => { throw new InternalServerException(); })
 
     if (updateDevice === undefined) throw new NonFoundException();

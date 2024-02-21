@@ -104,8 +104,14 @@ export class BookService {
       updatedAt: new Date().toISOString()
     }
 
-    const updatedBook = await this.repository
+    await this.repository
       .updateBookByUuid(updateBookByUuidRequest.uuid, toUpdateBook)
+      .catch(() => {
+        throw new InternalServerException();
+      })
+
+    const updatedBook = await this.repository
+      .findBookByUuid(updateBookByUuidRequest.uuid)
       .catch(() => {
         throw new InternalServerException();
       })

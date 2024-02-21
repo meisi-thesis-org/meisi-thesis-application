@@ -8,5 +8,5 @@ export interface BookRepository {
   updateBookByUuid(
     uuid: string,
     data: Omit<BookEntity, 'uuid' | 'dossierUuid' | 'createdAt'>
-  ): Promise<BookEntity | undefined>
+  ): Promise<void>
 }

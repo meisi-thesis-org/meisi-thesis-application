@@ -55,25 +55,25 @@ describe('DossierService', () => {
     })
   })
 
-  describe('findDossierByQuery', () => {
+  describe('findDossiersByQuery', () => {
     async function callFindDossierByUuid (): Promise<DossierEntity> {
-      return await instance.findDossierByQuery({
+      return await instance.findDossiersByQuery({
         userUuid: randomUuid
       })
     }
 
     it('should have returned DossierDTO', async () => {
-      vi.spyOn(DossierStateRepository.prototype, 'findDossierByQuery').mockResolvedValue(dossierDTO)
+      vi.spyOn(DossierStateRepository.prototype, 'findDossiersByQuery').mockResolvedValue(dossierDTO)
       await expect(callFindDossierByUuid()).resolves.toEqual(dossierDTO)
     })
 
-    it('should throw a NonFoundException because Repository.findDossierByQuery returned undefined ', async () => {
-      vi.spyOn(DossierStateRepository.prototype, 'findDossierByQuery').mockResolvedValue(undefined)
+    it('should throw a NonFoundException because Repository.findDossiersByQuery returned undefined ', async () => {
+      vi.spyOn(DossierStateRepository.prototype, 'findDossiersByQuery').mockResolvedValue(undefined)
       await expect(callFindDossierByUuid()).rejects.toThrow(NonFoundException)
     })
 
-    it('should throw a InternalServerException because Repository.findDossierByQuery threw InternalServerException ', async () => {
-      vi.spyOn(DossierStateRepository.prototype, 'findDossierByQuery').mockRejectedValue(new InternalServerException())
+    it('should throw a InternalServerException because Repository.findDossiersByQuery threw InternalServerException ', async () => {
+      vi.spyOn(DossierStateRepository.prototype, 'findDossiersByQuery').mockRejectedValue(new InternalServerException())
       await expect(callFindDossierByUuid()).rejects.toThrow(InternalServerException)
     })
   })
@@ -83,34 +83,34 @@ describe('DossierService', () => {
       return await instance.createDossier({
         userUuid: randomUuid,
         designation: randomString,
-        price: randomNumber,
+        price: randomNumber
       })
     }
 
     it('should resolve to be defined', async () => {
-      vi.spyOn(DossierStateRepository.prototype, 'findDossierByQuery').mockResolvedValue(undefined)
+      vi.spyOn(DossierStateRepository.prototype, 'findDossiersByQuery').mockResolvedValue(undefined)
       vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({})
       vi.spyOn(DossierStateRepository.prototype, 'createDossier').mockResolvedValue()
 
       await expect(callCreateDossier()).resolves.toBeDefined()
     })
 
-    it('should throw a NonFoundException because Repository.findDossierByQuery returned other than undefined ', async () => {
-      vi.spyOn(DossierStateRepository.prototype, 'findDossierByQuery').mockResolvedValue(dossierDTO)
+    it('should throw a NonFoundException because Repository.findDossiersByQuery returned other than undefined ', async () => {
+      vi.spyOn(DossierStateRepository.prototype, 'findDossiersByQuery').mockResolvedValue(dossierDTO)
       vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({})
       vi.spyOn(DossierStateRepository.prototype, 'createDossier').mockResolvedValue()
       await expect(callCreateDossier()).rejects.toThrow(ConflictException)
     })
 
-    it('should throw a InternalServerException because Repository.findDossierByQuery threw InternalServerException ', async () => {
-      vi.spyOn(DossierStateRepository.prototype, 'findDossierByQuery').mockRejectedValue(new InternalServerException())
+    it('should throw a InternalServerException because Repository.findDossiersByQuery threw InternalServerException ', async () => {
+      vi.spyOn(DossierStateRepository.prototype, 'findDossiersByQuery').mockRejectedValue(new InternalServerException())
       vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({})
       vi.spyOn(DossierStateRepository.prototype, 'createDossier').mockResolvedValue()
       await expect(callCreateDossier()).rejects.toThrow(InternalServerException)
     })
 
     it('should throw a InternalServerException because Repository.createDossier threw InternalServerException ', async () => {
-      vi.spyOn(DossierStateRepository.prototype, 'findDossierByQuery').mockResolvedValue(undefined)
+      vi.spyOn(DossierStateRepository.prototype, 'findDossiersByQuery').mockResolvedValue(undefined)
       vi.spyOn(NetworkProvider.prototype, 'doHttpRequest').mockResolvedValue({})
       vi.spyOn(DossierStateRepository.prototype, 'createDossier').mockRejectedValue(new InternalServerException())
       await expect(callCreateDossier()).rejects.toThrow(InternalServerException)
@@ -140,7 +140,7 @@ describe('DossierService', () => {
       await expect(callUpdateDossierByUuid()).rejects.toThrow(NonFoundException)
     })
 
-    it('should throw a InternalServerException because Repository.findDossierByQuery threw InternalServerException ', async () => {
+    it('should throw a InternalServerException because Repository.findDossiersByQuery threw InternalServerException ', async () => {
       vi.spyOn(DossierStateRepository.prototype, 'findDossierByUuid').mockRejectedValue(new InternalServerException())
       vi.spyOn(DossierStateRepository.prototype, 'updateDossierByUuid').mockResolvedValue(dossierDTO)
       await expect(callUpdateDossierByUuid()).rejects.toThrow(InternalServerException)
@@ -152,7 +152,7 @@ describe('DossierService', () => {
       await expect(callUpdateDossierByUuid()).rejects.toThrow(NonFoundException)
     })
 
-    it('should throw a InternalServerException because Repository.findDossierByQuery threw InternalServerException ', async () => {
+    it('should throw a InternalServerException because Repository.findDossiersByQuery threw InternalServerException ', async () => {
       vi.spyOn(DossierStateRepository.prototype, 'findDossierByUuid').mockResolvedValue(dossierDTO)
       vi.spyOn(DossierStateRepository.prototype, 'updateDossierByUuid').mockRejectedValue(new InternalServerException())
       await expect(callUpdateDossierByUuid()).rejects.toThrow(InternalServerException)

@@ -4,29 +4,29 @@ import { type DossierEntity } from '../structs/dossier.domain';
 export class DossierStateRepository implements DossierRepository {
   private readonly dossierCollection: DossierEntity[] = new Array<DossierEntity>();
 
-  async findDossierByUuid(
+  async findDossierByUuid (
     uuid: string
   ): Promise<DossierEntity | undefined> {
     return this.dossierCollection.find((dossierEntity) => dossierEntity.uuid === uuid)
   }
 
-  async findDossierByQuery(
+  async findDossiersByQuery (
     userUuid?: string
-  ): Promise<Array<DossierEntity>> {
-    if (!userUuid) return this.dossierCollection;
+  ): Promise<DossierEntity[]> {
+    if (userUuid === undefined) return this.dossierCollection;
     return this.dossierCollection.filter((dossierEntity) => dossierEntity.userUuid === userUuid);
   }
 
-  async createDossier(
+  async createDossier (
     data: DossierEntity
   ): Promise<void> {
     this.dossierCollection.push(data)
   }
 
-  async updateDossierByUuid(
+  async updateDossierByUuid (
     uuid: string,
     data: Omit<DossierEntity, 'uuid' | 'userUuid' | 'createdAt'>
-  ): Promise<DossierEntity | undefined> {
+  ): Promise<void> {
     for (const dossier of this.dossierCollection) {
       if (dossier.uuid === uuid) {
         dossier.designation = data.designation;
@@ -35,8 +35,6 @@ export class DossierStateRepository implements DossierRepository {
         dossier.active = data.active;
         dossier.updatedAt = data.updatedAt;
       }
-
-      return dossier;
     }
   }
 }

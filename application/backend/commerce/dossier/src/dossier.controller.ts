@@ -52,12 +52,12 @@ export class DossierController {
     }
   }
 
-  async findDossierByQuery (request: Request, response: Response): Promise<Response> {
+  async findDossiersByQuery (request: Request, response: Response): Promise<Response> {
     try {
       const FindDossierByQueryRequest: FindDossierByQueryRequest = {
         userUuid: String(request.query.userUuid) ?? ''
       }
-      const dossiers = await this.service.findDossierByQuery(FindDossierByQueryRequest);
+      const dossiers = await this.service.findDossiersByQuery(FindDossierByQueryRequest);
       return response.status(200).json(dossiers);
     } catch (error: any) {
       return response.status(error.getHttpCode()).json()

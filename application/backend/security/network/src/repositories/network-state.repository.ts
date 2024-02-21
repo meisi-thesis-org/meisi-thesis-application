@@ -2,7 +2,7 @@ import { type NetworkRepository } from '../network.repository';
 import { type NetworkDTO, type NetworkEntity } from '../structs/network.domain';
 
 export class NetworkStateRepository implements NetworkRepository {
-  private readonly networkCollection: NetworkEntity[] = new Array<NetworkEntity>();
+  private networkCollection: NetworkEntity[] = new Array<NetworkEntity>();
 
   public async findNetworksByUserUuid (
     userUuid: string | undefined
@@ -40,10 +40,10 @@ export class NetworkStateRepository implements NetworkRepository {
 
   public async updateNetworkByUuid (
     uuid: string,
-    networkEntity: Omit<NetworkEntity, 'uuid' | 'userUuid' | 'createdAt'>
-  ): Promise<NetworkEntity | undefined> {
-    return this.networkCollection.find((network) => {
-      if (network.uuid === uuid) network = { ...network, ...networkEntity }
+    entity: Omit<NetworkEntity, 'uuid' | 'userUuid' | 'createdAt'>
+  ): Promise<void> {
+    this.networkCollection = this.networkCollection.map((network) => {
+      if (network.uuid === uuid) network = { ...network, ...entity }
       return network
     })
   }

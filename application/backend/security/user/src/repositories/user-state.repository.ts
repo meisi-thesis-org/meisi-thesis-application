@@ -4,17 +4,17 @@ import { type UserRepository } from '../user.repository';
 export class UserStateRepository implements UserRepository {
   private userEntityCollection: UserEntity[] = new Array<UserEntity>();
 
-  public async findUserByUuid(
+  public async findUserByUuid (
     uuid: string
   ): Promise<UserEntity | undefined> {
     return this.userEntityCollection.find((userEntity) => userEntity.uuid === uuid);
   }
 
-  public async findBulk(): Promise<UserEntity[] | undefined> {
+  public async findBulk (): Promise<UserEntity[] | undefined> {
     return this.userEntityCollection;
   }
 
-  public async findUserByAuthCredentials(
+  public async findUserByAuthCredentials (
     username: string | undefined,
     email: string | undefined,
     phoneNumber: string | undefined
@@ -30,20 +30,19 @@ export class UserStateRepository implements UserRepository {
     });
   }
 
-  public async createUser(
+  public async createUser (
     userEntity: UserEntity
   ): Promise<void> {
     this.userEntityCollection.push(userEntity);
   }
 
-  public async updateUser(
+  public async updateUser (
     userEntity: UserEntity
   ): Promise<void> {
     this.userEntityCollection = this.userEntityCollection.map((storedUserEntity) => {
       if (storedUserEntity.uuid === userEntity.uuid) {
         storedUserEntity = { ...userEntity }
       }
-
 
       return storedUserEntity;
     })
