@@ -65,7 +65,7 @@ const usePage = defineStore('pages', () => {
     findPagesByQuery,
     createPage,
     updatePageByUuid,
-    updateState: (pages: PageEntity[]) => state.value = pages
+    updateState: (pages: PageEntity[]) => { state.value = pages }
   }
 })
 

@@ -14,7 +14,7 @@ export class SubscriptionService {
   private readonly randomProvider: RandomProvider = new RandomProvider();
   private readonly networkProvider: NetworkProvider = new NetworkProvider();
 
-  public async findSubscriptionByUuid(requestArgs: FindSubscriptionByUuidRequest): Promise<SubscriptionDTO> {
+  public async findSubscriptionByUuid (requestArgs: FindSubscriptionByUuidRequest): Promise<SubscriptionDTO> {
     const foundEntity = await this.repository
       .findSubscriptionByUuid(requestArgs)
       .catch(() => { throw new InternalServerException(); })
@@ -24,7 +24,7 @@ export class SubscriptionService {
     return subscriptionMapper(foundEntity)
   }
 
-  public async findSubscriptionsByForeignsUuid(requestArgs: FindSubscriptionsByForeignsUuidRequest): Promise<SubscriptionDTO[]> {
+  public async findSubscriptionsByForeignsUuid (requestArgs: FindSubscriptionsByForeignsUuidRequest): Promise<SubscriptionDTO[]> {
     const foundEntities = await this.repository
       .findSubscriptionsByForeignsUuid(requestArgs)
       .catch(() => { throw new InternalServerException(); })
@@ -34,7 +34,7 @@ export class SubscriptionService {
     return foundEntities.filter((foundEntity) => subscriptionMapper(foundEntity))
   }
 
-  public async createSubscription(
+  public async createSubscription (
     requestArgs: CreateSubscriptionRequest,
     requestOptions?: Record<string, string>
   ): Promise<SubscriptionDTO> {
@@ -62,7 +62,7 @@ export class SubscriptionService {
             { authorization: requestOptions?.authorization ?? '' }
           ).catch((error) => { throw error }) as any
 
-          console.log(responseArgs.data)
+        console.log(responseArgs.data)
         if (!responseArgs.data.active || !responseArgs.data.visible) throw new BadRequestException();
 
         removeAmount += responseArgs.data.price;
@@ -98,7 +98,7 @@ export class SubscriptionService {
     return subscriptionMapper(createdEntity);
   }
 
-  public async updateSubscriptionByUuid(requestArgs: UpdateSubscriptionByUuidRequest): Promise<SubscriptionDTO> {
+  public async updateSubscriptionByUuid (requestArgs: UpdateSubscriptionByUuidRequest): Promise<SubscriptionDTO> {
     const foundEntity = await this.repository
       .findSubscriptionByUuid({ uuid: requestArgs.uuid })
       .catch(() => { throw new InternalServerException(); })
