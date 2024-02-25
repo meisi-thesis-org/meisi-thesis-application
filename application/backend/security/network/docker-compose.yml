@@ -1,37 +1,37 @@
 version: '3.8'
 
 services:
-  ux:
-    container_name: ux
+  networkux:
+    container_name: networkux
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: admin
     restart: always
     volumes:
-      - ux:/var/lib/pgadmin
+      - networkux:/var/lib/pgadmin
     ports:
-      - "8888:80"
+      - "8891:80"
     networks:
-      - db-ux-network
-  db:
-    container_name: db
+      - networkdb-networkux-network
+  networkdb:
+    container_name: networkdb
     image: postgres
     restart: always
     ports:
-      - "5432:5432"
+      - "5434:5432"
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
     volumes:
-      - db:/var/lib/postgresql/data
+      - networkdb:/var/lib/postgresql/data
     networks:
-      - db-ux-network
+      - networkdb-networkux-network
 
 networks: 
-  db-ux-network:
+  networkdb-networkux-network:
     driver: bridge
 
 volumes:
-  db:
-  ux:
+  networkdb:
+  networkux:

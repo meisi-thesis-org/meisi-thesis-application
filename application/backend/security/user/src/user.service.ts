@@ -6,11 +6,11 @@ import { NonFoundException } from '@meisi-thesis/application-backend-utilities-s
 import { ConflictException } from '@meisi-thesis/application-backend-utilities-shared/src/exceptions/conflict.exception';
 import { RandomProvider } from '@meisi-thesis/application-backend-utilities-shared/src/providers/random.provider';
 import { HashProvider } from '@meisi-thesis/application-backend-utilities-shared/src/providers/hash.provider';
-import { UserStateRepository } from './repositories/user-state.repository';
 import { QueueProvider } from '@meisi-thesis/application-backend-utilities-shared/src/providers/queue.provider';
+import { UserRemoteRepository } from './repositories/user-remote.repository';
 
 export class UserService {
-  private readonly userRepository: UserRepository = new UserStateRepository();
+  private readonly userRepository: UserRepository = new UserRemoteRepository();
   private readonly randomProvider: RandomProvider = new RandomProvider();
   private readonly hashProvider: HashProvider = new HashProvider();
   private readonly queueProvider: QueueProvider = new QueueProvider();
@@ -80,7 +80,7 @@ export class UserService {
       updatedAt: new Date().toISOString()
     }
 
-    await this.userRepository.createUser(createdUser).catch(() => {
+    await this.userRepository.createUser(createdUser).catch((error) => {
       throw new InternalServerException()
     });
 
