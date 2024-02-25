@@ -44,11 +44,11 @@ export class DossierService {
     createDossierRequest: CreateDossierRequest,
     createDosserOptions?: Record<string, string>
   ): Promise<DossierDTO> {
-    const foundDossier = await this.repository
+    const foundDossiers = await this.repository
       .findDossiersByQuery(createDossierRequest.userUuid)
       .catch(() => { throw new InternalServerException(); })
 
-    if (foundDossier !== undefined) throw new ConflictException();
+    if (foundDossiers.length > 0) throw new ConflictException();
 
     await this.networkProvider.doHttpRequest(
       '8000',

@@ -17,6 +17,7 @@
     <PencilIcon class="icon" :class="definedColor" v-if="definedProps.name === 'dossier'" :style="definedStyle" @click="definedProps.onClick" />
     <ChartPieIcon class="icon" :class="definedColor" v-if="definedProps.name === 'dashboard'" :style="definedStyle" @click="definedProps.onClick" />
     <KeyIcon class="icon" :class="definedColor" v-if="definedProps.name === 'door'" :style="definedStyle" @click="definedProps.onClick" />
+    <BuildingLibraryIcon class="icon" :class="definedColor" v-if="definedProps.name === 'library'" :style="definedStyle" @click="definedProps.onClick" />
 </template> 
 
 <script setup lang="ts">
@@ -37,7 +38,8 @@ import {
     TrashIcon,
     WifiIcon,
     ChartPieIcon,
-    KeyIcon
+    KeyIcon,
+    BuildingLibraryIcon
 } from "@heroicons/vue/24/solid";
 import { computed } from "vue";
 const definedProps = defineProps<IconProps>();

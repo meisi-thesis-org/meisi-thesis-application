@@ -32,7 +32,7 @@ export const isDossierRegistered = async (
      * No: Redirects to dashboard
      */
   const parameterizedDossierUuid = to.params.dossierUuid as string;
-  if (!parameterizedDossierUuid && isGuest.value) return next({ name: 'dashboard', params: { userUuid: session.value?.userUuid } });
+  if (parameterizedDossierUuid === undefined && isGuest.value) return next({ name: 'dashboard', params: { userUuid: session.value?.userUuid } });
 
   /**
      * Loads Cached dossier
@@ -46,7 +46,7 @@ export const isDossierRegistered = async (
      */
   const useBookStore = useBook();
   const updateDossierBooksState = async (dossierUuid: string) => {
-    const books = await useBookStore.findBooksByDossierUuid(dossierUuid)
+    const books = await useBookStore.findBooksByQuery(dossierUuid)
     if (books && books.length > 0) useBookStore.updateState(books);
   }
 
@@ -75,8 +75,8 @@ export const isDossierRegistered = async (
      * Loads dossiers
      */
   const updateDossierState = async (foundDossier: DossierEntity | undefined) => {
-    if (!foundDossier) return next({ name: 'register-dossier', params: { userUuid: parameterizedUserUuid } })
-    if (!foundDossier && isConsumer.value) return next({ name: 'dashboard', params: { userUuid: parameterizedUserUuid } })
+    if (foundDossier === undefined) return next({ name: 'register-dossier', params: { userUuid: parameterizedUserUuid } })
+    if (foundDossier === undefined && isConsumer.value) return next({ name: 'dashboard', params: { userUuid: parameterizedUserUuid } })
     useDossierStore.updateState(foundDossier)
     await updateDossierBooksState(foundDossier.uuid)
     const userUsername = (await useUserStore.findUserByUuid(foundDossier.userUuid)).username;

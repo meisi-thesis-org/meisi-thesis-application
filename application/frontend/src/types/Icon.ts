@@ -16,7 +16,8 @@ type IconProps = {
   'unlock' |
   'dossier' |
   'dashboard' |
-  'door'
+  'door' | 
+  'library'
   readonly height: string
   readonly width: string
   readonly color?: Color

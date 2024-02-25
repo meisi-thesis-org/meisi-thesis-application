@@ -7,6 +7,7 @@ import RecoverAccount from '@/pages/RecoverAccount.vue'
 import CheckDevice from '@/pages/CheckDevice.vue'
 import CheckNetwork from '@/pages/CheckNetwork.vue'
 import Dashboard from '@/pages/Dashboard.vue'
+import Library from '@/pages/Library.vue'
 import Dossier from '@/pages/Dossier.vue'
 import Book from '@/pages/Book.vue'
 import Chapter from '@/pages/Chapter.vue'
@@ -111,6 +112,15 @@ const router = createRouter({
         requiresSession: true
       },
       beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isWalletRegistered, isSubscriptionsRegistered],
+    },
+    {
+      name: 'library',
+      path: '/:userUuid/library',
+      component: Library,
+      meta: {
+        requiresSession: true
+      },
+      beforeEnter: [isSessionExpired, isUserRegistered, isDeviceRegistered, isNetworkRegistered, isWalletRegistered],
     },
     {
       name: 'recover-dossier',

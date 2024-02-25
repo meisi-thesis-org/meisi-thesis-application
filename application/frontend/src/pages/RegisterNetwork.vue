@@ -54,7 +54,7 @@ const onSkip = () => {
     min-height: inherit;
 
     &__inner {
-        padding: 0 2.5rem;
+        padding: 0 25%;
         min-height: inherit;
 
         display: flex;

@@ -24,7 +24,6 @@ import { useLoader } from '@/composables/useLoader';
 import { useDevice } from '@/stores/useDevice';
 import { useSession } from '@/stores/useSession';
 import { storeToRefs } from 'pinia';
-import { useLocalStorage } from '@/composables/useLocalStorage';
 const router = useRouter();
 const { isLoading } = useLoader()
 const { createDevice } = useDevice();
@@ -48,14 +47,14 @@ const onSkip = () => {
     min-height: inherit;
 
     &__inner {
-        padding: 0 2.5rem;
+        padding: 0 25%;
         min-height: inherit;
 
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 1.25rem;
+        gap: 1.50rem;
 
         text-align: center;
 
@@ -65,5 +64,6 @@ const onSkip = () => {
             gap: 0.25rem;
         }
     }
+    
 }
 </style>

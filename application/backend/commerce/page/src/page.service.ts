@@ -30,8 +30,6 @@ export class PageService {
       .findPagesByQuery(requestArgs)
       .catch(() => { throw new InternalServerException(); })
 
-    if (foundEntities.length === 0) throw new NonFoundException();
-
     return foundEntities.filter((foundEntity) => pageMapper(foundEntity))
   }
 

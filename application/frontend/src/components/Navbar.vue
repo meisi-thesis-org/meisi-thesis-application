@@ -2,11 +2,9 @@
     <div id="navbar">
         <div id="navbar__inner">
             <Typography :content="'E-Bookler'" :segment="'brand'" />
-            <div id="navbar__inner--search">
-                <FormControl :name="'search'" :placeholder="'Search...'" :type="'text'" :rules="[]" :hide-alerts="true" />
-            </div>
             <div id="navbar__inner--icons">
                 <Icon :name="'dashboard'" :height="'1.25rem'" :width="'1.25rem'" :on-click="navigateToDashboard" />
+                <Icon :name="'library'" :height="'1.25rem'" :width="'1.25rem'" :on-click="navigateToLibrary" />
                 <Icon :name="'dossier'" :height="'1.25rem'" :width="'1.25rem'" :on-click="navigateToDossier" />
                 <Icon :name="'settings'" :height="'1.25rem'" :width="'1.25rem'" :on-click="navigateToSetting" />
                 <Icon :name="'door'" :height="'1.25rem'" :width="'1.25rem'" :on-click="navigateAccessAcount" />
@@ -21,7 +19,6 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 import Divider from './Divider.vue';
-import FormControl from './FormControl.vue';
 import Icon from './Icon.vue';
 import Typography from './Typography.vue';
 import { storeToRefs } from 'pinia';
@@ -37,6 +34,7 @@ const { dossiers } = storeToRefs(useDossier());
 const dossier = computed(() => dossiers.value.find((dossier) => dossier.userUuid === session.value?.userUuid))
 
 const navigateToDashboard = async () => await router.push({ name: "dashboard", params: { userUuid: session.value!.userUuid } })
+const navigateToLibrary = async () => await router.push({ name: "library", params: { userUuid: session.value!.userUuid } })
 const navigateToDossier = async () => await router.push({ name: "dossier", params: { userUuid: session.value!.userUuid, dossierUuid: dossier.value?.uuid } })
 const navigateToSetting = async () => await router.push({ name: "setting", params: { userUuid: session.value!.userUuid } })
 const navigateAccessAcount = async () => {

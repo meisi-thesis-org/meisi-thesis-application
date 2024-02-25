@@ -1,4 +1,5 @@
 import { useLocalStorage } from '@/composables/useLocalStorage';
+import { useLocation } from '@/composables/useLocation';
 import { useNetwork } from '@/stores/useNetwork';
 import { useSession } from '@/stores/useSession';
 import { storeToRefs } from 'pinia';
@@ -13,34 +14,33 @@ export const isNetworkRegistered = async (
   const useNetworkStore = useNetwork();
   const { networks } = storeToRefs(useNetworkStore);
   const { session } = storeToRefs(useSession());
-  const { fetch } = useLocalStorage();
+  const { fetch, save } = useLocalStorage();
+  const { location, loadLocation } = useLocation();
 
-  if (fetch("is_network_unknown") === true) {
+  if (fetch("is_network_unknown") !== null) {
     return next();
   }
-
-  const position = await new Promise<{ coords: { latitude: number, longitude: number } }>((resolve, reject) => {
-    navigator.geolocation.getCurrentPosition(
-      position => resolve(position),
-      error => reject(error)
-    )
-  })
+  
+  await loadLocation();
 
   const sessionUserUuid = session.value!.userUuid;
 
   const isCurrentNetwork = computed(() => networks.value.find(({ userUuid, latitude, longitude }) =>
     userUuid === sessionUserUuid &&
     (
-      latitude >= position.coords.latitude - 10 &&
-      latitude <= position.coords.latitude + 10 &&
-      longitude >= position.coords.longitude - 10 &&
-      longitude <= position.coords.longitude + 10
+      latitude >= location.value.latitude - 10 &&
+      latitude <= location.value.latitude + 10 &&
+      longitude >= location.value.longitude - 10 &&
+      longitude <= location.value.longitude + 10
     )))
 
   /**
    * In case the network is registered on state
    */
-  if (isCurrentNetwork.value !== undefined) return next();
+  if (isCurrentNetwork.value !== undefined) {
+    save('is_network_unknown', false);
+    return next();
+  };
 
   /**
    * In case the are no networks registered on state
@@ -56,7 +56,10 @@ export const isNetworkRegistered = async (
    * Check to see if current network is already registered
    * Then resume navigation
     */
-  if (isCurrentNetwork.value !== undefined) return next();
+  if (isCurrentNetwork.value !== undefined) {
+    save('is_network_unknown', false);
+    return next();
+  }
 
   /**
    * Resume Navigation with restricted access

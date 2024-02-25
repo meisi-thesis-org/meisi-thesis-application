@@ -55,7 +55,7 @@ export class DossierController {
   async findDossiersByQuery (request: Request, response: Response): Promise<Response> {
     try {
       const FindDossierByQueryRequest: FindDossierByQueryRequest = {
-        userUuid: String(request.query.userUuid) ?? ''
+        userUuid: request.query.userUuid ? String(request.query.userUuid) : undefined
       }
       const dossiers = await this.service.findDossiersByQuery(FindDossierByQueryRequest);
       return response.status(200).json(dossiers);
