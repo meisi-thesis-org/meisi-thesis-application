@@ -19,10 +19,7 @@ CREATE TABLE devices (
     active BOOLEAN NOT NULL, 
     created_at VARCHAR (255) NOT NULL, 
     updated_at VARCHAR (255) NOT NULL,
-    PRIMARY KEY(uuid),
-    CONSTRAINT fk_user
-      FOREIGN KEY(user_uuid) 
-        REFERENCES user(uuid)
+    PRIMARY KEY(uuid)
 )
 
 CREATE TABLE networks (
@@ -34,8 +31,56 @@ CREATE TABLE networks (
     active BOOLEAN NOT NULL, 
     created_at VARCHAR (255) NOT NULL, 
     updated_at VARCHAR (255) NOT NULL,
-    PRIMARY KEY(uuid),
-    CONSTRAINT fk_user
-      FOREIGN KEY(user_uuid) 
-        REFERENCES user(uuid)
+    PRIMARY KEY(uuid)
+)
+
+CREATE TABLE dossiers (
+    uuid VARCHAR (255) UNIQUE NOT NULL,
+    user_uuid VARCHAR (255) UNIQUE NOT NULL, 
+    price INT UNIQUE NOT NULL, 
+    designation VARCHAR (255) UNIQUE NOT NULL, 
+    visible BOOLEAN NOT NULL, 
+    active BOOLEAN NOT NULL, 
+    created_at VARCHAR (255) NOT NULL, 
+    updated_at VARCHAR (255) NOT NULL,
+    PRIMARY KEY(uuid)
+)
+
+CREATE TABLE books (
+    uuid VARCHAR (255) UNIQUE NOT NULL,
+    dossier_uuid VARCHAR (255) UNIQUE NOT NULL, 
+    designation VARCHAR (255) UNIQUE NOT NULL, 
+    description VARCHAR (255) UNIQUE NOT NULL, 
+    price INT UNIQUE NOT NULL, 
+    visible BOOLEAN NOT NULL, 
+    active BOOLEAN NOT NULL, 
+    created_at VARCHAR (255) NOT NULL, 
+    updated_at VARCHAR (255) NOT NULL,
+    PRIMARY KEY(uuid)
+)
+
+CREATE TABLE chapters (
+    uuid VARCHAR (255) UNIQUE NOT NULL,
+    book_uuid VARCHAR (255) UNIQUE NOT NULL, 
+    designation VARCHAR (255) UNIQUE NOT NULL, 
+    description VARCHAR (255) UNIQUE NOT NULL, 
+    price INT UNIQUE NOT NULL, 
+    visible BOOLEAN NOT NULL, 
+    active BOOLEAN NOT NULL, 
+    created_at VARCHAR (255) NOT NULL, 
+    updated_at VARCHAR (255) NOT NULL,
+    PRIMARY KEY(uuid)
+)
+
+CREATE TABLE pages (
+    uuid VARCHAR (255) UNIQUE NOT NULL,
+    chapter_uuid VARCHAR (255) UNIQUE NOT NULL, 
+    designation VARCHAR (255) UNIQUE NOT NULL, 
+    description VARCHAR (255) UNIQUE NOT NULL, 
+    price INT UNIQUE NOT NULL, 
+    visible BOOLEAN NOT NULL, 
+    active BOOLEAN NOT NULL, 
+    created_at VARCHAR (255) NOT NULL, 
+    updated_at VARCHAR (255) NOT NULL,
+    PRIMARY KEY(uuid)
 )

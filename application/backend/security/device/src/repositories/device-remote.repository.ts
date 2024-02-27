@@ -1,9 +1,9 @@
-import { Pool } from 'pg';
+import { Client } from 'pg';
 import { DeviceRepository } from '../device.repository';
 import { DeviceEntity } from '../structs/device.domain';
 
 export class DeviceRemoteRepository implements DeviceRepository {
-  private readonly provider: Pool = new Pool({
+  private readonly provider: Client = new Client({
     host: process.env.DB_HOST,
     database: process.env.DB_NAME,
     user: process.env.DB_USER,
@@ -11,9 +11,11 @@ export class DeviceRemoteRepository implements DeviceRepository {
     port: Number(process.env.DB_PORT)
   })
 
-  async findDevicesByUserUuid(userUuid: string | undefined): Promise<Array<Readonly<DeviceEntity>>> {
-    await this.provider.connect();
+  public constructor() {
+    this.provider.connect()
+  }
 
+  async findDevicesByUserUuid(userUuid: string | undefined): Promise<Array<Readonly<DeviceEntity>>> {
     const result = await this.provider.query<DeviceEntity>({
       name: 'find-devices-by-userUuid',
       text: `
@@ -28,8 +30,6 @@ export class DeviceRemoteRepository implements DeviceRepository {
   }
 
   async findDeviceByUuid(uuid: string): Promise<Readonly<DeviceEntity> | undefined> {
-    await this.provider.connect();
-
     const result = await this.provider.query<DeviceEntity>({
       name: 'find-device-by-uuid',
       text: `
@@ -44,7 +44,6 @@ export class DeviceRemoteRepository implements DeviceRepository {
   }
 
   async findDeviceByProps(userUuid: string, userAgent: string): Promise<Readonly<DeviceEntity> | undefined> {
-    await this.provider.connect();
     const result = await this.provider.query<DeviceEntity>({
       name: 'find-devices-by-props',
       text: `
@@ -58,7 +57,6 @@ export class DeviceRemoteRepository implements DeviceRepository {
   }
 
   async createDevice(deviceEntity: DeviceEntity): Promise<void> {
-    await this.provider.connect();
     await this.provider.query<DeviceEntity>({
       name: 'create-device',
       text: 'INSERT INTO devices ("uuid", "user_uuid", "user_agent", "visible", "active", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7)',
@@ -67,7 +65,6 @@ export class DeviceRemoteRepository implements DeviceRepository {
   }
 
   async updateDeviceByUuid(uuid: string, deviceEntity: Omit<DeviceEntity, 'uuid' | 'userUuid' | 'createdAt'>): Promise<void> {
-    await this.provider.connect();
     await this.provider.query<DeviceEntity>({
       name: 'update-device-by-uuid',
       text: 'UPDATE devices SET devices.user_agent = $1, devices.visible = $2, devices.active = $3, devices.updated_at = $4 WHERE devices.uuid = $5',

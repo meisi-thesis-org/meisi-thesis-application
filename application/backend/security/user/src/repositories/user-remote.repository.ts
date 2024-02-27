@@ -1,22 +1,21 @@
-import { Pool } from 'pg';
+import { Client } from 'pg';
 import { UserEntity } from '../structs/user.domain';
 import { UserRepository } from '../user.repository';
 
 export class UserRemoteRepository implements UserRepository {
-  private readonly provider: Pool
+  private readonly provider: Client = new Client({
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    port: Number(process.env.DB_PORT)
+  })
 
   public constructor() {
-    this.provider = new Pool({
-      host: process.env.DB_HOST,
-      database: process.env.DB_NAME,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      port: Number(process.env.DB_PORT)
-    })
+    this.provider.connect();
   }
 
   public async findBulk(): Promise<UserEntity[] | undefined> {
-    await this.provider.connect();
     const result = await this.provider.query<UserEntity>({
       name: 'find-users',
       text: `
@@ -28,7 +27,6 @@ export class UserRemoteRepository implements UserRepository {
   }
 
   public async findUserByUuid(uuid: string): Promise<UserEntity | undefined> {
-    await this.provider.connect();
     const result = await this.provider.query<UserEntity>({
       name: 'find-user-by-uuid',
       text: `
@@ -38,7 +36,6 @@ export class UserRemoteRepository implements UserRepository {
       `,
       values: [uuid]
     }); 
-    console.log(result.rows[0])
     return result.rows[0];
   }
 
@@ -47,7 +44,6 @@ export class UserRemoteRepository implements UserRepository {
     email: string | undefined,
     phoneNumber: string | undefined
   ): Promise<UserEntity | undefined> {
-    await this.provider.connect();
     const result = await this.provider.query<UserEntity>({
       name: 'find-user-by-auth-credentials',
       text: `
@@ -61,7 +57,6 @@ export class UserRemoteRepository implements UserRepository {
   }
 
   public async createUser(userEntity: UserEntity): Promise<void> {
-    await this.provider.connect();
     await this.provider.query<UserEntity>({
       name: 'create-user',
       text: 'INSERT INTO users ("uuid", "username", "email", "phone_number", "access_code", "name", "date_birth", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)',
@@ -70,7 +65,6 @@ export class UserRemoteRepository implements UserRepository {
   }
 
   public async updateUser(userEntity: UserEntity): Promise<void> {
-    await this.provider.connect();
     await this.provider.query<UserEntity>({
       name: 'update-user',
       text: 'UPDATE users SET users.username = $1, users.email = $2, users.phone_number = $3, users.access_code = $4, users.name = $5, users.date_birth = $6, users.updated_at = $7 WHERE users.uuid = $8',

@@ -11,89 +11,83 @@ export class BookRemoteRepository implements BookRepository {
     port: Number(process.env.DB_PORT)
   })
 
+  public constructor() {
+    this.provider.connect();
+  }
+
   async findBookByProps (
     dossierUuid: string,
     designation: string
   ): Promise<BookEntity | undefined> {
-    try {
-      await this.provider.connect();
-      const result = await this.provider.query<BookEntity>({
-        name: 'find-book-by-props',
-        text: 'SELECT * FROM books WHERE books.dossierUuid = $1 AND books.designation = $2',
-        values: [dossierUuid, designation]
-      });
-      return result.rows[0];
-    } finally {
-      await this.provider.end();
-    }
+    const result = await this.provider.query<BookEntity>({
+      name: 'find-book-by-props',
+      text: `
+        SELECT uuid, dossier_uuid as "dossierUuid", designation, description, price, visible, active, created_at as "createdAt", updated_at as "updatedAt" 
+        FROM books 
+        WHERE books.dossier_uuid = $1 AND books.designation = $2
+      `,
+      values: [dossierUuid, designation]
+    });
+    return result.rows[0];
   }
 
   async findBooksByQuery (dossierUuid?: string | undefined): Promise<BookEntity[]> {
-    try {
-      await this.provider.connect();
-      const result = await this.provider.query<BookEntity>({
-        name: 'find-books-by-query',
-        text: 'SELECT * FROM books WHERE books.bookUuid = $1',
-        values: [dossierUuid]
+    const result = await this.provider.query<BookEntity>({
+      name: 'find-books-by-query',
+      text: `
+        SELECT uuid, dossier_uuid as "dossierUuid", designation, description, price, visible, active, created_at as "createdAt", updated_at as "updatedAt" 
+        FROM books 
+        WHERE books.dossier_uuid = $1
+      `,
+      values: [dossierUuid]
+    });
+
+    if (result.rowCount === 0) {
+      const books = await this.provider.query<BookEntity>({
+        name: 'find-books',
+        text: `
+          SELECT uuid, dossier_uuid as "dossierUuid", designation, description, price, visible, active, created_at as "createdAt", updated_at as "updatedAt" 
+          FROM books
+        `
       });
 
-      if (result.rowCount === 0) {
-        const books = await this.provider.query<BookEntity>({
-          name: 'find-books',
-          text: 'SELECT * FROM books'
-        });
-
-        return books.rows;
-      }
-
-      return result.rows;
-    } finally {
-      await this.provider.end();
+      return books.rows;
     }
+
+    return result.rows;
   }
 
   async findBookByUuid (
     uuid: string
   ): Promise<BookEntity | undefined> {
-    try {
-      await this.provider.connect();
-      const result = await this.provider.query<BookEntity>({
-        name: 'find-book-by-uuid',
-        text: 'SELECT * FROM books WHERE books.uuid = $1',
-        values: [uuid]
-      });
-      return result.rows[0];
-    } finally {
-      await this.provider.end();
-    }
+    const result = await this.provider.query<BookEntity>({
+      name: 'find-book-by-uuid',
+      text: `
+        SELECT uuid, dossier_uuid as "dossierUuid", designation, description, price, visible, active, created_at as "createdAt", updated_at as "updatedAt" 
+        FROM books 
+        WHERE books.uuid = $1
+      `,
+      values: [uuid]
+    });
+    return result.rows[0];
   }
 
   async createBook (data: BookEntity): Promise<void> {
-    try {
-      await this.provider.connect();
-      await this.provider.query<BookEntity>({
-        name: 'create-book',
-        text: 'INSERT INTO books ("uuid", "dossierUuid", "designation", "description", "price", "visible", "active", "createdAt", "updatedAt") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)',
-        values: [data.uuid, data.dossierUuid, data.designation, data.description, data.price, data.visible, data.active, data.createdAt, data.updatedAt]
-      });
-    } finally {
-      await this.provider.end();
-    }
+    await this.provider.query<BookEntity>({
+      name: 'create-book',
+      text: 'INSERT INTO books ("uuid", "dossier_uuid", "designation", "description", "price", "visible", "active", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)',
+      values: [data.uuid, data.dossierUuid, data.designation, data.description, data.price, data.visible, data.active, data.createdAt, data.updatedAt]
+    });
   }
 
   async updateBookByUuid (
     uuid: string,
     data: Omit<BookEntity, 'uuid' | 'dossierUuid' | 'createdAt'>
   ): Promise<void> {
-    try {
-      await this.provider.connect();
-      await this.provider.query<BookEntity>({
-        name: 'update-book-by-uuid',
-        text: 'UPDATE books SET books.designation = $1, books.description = $2, books.price = $3, books.visible = $4, books.active = $5, books.updatedAt = $6 WHERE books.uuid = $5',
-        values: [data.designation, data.description, data.price, data.visible, data.active, data.updatedAt, uuid]
-      });
-    } finally {
-      await this.provider.end();
-    }
+    await this.provider.query<BookEntity>({
+      name: 'update-book-by-uuid',
+      text: 'UPDATE books SET books.designation = $1, books.description = $2, books.price = $3, books.visible = $4, books.active = $5, books.updated_at = $6 WHERE books.uuid = $5',
+      values: [data.designation, data.description, data.price, data.visible, data.active, data.updatedAt, uuid]
+    });
   }
 }

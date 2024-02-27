@@ -11,81 +11,81 @@ export class ChapterRemoteRepository implements ChapterRepository {
     port: Number(process.env.DB_PORT)
   })
 
+  public constructor() {
+    this.provider.connect()
+  }
+
   async findChapterByProps (bookUuid: string, designation: string): Promise<ChapterEntity | undefined> {
-    try {
-      await this.provider.connect();
-      const result = await this.provider.query<ChapterEntity>({
-        name: 'find-chapter-by-props',
-        text: 'SELECT * FROM chapters WHERE chapters.bookUuid = $1 AND chapters.designation = $2',
-        values: [bookUuid, designation]
-      });
-      return result.rows[0];
-    } finally {
-      await this.provider.end();
-    }
+    const result = await this.provider.query<ChapterEntity>({
+      name: 'find-chapter-by-props',
+      text: `
+        SELECT uuid, book_uuid as "bookUuid", designation, description, price, visible, active, created_at as "createdAt", updated_at as "updatedAt" 
+        FROM chapters 
+        WHERE chapters.book_uuid = $1 AND chapters.designation = $2
+      `,
+      values: [bookUuid, designation]
+    });
+    return result.rows[0];
   }
 
   async findChaptersByQuery (bookUuid?: string | undefined): Promise<ChapterEntity[]> {
-    try {
-      await this.provider.connect();
-      const result = await this.provider.query<ChapterEntity>({
-        name: 'find-chapters-by-query',
-        text: 'SELECT * FROM chapters WHERE chapters.bookUuid = $1',
-        values: [bookUuid]
+    const result = await this.provider.query<ChapterEntity>({
+      name: 'find-chapters-by-query',
+      text: `
+        SELECT uuid, book_uuid as "bookUuid", designation, description, price, visible, active, created_at as "createdAt", updated_at as "updatedAt" 
+        FROM chapters 
+        WHERE chapters.book_uuid = $1
+      `,
+      values: [bookUuid]
+    });
+
+    if (result.rowCount === 0) {
+      const chapters = await this.provider.query<ChapterEntity>({
+        name: 'find-chapters',
+        text: `
+          SELECT uuid, book_uuid as "bookUuid", designation, description, price, visible, active, created_at as "createdAt", updated_at as "updatedAt" 
+          FROM chapters 
+        `
       });
 
-      if (result.rowCount === 0) {
-        const chapters = await this.provider.query<ChapterEntity>({
-          name: 'find-chapters',
-          text: 'SELECT * FROM chapters'
-        });
-
-        return chapters.rows;
-      }
-
-      return result.rows;
-    } finally {
-      await this.provider.end();
+      return chapters.rows;
     }
+
+    return result.rows;
   }
 
   async findChapterByUuid (uuid: string): Promise<ChapterEntity | undefined> {
-    try {
-      await this.provider.connect();
-      const result = await this.provider.query<ChapterEntity>({
-        name: 'find-chapter-by-uuid',
-        text: 'SELECT * FROM chapters WHERE chapters.uuid = $1',
-        values: [uuid]
-      });
-      return result.rows[0];
-    } finally {
-      await this.provider.end();
-    }
+    const result = await this.provider.query<ChapterEntity>({
+      name: 'find-chapter-by-uuid',
+      text: `
+        SELECT uuid, book_uuid as "bookUuid", designation, description, price, visible, active, created_at as "createdAt", updated_at as "updatedAt" 
+        FROM chapters
+        WHERE chapters.uuid = $1
+      `,
+      values: [uuid]
+    });
+    return result.rows[0];
   }
 
   async createChapter (data: ChapterEntity): Promise<void> {
-    try {
-      await this.provider.connect();
-      await this.provider.query<ChapterEntity>({
-        name: 'create-chapter',
-        text: 'INSERT INTO chapters ("uuid", "bookUuid", "designation", "description", "price", "visible", "active", "createdAt", "updatedAt") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)',
-        values: [data.uuid, data.bookUuid, data.designation, data.description, data.price, data.visible, data.active, data.createdAt, data.updatedAt]
-      });
-    } finally {
-      await this.provider.end();
-    }
+    await this.provider.query<ChapterEntity>({
+      name: 'create-chapter',
+      text: `
+        INSERT INTO chapters ("uuid", "book_uuid", "designation", "description", "price", "visible", "active", "created_at", "updated_at") 
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+      `,
+      values: [data.uuid, data.bookUuid, data.designation, data.description, data.price, data.visible, data.active, data.createdAt, data.updatedAt]
+    });
   }
 
   async updateChapterByUuid (uuid: string, data: ChapterEntity): Promise<void> {
-    try {
-      await this.provider.connect();
-      await this.provider.query<ChapterEntity>({
-        name: 'update-chapter-by-uuid',
-        text: 'UPDATE chapters SET chapters.designation = $1, chapters.description = $2, chapters.price = $3, chapters.visible = $4, chapters.active = $5, chapters.updatedAt = $6 WHERE chapters.uuid = $5',
-        values: [data.designation, data.description, data.price, data.visible, data.active, data.updatedAt, uuid]
-      });
-    } finally {
-      await this.provider.end();
-    }
+    await this.provider.query<ChapterEntity>({
+      name: 'update-chapter-by-uuid',
+      text: `
+        UPDATE chapters SET chapters.designation = $1, chapters.description = $2, chapters.price = $3, chapters.visible = $4, chapters.active = $5, chapters.updated_at = $6
+        WHERE chapters.uuid = $5
+      `,
+      values: [data.designation, data.description, data.price, data.visible, data.active, data.updatedAt, uuid]
+    });
   }
 }

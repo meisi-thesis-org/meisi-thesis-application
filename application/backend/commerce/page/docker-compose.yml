@@ -1,37 +1,37 @@
 version: '3.8'
 
 services:
-  ux:
-    container_name: ux
+  pageux:
+    container_name: pageux
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: admin
     restart: always
     volumes:
-      - ux:/var/lib/pgadmin
+      - pageux:/var/lib/pgadmin
     ports:
-      - "8888:80"
+      - "8892:80"
     networks:
-      - db-ux-network
-  db:
-    container_name: db
+      - page-db-ux-network
+  pagedb:
+    container_name: pagedb
     image: postgres
     restart: always
     ports:
-      - "5432:5432"
+      - "5438:5432"
     environment:
-      POSTGRES_USER: admin
+      POSTGRES_page: admin
       POSTGRES_PASSWORD: admin
     volumes:
-      - db:/var/lib/postgresql/data
+      - pagedb:/var/lib/postgresql/data
     networks:
-      - db-ux-network
+      - page-db-ux-network
 
 networks: 
-  db-ux-network:
+  page-db-ux-network:
     driver: bridge
 
 volumes:
-  db:
-  ux:
+  pagedb:
+  pageux:
