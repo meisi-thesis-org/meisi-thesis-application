@@ -29,7 +29,7 @@ export const usePermission = (route: RouteLocation = useRoute()) => {
   const isProducerChapter = computed(() => chapters.value.find((chapter) => chapter.uuid === route.params.chapterUuid && isProducerBook.value))
   const isProducerPage = computed(() => pages.value.find((page) => page.uuid === route.params.pageUuid && isProducerChapter.value))
   const isTrustedDevice = computed(() => devices.value?.find(({ userUuid, userAgent }) => userAgent === navigator.userAgent && userUuid === session.value?.userUuid));
-  const isTrustedNetwork = computed( () => {
+  const isTrustedNetwork = computed(() => {
     return networks.value.find(({ userUuid, latitude, longitude }) => (
       userUuid === session.value?.userUuid &&
       (
@@ -46,7 +46,12 @@ export const usePermission = (route: RouteLocation = useRoute()) => {
 
   const isProducer = computed(() => (isProducerDossier.value !== undefined || isProducerBook.value !== undefined || isProducerChapter.value !== undefined || isProducerPage.value !== undefined));
   const isConsumer = computed(() => (isProducerDossier.value === undefined && isProducerBook.value === undefined && isProducerChapter.value === undefined && isProducerPage.value === undefined));
-  const isSubscribed = computed(() => subscriptions.value.find((subscription) => subscription.dossierUuid === route.params.dossierUuid));
+  
+  /** Subscribed Chaindown */
+  const isDossierSubscribed = computed(() => subscriptions.value.find((subscription) => !!(subscription.dossierUuid === route.params?.dossierUuid && (subscription.active && subscription.visible))));
+  const isBookSubscribed = computed(() => subscriptions.value.find((subscription) => !!(subscription.bookUuid === route.params?.bookUuid && (subscription.active && subscription.visible))));
+  const isChapterSubscribed = computed(() => subscriptions.value.find((subscription) => !!(subscription.chapterUuid === route.params?.chapterUuid && (subscription.active && subscription.visible))));
+  const isPageSubscribed = computed(() => subscriptions.value.find((subscription) => !!(subscription.pageUuid === route.params?.pageUuid && (subscription.active && subscription.visible))));
 
-  return { isOwner, isGuest, isProducer, isConsumer, isSubscribed }
+  return { isOwner, isGuest, isProducer, isConsumer, isDossierSubscribed, isBookSubscribed, isChapterSubscribed, isPageSubscribed } 
 }

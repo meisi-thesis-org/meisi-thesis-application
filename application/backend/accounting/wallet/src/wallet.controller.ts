@@ -68,7 +68,6 @@ export class WalletController {
 
   public async updateWalletByUuid (request: Request, response: Response): Promise<Response> {
     try {
-      console.log("xdd")
       const requestArgs: UpdateWalletByUuidRequest = {
         uuid: request.params.uuid,
         active: request.body.active,

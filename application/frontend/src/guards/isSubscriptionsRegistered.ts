@@ -12,8 +12,8 @@ export const isSubscriptionsRegistered = async (
     const useWalletStore = useWallet();
     const { subscriptions } = storeToRefs(useSubscriptionStore);
     const { wallet } = storeToRefs(useWalletStore);
-    
-    if (subscriptions.value) return next();
+
+    if (subscriptions.value.length > 0) return next();
 
     const foundSubscriptions = await useSubscriptionStore.findSubscriptionsByForeignsUuid(wallet.value?.uuid);
     useSubscriptionStore.updateState(foundSubscriptions);

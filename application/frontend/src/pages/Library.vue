@@ -7,13 +7,14 @@
                     <div id="wrapper__inner--sections__content--cards">
                         <Typography :content="'Dossiers'" :segment="'designation'" />
                         <Card v-for="dossier of dossiers" @click="navigateToDossier(dossier.uuid)"
-                            :designation="`Dossier: ${dossier.uuid}`" :description="dossier.designation" :is-visible="dossier.visible"
-                            :is-active="dossier.active" />
+                            :designation="`Dossier: ${dossier.uuid}`" :description="dossier.designation"
+                            :is-visible="dossier.visible" :is-active="dossier.active" />
                     </div>
                     <div id="wrapper__inner--sections__content--cards">
                         <Typography :content="'Books'" :segment="'designation'" />
-                        <Card v-for="book of books" @click="navigateToBook(book.uuid)" :designation="`Book: ${book.designation}`"
-                            :description="book.description" :is-visible="book.visible" :is-active="book.active" />
+                        <Card v-for="book of books" @click="navigateToBook(book.uuid)"
+                            :designation="`Book: ${book.designation}`" :description="book.description"
+                            :is-visible="book.visible" :is-active="book.active" />
                     </div>
                     <div id="wrapper__inner--sections__content--cards">
                         <Typography :content="'Chapters'" :segment="'designation'" />
@@ -23,8 +24,9 @@
                     </div>
                     <div id="wrapper__inner--sections__content--cards">
                         <Typography :content="' Pages'" :segment="'designation'" />
-                        <Card v-for="page of pages" @click="navigateToPage(page.uuid)" :designation="`Page: ${page.designation}`"
-                            :description="page.description" :is-visible="page.visible" :is-active="page.active" />
+                        <Card v-for="page of pages" @click="navigateToPage(page.uuid)"
+                            :designation="`Page: ${page.designation}`" :description="page.description"
+                            :is-visible="page.visible" :is-active="page.active" />
                     </div>
                 </div>
             </div>
@@ -90,22 +92,22 @@ const navigateToPage = (pageUuid: string) => {
 onMounted(async () => {
     isLoading.value = true;
     dossiers.value = (await findDossiersByQuery()).filter((dossier) => {
-        return dossier.userUuid === session.value?.userUuid;
+        return dossier.userUuid !== session.value?.userUuid && dossier.active === true && dossier.visible === true;
     });
     books.value = (await findBooksByQuery()).filter((book) => {
         const dossier = findDossierById(book.dossierUuid);
-        return dossier?.userUuid === session.value?.userUuid ? book : undefined;
+        return dossier?.userUuid !== session.value?.userUuid && dossier?.active === true && dossier?.visible === true && book.active === true && book.visible === true;
     });
     chapters.value = (await findChaptersByQuery()).filter((chapter) => {
         const book = findBookById(chapter.bookUuid);
         const dossier = findDossierById(book?.dossierUuid ?? '');
-        return dossier?.userUuid === session.value?.userUuid ? book : undefined;
+        return dossier?.userUuid !== session.value?.userUuid && dossier?.active === true && dossier?.visible === true && book?.active === true && book?.visible === true && chapter.active === true && chapter.visible === true;
     });
     pages.value = (await findPagesByQuery()).filter((page) => {
         const chapter = findChapterById(page?.chapterUuid ?? '');
         const book = findBookById(chapter?.bookUuid ?? '');
         const dossier = findDossierById(book?.dossierUuid ?? '');
-        return dossier?.userUuid === session.value?.userUuid ? book : undefined;
+        return dossier?.userUuid !== session.value?.userUuid && dossier?.visible === true && book?.active === true && book?.visible === true && chapter?.active === true && chapter?.visible === true && page.active === true && page.visible === true;
     });
     isLoading.value = false;
 })

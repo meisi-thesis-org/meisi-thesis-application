@@ -11,7 +11,7 @@ services:
     volumes:
       - pageux:/var/lib/pgadmin
     ports:
-      - "8892:80"
+      - "8895:80"
     networks:
       - page-db-ux-network
   pagedb:

@@ -62,7 +62,6 @@ export class SubscriptionService {
             { authorization: requestOptions?.authorization ?? '' }
           ).catch((error) => { throw error }) as any
 
-        console.log(responseArgs.data)
         if (!responseArgs.data.active || !responseArgs.data.visible) throw new BadRequestException();
 
         removeAmount += responseArgs.data.price;
@@ -76,7 +75,7 @@ export class SubscriptionService {
       { authorization: requestOptions?.authorization ?? '' },
       undefined,
       { funds: removeAmount }
-    ).catch((error) => { throw error }) as any
+    ).catch(() => { throw new InternalServerException() })
 
     const createdEntity: SubscriptionEntity = {
       uuid: this.randomProvider.randomUUID(),

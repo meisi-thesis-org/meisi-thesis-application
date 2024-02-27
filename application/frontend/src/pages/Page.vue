@@ -36,7 +36,7 @@ const { isLoading } = useLoader();
 const { pages } = storeToRefs(usePageStore);
 const { subscriptions } = storeToRefs(useSubscriptionStore);
 const { wallet } = storeToRefs(useWalletStore);
-const { isProducer, isConsumer, isSubscribed } = usePermission();
+const { isProducer, isConsumer, isDossierSubscribed, isBookSubscribed, isChapterSubscribed, isPageSubscribed } = usePermission();
 
 const page = computed(() => pages.value.find((page) => page.uuid === route.params.pageUuid))
 const isVisible = computed(() => (page.value && page.value.visible) ?? false)
@@ -44,8 +44,8 @@ const isActive = computed(() => (page.value && page.value.active) ?? false)
 const subHeaderContent = computed(() => page.value?.description ?? '')
 
 const bannerIcons = computed<Array<IconProps & { isVisible: boolean }>>(() => ([
-    { name: 'lock', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isConsumer.value && !isSubscribed.value && isActive.value && isVisible.value), onClick: () => toggleSubscription() },
-    { name: 'unlock', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isConsumer.value && isSubscribed.value && isActive.value && isVisible.value), onClick: () => toggleSubscription() },
+    { name: 'lock', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isConsumer.value && !isDossierSubscribed.value && !isBookSubscribed.value && !isChapterSubscribed.value && !isPageSubscribed.value && isActive.value && isVisible.value), onClick: () => toggleSubscription() },
+    { name: 'unlock', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isConsumer.value && !isDossierSubscribed.value && !isBookSubscribed.value && !isChapterSubscribed.value && isPageSubscribed.value && isActive.value && isVisible.value), onClick: () => toggleSubscription() },
     { name: 'watcher', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && !isVisible.value), onClick: () => updatePage({ visible: true }) },
     { name: 'watcher-off', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && isVisible.value), onClick: () => updatePage({ visible: false }) },
     { name: 'trashcan', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value), onClick: () => updatePage({ active: false }) },

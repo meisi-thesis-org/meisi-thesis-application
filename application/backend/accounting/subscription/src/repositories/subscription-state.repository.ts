@@ -2,7 +2,7 @@ import { type SubscriptionEntity } from '../structs/subscription.domain';
 import { type SubscriptionRepository } from '../subscription.repository';
 
 export class SubscriptionStateRepository implements SubscriptionRepository {
-  private readonly subscriptions = new Array<SubscriptionEntity>();
+  private subscriptions = new Array<SubscriptionEntity>();
 
   public async findSubscriptionByUuid (entity: Pick<SubscriptionEntity, 'uuid'>): Promise<SubscriptionEntity | undefined> {
     return this.subscriptions.find((subscription) => subscription.uuid === entity.uuid);
@@ -32,7 +32,7 @@ export class SubscriptionStateRepository implements SubscriptionRepository {
   }
 
   public async updateSubscriptionByUuid (entity: SubscriptionEntity): Promise<void> {
-    this.subscriptions.filter((subscription) => {
+    this.subscriptions = this.subscriptions.map((subscription) => {
       if (subscription.uuid === entity.uuid) {
         subscription = { ...subscription, ...entity };
       }

@@ -45,8 +45,13 @@ const useSubscription = defineStore('subscriptions', () => {
     const updateSubscriptionByUuid = async (uuid: string, data: Record<string, Primitive>) => {
         try {
             const response = await createRequest<SubscriptionEntity>(`accounting/subscriptions/${uuid}`, 'PUT', data);
-            state.value = state.value?.map((subscription) => {
-                if (subscription.uuid === response.data.uuid) subscription = response.data;
+            state.value = state.value.map((subscription) => {
+                if (subscription.uuid === response.data.uuid) {
+                    subscription.visible = response.data.visible;
+                    subscription.active = response.data.active;
+                    subscription.updatedAt = response.data.updatedAt;
+                }
+                console.log(subscription);
                 return subscription;
             })
         } catch (error) {

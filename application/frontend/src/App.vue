@@ -22,7 +22,7 @@ const { theme } = useTheme();
   box-sizing: border-box;
 
   --dark--theme--color: #394053;
-  --light--theme--color: #fafafa;
+  --light--theme--color: #F4F4F6;
   --blue--theme--color: #5382A1;
   --yellow--theme--color: #EF9B0F;
   --violet--theme--color: #e81cff;

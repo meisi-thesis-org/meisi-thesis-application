@@ -49,13 +49,13 @@ const { chapters } = storeToRefs(useChapterStore);
 const { pages } = storeToRefs(usePageStore);
 const { subscriptions } = storeToRefs(useSubscriptionStore);
 const { wallet } = storeToRefs(useWalletStore);
-const { isProducer, isConsumer, isSubscribed } = usePermission();
+const { isProducer, isConsumer, isDossierSubscribed, isBookSubscribed, isChapterSubscribed } = usePermission();
 
 const chapter = computed(() => chapters.value.find((chapter) => chapter.uuid === route.params.chapterUuid))
 
 const bannerIcons = computed<Array<IconProps & { isVisible: boolean }>>(() => ([
-    { name: 'lock', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isConsumer.value && !isSubscribed.value && isActive.value && isVisible.value), onClick: () => toggleSubscription() },
-    { name: 'unlock', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isConsumer.value && isSubscribed.value && isActive.value && isVisible.value), onClick: () => toggleSubscription() },
+    { name: 'lock', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isConsumer.value && !isDossierSubscribed.value && !isBookSubscribed.value && !isChapterSubscribed.value && isActive.value && isVisible.value), onClick: () => toggleSubscription() },
+    { name: 'unlock', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isConsumer.value && !isDossierSubscribed.value && !isBookSubscribed.value && isChapterSubscribed.value && isActive.value && isVisible.value), onClick: () => toggleSubscription() },
     { name: 'watcher', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && !isVisible.value), onClick: () => updateChapter({ visible: true }) },
     { name: 'watcher-off', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && isVisible.value), onClick: () => updateChapter({ visible: false }) },
     { name: 'trashcan', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value), onClick: () => updateChapter({ active: false }) },
