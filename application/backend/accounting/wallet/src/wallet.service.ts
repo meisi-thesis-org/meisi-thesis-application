@@ -69,7 +69,7 @@ export class WalletService {
 
     if (foundEntity === undefined) throw new NonFoundException();
 
-    if(requestArgs.funds && requestArgs.funds > foundEntity.funds) throw new BadRequestException();
+    if (requestArgs.funds !== undefined && requestArgs.funds > foundEntity.funds) throw new BadRequestException();
     const newFunds = foundEntity.funds - (requestArgs.funds ?? 0);
 
     const updatedEntity: WalletEntity = {

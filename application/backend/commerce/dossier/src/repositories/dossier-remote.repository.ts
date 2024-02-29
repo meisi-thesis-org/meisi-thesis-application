@@ -11,8 +11,8 @@ export class DossierRemoteRepository implements DossierRepository {
     port: Number(process.env.DB_PORT)
   })
 
-  public constructor() {
-    this.provider.connect();
+  public constructor () {
+    void this.provider.connect();
   }
 
   async findDossierByUuid (uuid: string): Promise<DossierEntity | undefined> {

@@ -1,6 +1,6 @@
 import { Client } from 'pg';
-import { DeviceRepository } from '../device.repository';
-import { DeviceEntity } from '../structs/device.domain';
+import { type DeviceRepository } from '../device.repository';
+import { type DeviceEntity } from '../structs/device.domain';
 
 export class DeviceRemoteRepository implements DeviceRepository {
   private readonly provider: Client = new Client({
@@ -11,11 +11,11 @@ export class DeviceRemoteRepository implements DeviceRepository {
     port: Number(process.env.DB_PORT)
   })
 
-  public constructor() {
-    this.provider.connect()
+  public constructor () {
+    void this.provider.connect();
   }
 
-  async findDevicesByUserUuid(userUuid: string | undefined): Promise<Array<Readonly<DeviceEntity>>> {
+  async findDevicesByUserUuid (userUuid: string | undefined): Promise<Array<Readonly<DeviceEntity>>> {
     const result = await this.provider.query<DeviceEntity>({
       name: 'find-devices-by-userUuid',
       text: `
@@ -29,7 +29,7 @@ export class DeviceRemoteRepository implements DeviceRepository {
     return result.rows;
   }
 
-  async findDeviceByUuid(uuid: string): Promise<Readonly<DeviceEntity> | undefined> {
+  async findDeviceByUuid (uuid: string): Promise<Readonly<DeviceEntity> | undefined> {
     const result = await this.provider.query<DeviceEntity>({
       name: 'find-device-by-uuid',
       text: `
@@ -43,7 +43,7 @@ export class DeviceRemoteRepository implements DeviceRepository {
     return result.rows[0];
   }
 
-  async findDeviceByProps(userUuid: string, userAgent: string): Promise<Readonly<DeviceEntity> | undefined> {
+  async findDeviceByProps (userUuid: string, userAgent: string): Promise<Readonly<DeviceEntity> | undefined> {
     const result = await this.provider.query<DeviceEntity>({
       name: 'find-devices-by-props',
       text: `
@@ -56,7 +56,7 @@ export class DeviceRemoteRepository implements DeviceRepository {
     return result.rows[0];
   }
 
-  async createDevice(deviceEntity: DeviceEntity): Promise<void> {
+  async createDevice (deviceEntity: DeviceEntity): Promise<void> {
     await this.provider.query<DeviceEntity>({
       name: 'create-device',
       text: 'INSERT INTO devices ("uuid", "user_uuid", "user_agent", "visible", "active", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7)',
@@ -64,7 +64,7 @@ export class DeviceRemoteRepository implements DeviceRepository {
     });
   }
 
-  async updateDeviceByUuid(uuid: string, deviceEntity: Omit<DeviceEntity, 'uuid' | 'userUuid' | 'createdAt'>): Promise<void> {
+  async updateDeviceByUuid (uuid: string, deviceEntity: Omit<DeviceEntity, 'uuid' | 'userUuid' | 'createdAt'>): Promise<void> {
     await this.provider.query<DeviceEntity>({
       name: 'update-device-by-uuid',
       text: 'UPDATE devices SET user_agent = $1, visible = $2, active = $3, updated_at = $4 WHERE devices.uuid = $5',

@@ -1,6 +1,6 @@
 import { Client } from 'pg';
-import { NetworkRepository } from '../network.repository';
-import { NetworkEntity } from '../structs/network.domain';
+import { type NetworkRepository } from '../network.repository';
+import { type NetworkEntity } from '../structs/network.domain';
 
 export class NetworkRemoteRepository implements NetworkRepository {
   private readonly provider: Client = new Client({
@@ -11,11 +11,11 @@ export class NetworkRemoteRepository implements NetworkRepository {
     port: Number(process.env.DB_PORT)
   });
 
-  public constructor() {
-    this.provider.connect()
+  public constructor () {
+    void this.provider.connect();
   }
 
-  async findNetworksByUserUuid(userUuid: string | undefined): Promise<Array<Readonly<NetworkEntity>>> {
+  async findNetworksByUserUuid (userUuid: string | undefined): Promise<Array<Readonly<NetworkEntity>>> {
     const result = await this.provider.query<NetworkEntity>({
       name: 'find-networks-by-userUuid',
       text: `
@@ -28,7 +28,7 @@ export class NetworkRemoteRepository implements NetworkRepository {
     return result.rows;
   }
 
-  async findNetworkByUuid(uuid: string): Promise<Readonly<NetworkEntity> | undefined> {
+  async findNetworkByUuid (uuid: string): Promise<Readonly<NetworkEntity> | undefined> {
     const result = await this.provider.query<NetworkEntity>({
       name: 'find-network-by-uuid',
       text: `
@@ -41,7 +41,7 @@ export class NetworkRemoteRepository implements NetworkRepository {
     return result.rows[0];
   }
 
-  async findNetworkByProps(userUuid: string, latitude: number, longitude: number): Promise<Readonly<NetworkEntity> | undefined> {
+  async findNetworkByProps (userUuid: string, latitude: number, longitude: number): Promise<Readonly<NetworkEntity> | undefined> {
     const result = await this.provider.query<NetworkEntity>({
       name: 'find-network-by-props',
       text: `
@@ -54,7 +54,7 @@ export class NetworkRemoteRepository implements NetworkRepository {
     return result.rows[0];
   }
 
-  async createNetwork(networkEntity: NetworkEntity): Promise<void> {
+  async createNetwork (networkEntity: NetworkEntity): Promise<void> {
     await this.provider.query<NetworkEntity>({
       name: 'create-network',
       text: 'INSERT INTO networks ("uuid", "user_uuid", "latitude", "longitude", "visible", "active", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
@@ -62,7 +62,7 @@ export class NetworkRemoteRepository implements NetworkRepository {
     });
   }
 
-  async updateNetworkByUuid(uuid: string, networkEntity: Omit<NetworkEntity, 'uuid' | 'userUuid' | 'createdAt'>): Promise<void> {
+  async updateNetworkByUuid (uuid: string, networkEntity: Omit<NetworkEntity, 'uuid' | 'userUuid' | 'createdAt'>): Promise<void> {
     await this.provider.query<NetworkEntity>({
       name: 'update-network-by-uuid',
       text: 'UPDATE networks SET latitude = $1, longitude = $2, visible = $3, active = $4, update_at = $5 WHERE networks.uuid = $6',

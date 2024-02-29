@@ -11,8 +11,8 @@ export class BookRemoteRepository implements BookRepository {
     port: Number(process.env.DB_PORT)
   })
 
-  public constructor() {
-    this.provider.connect();
+  public constructor () {
+    void this.provider.connect();
   }
 
   async findBookByProps (

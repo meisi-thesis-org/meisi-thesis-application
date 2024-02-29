@@ -11,57 +11,41 @@ export class WalletRemoteRepository implements WalletRepository {
     port: Number(process.env.DB_PORT)
   })
 
+  public constructor () {
+    void this.provider.connect();
+  }
+
   async findWalletByUuid (entity: Pick<WalletEntity, 'uuid'>): Promise<WalletEntity | undefined> {
-    try {
-      await this.provider.connect();
-      const result = await this.provider.query<WalletEntity>({
-        name: 'find-wallet-by-uuid',
-        text: 'SELECT * FROM wallets WHERE wallets.uuid = $1',
-        values: [entity.uuid]
-      });
-      return result.rows[0];
-    } finally {
-      await this.provider.end();
-    }
+    const result = await this.provider.query<WalletEntity>({
+      name: 'find-wallet-by-uuid',
+      text: 'SELECT uuid, user_uuid as "userUuid", funds, active, visible, created_at as "createdAt", updated_at as "updatedAt" FROM wallets WHERE wallets.uuid = $1',
+      values: [entity.uuid]
+    });
+    return result.rows[0];
   }
 
   async findWalletByUserUuid (entity: Partial<Pick<WalletEntity, 'userUuid'>>): Promise<WalletEntity | undefined> {
-    try {
-      await this.provider.connect();
-      const result = await this.provider.query<WalletEntity>({
-        name: 'find-wallet-by-userUuid',
-        text: 'SELECT * FROM wallets WHERE wallets.userUuid = $1',
-        values: [entity.userUuid]
-      });
-      return result.rows[0];
-    } finally {
-      await this.provider.end();
-    }
+    const result = await this.provider.query<WalletEntity>({
+      name: 'find-wallet-by-userUuid',
+      text: 'SELECT uuid, user_uuid as "userUuid", funds, active, visible, created_at as "createdAt", updated_at as "updatedAt" FROM wallets WHERE wallets.user_uuid = $1',
+      values: [entity.userUuid]
+    });
+    return result.rows[0];
   }
 
   async createWallet (entity: WalletEntity): Promise<void> {
-    try {
-      await this.provider.connect();
-      await this.provider.query<WalletEntity>({
-        name: 'create-wallet',
-        text: 'INSERT INTO wallets ("uuid", "userUuid", "funds", "active", "visible", "createdAt", "updatedAt") VALUES ($1, $2, $3, $4, $5, $6, $7)',
-        values: [entity.uuid, entity.userUuid, entity.funds, entity.active, entity.visible, entity.createdAt, entity.updatedAt]
-      });
-    } finally {
-      await this.provider.end();
-    }
+    await this.provider.query<WalletEntity>({
+      name: 'create-wallet',
+      text: 'INSERT INTO wallets ("uuid", "user_uuid", "funds", "active", "visible", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7)',
+      values: [entity.uuid, entity.userUuid, entity.funds, entity.active, entity.visible, entity.createdAt, entity.updatedAt]
+    });
   }
 
   async updateWalletByUuid (entity: WalletEntity): Promise<void> {
-    try {
-      await this.provider.connect();
-      await this.provider.query<WalletEntity>({
-        name: 'update-wallets',
-        text: 'UPDATE wallets SET wallets.funds = $1, wallets.active = $2, wallets.visible = $3, wallets.updatedAt = $4 WHERE users.uuid = $5',
-        values: [entity.funds, entity.active, entity.visible, entity.updatedAt, entity.uuid]
-      });
-    } finally {
-      await this.provider.end();
-    }
+    await this.provider.query<WalletEntity>({
+      name: 'update-wallets',
+      text: 'UPDATE wallets SET funds = $1, active = $2, visible = $3, updatedAt = $4 WHERE users.uuid = $5',
+      values: [entity.funds, entity.active, entity.visible, entity.updatedAt, entity.uuid]
+    });
   }
 }

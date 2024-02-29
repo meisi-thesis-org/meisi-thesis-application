@@ -1,37 +1,37 @@
 version: '3.8'
 
 services:
-  ux:
-    container_name: ux
+  subscriptionux:
+    container_name: subscriptionux
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: admin
     restart: always
     volumes:
-      - ux:/var/lib/pgadmin
+      - subscriptionux:/var/lib/pgadmin
     ports:
-      - "8888:80"
+      - "8901:80"
     networks:
-      - db-ux-network
-  db:
-    container_name: db
+      - subscription-db-ux-network
+  subscriptiondb:
+    container_name: subscriptiondb
     image: postgres
     restart: always
     ports:
-      - "5432:5432"
+      - "5441:5432"
     environment:
-      POSTGRES_USER: admin
+      POSTGRES_subscription: admin
       POSTGRES_PASSWORD: admin
     volumes:
-      - db:/var/lib/postgresql/data
+      - subscriptiondb:/var/lib/postgresql/data
     networks:
-      - db-ux-network
+      - subscription-db-ux-network
 
 networks: 
-  db-ux-network:
+  subscription-db-ux-network:
     driver: bridge
 
 volumes:
-  db:
-  ux:
+  subscriptiondb:
+  subscriptionux:

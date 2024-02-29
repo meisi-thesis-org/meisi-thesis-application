@@ -11,11 +11,11 @@ export class PageRemoteRepository implements PageRepository {
     port: Number(process.env.DB_PORT)
   })
 
-  public constructor() {
-    this.provider.connect();
+  public constructor () {
+    void this.provider.connect();
   }
 
-  async findPageByUuid(
+  async findPageByUuid (
     entity: NonNullable<Pick<PageEntity, 'uuid'>>
   ): Promise<PageEntity | undefined> {
     const result = await this.provider.query<PageEntity>({
@@ -30,7 +30,7 @@ export class PageRemoteRepository implements PageRepository {
     return result.rows[0];
   }
 
-  async findPagesByQuery(
+  async findPagesByQuery (
     entity: Partial<Pick<PageEntity, 'chapterUuid'>>
   ): Promise<PageEntity[]> {
     const result = await this.provider.query<PageEntity>({
@@ -49,7 +49,7 @@ export class PageRemoteRepository implements PageRepository {
         text: `
           SELECT uuid, chapter_uuid as "chapterUuid", designation, description, price, active, visible, created_at as "createdAt", updated_at as "updatedAt"
           FROM pages 
-        `,
+        `
       });
 
       return pages.rows;
@@ -58,7 +58,7 @@ export class PageRemoteRepository implements PageRepository {
     return result.rows;
   }
 
-  async createPage(data: PageEntity): Promise<void> {
+  async createPage (data: PageEntity): Promise<void> {
     await this.provider.query<PageEntity>({
       name: 'create-page',
       text: `
@@ -69,7 +69,7 @@ export class PageRemoteRepository implements PageRepository {
     });
   }
 
-  async updatePageByUuid(entity: PageEntity): Promise<void> {
+  async updatePageByUuid (entity: PageEntity): Promise<void> {
     await this.provider.query<PageEntity>({
       name: 'update-page-by-uuid',
       text: `

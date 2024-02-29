@@ -8,7 +8,7 @@ type SubscriptionEntity = {
   active: boolean
   visible: boolean
   readonly createdAt: string
-  readonly updatedAt: string
+  updatedAt: string
 }
 type SubscriptionDTO = Readonly<SubscriptionEntity>
 

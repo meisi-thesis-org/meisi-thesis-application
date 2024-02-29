@@ -11,8 +11,8 @@ export class ChapterRemoteRepository implements ChapterRepository {
     port: Number(process.env.DB_PORT)
   })
 
-  public constructor() {
-    this.provider.connect()
+  public constructor () {
+    void this.provider.connect();
   }
 
   async findChapterByProps (bookUuid: string, designation: string): Promise<ChapterEntity | undefined> {

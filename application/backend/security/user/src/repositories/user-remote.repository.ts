@@ -1,6 +1,6 @@
 import { Client } from 'pg';
-import { UserEntity } from '../structs/user.domain';
-import { UserRepository } from '../user.repository';
+import { type UserEntity } from '../structs/user.domain';
+import { type UserRepository } from '../user.repository';
 
 export class UserRemoteRepository implements UserRepository {
   private readonly provider: Client = new Client({
@@ -11,11 +11,11 @@ export class UserRemoteRepository implements UserRepository {
     port: Number(process.env.DB_PORT)
   })
 
-  public constructor() {
-    this.provider.connect();
+  public constructor () {
+    void this.provider.connect();
   }
 
-  public async findBulk(): Promise<UserEntity[] | undefined> {
+  public async findBulk (): Promise<UserEntity[] | undefined> {
     const result = await this.provider.query<UserEntity>({
       name: 'find-users',
       text: `
@@ -26,7 +26,7 @@ export class UserRemoteRepository implements UserRepository {
     return result.rows;
   }
 
-  public async findUserByUuid(uuid: string): Promise<UserEntity | undefined> {
+  public async findUserByUuid (uuid: string): Promise<UserEntity | undefined> {
     const result = await this.provider.query<UserEntity>({
       name: 'find-user-by-uuid',
       text: `
@@ -35,11 +35,11 @@ export class UserRemoteRepository implements UserRepository {
         WHERE users.uuid = $1
       `,
       values: [uuid]
-    }); 
+    });
     return result.rows[0];
   }
 
-  public async findUserByAuthCredentials(
+  public async findUserByAuthCredentials (
     username: string | undefined,
     email: string | undefined,
     phoneNumber: string | undefined
@@ -56,7 +56,7 @@ export class UserRemoteRepository implements UserRepository {
     return result.rows[0];
   }
 
-  public async createUser(userEntity: UserEntity): Promise<void> {
+  public async createUser (userEntity: UserEntity): Promise<void> {
     await this.provider.query<UserEntity>({
       name: 'create-user',
       text: 'INSERT INTO users ("uuid", "username", "email", "phone_number", "access_code", "name", "date_birth", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)',
@@ -64,7 +64,7 @@ export class UserRemoteRepository implements UserRepository {
     });
   }
 
-  public async updateUser(userEntity: UserEntity): Promise<void> {
+  public async updateUser (userEntity: UserEntity): Promise<void> {
     await this.provider.query<UserEntity>({
       name: 'update-user',
       text: 'UPDATE users SET username = $1, email = $2, phone_number = $3, access_code = $4, name = $5, date_birth = $6, updated_at = $7 WHERE users.uuid = $8',
