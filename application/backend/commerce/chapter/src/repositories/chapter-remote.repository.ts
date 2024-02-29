@@ -82,7 +82,7 @@ export class ChapterRemoteRepository implements ChapterRepository {
     await this.provider.query<ChapterEntity>({
       name: 'update-chapter-by-uuid',
       text: `
-        UPDATE chapters SET chapters.designation = $1, chapters.description = $2, chapters.price = $3, chapters.visible = $4, chapters.active = $5, chapters.updated_at = $6
+        UPDATE chapters SET designation = $1, description = $2, price = $3, visible = $4, active = $5, updated_at = $6
         WHERE chapters.uuid = $5
       `,
       values: [data.designation, data.description, data.price, data.visible, data.active, data.updatedAt, uuid]

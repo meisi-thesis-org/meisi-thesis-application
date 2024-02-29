@@ -17,7 +17,7 @@ export const isNetworkRegistered = async (
   const { fetch, save } = useLocalStorage();
   const { location, loadLocation } = useLocation();
 
-  if (fetch("is_network_unknown") !== null) {
+  if (fetch("is_network_unknown") === true) {
     return next();
   }
   

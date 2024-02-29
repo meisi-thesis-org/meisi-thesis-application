@@ -73,7 +73,7 @@ export class PageRemoteRepository implements PageRepository {
     await this.provider.query<PageEntity>({
       name: 'update-page-by-uuid',
       text: `
-        UPDATE pages SET pages.designation = $1, pages.description = $2, pages.price = $3, pages.visible = $4, pages.active = $5, pages.updated_at = $6 
+        UPDATE pages SET designation = $1, description = $2, price = $3, visible = $4, active = $5, updated_at = $6 
         WHERE pages.uuid = $5
       `,
       values: [entity.designation, entity.description, entity.price, entity.visible, entity.active, entity.updatedAt, entity.uuid]

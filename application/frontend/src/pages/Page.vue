@@ -3,9 +3,12 @@
         <div id="wrapper__inner">
             <Navbar />
             <div id="wrapper__inner--content">
-                <Banner :header-content="page?.designation ?? ''"  :icons="bannerIcons" :groups="bannerGroups"
-                    :color="'light-colorized'" :is-editable="isProducer" :on-blur="(data: string) => updatePage({ designation: data })" />
-                <EditableField :content="subHeaderContent" :max-length="'1500'" :is-editable="isProducer"
+                <Banner :header-content="page?.designation ?? ''" :icons="bannerIcons" :groups="bannerGroups"
+                    :color="'light-colorized'" :is-editable="isProducer"
+                    :on-blur="(data: string) => updatePage({ designation: data })" />
+                <EditableField
+                    v-show="isProducer || isDossierSubscribed || isBookSubscribed || isChapterSubscribed || isPageSubscribed"
+                    :content="subHeaderContent" :max-length="'1500'" :is-editable="isProducer"
                     @on-blur="(data: string) => updatePage({ description: data })" />
             </div>
         </div>
@@ -45,7 +48,6 @@ const subHeaderContent = computed(() => page.value?.description ?? '')
 
 const bannerIcons = computed<Array<IconProps & { isVisible: boolean }>>(() => ([
     { name: 'lock', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isConsumer.value && !isDossierSubscribed.value && !isBookSubscribed.value && !isChapterSubscribed.value && !isPageSubscribed.value && isActive.value && isVisible.value), onClick: () => toggleSubscription() },
-    { name: 'unlock', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isConsumer.value && !isDossierSubscribed.value && !isBookSubscribed.value && !isChapterSubscribed.value && isPageSubscribed.value && isActive.value && isVisible.value), onClick: () => toggleSubscription() },
     { name: 'watcher', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && !isVisible.value), onClick: () => updatePage({ visible: true }) },
     { name: 'watcher-off', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && isVisible.value), onClick: () => updatePage({ visible: false }) },
     { name: 'trashcan', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value), onClick: () => updatePage({ active: false }) },
@@ -90,5 +92,4 @@ const toggleSubscription = async () => {
             }
         }
     }
-}
-</style>
+}</style>

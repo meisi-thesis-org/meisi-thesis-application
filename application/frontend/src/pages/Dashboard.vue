@@ -6,7 +6,7 @@
                 <div id="wrapper__inner--sections__wallet">
                     <Typography :content="'Wallet'" :segment="'designation'" />
                     <div id="wrapper__inner--sections__wallet--cards">
-                        <SegmentedCard :designation="'E-Bookler Points'" :description="String(wallet?.funds ?? 0)" />
+                        <SegmentedCard :designation="'E-Bookler Points'" :description="funds" />
                         <SegmentedCard :designation="'Subscriptions'" :description="String(subscriptions.length ?? 0)" />
                         <SegmentedCard v-if="dossier" :designation="'Subscribers'" :description="String(subscribers)" />
                     </div>
@@ -17,7 +17,6 @@
 </template>
 
 <script setup lang="ts">
-import Card from "@/components/Card.vue";
 import Navbar from "@/components/Navbar.vue"
 import SegmentedCard from "@/components/SegmentedCard.vue";
 import Typography from "@/components/Typography.vue";
@@ -34,6 +33,7 @@ const { dossiers } = storeToRefs(useDossierStore);
 const { session } = storeToRefs(useSession());
 const subscribers = ref<number>(0);
 const dossier = computed(() => dossiers.value.find((dossier) => dossier.userUuid === session.value?.userUuid));
+const funds = computed(() => String(wallet.value?.funds ?? 0))
 </script>
 
 <style scoped lang="scss">

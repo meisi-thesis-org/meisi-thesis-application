@@ -65,7 +65,7 @@ export class NetworkRemoteRepository implements NetworkRepository {
   async updateNetworkByUuid(uuid: string, networkEntity: Omit<NetworkEntity, 'uuid' | 'userUuid' | 'createdAt'>): Promise<void> {
     await this.provider.query<NetworkEntity>({
       name: 'update-network-by-uuid',
-      text: 'UPDATE networks SET networks.latitude = $1, networks.longitude = $2, networks.visible = $3, networks.active = $4, networks.update_at = $5 WHERE networks.uuid = $6',
+      text: 'UPDATE networks SET latitude = $1, longitude = $2, visible = $3, active = $4, update_at = $5 WHERE networks.uuid = $6',
       values: [networkEntity.latitude, networkEntity.longitude, networkEntity.visible, networkEntity.active, networkEntity.updatedAt, uuid]
     });
   }

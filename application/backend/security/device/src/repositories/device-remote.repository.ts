@@ -67,7 +67,7 @@ export class DeviceRemoteRepository implements DeviceRepository {
   async updateDeviceByUuid(uuid: string, deviceEntity: Omit<DeviceEntity, 'uuid' | 'userUuid' | 'createdAt'>): Promise<void> {
     await this.provider.query<DeviceEntity>({
       name: 'update-device-by-uuid',
-      text: 'UPDATE devices SET devices.user_agent = $1, devices.visible = $2, devices.active = $3, devices.updated_at = $4 WHERE devices.uuid = $5',
+      text: 'UPDATE devices SET user_agent = $1, visible = $2, active = $3, updated_at = $4 WHERE devices.uuid = $5',
       values: [deviceEntity.userAgent, deviceEntity.visible, deviceEntity.active, deviceEntity.updatedAt, uuid]
     });
   }

@@ -30,15 +30,17 @@ export const usePermission = (route: RouteLocation = useRoute()) => {
   const isProducerPage = computed(() => pages.value.find((page) => page.uuid === route.params.pageUuid && isProducerChapter.value))
   const isTrustedDevice = computed(() => devices.value?.find(({ userUuid, userAgent }) => userAgent === navigator.userAgent && userUuid === session.value?.userUuid));
   const isTrustedNetwork = computed(() => {
-    return networks.value.find(({ userUuid, latitude, longitude }) => (
-      userUuid === session.value?.userUuid &&
-      (
-        latitude >= location.value.latitude - 10 &&
-        latitude <= location.value.latitude + 10 &&
-        longitude >= location.value.longitude - 10 &&
-        longitude <= location.value.longitude + 10
+    return networks.value.find(({ userUuid, latitude, longitude }) => {
+      return (
+        userUuid === session.value?.userUuid &&
+        (
+          latitude >= location.value.latitude - 10 &&
+          latitude <= location.value.latitude + 10 &&
+          longitude >= location.value.longitude - 10 &&
+          longitude <= location.value.longitude + 10
+        )
       )
-    ))
+    })
   });
 
   const isOwner = computed(() => !!(isTrustedDevice.value && isTrustedNetwork.value));

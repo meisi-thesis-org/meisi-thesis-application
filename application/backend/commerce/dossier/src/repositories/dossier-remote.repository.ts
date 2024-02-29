@@ -68,7 +68,7 @@ export class DossierRemoteRepository implements DossierRepository {
   ): Promise<void> {
     await this.provider.query<DossierEntity>({
       name: 'update-dossier-by-uuid',
-      text: 'UPDATE dossiers SET dossiers.designation = $1, dossiers.price = $2, dossiers.visible = $3, dossiers.active = $4, dossiers.updated_at = $5 WHERE dossiers.uuid = $6',
+      text: 'UPDATE dossiers SET designation = $1, price = $2, visible = $3, active = $4, updated_at = $5 WHERE dossiers.uuid = $6',
       values: [data.designation, data.price, data.visible, data.active, data.updatedAt, uuid]
     });
   }

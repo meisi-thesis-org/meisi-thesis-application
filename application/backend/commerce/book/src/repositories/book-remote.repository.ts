@@ -86,7 +86,7 @@ export class BookRemoteRepository implements BookRepository {
   ): Promise<void> {
     await this.provider.query<BookEntity>({
       name: 'update-book-by-uuid',
-      text: 'UPDATE books SET books.designation = $1, books.description = $2, books.price = $3, books.visible = $4, books.active = $5, books.updated_at = $6 WHERE books.uuid = $5',
+      text: 'UPDATE books SET designation = $1, description = $2, price = $3, visible = $4, active = $5, updated_at = $6 WHERE books.uuid = $5',
       values: [data.designation, data.description, data.price, data.visible, data.active, data.updatedAt, uuid]
     });
   }

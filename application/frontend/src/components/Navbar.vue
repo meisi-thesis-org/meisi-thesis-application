@@ -8,9 +8,6 @@
                 <Icon :name="'dossier'" :height="'1.25rem'" :width="'1.25rem'" :on-click="navigateToDossier" />
                 <Icon :name="'settings'" :height="'1.25rem'" :width="'1.25rem'" :on-click="navigateToSetting" />
                 <Icon :name="'door'" :height="'1.25rem'" :width="'1.25rem'" :on-click="navigateAccessAcount" />
-                <Divider :width="'0.025rem'" :height="'2rem'" />
-                <Icon :name="'locale'" :height="'1.25rem'" :width="'1.25rem'" />
-                <Icon :name="'theme'" :height="'1.25rem'" :width="'1.25rem'" />
             </div>
         </div>
     </div>

@@ -25,7 +25,7 @@
                     <div id="wrapper__inner--sections__content--cards">
                         <Typography :content="' Pages'" :segment="'designation'" />
                         <Card v-for="page of pages" @click="navigateToPage(page.uuid)"
-                            :designation="`Page: ${page.designation}`" :description="page.description"
+                            :designation="`Page: ${page.designation}`" :description="''"
                             :is-visible="page.visible" :is-active="page.active" />
                     </div>
                 </div>

@@ -51,7 +51,6 @@ const useSubscription = defineStore('subscriptions', () => {
                     subscription.active = response.data.active;
                     subscription.updatedAt = response.data.updatedAt;
                 }
-                console.log(subscription);
                 return subscription;
             })
         } catch (error) {

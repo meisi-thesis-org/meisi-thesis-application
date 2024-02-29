@@ -71,7 +71,8 @@ export class WalletController {
       const requestArgs: UpdateWalletByUuidRequest = {
         uuid: request.params.uuid,
         active: request.body.active,
-        visible: request.body.visible
+        visible: request.body.visible,
+        funds: request.body.funds
       }
       const responseArgs = await this.service.updateWalletByUuid(requestArgs);
       return response.status(201).json(responseArgs)

@@ -67,7 +67,7 @@ export class UserRemoteRepository implements UserRepository {
   public async updateUser(userEntity: UserEntity): Promise<void> {
     await this.provider.query<UserEntity>({
       name: 'update-user',
-      text: 'UPDATE users SET users.username = $1, users.email = $2, users.phone_number = $3, users.access_code = $4, users.name = $5, users.date_birth = $6, users.updated_at = $7 WHERE users.uuid = $8',
+      text: 'UPDATE users SET username = $1, email = $2, phone_number = $3, access_code = $4, name = $5, date_birth = $6, updated_at = $7 WHERE users.uuid = $8',
       values: [userEntity.username, userEntity.email, userEntity.phoneNumber, userEntity.accessCode, userEntity.name, userEntity.dateBirth, userEntity.updatedAt, userEntity.uuid]
     });
   }
