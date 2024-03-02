@@ -48,12 +48,12 @@ export const usePermission = (route: RouteLocation = useRoute()) => {
 
   const isProducer = computed(() => (isProducerDossier.value !== undefined || isProducerBook.value !== undefined || isProducerChapter.value !== undefined || isProducerPage.value !== undefined));
   const isConsumer = computed(() => (isProducerDossier.value === undefined && isProducerBook.value === undefined && isProducerChapter.value === undefined && isProducerPage.value === undefined));
-  
+
   /** Subscribed Chaindown */
   const isDossierSubscribed = computed(() => subscriptions.value.find((subscription) => !!(subscription.dossierUuid === route.params?.dossierUuid && (subscription.active && subscription.visible))));
   const isBookSubscribed = computed(() => subscriptions.value.find((subscription) => !!(subscription.bookUuid === route.params?.bookUuid && (subscription.active && subscription.visible))));
   const isChapterSubscribed = computed(() => subscriptions.value.find((subscription) => !!(subscription.chapterUuid === route.params?.chapterUuid && (subscription.active && subscription.visible))));
   const isPageSubscribed = computed(() => subscriptions.value.find((subscription) => !!(subscription.pageUuid === route.params?.pageUuid && (subscription.active && subscription.visible))));
 
-  return { isOwner, isGuest, isProducer, isConsumer, isDossierSubscribed, isBookSubscribed, isChapterSubscribed, isPageSubscribed } 
+  return { isOwner, isGuest, isProducer, isConsumer, isDossierSubscribed, isBookSubscribed, isChapterSubscribed, isPageSubscribed }
 }

@@ -8,7 +8,7 @@
                 <div id="wrapper__inner--content__box">
                     <div id="wrapper__inner--content__box--row">
                         <Typography :content="'Books'" :segment="'designation'" />
-                        <Icon v-if="isProducer" :name="'plus'" :color="'blue-colorized'" :height="'1.25rem'"
+                        <Icon v-if="isProducer && isOwner" :name="'plus'" :color="'blue-colorized'" :height="'1.25rem'"
                             :width="'1.25rem'" :on-click="createBook" />
                     </div>
                     <div id="wrapper__inner--content__box--books">
@@ -35,6 +35,7 @@ import { useSubscription } from "@/stores/useSubscription";
 import { useWallet } from "@/stores/useWallet";
 import type { BannerGroupProps } from "@/types/Banner";
 import type { IconProps } from "@/types/Icon";
+import type { Primitive } from "@/types/Primitive";
 import { storeToRefs } from "pinia";
 import { computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
@@ -50,7 +51,7 @@ const { dossiers } = storeToRefs(useDossierStore);
 const { books } = storeToRefs(useBookStore);
 const { wallet } = storeToRefs(useWalletStore);
 const { subscriptions } = storeToRefs(useSubscriptionStore);
-const { isProducer, isConsumer, isDossierSubscribed } = usePermission();
+const { isProducer, isConsumer, isDossierSubscribed, isOwner } = usePermission();
 
 const dossier = computed(() => dossiers.value.find((dossier) => dossier.uuid === route.params.dossierUuid))
 
@@ -66,17 +67,17 @@ const isActive = computed(() => {
 
 const bannerIcons = computed<Array<IconProps & { isVisible: boolean }>>(() => ([
     { name: 'lock', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isConsumer.value && !isDossierSubscribed.value && isActive.value && isVisible.value), onClick: () => toggleSubscription() },
-    { name: 'watcher', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && !isVisible.value), onClick: () => updateDossier({ visible: true }) },
-    { name: 'watcher-off', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && isVisible.value), onClick: () => updateDossier({ visible: false }) },
-    { name: 'trashcan', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value), onClick: () => updateDossier({ active: false }) },
+    { name: 'watcher', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && !isVisible.value && isOwner.value), onClick: () => updateDossier({ visible: true }) },
+    { name: 'watcher-off', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && isVisible.value && isOwner.value), onClick: () => updateDossier({ visible: false }) },
+    { name: 'trashcan', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && isOwner.value), onClick: () => updateDossier({ active: false }) },
 ]))
 
 const bannerGroups = computed<Array<BannerGroupProps>>(() => [
-    { type: 'editableControl', content: dossier.value?.designation ?? '', contentType: 'text', maxLength: '60', color: "light-colorized", isEditable: isProducer.value, onBlur: (designation: string) => updateDossier({ designation }) },
-    { type: 'editableControl', content: dossier.value?.price ?? 0, contentType: 'number', designation: 'Fee: ', color: "light-colorized", isEditable: isProducer.value, onBlur: (price: number) => updateDossier({ price }) },
+    { type: 'editableControl', content: dossier.value?.designation ?? '', contentType: 'text', maxLength: '60', color: "light-colorized", isEditable: isProducer.value && isOwner.value, onBlur: (designation: string) => updateDossier({ designation }) },
+    { type: 'editableControl', content: dossier.value?.price ?? 0, contentType: 'number', designation: '', color: "light-colorized", isEditable: isProducer.value && isOwner.value, onBlur: (price: number) => updateDossier({ price }) },
 ])
 
-const updateDossier = async (data: Record<string, string | boolean | number>) => {
+const updateDossier = async (data: Record<string, Primitive>) => {
     try {
         isLoading.value = !isLoading.value;
         await useDossierStore.updateDossierByUuid(dossier.value!.uuid, data);

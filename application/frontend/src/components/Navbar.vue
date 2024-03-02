@@ -6,6 +6,7 @@
                 <Icon :name="'dashboard'" :height="'1.25rem'" :width="'1.25rem'" :on-click="navigateToDashboard" />
                 <Icon :name="'library'" :height="'1.25rem'" :width="'1.25rem'" :on-click="navigateToLibrary" />
                 <Icon :name="'dossier'" :height="'1.25rem'" :width="'1.25rem'" :on-click="navigateToDossier" />
+                <Divider :width="'0.025rem'" :height="'2.5rem'" />
                 <Icon :name="'settings'" :height="'1.25rem'" :width="'1.25rem'" :on-click="navigateToSetting" />
                 <Icon :name="'door'" :height="'1.25rem'" :width="'1.25rem'" :on-click="navigateAccessAcount" />
             </div>
@@ -15,13 +16,13 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import Divider from './Divider.vue';
 import Icon from './Icon.vue';
 import Typography from './Typography.vue';
 import { storeToRefs } from 'pinia';
 import { useSession } from '@/stores/useSession';
 import { computed } from 'vue';
 import { useDossier } from '@/stores/useDossier';
+import Divider from './Divider.vue';
 
 const router = useRouter();
 const useSessionStore = useSession();

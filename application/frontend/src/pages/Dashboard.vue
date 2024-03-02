@@ -8,7 +8,6 @@
                     <div id="wrapper__inner--sections__wallet--cards">
                         <SegmentedCard :designation="'E-Bookler Points'" :description="funds" />
                         <SegmentedCard :designation="'Subscriptions'" :description="String(subscriptions.length ?? 0)" />
-                        <SegmentedCard v-if="dossier" :designation="'Subscribers'" :description="String(subscribers)" />
                     </div>
                 </div>
             </div>
@@ -20,20 +19,15 @@
 import Navbar from "@/components/Navbar.vue"
 import SegmentedCard from "@/components/SegmentedCard.vue";
 import Typography from "@/components/Typography.vue";
-import { useDossier } from "@/stores/useDossier";
-import { useSession } from "@/stores/useSession";
 import { useSubscription } from "@/stores/useSubscription";
 import { useWallet } from "@/stores/useWallet";
 import { storeToRefs } from "pinia";
-import { computed, ref } from "vue";
-const useDossierStore = useDossier();
-const { subscriptions } = storeToRefs(useSubscription());
-const { wallet } = storeToRefs(useWallet());
-const { dossiers } = storeToRefs(useDossierStore);
-const { session } = storeToRefs(useSession());
-const subscribers = ref<number>(0);
-const dossier = computed(() => dossiers.value.find((dossier) => dossier.userUuid === session.value?.userUuid));
-const funds = computed(() => String(wallet.value?.funds ?? 0))
+import { computed } from "vue";
+const useSubscriptionStore = useSubscription();
+const useWalletStore = useWallet();
+const { subscriptions } = storeToRefs(useSubscriptionStore);
+const { wallet } = storeToRefs(useWalletStore);
+const funds = computed(() => String(wallet.value?.funds ?? 0));
 </script>
 
 <style scoped lang="scss">

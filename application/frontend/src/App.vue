@@ -22,13 +22,13 @@ const { theme } = useTheme();
   box-sizing: border-box;
 
   --dark--theme--color: #394053;
-  --light--theme--color: #F4F4F6;
+  --light--theme--color: #fff;
   --blue--theme--color: #5382A1;
   --yellow--theme--color: #EF9B0F;
   --violet--theme--color: #e81cff;
-  
-  --banner--gradient--color: linear-gradient(90deg, hsla(160, 50%, 51%, 1) 0%, hsla(247, 60%, 21%, 1) 100%);
 
+  --banner--gradient--color: linear-gradient(90deg, hsla(160, 50%, 51%, 1) 0%, hsla(247, 60%, 21%, 1) 100%);
+  
   font-family: 'Quicksand', sans-serif;
 }
 

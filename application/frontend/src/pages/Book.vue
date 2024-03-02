@@ -8,12 +8,14 @@
                 <div id="wrapper__inner--content__box">
                     <div id="wrapper__inner--content__box--row">
                         <Typography :content="'Chapters'" :segment="'designation'" />
-                        <Icon v-if="isProducer" :name="'plus'" :color="'blue-colorized'" :height="'1.25rem'"
+                        <Icon v-if="isProducer && isOwner" :name="'plus'" :color="'blue-colorized'" :height="'1.25rem'"
                             :width="'1.25rem'" :on-click="createChapter" />
                     </div>
-                    <Card v-for="chapter of chapters" @click="navigateToChapter(chapter.uuid)"
+                    <template v-for="chapter of chapters.filter((chapter) => chapter.bookUuid === book?.uuid)">
+                        <Card @click="navigateToChapter(chapter.uuid)"
                         :designation="chapter.designation" :description="chapter.description" :is-visible="chapter.visible"
                         :is-active="chapter.active" />
+                    </template>
                 </div>
             </div>
         </div>
@@ -49,19 +51,19 @@ const { books } = storeToRefs(useBookStore);
 const { chapters } = storeToRefs(useChapterStore);
 const { subscriptions } = storeToRefs(useSubscriptionStore);
 const { wallet } = storeToRefs(useWalletStore);
-const { isProducer, isConsumer, isDossierSubscribed, isBookSubscribed } = usePermission();
+const { isProducer, isConsumer, isDossierSubscribed, isBookSubscribed, isOwner } = usePermission();
 
 const book = computed(() => books.value.find((book) => book.uuid === route.params.bookUuid))
 
 const bannerIcons = computed<Array<IconProps & { isVisible: boolean }>>(() => ([
     { name: 'lock', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isConsumer.value && !isDossierSubscribed.value && !isBookSubscribed.value && isActive.value && isVisible.value), onClick: () => toggleSubscription() },
-    { name: 'watcher', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && !isVisible.value), onClick: () => updateBook({ visible: true }) },
-    { name: 'watcher-off', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && isVisible.value), onClick: () => updateBook({ visible: false }) },
-    { name: 'trashcan', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value), onClick: () => updateBook({ active: false }) },
+    { name: 'watcher', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && !isVisible.value && isOwner.value), onClick: () => updateBook({ visible: true }) },
+    { name: 'watcher-off', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && isVisible.value && isOwner.value), onClick: () => updateBook({ visible: false }) },
+    { name: 'trashcan', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && isOwner.value), onClick: () => updateBook({ active: false }) },
 ]))
 const bannerGroups = computed<Array<BannerGroupProps>>(() => [
-    { type: 'editableControl', content: book.value?.description ?? '', contentType: 'text', maxLength: '60', color: "light-colorized", isEditable: isProducer.value, onBlur: (description: string) => updateBook({ description }) },
-    { type: 'editableControl', content: book.value?.price ?? 0, contentType: 'number', designation: 'Fee: ', color: "light-colorized", isEditable: isProducer.value, onBlur: (price: number) => updateBook({ price }) },
+    { type: 'editableControl', content: book.value?.description ?? '', contentType: 'text', maxLength: '60', color: "light-colorized", isEditable: isProducer.value && isOwner.value, onBlur: (description: string) => updateBook({ description }) },
+    { type: 'editableControl', content: book.value?.price ?? 0, contentType: 'number', designation: 'Fee: ', color: "light-colorized", isEditable: isProducer.value && isOwner.value, onBlur: (price: number) => updateBook({ price }) },
 ])
 
 const isVisible = computed(() => {
@@ -89,7 +91,7 @@ const createChapter = async () => {
         isLoading.value = !isLoading.value;
         await useChapterStore.createChapter({
             bookUuid: book.value!.uuid,
-            designation: `Chapter #${chapters.value?.length}`,
+            designation: `Chapter #${chapters.value.filter((chapter) => chapter.bookUuid === book.value?.uuid)?.length}`,
             description: '',
             price: 0
         })

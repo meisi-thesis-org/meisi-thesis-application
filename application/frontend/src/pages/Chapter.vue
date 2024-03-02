@@ -8,7 +8,7 @@
                 <div id="wrapper__inner--content__box">
                     <div id="wrapper__inner--content__box--row">
                         <Typography :content="'Pages'" :segment="'designation'" />
-                        <Icon v-if="isProducer" :name="'plus'" :color="'blue-colorized'" :height="'1.25rem'"
+                        <Icon v-if="isProducer && isOwner" :name="'plus'" :color="'blue-colorized'" :height="'1.25rem'"
                             :width="'1.25rem'" :on-click="createPage" />
                     </div>
                     <Card v-for="page of pages" :designation="page.designation" :description="page.description"
@@ -49,20 +49,20 @@ const { chapters } = storeToRefs(useChapterStore);
 const { pages } = storeToRefs(usePageStore);
 const { subscriptions } = storeToRefs(useSubscriptionStore);
 const { wallet } = storeToRefs(useWalletStore);
-const { isProducer, isConsumer, isDossierSubscribed, isBookSubscribed, isChapterSubscribed } = usePermission();
+const { isProducer, isConsumer, isDossierSubscribed, isBookSubscribed, isChapterSubscribed, isOwner } = usePermission();
 
 const chapter = computed(() => chapters.value.find((chapter) => chapter.uuid === route.params.chapterUuid))
 
 const bannerIcons = computed<Array<IconProps & { isVisible: boolean }>>(() => ([
     { name: 'lock', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isConsumer.value && !isDossierSubscribed.value && !isBookSubscribed.value && !isChapterSubscribed.value && isActive.value && isVisible.value), onClick: () => toggleSubscription() },
-    { name: 'watcher', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && !isVisible.value), onClick: () => updateChapter({ visible: true }) },
-    { name: 'watcher-off', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && isVisible.value), onClick: () => updateChapter({ visible: false }) },
-    { name: 'trashcan', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value), onClick: () => updateChapter({ active: false }) },
+    { name: 'watcher', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && !isVisible.value && isOwner.value), onClick: () => updateChapter({ visible: true }) },
+    { name: 'watcher-off', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && isVisible.value && isOwner.value), onClick: () => updateChapter({ visible: false }) },
+    { name: 'trashcan', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && isOwner.value), onClick: () => updateChapter({ active: false }) },
 ]))
 
 const bannerGroups = computed<Array<BannerGroupProps>>(() => [
-    { type: 'editableControl', content: chapter.value?.description ?? '', contentType: 'text', maxLength: '60', color: "light-colorized", isEditable: isProducer.value, onBlur: (description: string) => updateChapter({ description }) },
-    { type: 'editableControl', content: chapter.value?.price ?? 0, contentType: 'number', designation: 'Fee: ', color: "light-colorized", isEditable: isProducer.value, onBlur: (price: number) => updateChapter({ price }) },
+    { type: 'editableControl', content: chapter.value?.description ?? '', contentType: 'text', maxLength: '60', color: "light-colorized", isEditable: isProducer.value && isOwner.value, onBlur: (description: string) => updateChapter({ description }) },
+    { type: 'editableControl', content: chapter.value?.price ?? 0, contentType: 'number', designation: 'Fee: ', color: "light-colorized", isEditable: isProducer.value && isOwner.value, onBlur: (price: number) => updateChapter({ price }) },
 ])
 
 const isVisible = computed(() => {

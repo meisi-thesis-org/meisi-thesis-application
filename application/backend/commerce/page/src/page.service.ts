@@ -6,7 +6,6 @@ import { NonFoundException } from '@meisi-thesis/application-backend-utilities-s
 import { RandomProvider } from '@meisi-thesis/application-backend-utilities-shared/src/providers/random.provider';
 import { NetworkProvider } from '@meisi-thesis/application-backend-utilities-shared/src/providers/network.provider';
 import { PageStateRepository } from './repositories/page-state.repository';
-import { BadRequestException } from '@meisi-thesis/application-backend-utilities-shared/src/exceptions/bad-request.exception';
 
 export class PageService {
   private readonly repository: PageRepository = new PageStateRepository();

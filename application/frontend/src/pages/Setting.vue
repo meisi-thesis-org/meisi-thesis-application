@@ -7,26 +7,26 @@
                     <Typography :content="'Manage Account'" :segment="'designation'" />
                     <div id="wrapper__inner--content__section--field">
                         <Typography :content="'Username'" :segment="'designation'" />
-                        <EditableControl :content="user?.username ?? ''" :is-editable="isOwner" :type="'text'" @on-blur="(data: string) => updateUser({ username: data})" />
+                        <EditableControl :content="isOwner && user ? user.username : '*********'" :is-editable="isOwner" :type="'text'" @on-blur="(data: string) => updateUser({ username: data})" />
                     </div>
                     <div id="wrapper__inner--content__section--field">
                         <Typography :content="'Email'" :segment="'designation'" />
-                        <EditableControl :content="user?.email ?? ''" :is-editable="isOwner" :type="'email'" @on-blur="(data: string) => updateUser({ email: data})" />
+                        <EditableControl :content="isOwner && user ? user.email : '*********'" :is-editable="isOwner" :type="'email'" @on-blur="(data: string) => updateUser({ email: data})" />
                     </div>
                     <div id="wrapper__inner--content__section--field">
                         <Typography :content="'Phone Number'" :segment="'designation'" />
-                        <EditableControl :content="user?.phoneNumber ?? ''" :is-editable="isOwner" :type="'tel'" @on-blur="(data: string) => updateUser({ phoneNumber: data})" />
+                        <EditableControl :content="isOwner && user ? user.phoneNumber : '*********'" :is-editable="isOwner" :type="'tel'" @on-blur="(data: string) => updateUser({ phoneNumber: data})" />
                     </div>
                 </div>
                 <div id="wrapper__inner--content__section">
                     <Typography :content="'Manage Profile'" :segment="'designation'" />
                     <div id="wrapper__inner--content__section--field">
                         <Typography :content="'Name'" :segment="'designation'" />
-                        <EditableControl :content="user?.name ?? ''" :is-editable="isOwner" :type="'text'" @on-blur="(data: string) => updateUser({ name: data})" />
+                        <EditableControl :content="isOwner && user ? user.name : '*********'" :is-editable="isOwner" :type="'text'" @on-blur="(data: string) => updateUser({ name: data})" />
                     </div>
                     <div id="wrapper__inner--content__section--field">
                         <Typography :content="'Date Birth'" :segment="'designation'" />
-                        <EditableControl :content="user?.dateBirth ?? ''" :is-editable="isOwner" :type="'date'" @on-blur="(data: string) => updateUser({ dateBirth: data})" />
+                        <EditableControl :content="isOwner && user ? user.dateBirth : '*********'" :is-editable="isOwner" :type="'date'" @on-blur="(data: string) => updateUser({ dateBirth: data})" />
                     </div>
                 </div>
             </div>

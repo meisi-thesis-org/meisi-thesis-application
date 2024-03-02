@@ -7,7 +7,8 @@
     :class="definedProps.color" 
     :disabled="!definedProps.isEditable" 
     id="editable-field" 
-    v-model="content">
+    v-model="content"
+    :style="isEditable ? { 'filter': 'blur(0)' } : { 'filter': 'blur(0.25rem)' }">
   </textarea>
 </template>
 

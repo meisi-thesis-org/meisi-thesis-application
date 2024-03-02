@@ -24,15 +24,7 @@ export const isDossierRegistered = async (
   const parameterizedUserUuid = to.params.userUuid as string;
   if (!parameterizedUserUuid) return next({ path: 'dashboard', params: { userUuid: session.value?.userUuid } })
 
-  /**
-     * Checks if there is a dossierUuid
-     * No: Continue
-     * Checks if the user is the owner
-     * Yes: Continue
-     * No: Redirects to dashboard
-     */
   const parameterizedDossierUuid = to.params.dossierUuid as string;
-  if (parameterizedDossierUuid === undefined && isGuest.value) return next({ name: 'dashboard', params: { userUuid: session.value?.userUuid } });
 
   /**
      * Loads Cached dossier

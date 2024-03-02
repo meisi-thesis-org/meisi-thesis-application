@@ -7,15 +7,15 @@ import { ConflictException } from '@meisi-thesis/application-backend-utilities-s
 import { RandomProvider } from '@meisi-thesis/application-backend-utilities-shared/src/providers/random.provider';
 import { HashProvider } from '@meisi-thesis/application-backend-utilities-shared/src/providers/hash.provider';
 import { QueueProvider } from '@meisi-thesis/application-backend-utilities-shared/src/providers/queue.provider';
-import { UserRemoteRepository } from './repositories/user-remote.repository';
+import { UserStateRepository } from './repositories/user-state.repository';
 
 export class UserService {
-  private readonly userRepository: UserRepository = new UserRemoteRepository();
+  private readonly userRepository: UserRepository = new UserStateRepository();
   private readonly randomProvider: RandomProvider = new RandomProvider();
   private readonly hashProvider: HashProvider = new HashProvider();
   private readonly queueProvider: QueueProvider = new QueueProvider();
 
-  private async sendEmailQueue(
+  private async sendEmailQueue (
     path: string,
     props: {
       toEmail: string
@@ -39,7 +39,7 @@ export class UserService {
     */
   }
 
-  public async findUserByUuid(findUserByUuidRequest: FindUserByUuidRequest): Promise<UserDTO> {
+  public async findUserByUuid (findUserByUuidRequest: FindUserByUuidRequest): Promise<UserDTO> {
     const foundUser = await this.userRepository
       .findUserByUuid(findUserByUuidRequest.uuid)
       .catch(() => { throw new InternalServerException() });
@@ -49,7 +49,7 @@ export class UserService {
     return userMapper(foundUser);
   }
 
-  public async createUser(createUserRequest: CreateUserRequest): Promise<UserDTO> {
+  public async createUser (createUserRequest: CreateUserRequest): Promise<UserDTO> {
     const foundUser = await this.userRepository
       .findUserByAuthCredentials(
         createUserRequest.username,
@@ -80,7 +80,7 @@ export class UserService {
       updatedAt: new Date().toISOString()
     }
 
-    await this.userRepository.createUser(createdUser).catch((error) => {
+    await this.userRepository.createUser(createdUser).catch(() => {
       throw new InternalServerException()
     });
 
@@ -95,7 +95,7 @@ export class UserService {
     return userMapper(createdUser);
   }
 
-  public async updateUserByUuid(updateUserByUuidRequest: UpdateUserByUuidRequest): Promise<UserDTO> {
+  public async updateUserByUuid (updateUserByUuidRequest: UpdateUserByUuidRequest): Promise<UserDTO> {
     const foundUser = await this.userRepository
       .findUserByUuid(updateUserByUuidRequest.uuid)
       .catch(() => { throw new InternalServerException() });
@@ -121,7 +121,7 @@ export class UserService {
     return userMapper(updatedUser);
   }
 
-  public async updateUserAccessCode(updateUserAccessCodeRequest: UpdateUserAccessCodeRequest): Promise<UserDTO> {
+  public async updateUserAccessCode (updateUserAccessCodeRequest: UpdateUserAccessCodeRequest): Promise<UserDTO> {
     const foundUser = await this.userRepository
       .findUserByAuthCredentials(
         updateUserAccessCodeRequest.username,
@@ -164,7 +164,7 @@ export class UserService {
     return userMapper(updatedUser);
   }
 
-  public async findUserByAccessCode(findUserByAccessCodeRequest: FindUserByAccessCodeRequest): Promise<UserDTO> {
+  public async findUserByAccessCode (findUserByAccessCodeRequest: FindUserByAccessCodeRequest): Promise<UserDTO> {
     const foundUsers = await this.userRepository
       .findBulk()
       .catch(() => { throw new InternalServerException() });

@@ -23,7 +23,6 @@ const showDescription = computed(() => definedProps.showDescription)
     border-radius: 0.25rem;
     box-shadow: 0 0 0.25rem 0 currentColor;
     cursor: pointer;
-
     text-align: center;
 
     &__inner {

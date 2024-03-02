@@ -1,7 +1,7 @@
 export type CardProps = {
-    readonly designation: string
-    readonly description: string
-    readonly isVisible: boolean
-    readonly isActive: boolean
-    readonly showDescription?: boolean 
+  readonly designation: string
+  readonly description: string
+  readonly isVisible: boolean
+  readonly isActive: boolean
+  readonly showDescription?: boolean
 }
