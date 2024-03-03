@@ -4,14 +4,14 @@
             <Navbar />
             <div id="wrapper__inner--content">
                 <Banner :header-content="chapter?.designation ?? ''"  :icons="bannerIcons" :groups="bannerGroups"
-                    :color="'light-colorized'" :is-editable="isProducer" :on-blur="(data: string) => updateChapter({ designation: data })" />
+                    :color="'light-colorized'" :is-editable="isProducer && isOwner" :on-blur="(data: string) => updateChapter({ designation: data })" />
                 <div id="wrapper__inner--content__box">
                     <div id="wrapper__inner--content__box--row">
                         <Typography :content="'Pages'" :segment="'designation'" />
                         <Icon v-if="isProducer && isOwner" :name="'plus'" :color="'blue-colorized'" :height="'1.25rem'"
                             :width="'1.25rem'" :on-click="createPage" />
                     </div>
-                    <Card v-for="page of pages" :designation="page.designation" :description="page.description"
+                    <Card v-for="page of pages.filter((page) => page.chapterUuid === chapter?.uuid)" :designation="page.designation" :description="page.description"
                         :is-visible="page.visible" :is-active="page.active" :show-description="false"
                         @click="navigateToPage(page.uuid)" />
                 </div>
@@ -54,7 +54,7 @@ const { isProducer, isConsumer, isDossierSubscribed, isBookSubscribed, isChapter
 const chapter = computed(() => chapters.value.find((chapter) => chapter.uuid === route.params.chapterUuid))
 
 const bannerIcons = computed<Array<IconProps & { isVisible: boolean }>>(() => ([
-    { name: 'lock', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isConsumer.value && !isDossierSubscribed.value && !isBookSubscribed.value && !isChapterSubscribed.value && isActive.value && isVisible.value), onClick: () => toggleSubscription() },
+    { name: 'lock', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isConsumer.value && !isDossierSubscribed.value && !isBookSubscribed.value && !isChapterSubscribed.value && isActive.value && isVisible.value && isOwner.value), onClick: () => toggleSubscription() },
     { name: 'watcher', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && !isVisible.value && isOwner.value), onClick: () => updateChapter({ visible: true }) },
     { name: 'watcher-off', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && isVisible.value && isOwner.value), onClick: () => updateChapter({ visible: false }) },
     { name: 'trashcan', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && isOwner.value), onClick: () => updateChapter({ active: false }) },

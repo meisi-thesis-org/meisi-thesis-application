@@ -9,7 +9,7 @@ export class SubscriptionController {
   private readonly queueProvider = new QueueProvider();
   private readonly randomProvider = new RandomProvider();
 
-  private async sendExceptionQueue(path: string, error: any): Promise<void> {
+  private async sendExceptionQueue (path: string, error: any): Promise<void> {
     const isExceptionQueueActive = process.env.EXCEPTION_QUEUE_ACTIVE
 
     if (isExceptionQueueActive === undefined || isExceptionQueueActive === 'false') {
@@ -27,10 +27,10 @@ export class SubscriptionController {
     )
   }
 
-  public async findSubscriptionByUuid(request: Request, response: Response): Promise<Response> {
+  public async findSubscriptionByUuid (request: Request, response: Response): Promise<Response> {
     try {
       const requestArgs: FindSubscriptionByUuidRequest = {
-        uuid: request.params.userUuid
+        uuid: request.params.uuid
       }
       const responseArgs = await this.service.findSubscriptionByUuid(requestArgs);
       return response.status(200).json(responseArgs)
@@ -40,14 +40,14 @@ export class SubscriptionController {
     }
   }
 
-  public async findSubscriptionsByForeignsUuid(request: Request, response: Response): Promise<Response> {
+  public async findSubscriptionsByForeignsUuid (request: Request, response: Response): Promise<Response> {
     try {
       const requestArgs: FindSubscriptionsByForeignsUuidRequest = {
-        walletUuid: String(request.query.walletUuid) ?? undefined,
-        dossierUuid: String(request.query.dossierUuid) ?? undefined,
-        bookUuid: String(request.query.bookUuid) ?? undefined,
-        chapterUuid: String(request.query.chapterUuid) ?? undefined,
-        pageUuid: String(request.query.pageUuid) ?? undefined
+        walletUuid: request.query.walletUuid?.toString() ?? undefined,
+        dossierUuid: request.query.dossierUuid?.toString() ?? undefined,
+        bookUuid: request.query.bookUuid?.toString() ?? undefined,
+        chapterUuid: request.query.chapterUuid?.toString() ?? undefined,
+        pageUuid: request.query.pageUuid?.toString() ?? undefined
       }
       const responseArgs = await this.service.findSubscriptionsByForeignsUuid(requestArgs);
       return response.status(200).json(responseArgs)
@@ -57,7 +57,7 @@ export class SubscriptionController {
     }
   }
 
-  public async createSubscription(request: Request, response: Response): Promise<Response> {
+  public async createSubscription (request: Request, response: Response): Promise<Response> {
     try {
       const requestArgs: CreateSubscriptionRequest = {
         walletUuid: request.body.walletUuid,
@@ -74,7 +74,7 @@ export class SubscriptionController {
     }
   }
 
-  public async updateSubscriptionByUuid(request: Request, response: Response): Promise<Response> {
+  public async updateSubscriptionByUuid (request: Request, response: Response): Promise<Response> {
     try {
       const requestArgs: UpdateSubscriptionByUuidRequest = {
         uuid: request.params.uuid,

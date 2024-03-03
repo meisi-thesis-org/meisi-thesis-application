@@ -21,11 +21,11 @@ const useSubscription = defineStore('subscriptions', () => {
     walletUuid?: string,
     dossierUuid?: string,
     bookUuid?: string,
-    subscriptionUuid?: string,
+    chapterUuid?: string,
     pageUuid?: string
   ) => {
     try {
-      const response = await createRequest<SubscriptionEntity[]>('accounting/subscriptions', 'GET', undefined, { walletUuid, dossierUuid, bookUuid, subscriptionUuid, pageUuid });
+      const response = await createRequest<SubscriptionEntity[]>('accounting/subscriptions', 'GET', undefined, { walletUuid, dossierUuid, bookUuid, chapterUuid, pageUuid });
       return response.data;
     } catch (error) {
       console.log(error)

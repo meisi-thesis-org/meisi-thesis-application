@@ -30,7 +30,7 @@ export class PageController {
   public async findPageByUuid (request: Request, response: Response): Promise<Response> {
     try {
       const requestArgs: FindPageByUuidRequest = {
-        uuid: request.params.pageUuid
+        uuid: request.params.uuid
       }
       const responseArgs = await this.service.findPageByUuid(requestArgs);
       return response.status(200).json(responseArgs)

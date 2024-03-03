@@ -4,7 +4,7 @@
             <Navbar />
             <div id="wrapper__inner--content">
                 <Banner :header-content="book?.designation ?? ''"  :icons="bannerIcons" :groups="bannerGroups"
-                    :color="'light-colorized'" :is-editable="isProducer" :on-blur="(data: string) => updateBook({ designation: data })"  />
+                    :color="'light-colorized'" :is-editable="isProducer && isOwner" :on-blur="(data: string) => updateBook({ designation: data })"  />
                 <div id="wrapper__inner--content__box">
                     <div id="wrapper__inner--content__box--row">
                         <Typography :content="'Chapters'" :segment="'designation'" />
@@ -56,7 +56,7 @@ const { isProducer, isConsumer, isDossierSubscribed, isBookSubscribed, isOwner }
 const book = computed(() => books.value.find((book) => book.uuid === route.params.bookUuid))
 
 const bannerIcons = computed<Array<IconProps & { isVisible: boolean }>>(() => ([
-    { name: 'lock', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isConsumer.value && !isDossierSubscribed.value && !isBookSubscribed.value && isActive.value && isVisible.value), onClick: () => toggleSubscription() },
+    { name: 'lock', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isConsumer.value && !isDossierSubscribed.value && !isBookSubscribed.value && isActive.value && isVisible.value && isOwner.value), onClick: () => toggleSubscription() },
     { name: 'watcher', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && !isVisible.value && isOwner.value), onClick: () => updateBook({ visible: true }) },
     { name: 'watcher-off', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && isVisible.value && isOwner.value), onClick: () => updateBook({ visible: false }) },
     { name: 'trashcan', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && isOwner.value), onClick: () => updateBook({ active: false }) },

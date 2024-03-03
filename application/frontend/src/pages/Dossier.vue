@@ -12,7 +12,7 @@
                             :width="'1.25rem'" :on-click="createBook" />
                     </div>
                     <div id="wrapper__inner--content__box--books">
-                        <Card v-for="book of books" v-show="isProducer || (isConsumer && book.active && book.visible)" :designation="book.designation" :description="book.description"
+                        <Card v-for="book of books.filter((book) => book.dossierUuid === dossier?.uuid)" v-show="isProducer || (isConsumer && book.active && book.visible)" :designation="book.designation" :description="book.description"
                         :is-visible="book.visible" :is-active="book.active" @click="navigateToBook(book.uuid)" />
                     </div>
                 </div>
@@ -66,7 +66,7 @@ const isActive = computed(() => {
 })
 
 const bannerIcons = computed<Array<IconProps & { isVisible: boolean }>>(() => ([
-    { name: 'lock', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isConsumer.value && !isDossierSubscribed.value && isActive.value && isVisible.value), onClick: () => toggleSubscription() },
+    { name: 'lock', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isConsumer.value && !isDossierSubscribed.value && isActive.value && isVisible.value && isOwner.value), onClick: () => toggleSubscription() },
     { name: 'watcher', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && !isVisible.value && isOwner.value), onClick: () => updateDossier({ visible: true }) },
     { name: 'watcher-off', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && isVisible.value && isOwner.value), onClick: () => updateDossier({ visible: false }) },
     { name: 'trashcan', height: '1.25rem', width: '1.25rem', color: 'light-colorized', isVisible: !!(isProducer.value && isOwner.value), onClick: () => updateDossier({ active: false }) },
