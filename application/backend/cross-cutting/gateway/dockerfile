@@ -4,13 +4,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 
 WORKDIR /usr/src/app
 
-COPY application/backend/gateway/package.json application/backend/gateway/yarn.lock ./
-RUN yarn install --frozen-lockfile
+COPY ./application/backend/utilities/shared ./shared
+COPY ./application/backend/cross-cutting/gateway ./
 
-COPY . .
+RUN yarn install 
+RUN yarn add ./shared
 
-RUN cd application/backend/gateway && yarn build
+RUN yarn build
 
 EXPOSE 8000
 
-CMD ["yarn","start"]
+CMD ["yarn", "start"]
