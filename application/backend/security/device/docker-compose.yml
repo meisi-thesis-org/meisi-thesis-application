@@ -27,10 +27,23 @@ services:
       - devicedb:/var/lib/postgresql/data
     networks:
       - devicedb-deviceux-network
+  device_app: 
+    build: 
+      context: .
+      network: host
+      dockerfile: ./dockerfile
+    deploy:
+      replicas: 3
+    environment:
+      - PORT=8002
+    command: yarn run start
+    networks:
+      - gateway_gateway-network
 
 networks: 
   devicedb-deviceux-network:
     driver: bridge
+  gateway_gateway-network:
 
 volumes:
   devicedb:

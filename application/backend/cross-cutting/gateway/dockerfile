@@ -4,14 +4,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 
 WORKDIR /usr/src/app
 
-COPY ./application/backend/utilities/shared ./shared
-COPY ./application/backend/cross-cutting/gateway ./
+COPY . .
 
 RUN yarn install 
-RUN yarn add ./shared
-
 RUN yarn build
-
-EXPOSE 8000
-
-CMD ["yarn", "start"]

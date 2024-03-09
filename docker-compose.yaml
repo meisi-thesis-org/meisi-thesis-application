@@ -1,24 +1,12 @@
 version: '3.8'
 
 services:
-  gateway-dockerfile:
-    build: 
-      context: .
-      network: host
-      dockerfile: ./application/backend/cross-cutting/gateway/dockerfile
-    environment:
-      - PORT=8000
-    deploy:
-      replicas: 3
-    networks:
-      - gateway-network
-
-  gateway-load-balancer:
+  load-balancer:
       image: nginx
       ports:
         - "80:80"
       volumes:
-        - ./application/backend/cross-cutting/gateway/nginx.conf:/etc/nginx/nginx.conf:ro
+        - ./nginx.conf:/etc/nginx/nginx.conf:ro
       deploy:
         replicas: 1
         resources:
@@ -26,7 +14,8 @@ services:
             cpus: '0.1'
             memory: '128M'
       networks:
-        - gateway-network
+        - gateway_gateway-network
 
 networks:
-  gateway-network:
+  gateway_gateway-network:
+    external: true

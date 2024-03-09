@@ -27,10 +27,23 @@ services:
       - networkdb:/var/lib/postgresql/data
     networks:
       - networkdb-networkux-network
-
+  network_app: 
+    build: 
+      context: .
+      network: host
+      dockerfile: ./dockerfile
+    deploy:
+      replicas: 3
+    environment:
+      - PORT=8003
+    command: yarn run start
+    networks:
+      - gateway_gateway-network
+      
 networks: 
   networkdb-networkux-network:
     driver: bridge
+  gateway_gateway-network:
 
 volumes:
   networkdb:

@@ -4,13 +4,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 
 WORKDIR /usr/src/app
 
-COPY application/backend/security/user/package.json application/backend/security/user/yarn.lock ./
-RUN yarn install --frozen-lockfile
-
 COPY . .
 
-RUN cd application/backend/security/user && yarn build
-
-EXPOSE 8001
-
-CMD ["yarn","start"]
+RUN yarn install 
+RUN yarn build

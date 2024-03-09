@@ -10,9 +10,19 @@ services:
     volumes:
       - ~/.docker-conf/redis/data/:/var/lib/redis/
       - ~/.docker-conf/redis/log/:/var/log/redis
-    networks:
-      - redis_network_gateway
 
+  gateway_app: 
+    build: 
+      context: .
+      network: host
+      dockerfile: ./dockerfile
+    deploy:
+      replicas: 3
+    environment:
+      - PORT=8000
+    command: yarn run start
+    networks:
+      - gateway-network
+      
 networks:
-  redis_network_gateway:
-    driver: bridge
+  gateway-network:

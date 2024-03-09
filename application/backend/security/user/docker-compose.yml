@@ -27,10 +27,23 @@ services:
       - userdb:/var/lib/postgresql/data
     networks:
       - user-db-ux-network
-
+  user_app: 
+    build: 
+      context: .
+      network: host
+      dockerfile: ./dockerfile
+    deploy:
+      replicas: 3
+    environment:
+      - PORT=8001
+    command: yarn run start
+    networks:
+      - gateway_gateway-network
+      
 networks: 
   user-db-ux-network:
     driver: bridge
+  gateway_gateway-network:
 
 volumes:
   userdb:
