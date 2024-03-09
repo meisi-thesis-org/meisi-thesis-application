@@ -27,10 +27,23 @@ services:
       - bookdb:/var/lib/postgresql/data
     networks:
       - book-db-ux-network
+  book_app: 
+    build: 
+      context: .
+      network: host
+      dockerfile: ./dockerfile
+    deploy:
+      replicas: 3
+    environment:
+      - PORT=8005
+    command: yarn run start
+    networks:
+      - gateway_gateway-network
 
 networks: 
   book-db-ux-network:
     driver: bridge
+  gateway_gateway-network:
 
 volumes:
   bookdb:

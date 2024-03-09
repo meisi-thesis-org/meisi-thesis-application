@@ -27,10 +27,23 @@ services:
       - subscriptiondb:/var/lib/postgresql/data
     networks:
       - subscription-db-ux-network
+  subscription_app: 
+    build: 
+      context: .
+      network: host
+      dockerfile: ./dockerfile
+    deploy:
+      replicas: 3
+    environment:
+      - PORT=8009
+    command: yarn run start
+    networks:
+      - gateway_gateway-network
 
 networks: 
   subscription-db-ux-network:
     driver: bridge
+  gateway_gateway-network:
 
 volumes:
   subscriptiondb:

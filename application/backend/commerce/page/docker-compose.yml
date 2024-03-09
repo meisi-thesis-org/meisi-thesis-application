@@ -27,10 +27,23 @@ services:
       - pagedb:/var/lib/postgresql/data
     networks:
       - page-db-ux-network
+  page_app: 
+    build: 
+      context: .
+      network: host
+      dockerfile: ./dockerfile
+    deploy:
+      replicas: 3
+    environment:
+      - PORT=8007
+    command: yarn run start
+    networks:
+      - gateway_gateway-network
 
 networks: 
   page-db-ux-network:
     driver: bridge
+  gateway_gateway-network:
 
 volumes:
   pagedb:

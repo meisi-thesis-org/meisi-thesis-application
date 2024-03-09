@@ -27,10 +27,23 @@ services:
       - dossierdb:/var/lib/postgresql/data
     networks:
       - dossier-db-ux-network
+  dossier_app: 
+    build: 
+      context: .
+      network: host
+      dockerfile: ./dockerfile
+    deploy:
+      replicas: 3
+    environment:
+      - PORT=8004
+    command: yarn run start
+    networks:
+      - gateway_gateway-network
 
 networks: 
   dossier-db-ux-network:
     driver: bridge
+  gateway_gateway-network:
 
 volumes:
   dossierdb:

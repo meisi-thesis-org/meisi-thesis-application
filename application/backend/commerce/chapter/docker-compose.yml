@@ -27,10 +27,23 @@ services:
       - chapterdb:/var/lib/postgresql/data
     networks:
       - chapter-db-ux-network
+  chapter_app: 
+    build: 
+      context: .
+      network: host
+      dockerfile: ./dockerfile
+    deploy:
+      replicas: 3
+    environment:
+      - PORT=8006
+    command: yarn run start
+    networks:
+      - gateway_gateway-network
 
 networks: 
   chapter-db-ux-network:
     driver: bridge
+  gateway_gateway-network:
 
 volumes:
   chapterdb:

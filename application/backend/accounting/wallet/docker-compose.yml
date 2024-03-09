@@ -27,10 +27,23 @@ services:
       - walletdb:/var/lib/postgresql/data
     networks:
       - wallet-db-ux-network
+  wallet_app: 
+    build: 
+      context: .
+      network: host
+      dockerfile: ./dockerfile
+    deploy:
+      replicas: 3
+    environment:
+      - PORT=8008
+    command: yarn run start
+    networks:
+      - gateway_gateway-network
 
 networks: 
   wallet-db-ux-network:
     driver: bridge
+  gateway_gateway-network:
 
 volumes:
   walletdb:
