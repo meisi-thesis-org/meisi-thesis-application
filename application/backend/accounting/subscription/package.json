@@ -7,7 +7,7 @@
     "scripts": {
         "start": "node dist/subscription.application.js",
         "start:watch": "tsx --watch src/subscription.application.ts",
-        "build": "rimraf dist && tsup src"
+        "build": "rimraf dist && tsup src --external=vitest"
     },
     "dependencies": {
         "@meisi-thesis/application-backend-utilities-shared": "https://github.com/meisi-thesis-org/meisi-thesis-shared",
