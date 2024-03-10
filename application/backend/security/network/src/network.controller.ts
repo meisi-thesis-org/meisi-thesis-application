@@ -5,6 +5,22 @@ import { NetworkService } from './network.service';
 export class NetworkController {
   private readonly service: NetworkService = new NetworkService();
 
+  private async sendExceptionQueue (routeURL: string, exception: any): Promise<void> {
+    const isExceptionQueueActive = process.env.EXCEPTION_QUEUE_ACTIVE
+
+    if (isExceptionQueueActive === undefined || isExceptionQueueActive === 'false') {
+      return;
+    }
+
+    const correlationUuid = this.randomProvider.randomUUID()
+
+    await this.queueProvider.sendQueue(
+      process.env.RABBITMQ_URL ?? 'amqp://localhost',
+      'create_exception',
+      Buffer.from(JSON.stringify({ routeURL, correlationUuid, exception }))
+    ).catch(() => { throw new InternalServerException() });
+  }
+
   public async findNetworksByUserUuid (request: Request, response: Response): Promise<Response> {
     try {
       const findNetworksByUserUuidRequest: FindNetworksByUserUuidRequest = {
@@ -13,6 +29,7 @@ export class NetworkController {
       const networks = await this.service.findNetworksByUserUuid(findNetworksByUserUuidRequest);
       return response.status(200).json(networks)
     } catch (error: any) {
+      await this.sendExceptionQueue('security.networks::findNetworksByUserUuid', error);
       return response.status(error.getHttpCode()).json()
     }
   }
@@ -25,6 +42,7 @@ export class NetworkController {
       const network = await this.service.findNetworkByUuid(findNetworkByUuidRequest);
       return response.status(200).json(network)
     } catch (error: any) {
+      await this.sendExceptionQueue('security.networks::findNetworkByUuid', error);
       return response.status(error.getHttpCode()).json()
     }
   }
@@ -39,6 +57,7 @@ export class NetworkController {
       const network = await this.service.createNetwork(createNetworkRequest);
       return response.status(201).json(network)
     } catch (error: any) {
+      await this.sendExceptionQueue('security.networks::createNetwork', error);
       return response.status(error.getHttpCode()).json()
     }
   }
@@ -55,6 +74,7 @@ export class NetworkController {
       const network = await this.service.updateNetworkByUuid(updateNetworkByUuidRequest);
       return response.status(201).json(network)
     } catch (error: any) {
+      await this.sendExceptionQueue('security.networks::updateNetworkByUuid', error);
       return response.status(error.getHttpCode()).json()
     }
   }

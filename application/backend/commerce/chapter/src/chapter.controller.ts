@@ -4,9 +4,32 @@ import {
 } from 'express'
 import { type UpdateChapterByUuidRequest, type CreateChapterRequest, type FindChapterByUuidRequest, type FindChaptersByQueryRequest } from './structs/chapter.request';
 import { ChapterService } from './chapter.service';
+import { RandomProvider } from '@meisi-thesis/application-backend-utilities-shared/src/providers/random.provider';
+import { QueueProvider } from '@meisi-thesis/application-backend-utilities-shared/src/providers/queue.provider';
+import { InternalServerException } from '@meisi-thesis/application-backend-utilities-shared/src/exceptions/internal-server.exception';
 
 export class ChapterController {
   private readonly service: ChapterService = new ChapterService();
+  private readonly queueProvider: QueueProvider = new QueueProvider();
+  private readonly randomProvider: RandomProvider = new RandomProvider();
+
+  private async sendExceptionQueue (routeURL: string, exception: any): Promise<void> {
+    const isExceptionQueueActive = process.env.EXCEPTION_QUEUE_ACTIVE
+
+    if (isExceptionQueueActive === undefined || isExceptionQueueActive === 'false') {
+      return;
+    }
+
+    await this.queueProvider.sendQueue(
+      process.env.RABBITMQ_URL ?? 'amqp://localhost',
+      'create_exception',
+      Buffer.from(JSON.stringify({
+        routeURL,
+        correlationUuid: this.randomProvider.randomUUID(),
+        exception
+      }))
+    ).catch(() => { throw new InternalServerException() });
+  }
 
   public async findChaptersByQuery (
     request: Request,
@@ -19,6 +42,7 @@ export class ChapterController {
       const bookCollection = await this.service.findChaptersByQuery(findChaptersByDossierUuidRequest);
       return response.status(200).json(bookCollection);
     } catch (error: any) {
+      await this.sendExceptionQueue('commerce.chapters::findChaptersByQuery', error);
       return response.status(error.getHttpCode()).json()
     }
   }
@@ -34,6 +58,7 @@ export class ChapterController {
       const book = await this.service.findChapterByUuid(findChapterByUuidRequest);
       return response.status(200).json(book);
     } catch (error: any) {
+      await this.sendExceptionQueue('commerce.chapters::findChapterByUuid', error);
       return response.status(error.getHttpCode()).json()
     }
   }
@@ -52,6 +77,7 @@ export class ChapterController {
       const book = await this.service.createChapter(createChapterRequest, { authorization: request.headers.authorization ?? '' });
       return response.status(201).json(book);
     } catch (error: any) {
+      await this.sendExceptionQueue('commerce.chapters::createChapter', error);
       return response.status(error.getHttpCode()).json()
     }
   }
@@ -72,6 +98,7 @@ export class ChapterController {
       const book = await this.service.updateChapterByUuid(updateChapterByUuidRequest);
       return response.status(201).json(book);
     } catch (error: any) {
+      await this.sendExceptionQueue('commerce.chapters::updateChapterByUuid', error);
       return response.status(error.getHttpCode()).json()
     }
   }

@@ -3,13 +3,14 @@ import { type FindPageByUuidRequest, type CreatePageRequest, type UpdatePageByUu
 import { PageService } from './page.service';
 import { QueueProvider } from '@meisi-thesis/application-backend-utilities-shared/src/providers/queue.provider';
 import { RandomProvider } from '@meisi-thesis/application-backend-utilities-shared/src/providers/random.provider';
+import { InternalServerException } from '@meisi-thesis/application-backend-utilities-shared/src/exceptions/internal-server.exception';
 
 export class PageController {
   private readonly service = new PageService();
   private readonly queueProvider = new QueueProvider();
   private readonly randomProvider = new RandomProvider();
 
-  private async sendExceptionQueue (path: string, error: any): Promise<void> {
+  private async sendExceptionQueue (routeURL: string, exception: any): Promise<void> {
     const isExceptionQueueActive = process.env.EXCEPTION_QUEUE_ACTIVE
 
     if (isExceptionQueueActive === undefined || isExceptionQueueActive === 'false') {
@@ -20,11 +21,11 @@ export class PageController {
       process.env.RABBITMQ_URL ?? 'amqp://localhost',
       'create_exception',
       Buffer.from(JSON.stringify({
-        routeURL: path,
+        routeURL,
         correlationUuid: this.randomProvider.randomUUID(),
-        exception: error
+        exception
       }))
-    )
+    ).catch(() => { throw new InternalServerException() });
   }
 
   public async findPageByUuid (request: Request, response: Response): Promise<Response> {

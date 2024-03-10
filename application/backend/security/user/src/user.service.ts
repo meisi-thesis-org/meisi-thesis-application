@@ -16,27 +16,26 @@ export class UserService {
   private readonly queueProvider: QueueProvider = new QueueProvider();
 
   private async sendEmailQueue (
-    path: string,
+    routeURL: string,
     props: {
       toEmail: string
       subject: string
       content: string
     }
   ): Promise<void> {
-    /*
-    const message = {
-      routeURL: path,
-      correlationUuid: this.randomProvider.randomUUID(),
-      ...props
+    const dispatcherQueueActive = process.env.DISPATCHER_QUEUE_ACTIVE
+
+    if (dispatcherQueueActive === undefined || dispatcherQueueActive === 'false') {
+      return;
     }
 
+    const correlationUuid = this.randomProvider.randomUUID()
+    const providerHost = process.env.RABBITMQ_URL ?? 'amqp://localhost'
+    const bufferedMessage = Buffer.from(JSON.stringify({ routeURL, correlationUuid, ...props }))
+
     await this.queueProvider
-      .sendQueue(
-        process.env.RABBITMQ_URL ?? 'amqp://localhost',
-        'create_email',
-        Buffer.from(JSON.stringify(message))
-      ).catch(() => { throw new InternalServerException() });
-    */
+      .sendQueue(providerHost, 'create_email', bufferedMessage)
+      .catch(() => { throw new InternalServerException() });
   }
 
   public async findUserByUuid (findUserByUuidRequest: FindUserByUuidRequest): Promise<UserDTO> {
