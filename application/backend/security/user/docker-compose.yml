@@ -33,17 +33,21 @@ services:
       network: host
       dockerfile: ./dockerfile
     deploy:
+      resources:
+        limits:
+          cpus: "12.0"
       replicas: 3
     environment:
       - PORT=8001
     command: yarn run start
     networks:
-      - gateway_gateway-network
+      - gateway_network
       
 networks: 
   user-db-ux-network:
     driver: bridge
-  gateway_gateway-network:
+  gateway_network:
+    external: true
 
 volumes:
   userdb:

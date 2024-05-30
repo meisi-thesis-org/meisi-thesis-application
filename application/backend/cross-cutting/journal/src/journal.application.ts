@@ -19,7 +19,7 @@ export class JournalApplication {
       await queueProvider.consumeQueue(
         process.env.RABBITMQ_URL ?? 'amqp://localhost',
         'create_exception',
-        (message) => { console.log(message?.content.toString()); }
+        (message) => console.log(message?.content.toString())
       )
     })
 

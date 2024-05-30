@@ -38,12 +38,13 @@ services:
       - PORT=8007
     command: yarn run start
     networks:
-      - gateway_gateway-network
+      - gateway_network
 
 networks: 
   page-db-ux-network:
     driver: bridge
-  gateway_gateway-network:
+  gateway_network:
+    external: true
 
 volumes:
   pagedb:

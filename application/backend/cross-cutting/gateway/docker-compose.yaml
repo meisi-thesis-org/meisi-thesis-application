@@ -7,6 +7,7 @@ services:
     restart: always
     ports:
       - 6379:6379
+    network_mode: host
     volumes:
       - ~/.docker-conf/redis/data/:/var/lib/redis/
       - ~/.docker-conf/redis/log/:/var/log/redis
@@ -22,7 +23,8 @@ services:
       - PORT=8000
     command: yarn run start
     networks:
-      - gateway-network
+      - gateway_network
       
 networks:
-  gateway-network:
+  gateway_network:
+    external: true

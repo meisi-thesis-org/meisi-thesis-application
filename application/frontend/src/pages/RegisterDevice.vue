@@ -1,7 +1,7 @@
 <template>
     <div id="wrapper">
         <div id="wrapper__inner">
-            <Icon :name="'network'" :height="'5rem'" :width="'5rem'" />
+            <Icon :name="'device'" :height="'5rem'" :width="'5rem'" />
             <div id="wrapper__inner--text-block">
                 <Typography :content="'Register Device'" :segment="'header'" />
                 <Typography :content="'Present device can be registered!'" :segment="'paragraph'" />

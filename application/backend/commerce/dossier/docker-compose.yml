@@ -38,12 +38,13 @@ services:
       - PORT=8004
     command: yarn run start
     networks:
-      - gateway_gateway-network
+      - gateway_network
 
 networks: 
   dossier-db-ux-network:
     driver: bridge
-  gateway_gateway-network:
+  gateway_network:
+    external: true
 
 volumes:
   dossierdb:

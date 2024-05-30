@@ -19,7 +19,8 @@ export class GatewayService {
 
       const userSessionExists = await this.redisProvider
         .keyExists(`userSession::${signInRequest.userUuid}`)
-        .catch(() => {
+        .catch((error) => {
+          console.log(error)
           throw new InternalServerException()
         })
 
@@ -43,6 +44,7 @@ export class GatewayService {
 
       return sessionMapper(sessionEntity);
     } catch (error) {
+      console.log(error)
       await this.redisProvider.disconnect();
       throw error;
     }

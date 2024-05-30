@@ -74,7 +74,7 @@ const bannerIcons = computed<Array<IconProps & { isVisible: boolean }>>(() => ([
 
 const bannerGroups = computed<Array<BannerGroupProps>>(() => [
     { type: 'editableControl', content: dossier.value?.designation ?? '', contentType: 'text', maxLength: '60', color: "light-colorized", isEditable: isProducer.value && isOwner.value, onBlur: (designation: string) => updateDossier({ designation }) },
-    { type: 'editableControl', content: dossier.value?.price ?? 0, contentType: 'number', designation: '', color: "light-colorized", isEditable: isProducer.value && isOwner.value, onBlur: (price: number) => updateDossier({ price }) },
+    { type: 'editableControl', content: dossier.value?.price ?? 0, contentType: 'number', designation: 'Fee', color: "light-colorized", isEditable: isProducer.value && isOwner.value, onBlur: (price: number) => updateDossier({ price }) },
 ])
 
 const updateDossier = async (data: Record<string, Primitive>) => {

@@ -13,7 +13,7 @@ services:
     ports:
       - "8891:80"
     networks:
-      - networkdb-networkux-network
+      - network-db-ux-network
   networkdb:
     container_name: networkdb
     image: postgres
@@ -26,7 +26,7 @@ services:
     volumes:
       - networkdb:/var/lib/postgresql/data
     networks:
-      - networkdb-networkux-network
+      - network-db-ux-network
   network_app: 
     build: 
       context: .
@@ -38,12 +38,13 @@ services:
       - PORT=8003
     command: yarn run start
     networks:
-      - gateway_gateway-network
+      - gateway_network
       
 networks: 
-  networkdb-networkux-network:
+  network-db-ux-network:
     driver: bridge
-  gateway_gateway-network:
+  gateway_network:
+    external: true
 
 volumes:
   networkdb:

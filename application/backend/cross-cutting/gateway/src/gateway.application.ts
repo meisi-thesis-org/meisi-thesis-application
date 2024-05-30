@@ -21,21 +21,21 @@ export class GatewayApplication {
   }
 
   public defineRoutes (): void {
-    this.application.use('/security/users', createProxyMiddleware({ target: 'http://192.168.1.78:8001', changeOrigin: true, secure: false }));
+    this.application.use('/security/users', createProxyMiddleware({ target: 'http://user_app:8001', changeOrigin: true, secure: false }));
     this.application.put('/session/sign-in/:userUuid', SchemaValidator(SignInSchema), async (request: Request, response: Response) => await this.gatewayController.signIn(request, response));
     this.application.put('/session/sign-out', AccessTokenGuard, async (request: Request, response: Response) => await this.gatewayController.signOut(request as AuthenticatedRequest, response));
     this.application.put('/session/refresh-tokens', RefreshTokenGuard, async (request: Request, response: Response) => await this.gatewayController.refreshTokens(request as AuthenticatedRequest, response));
 
     const availableHosts = new Map<string, string>();
-    availableHosts.set('/security/users/:uuid', 'http://192.168.1.78:8001');
-    availableHosts.set('/security/devices', 'http://192.168.1.78:8002');
-    availableHosts.set('/security/networks', 'http://192.168.1.78:8003');
-    availableHosts.set('/commerce/dossiers', 'http://192.168.1.78:8004');
-    availableHosts.set('/commerce/books', 'http://192.168.1.78:8005');
-    availableHosts.set('/commerce/chapters', 'http://192.168.1.78:8006');
-    availableHosts.set('/commerce/pages', 'http://192.168.1.78:8007');
-    availableHosts.set('/accounting/wallets', 'http://192.168.1.78:8008');
-    availableHosts.set('/accounting/subscriptions', 'http://192.168.1.78:8009');
+    availableHosts.set('/security/users/:uuid', 'http://user_app:8001');
+    availableHosts.set('/security/devices', 'http://device_app:8002');
+    availableHosts.set('/security/networks', 'http://network_app:8003');
+    availableHosts.set('/commerce/dossiers', 'http://dossier_app:8004');
+    availableHosts.set('/commerce/books', 'http://book_app:8005');
+    availableHosts.set('/commerce/chapters', 'http://chapter_app:8006');
+    availableHosts.set('/commerce/pages', 'http://page_app:8007');
+    availableHosts.set('/accounting/wallets', 'http://wallet_app:8008');
+    availableHosts.set('/accounting/subscriptions', 'http://subscription_app:8009');
 
     for (const [key, value] of availableHosts.entries()) {
       this.application.use(key, AccessTokenGuard, createProxyMiddleware({ target: value, changeOrigin: true, secure: false }))

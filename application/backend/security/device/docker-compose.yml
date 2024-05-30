@@ -13,7 +13,7 @@ services:
     ports:
       - "8889:80"
     networks:
-      - devicedb-deviceux-network
+      - device-db-ux-network
   devicedb:
     container_name: devicedb
     image: postgres
@@ -26,7 +26,7 @@ services:
     volumes:
       - devicedb:/var/lib/postgresql/data
     networks:
-      - devicedb-deviceux-network
+      - device-db-ux-network
   device_app: 
     build: 
       context: .
@@ -38,12 +38,13 @@ services:
       - PORT=8002
     command: yarn run start
     networks:
-      - gateway_gateway-network
+      - gateway_network
 
 networks: 
-  devicedb-deviceux-network:
+  device-db-ux-network:
     driver: bridge
-  gateway_gateway-network:
+  gateway_network:
+    external: true
 
 volumes:
   devicedb:

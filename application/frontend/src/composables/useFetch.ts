@@ -4,7 +4,7 @@ import axios from 'axios';
 import { storeToRefs } from 'pinia';
 
 export const useFetch = () => {
-  const axiosClient = axios.create({ baseURL: 'http://localhost:8000/' });
+  const axiosClient = axios.create({ baseURL: 'http://localhost/' });
 
   axiosClient.interceptors.request.use(
     (config) => {

@@ -6,7 +6,8 @@ export class RedisProvider {
   private readonly instance: RedisClientType = createClient();
 
   public async connect (): Promise<void> {
-    await this.instance.connect().catch(() => {
+    await this.instance.connect().catch((error) => {
+      console.log(error)
       throw new InternalServerException();
     })
   }

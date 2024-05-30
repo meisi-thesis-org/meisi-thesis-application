@@ -14,6 +14,7 @@ export class GatewayController {
       const signInResponse = await this.gatewayService.signIn(signInRequest);
       return response.status(201).json(signInResponse)
     } catch (error: any) {
+      console.log(error)
       return response.status(error.getHttpCode()).json()
     }
   }

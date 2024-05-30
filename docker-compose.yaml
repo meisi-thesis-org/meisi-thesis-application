@@ -14,8 +14,8 @@ services:
             cpus: '0.1'
             memory: '128M'
       networks:
-        - gateway_gateway-network
+        - gateway_network
 
 networks:
-  gateway_gateway-network:
+  gateway_network:
     external: true
